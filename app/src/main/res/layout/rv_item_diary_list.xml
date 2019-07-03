@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                android:background="#ffffff">
+
+    <LinearLayout
+            android:id="@+id/ll_rv_item_diary_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_marginVertical="10dp"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/txt_rv_item_diary_list_day_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textSize="20dp"
+                    android:textColor="#959595"/>
+
+            <TextView
+                    android:id="@+id/txt_rv_item_diary_list_day_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Day"
+                    android:textSize="10dp"
+                    android:textColor="#959595"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/txt_rv_item_diary_list_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:text="Content"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:textColor="#959595"
+                android:singleLine="true"/>
+
+        <LinearLayout
+                android:id="@+id/lay1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+            <ImageView
+                    android:id="@+id/img_remove"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:src="@drawable/like_fill"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
