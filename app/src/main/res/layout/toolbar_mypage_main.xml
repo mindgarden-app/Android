@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:contentInsetStart="0dp"
+        android:theme="@style/MainTheme"
+        android:background="@drawable/gray_bottom_border">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="10dp">
+        <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:layout_alignParentStart="true"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/btn_back"
+                android:contentDescription="TODO"
+                android:scaleType="centerCrop"
+                android:background="@color/colorWhite"
+                />
+        <TextView
+                android:id="@+id/txtSetting"
+                android:text="환경설정"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:gravity="center|center"
+                android:layout_centerInParent="true"
+        />
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
