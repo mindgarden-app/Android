@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.mindgarden_2.Activity.ReadDiaryActivity
 import com.example.mindgarden_2.Data.DiaryListData
 import com.example.mindgarden_2.R
+import org.jetbrains.anko.startActivity
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
     var context : Context = ctx
@@ -35,9 +37,12 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             false
         }
 
-        /*holder.content.setOnClickListener {
+        /*
         일기 내용 눌렀을 때 일기 편집 페이지로 넘어감
-        }*/
+        */
+        holder.content.setOnClickListener {
+            ctx.startActivity<ReadDiaryActivity>()
+        }
 
         if (isPressed) {
             holder.lay1.visibility = View.VISIBLE

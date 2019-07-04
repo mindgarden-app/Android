@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp"
+        android:background="@drawable/toolbar_border"
+
+>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:layout_margin="18dp"
+                android:src="@drawable/btn_back"
+                android:id="@+id/btn_back_toolbar" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="작성날짜"
+                android:textColor="#000000"
+                android:textSize="15dp"
+        />
+        <Button
+                android:layout_width="45dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:text="수정"
+                android:textColor="#505050"
+                android:background="@drawable/round_border"
+                android:id="@+id/btn_save_diary_toolbar"/>
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.Toolbar>
