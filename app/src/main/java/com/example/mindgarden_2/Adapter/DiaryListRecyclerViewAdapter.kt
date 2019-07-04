@@ -29,9 +29,10 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         holder.day_text.text = dataList[position].day_text
         holder.content.text = dataList[position].content
 
-        holder.container.setOnClickListener {
+        holder.container.setOnLongClickListener {
             isPressed = !isPressed
             notifyDataSetChanged()
+            false
         }
 
         /*holder.content.setOnClickListener {
