@@ -9,10 +9,8 @@ import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_mood_choice.*
 import android.content.Context.WINDOW_SERVICE
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.RelativeLayout
 import com.example.mindgarden_2.Data.MoodChoiceData
 import com.example.writediary.MoodChoiceRecyclerViewAdapter
-import kotlinx.android.synthetic.main.rv_item_mood_choice.*
 import com.example.mindgarden_2.R
 
 
@@ -27,7 +25,10 @@ class MoodChoiceActivity : AppCompatActivity() {
 
         setWindowSize()
         configureRecyclerView()
+
+
     }
+
 
     //PopUpWindow 사이즈 조절
     private fun setWindowSize(){
@@ -38,6 +39,7 @@ class MoodChoiceActivity : AppCompatActivity() {
         window.attributes.width = width
         window.attributes.height = height
     }
+
 
     //데이터
     private fun configureRecyclerView(){
@@ -58,7 +60,6 @@ class MoodChoiceActivity : AppCompatActivity() {
         rv_mood_mood_choice_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         moodChoiceRecyclerViewAdapter = MoodChoiceRecyclerViewAdapter(this, dataList)
-
 
     }
 

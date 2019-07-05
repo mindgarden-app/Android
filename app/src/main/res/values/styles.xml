@@ -11,6 +11,7 @@
     <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
     </style>
 
 </resources>

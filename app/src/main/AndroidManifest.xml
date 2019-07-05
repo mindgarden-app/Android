@@ -12,19 +12,18 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activity.MoodChoiceActivity"
-                  android:theme="@style/Theme.MyPopUpWindow">
+        <activity
+                android:name=".Activity.MoodChoiceActivity"
+                android:theme="@style/Theme.MyPopUpWindow">
         </activity>
         <activity android:name=".Activity.ReadDiaryActivity">
         </activity>
-        <activity android:name=".Activity.WriteDiaryActivity"
-        >
+        <activity android:name=".Activity.WriteDiaryActivity">
         </activity>
         <activity android:name=".Activity.DiaryListActivity">
         </activity>
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>

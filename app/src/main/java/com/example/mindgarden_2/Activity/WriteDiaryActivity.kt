@@ -1,7 +1,12 @@
 package com.example.mindgarden_2.Activity
 
+import android.app.ActionBar
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,13 +16,22 @@ import org.jetbrains.anko.startActivity
 import com.example.mindgarden_2.R
 import android.net.Uri
 import android.provider.MediaStore.Images
+import android.view.Display
 import android.view.View
+import android.widget.*
+import android.view.WindowManager
+import android.R.attr.y
+import android.R.attr.x
+import android.graphics.Point
 
 
 class WriteDiaryActivity : AppCompatActivity() {
 
     val REQUEST_CODE_WRITE_ACTIVITY = 1000
     val REQUEST_CODE_SELECT_IMAGE = 1004
+
+    val choiceList = arrayOf<String>("이미지 선택", "삭제")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_diary)
@@ -44,23 +58,56 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //갤러리 접근하여 이미지 얻어오기
         img_gallary_write_diary.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
 
-            //dialog
-            //1. 이미지 선택 or 삭제
-            /*
-            이미지 선택시
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
-            intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
-            */
-            //이미지 삭제시
-            deleteImage()
+            val inflater = layoutInflater
+            val view = inflater.inflate(R.layout.dialog_chice_listview, null)
 
+            builder.setView(view)
+
+
+            val listview= view.findViewById(R.id.listview_dialog_choice) as ListView
+            val dialog = builder.create()
+
+
+            val display = windowManager.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+
+            val window = dialog.window
+
+            val x = (size.x * 0.2f).toInt()
+            val y = (size.y * 0.3f).toInt()
+
+            window.setLayout(x, y)
+
+            val myAdapter = MyListAdapter(this, choiceList)
+
+            listview.setAdapter(myAdapter)
+
+            listview.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, i, l ->
+                when (i) {
+                    0 -> {
+                        val intent = Intent(Intent.ACTION_PICK)
+                        intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                        intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+                    }
+                    1 -> {
+                        deleteImage()
+                    }
+                }
+                dialog.dismiss()
+            })
+            dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show()
         }
 
 
     }
+
+
 
     //MoodChoice액티비티 팝업
     fun moodChoice(){
