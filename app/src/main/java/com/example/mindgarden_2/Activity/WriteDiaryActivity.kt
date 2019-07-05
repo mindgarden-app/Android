@@ -44,10 +44,19 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //갤러리 접근하여 이미지 얻어오기
         img_gallary_write_diary.setOnClickListener{
+
+            //dialog
+            //1. 이미지 선택 or 삭제
+            /*
+            이미지 선택시
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
             intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+            */
+            //이미지 삭제시
+            deleteImage()
+
         }
 
 
@@ -100,6 +109,12 @@ class WriteDiaryActivity : AppCompatActivity() {
         img_gallary_write_diary.setImageBitmap(image_bitmap)
         icn_gallary_write_diary.visibility = View.INVISIBLE
 
+    }
+
+    //이미지 삭제
+    private fun deleteImage(){
+        icn_gallary_write_diary.visibility = View.VISIBLE
+        img_gallary_write_diary.setImageBitmap(null)
     }
 
     //이미지 파일명 가져오기
