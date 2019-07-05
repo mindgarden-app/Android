@@ -1,9 +1,7 @@
 package com.example.mindgarden_2.Activity
 
-import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,13 +14,12 @@ import org.jetbrains.anko.startActivity
 import com.example.mindgarden_2.R
 import android.net.Uri
 import android.provider.MediaStore.Images
-import android.view.Display
 import android.view.View
 import android.widget.*
-import android.view.WindowManager
-import android.R.attr.y
-import android.R.attr.x
-import android.graphics.Point
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+
+
 
 
 class WriteDiaryActivity : AppCompatActivity() {
@@ -69,18 +66,6 @@ class WriteDiaryActivity : AppCompatActivity() {
             val listview= view.findViewById(R.id.listview_dialog_choice) as ListView
             val dialog = builder.create()
 
-
-            val display = windowManager.defaultDisplay
-            val size = Point()
-            display.getSize(size)
-
-            val window = dialog.window
-
-            val x = (size.x * 0.2f).toInt()
-            val y = (size.y * 0.3f).toInt()
-
-            window.setLayout(x, y)
-
             val myAdapter = MyListAdapter(this, choiceList)
 
             listview.setAdapter(myAdapter)
@@ -103,8 +88,6 @@ class WriteDiaryActivity : AppCompatActivity() {
 
             dialog.show()
         }
-
-
     }
 
 
@@ -128,7 +111,9 @@ class WriteDiaryActivity : AppCompatActivity() {
         //기분선택 팝업 -> this
         if(requestCode == REQUEST_CODE_WRITE_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
-                //선택한 기분 이미지 넣어주기
+                //선택한 기분 아이콘 넣어주기
+               btn_mood_icon_write_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
+
                 //선택한 기분 텍스트 넣어주기
                 txt_mood_text_write_diary.text = data!!.getStringExtra("moodTxt")
             }

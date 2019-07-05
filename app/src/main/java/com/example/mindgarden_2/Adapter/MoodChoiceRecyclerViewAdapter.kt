@@ -28,11 +28,16 @@ class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<
         Glide.with(ctx)
             .load(dataList[position].moodIcn)
             .into(holder.moodIcn)
+
+        val btm = dataList[position].moodIcn
+
         holder.moodTxt.text = dataList[position].moodTxt
+
 
         holder.container.setOnClickListener{
             var intent: Intent = Intent()
             intent.putExtra("moodTxt", dataList[position].moodTxt)
+            intent.putExtra("moodIcn", btm)
             (ctx as Activity).setResult(Activity.RESULT_OK, intent)
             (ctx as Activity).finish()
 

@@ -8,11 +8,15 @@ import android.view.Window
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_mood_choice.*
 import android.content.Context.WINDOW_SERVICE
+import android.graphics.Bitmap
 import android.support.v7.widget.LinearLayoutManager
 import com.example.mindgarden_2.Data.MoodChoiceData
 import com.example.writediary.MoodChoiceRecyclerViewAdapter
 import com.example.mindgarden_2.R
-
+import android.graphics.drawable.ColorDrawable
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 
 
 class MoodChoiceActivity : AppCompatActivity() {
@@ -23,7 +27,7 @@ class MoodChoiceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mood_choice)
 
-        setWindowSize()
+        setWindow()
         configureRecyclerView()
 
 
@@ -31,10 +35,13 @@ class MoodChoiceActivity : AppCompatActivity() {
 
 
     //PopUpWindow 사이즈 조절
-    private fun setWindowSize(){
+    private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-        val width = (display.width * 0.9).toInt() //Display 사이즈의 90%
-        val height = (display.height * 0.9).toInt()  //Display 사이즈의 90%
+        val width = (display.width * 0.6).toInt() //Display 사이즈의 60%
+        val height = (display.height * 0.85).toInt()  //Display 사이즈의 85%
+
+        //테두리 없애기
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         window.attributes.width = width
         window.attributes.height = height
@@ -43,17 +50,19 @@ class MoodChoiceActivity : AppCompatActivity() {
 
     //데이터
     private fun configureRecyclerView(){
+
+        val icn1 = drawableToBitmap(R.drawable.icn_weather_001)
+
         var dataList : ArrayList<MoodChoiceData> = ArrayList()
-        dataList.add(MoodChoiceData("", "기분이 신나요"))
-        dataList.add(MoodChoiceData("", "기분이 좋아요"))
-        dataList.add(MoodChoiceData("", "기분이 그냥 그래요"))
-        dataList.add(MoodChoiceData("", "기분이 별로에요"))
-        dataList.add(MoodChoiceData("", "기분이 화가나요"))
-        dataList.add(MoodChoiceData("", "기분이 짜증나요"))
-        dataList.add(MoodChoiceData("", "기분이 우울해요"))
-        dataList.add(MoodChoiceData("", "기분이 심심해요"))
-        dataList.add(MoodChoiceData("", "기분이 재미있어요"))
-        dataList.add(MoodChoiceData("", "기분이 설레어요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 신나요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 좋아요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 별로에요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 화가나요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 짜증나요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 우울해요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 심심해요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 재미있어요"))
+        dataList.add(MoodChoiceData(icn1, "기분이 설레어요"))
 
 
         rv_mood_mood_choice_list.adapter = MoodChoiceRecyclerViewAdapter(this, dataList)
@@ -61,6 +70,12 @@ class MoodChoiceActivity : AppCompatActivity() {
 
         moodChoiceRecyclerViewAdapter = MoodChoiceRecyclerViewAdapter(this, dataList)
 
+    }
+
+    private fun drawableToBitmap(icnName : Int) : Bitmap{
+        val drawable = resources.getDrawable(icnName) as BitmapDrawable
+        val bitmap = drawable.bitmap
+        return bitmap
     }
 
 }

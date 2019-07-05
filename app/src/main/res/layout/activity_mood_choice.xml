@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/rv_mood_mood_choice_list">
 
-
     </android.support.v7.widget.RecyclerView>
 
 
