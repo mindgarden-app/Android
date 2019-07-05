@@ -27,6 +27,12 @@ class ReadDiaryActivity : AppCompatActivity() {
         btn_back_toolbar.setOnClickListener{
            startActivity<DiaryListActivity>()
         }
+
+        /*
+        이미지가 있다면
+         img_gallary_read_diary.visibility = View.VISIBLE
+         서버에 받아온 이미지 넣어주기
+         */
     }
 
     fun sharedPreference(){

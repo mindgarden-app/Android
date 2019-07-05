@@ -10,9 +10,7 @@
         android:background="#FFFFFF"
 >
 
-  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
       <include layout="@layout/toolbar_write_diary"/>
   </LinearLayout>
 
@@ -20,11 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
     >
+
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-        >
+                android:layout_height="match_parent">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -40,13 +37,10 @@
                     android:id="@+id/txt_mood_text_write_diary"
                     android:text="기분을 선택하세요."
                     android:textColor="#969696"
-                    android:textSize="15dp"
-
-            />
+                    android:textSize="14dp"/>
 
             <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_alignLeft="@id/img_mood_text_write_diary">
+                            android:layout_centerVertical="true" android:layout_alignLeft="@id/img_mood_text_write_diary">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,7 +69,7 @@
                           android:orientation="vertical">
 
                 <RelativeLayout android:layout_width="match_parent"
-                                android:layout_height="240dp"
+                                android:layout_height="220dp"
                 >
 
                     <ImageView android:layout_width="match_parent"

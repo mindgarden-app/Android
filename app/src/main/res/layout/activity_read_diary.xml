@@ -67,36 +67,49 @@ android:background="#FFFFFF"
             android:layout_weight="7"
             android:orientation="vertical"
     >
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="저장시간"
-                    android:textSize="13dp"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:layout_marginLeft="23dp"
-                    android:layout_marginRight="23dp"
-                    android:layout_marginBottom="7dp"
-                    android:id="@+id/txt_time_read_diary"/>
 
             <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="저장시간"
+                        android:textSize="12dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:background="@null"
+                        android:layout_marginLeft="23dp"
+                        android:layout_marginRight="23dp"
+                        android:layout_marginBottom="7dp"
+                        android:id="@+id/txt_time_read_diary"/>
+
+                    <ImageView android:layout_width="match_parent"
+                               android:layout_height="220dp"
+                               android:layout_marginRight="30dp"
+                               android:layout_marginLeft="30dp"
+                               android:layout_marginTop="18dp"
+                               android:layout_marginBottom="48dp"
+                               android:visibility="gone"
+                               android:background="@drawable/img_shadow"
+                               android:id="@+id/img_gallary_read_diary"
+                    />
 
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="내용\n내용\n내용\n내용\n내용\n"
                         android:textColor="#292929"
-                        android:textSize="15dp"
+                        android:textSize="13.5dp"
                         android:background="@null"
                         android:layout_marginLeft="23dp"
                         android:layout_marginRight="23dp" android:id="@+id/txt_cotent_read_diary"/>
+                </LinearLayout>
+
             </ScrollView>
 
-        </LinearLayout>
         <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F8F8F8"/>
 
     </LinearLayout>
