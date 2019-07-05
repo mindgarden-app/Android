@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".Activity.ReadDiaryActivity">
         </activity>
-        <activity android:name=".Activity.WriteDiaryActivity">
+        <activity android:name=".Activity.WriteDiaryActivity"
+        >
         </activity>
         <activity android:name=".Activity.DiaryListActivity">
         </activity>

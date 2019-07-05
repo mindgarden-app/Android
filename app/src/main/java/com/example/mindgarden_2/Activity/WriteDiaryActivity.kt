@@ -5,13 +5,13 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Spannable
-import android.text.style.ImageSpan
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_write_diary.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import org.jetbrains.anko.startActivity
 import com.example.mindgarden_2.R
+import android.net.Uri
+import android.provider.MediaStore.Images
+import android.view.View
 
 
 class WriteDiaryActivity : AppCompatActivity() {
@@ -66,7 +66,6 @@ class WriteDiaryActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
                 selectImage(data)
-
             }
         }
 
@@ -92,6 +91,27 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         span.setSpan(ImageSpan(image_bitmap), st_index, et_index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         */
-        //이미지를 글 맨 위에 삽입
+
+        //이미지를 글 상단 이미지뷰에 삽입
+        val name_Str = getImageNameToUri(data!!.getData())
+
+        //이미지를 비트맵으로 받아오기
+        val image_bitmap = Images.Media.getBitmap(contentResolver, data.data)
+        img_gallary_write_diary.setImageBitmap(image_bitmap)
+        icn_gallary_write_diary.visibility = View.INVISIBLE
+
+    }
+
+    //이미지 파일명 가져오기
+    fun getImageNameToUri(data : Uri?) : String{
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = managedQuery(data, proj, null, null, null)
+        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+
+        cursor.moveToFirst()
+        val imgPath = cursor.getString(column_index)
+        val imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1)
+
+        return imgName
     }
 }
