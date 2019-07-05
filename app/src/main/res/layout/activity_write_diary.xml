@@ -69,11 +69,11 @@
                           android:orientation="vertical">
 
                 <RelativeLayout android:layout_width="match_parent"
-                                android:layout_height="220dp"
+                                android:layout_height="260dp"
                 >
 
                     <ImageView android:layout_width="match_parent"
-                               android:layout_height="match_parent"
+                               android:layout_height="220dp"
                                android:layout_marginRight="30dp"
                                android:layout_marginLeft="30dp"
                                android:layout_centerInParent="true"
@@ -97,7 +97,7 @@
                             android:background="@null"
                             android:layout_marginLeft="23dp"
                             android:layout_marginRight="23dp"
-                            android:layout_marginTop="40dp"
+                            android:layout_marginTop="30dp"
                             android:id="@+id/edt_content_write_diary"/>
 
             </LinearLayout>

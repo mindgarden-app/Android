@@ -39,6 +39,7 @@ class MoodChoiceActivity : AppCompatActivity() {
         window.attributes.height = height
     }
 
+    //데이터
     private fun configureRecyclerView(){
         var dataList : ArrayList<MoodChoiceData> = ArrayList()
         dataList.add(MoodChoiceData("", "기분이 신나요"))
