@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mindgarden_2.Data.DiaryListData
 import com.example.mindgarden_2.R
+import org.w3c.dom.Text
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
     var context : Context = ctx
@@ -42,10 +44,11 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         if (isPressed) {
             holder.lay1.visibility = View.VISIBLE
 
-            holder.img_remove.setOnClickListener {
-                var dialogView: View = View.inflate(context, R.layout.diary_list_dialog, null)
-                var dlg = AlertDialog.Builder(context)
-                dlg.setView(dialogView)
+            holder.icn_delete.setOnClickListener {
+                //var dialogView: View = View.inflate(context, R.layout.diary_list_dialog, null)
+                var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                dlg.setTitle("삭제")
+                dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
                     dataList.removeAt(holder.adapterPosition)
@@ -59,9 +62,14 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                     }
                 }
 
-                dlg.setNegativeButton("아니오", null)
                 dlg.setPositiveButton("네", dlg_listener)
-                dlg.show()
+                dlg.setNegativeButton("아니오", null)
+
+                var dlgNew: AlertDialog = dlg.show()
+                var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
+                messageText!!.gravity = Gravity.CENTER
+
+                dlgNew.show()
             }
         } else {
             holder.lay1.visibility = View.GONE
@@ -70,7 +78,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
-        var img_remove = itemView.findViewById(R.id.img_remove) as ImageView
+        var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
         var container = itemView.findViewById(R.id.ll_rv_item_diary_list_container) as LinearLayout
         var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
         var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView

@@ -1,23 +1,44 @@
-package com.example.mindgarden_2.Activity
+package com.example.mindgarden_2.Fragment
 
-import android.support.v7.app.AppCompatActivity
+
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import com.example.mindgarden_2.Data.DiaryListData
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.example.mindgarden_2.Adapter.DiaryListRecyclerViewAdapter
+import com.example.mindgarden_2.Data.DiaryListData
+
 import com.example.mindgarden_2.R
-import kotlinx.android.synthetic.main.activity_diary_list.*
+import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import java.util.*
 
-class DiaryListActivity : AppCompatActivity() {
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+/**
+ * A simple [Fragment] subclass.
+ *
+ */
+class DiaryListFragment : Fragment() {
     lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
     private var ascending = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_diary_list)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_diary_list, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR).toString()
@@ -25,7 +46,7 @@ class DiaryListActivity : AppCompatActivity() {
 
         txt_year.setText(year)
         if (month.toInt() < 10) {
-          month = "0$month"
+            month = "0$month"
         }
         txt_month.setText(month)
 
@@ -91,7 +112,7 @@ class DiaryListActivity : AppCompatActivity() {
 
         dataList.sortBy { data -> data.day_num }
 
-        icn_listing.setOnClickListener {
+        btn_updown.setOnClickListener {
             if (ascending) {
                 dataList.sortBy { data -> data.day_num }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
@@ -103,15 +124,15 @@ class DiaryListActivity : AppCompatActivity() {
             ascending = !ascending
         }
 
-        /*icn_setting.setOnClickListener {
+        /*btn_setting.setOnClickListener {
             val intent = Intent(this, MypageActivituy::class.java)
             startActivity(intent)
             환경설정 페이지로 넘어감
         }*/
 
-        diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(this, dataList)
+        diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
-        rv_diary_list.addItemDecoration(DividerItemDecoration(this, 1))
-        rv_diary_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
+        rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
     }
 }
