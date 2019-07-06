@@ -24,7 +24,7 @@
                     android:gravity="center"
                     android:text="00"
                     android:textSize="20dp"
-                    android:textColor="#959595"/>
+                    android:textColor="#2B2B2B"/>
 
             <TextView
                     android:id="@+id/txt_rv_item_diary_list_day_text"
@@ -33,7 +33,7 @@
                     android:gravity="center"
                     android:text="Day"
                     android:textSize="10dp"
-                    android:textColor="#959595"/>
+                    android:textColor="#888888"/>
 
         </LinearLayout>
 
@@ -45,9 +45,8 @@
                 android:layout_marginVertical="10dp"
                 android:gravity="center"
                 android:text="Content"
-                android:textStyle="bold"
                 android:textSize="12dp"
-                android:textColor="#959595"
+                android:textColor="#2B2B2B"
                 android:singleLine="true"/>
 
         <LinearLayout
@@ -55,18 +54,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:layout_marginVertical="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
+                android:background="#78DEB0"
                 android:visibility="gone">
 
             <ImageView
-                    android:id="@+id/img_remove"
+                    android:id="@+id/icn_delete"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:src="@drawable/like_fill"/>
+                    android:src="@drawable/icn_delete"/>
 
         </LinearLayout>
 
