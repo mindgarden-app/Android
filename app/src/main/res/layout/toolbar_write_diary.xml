@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="작성날짜"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:textColor="#000000"
                 android:textSize="15dp"
         />
@@ -37,6 +38,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
                 android:text="등록"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:textColor="#ffffff"
                 android:background="@drawable/green_border_fill"
                 android:id="@+id/btn_save_diary_toolbar"/>

@@ -25,6 +25,7 @@
                 android:gravity="left"
                 android:layout_marginLeft="40dp"
                 android:text="text "
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:textSize="12dp"
                 android:textColor="#2B2B2B"
                 android:id="@+id/txt_rv_item_mood_choice"/>
