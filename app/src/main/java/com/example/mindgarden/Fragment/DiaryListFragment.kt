@@ -1,6 +1,7 @@
 package com.example.mindgarden.Fragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -8,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
+import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -124,11 +127,10 @@ class DiaryListFragment : Fragment() {
             ascending = !ascending
         }
 
-        /*btn_setting.setOnClickListener {
-            val intent = Intent(this, MypageActivituy::class.java)
-            startActivity(intent)
-            환경설정 페이지로 넘어감
-        }*/
+        btn_setting.setOnClickListener {
+            startActivity<MypageActivity>()
+           // 환경설정 페이지로 넘어감
+        }
 
         diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
