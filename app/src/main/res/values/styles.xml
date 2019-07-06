@@ -8,16 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-
-    </style>
-
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#78DEB0</item>
         <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
         <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
     </style>
 
+    <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+    </style>
+    
 </resources>
