@@ -6,7 +6,6 @@
         android:layout_height="wrap_content"
         app:contentInsetStart="0dp"
         android:background="@drawable/toolbar_border"
-
 >
 
     <RelativeLayout
