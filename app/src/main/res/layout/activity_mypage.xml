@@ -58,6 +58,7 @@
                     android:layout_width="50dp"
                     android:layout_toEndOf="@id/userName"
                     android:textSize="12sp"
+                    android:layout_alignBottom="@id/userName"
                     android:background="@drawable/gray_border_fill">
             </TextView>
             <TextView
