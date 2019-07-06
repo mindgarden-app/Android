@@ -18,7 +18,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         configureMainTab()
         btnLogin.setOnClickListener {
-            val intent = Intent(this, MypageActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
 
             startActivity(intent)
