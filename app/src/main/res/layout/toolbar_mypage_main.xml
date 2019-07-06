@@ -6,7 +6,7 @@
         android:layout_height="50dp"
         app:contentInsetStart="0dp"
         android:theme="@style/MainTheme"
-        android:background="@drawable/gray_bottom_border">
+        android:background="@drawable/toolbar_border">
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

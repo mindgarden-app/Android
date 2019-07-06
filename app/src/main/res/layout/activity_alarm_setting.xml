@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@color/colorWhite">
+                                             android:background="@color/colorLightGray">
 
 
 
@@ -55,7 +55,7 @@
                 android:elevation="10dp"
                 android:textColor="@color/colorBlockGray"
                 android:textSize="13sp"
-                android:background="@drawable/gray_bottom_border"/>
+                android:background="@drawable/toolbar_border"/>
 
     </LinearLayout>
 
