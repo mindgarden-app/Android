@@ -8,10 +8,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mindgarden_2.Adapter.DiaryListRecyclerViewAdapter
-import com.example.mindgarden_2.Data.DiaryListData
+import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
+import com.example.mindgarden.Data.DiaryListData
 
-import com.example.mindgarden_2.R
+import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import java.util.*

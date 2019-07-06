@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import com.example.mindgarden.R
 
 
 class FontSettingActivity : AppCompatActivity() {

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import org.jetbrains.anko.startActivity
-import com.example.mindgarden_2.R
+import com.example.mindgarden.R
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class ReadDiaryActivity : AppCompatActivity() {
         }
         //뒤로가기 -> DiaryListAcitivy로 이동
         btn_back_toolbar.setOnClickListener{
-           startActivity<DiaryListActivity>()
+          // startActivity<DiaryListActivity>()
         }
 
         /*

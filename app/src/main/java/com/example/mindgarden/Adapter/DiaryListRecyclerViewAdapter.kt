@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.mindgarden_2.Activity.ReadDiaryActivity
-import com.example.mindgarden_2.Data.DiaryListData
-import com.example.mindgarden_2.R
+import com.example.mindgarden.Activity.ReadDiaryActivity
+import com.example.mindgarden.Data.DiaryListData
+
+import com.example.mindgarden.R
 import org.w3c.dom.Text
 import org.jetbrains.anko.startActivity
 

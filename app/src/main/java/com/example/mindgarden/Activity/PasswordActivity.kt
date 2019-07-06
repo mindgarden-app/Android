@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_password.*
 import org.jetbrains.anko.toast
+import com.example.mindgarden.R
 
 var checkPassword: String = ""
 

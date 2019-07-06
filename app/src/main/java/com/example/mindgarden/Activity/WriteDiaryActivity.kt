@@ -11,15 +11,13 @@ import android.provider.MediaStore
 import kotlinx.android.synthetic.main.activity_write_diary.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import org.jetbrains.anko.startActivity
-import com.example.mindgarden_2.R
+import com.example.mindgarden.R
 import android.net.Uri
 import android.provider.MediaStore.Images
 import android.view.View
 import android.widget.*
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-
-
+import com.example.mindgarden.Adapter.MyListAdapter
 
 
 class WriteDiaryActivity : AppCompatActivity() {

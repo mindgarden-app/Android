@@ -3,6 +3,8 @@ package com.example.mindgarden
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridView
+import com.example.mindgarden.R
+
 
 class InventoryActivity : AppCompatActivity() {
 

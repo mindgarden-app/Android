@@ -10,13 +10,13 @@ import kotlinx.android.synthetic.main.activity_mood_choice.*
 import android.content.Context.WINDOW_SERVICE
 import android.graphics.Bitmap
 import android.support.v7.widget.LinearLayoutManager
-import com.example.mindgarden_2.Data.MoodChoiceData
-import com.example.writediary.MoodChoiceRecyclerViewAdapter
-import com.example.mindgarden_2.R
+import com.example.mindgarden.R
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import com.example.mindgarden.Adapter.MoodChoiceRecyclerViewAdapter
+import com.example.mindgarden.Data.MoodChoiceData
 
 
 class MoodChoiceActivity : AppCompatActivity() {

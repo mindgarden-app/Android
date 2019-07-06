@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
-import com.example.mindgarden_2.Adapter.MainPagerAdapter
-import com.example.mindgarden_2.R
+import com.example.mindgarden.Adapter.MainPagerAdapter
+import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

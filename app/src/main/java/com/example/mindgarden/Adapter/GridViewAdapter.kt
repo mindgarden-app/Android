@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import com.example.mindgarden.R
+
 
 class GridViewAdapter(private val getContext : Context, private val CustomGridViewLayoutID:Int, private val customItem:ArrayList<CustomGridViewLayout>):
     ArrayAdapter<CustomGridViewLayout>(getContext,CustomGridViewLayoutID,customItem){

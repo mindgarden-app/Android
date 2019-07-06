@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import com.example.mindgarden.R
 
 class SliderLoginPagerAdapter (fm: FragmentManager?,val num_fragment:Int): FragmentPagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {

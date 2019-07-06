@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import com.example.mindgarden.R
 
 class MypageActivity : AppCompatActivity() {
 

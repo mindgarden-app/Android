@@ -2,6 +2,7 @@ package com.example.mindgarden
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.mindgarden.R
 
 class PremiumActivity : AppCompatActivity() {
 

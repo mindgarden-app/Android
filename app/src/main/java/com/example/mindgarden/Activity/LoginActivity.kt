@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import com.example.mindgarden.R
 import android.widget.RelativeLayout
 import android.widget.TableLayout
 import kotlinx.android.synthetic.main.activity_login.*

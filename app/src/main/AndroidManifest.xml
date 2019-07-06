@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.mindgarden_2">
+          package="com.example.mindgarden">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,6 +17,7 @@
             android:supportsRtl="true"
 
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity
                 android:name=".Activity.MoodChoiceActivity"
                 android:theme="@style/Theme.MyPopUpWindow">
@@ -26,27 +27,27 @@
         <activity android:name=".Activity.WriteDiaryActivity">
         </activity>
         <activity android:name=".Activity.MainActivity">
-
-        <activity android:name=".InventoryActivity">
         </activity>
-        <activity android:name=".FontSettingActivity">
+        <activity android:name=".Activity.InventoryActivity">
         </activity>
-        <activity android:name=".PasswordActivity">
+        <activity android:name=".Activity.FontSettingActivity">
         </activity>
-        <activity android:name=".PasswordSettingActivity">
+        <activity android:name=".Activity.PasswordActivity">
         </activity>
-        <activity android:name=".PremiumActivity">
+        <activity android:name=".Activity.PasswordSettingActivity">
         </activity>
-        <activity android:name=".AlarmSettingActivity">
+        <activity android:name=".Activity.PremiumActivity">
         </activity>
-        <activity android:name=".MypageActivity">
+        <activity android:name=".Activity.AlarmSettingActivity">
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity.MypageActivity">
+        </activity>
+        <activity android:name=".Activity.LoginActivity">
         </activity>
 
         <activity
-                android:name=".SplashActivity"
-                android:screenOrientation="portrait"
+                android:name=".Activity.SplashActivity"
+                android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

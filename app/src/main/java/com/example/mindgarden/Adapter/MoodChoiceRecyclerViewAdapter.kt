@@ -10,8 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
-import com.example.mindgarden_2.Data.MoodChoiceData
-import com.example.mindgarden_2.R
+import com.example.mindgarden.Data.MoodChoiceData
+
+import com.example.mindgarden.R
 import org.jetbrains.anko.startActivity
 
 class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<MoodChoiceData>) : RecyclerView.Adapter<MoodChoiceRecyclerViewAdapter.Holder>(){

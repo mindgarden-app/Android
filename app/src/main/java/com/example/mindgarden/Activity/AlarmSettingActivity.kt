@@ -20,6 +20,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk27.coroutines.onTimeChanged
 import org.jetbrains.anko.toast
 import java.util.*
+import com.example.mindgarden.R
 
 class AlarmSettingActivity : AppCompatActivity() {
 

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.Switch
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.toast
+import com.example.mindgarden.R
 
 class PasswordSettingActivity : AppCompatActivity() {
     val REQUEST_CODE_PASSWORD_SETTING_ACTIVITY=1000
