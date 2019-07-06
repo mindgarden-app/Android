@@ -16,12 +16,8 @@ class MypageActivity : AppCompatActivity() {
 
         //Toolbar
         btnBack.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            //백 스페이스 누르면 다시 일단 로그인 페이지로
-
-            startActivity(intent)
-
-            finish()
+            //뒤로가기
+            onBackPressed()
         }
 
         //RelativeLayout

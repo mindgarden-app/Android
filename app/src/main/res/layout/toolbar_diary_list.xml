@@ -16,8 +16,8 @@
 
             <ImageView
                     android:id="@+id/btn_updown"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="16.29dp"
                     android:src="@drawable/btn_updown"/>
 
@@ -31,8 +31,8 @@
 
             <ImageView
                     android:id="@+id/btn_left"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/btn_left"/>
 
             <TextView
@@ -69,8 +69,8 @@
 
             <ImageView
                     android:id="@+id/btn_right"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="41.15dp"
                     android:src="@drawable/btn_right"/>
 
@@ -83,8 +83,8 @@
 
             <ImageView
                     android:id="@+id/btn_setting"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="16.39dp"
                     android:src="@drawable/btn_setting"/>
 

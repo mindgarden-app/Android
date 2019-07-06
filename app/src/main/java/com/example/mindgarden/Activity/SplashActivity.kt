@@ -11,8 +11,6 @@ class SplashActivity: AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-
-
         val intent = Intent(this, LoginActivity::class.java)
         //스플래시 화면에서 로그인 화면으로 넘어가는 걸로 구현
 
