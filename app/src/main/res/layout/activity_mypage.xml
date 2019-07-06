@@ -96,7 +96,6 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="220dp"
-            android:background="@drawable/toolbar_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.478" tools:ignore="MissingConstraints"

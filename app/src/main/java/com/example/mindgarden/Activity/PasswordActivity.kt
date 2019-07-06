@@ -26,6 +26,7 @@ class PasswordActivity : AppCompatActivity() {
 
         // TODO
         // Get isPasswordSet to isSet from innerDB
+
         Log.e("isSet", isSet.toString())
 
         setNumBtnClickListener()
@@ -42,7 +43,7 @@ class PasswordActivity : AppCompatActivity() {
 
             intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
-            //finish()
+
 
         }
 
@@ -135,6 +136,10 @@ class PasswordActivity : AppCompatActivity() {
                                 txtPassword.text = "새 암호를 입력하세요"
                                 isSet = false
                             }
+                            else {// 기존 비
+                                toast("비밀번호 틀렸어")
+                                //finish()
+                                 }
                         }
                     }
 
