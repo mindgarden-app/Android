@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.mindgarden.Activity.MainCalendarActivity
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.fragment_main.*
+import org.jetbrains.anko.support.v4.startActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,6 +29,14 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        cal_test.setOnClickListener {
+            startActivity<MainCalendarActivity>()
+        }
     }
 
 
