@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="300dp"
+              android:layout_height="299dp"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:background="@drawable/rectangle_round_dialog">
+
+    <TimePicker
+        android:id="@+id/alarmTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center"
+        android:numbersTextColor="@color/colorPrimaryMint"
+        android:numbersBackgroundColor="@color/colorPrimaryMint"
+        android:numbersSelectorColor="@color/colorPrimaryMint"
+        android:headerBackground="@color/colorPrimaryMint"
+        android:timePickerMode="spinner">
+
+</TimePicker>
+
+</LinearLayout>

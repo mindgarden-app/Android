@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/colorWhite">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <include
+                android:id="@+id/toolbar_main"
+                layout="@layout/toolbar_mypage_main"/>
+
+
+
+        <Button
+                android:text="크기"
+                android:id="@+id/fontSizeSetting"
+                android:onClick="showdialog"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="start|center"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="13sp"
+                android:background="@drawable/gray_bottom_border"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
