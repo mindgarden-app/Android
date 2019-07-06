@@ -14,8 +14,7 @@ class ReadDiaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_diary)
 
-        //1. 등록버튼에서 넘어왔을 경우 : 내부 DB
-        sharedPreference()
+
 
         //2. 목록에서 넘어왔을 경우 : 서버
 
