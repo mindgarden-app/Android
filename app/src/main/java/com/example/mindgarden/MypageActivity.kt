@@ -44,7 +44,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
         fontSetting.setOnClickListener {
-         val intent3=Intent(this,FontSettingActivity::class.java)
+         val intent3=Intent(this,InventoryActivity::class.java)
             startActivity(intent3)
             finish()
         }

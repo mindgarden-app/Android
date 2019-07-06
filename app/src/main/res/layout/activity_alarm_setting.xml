@@ -7,6 +7,7 @@
                                              android:background="@color/colorWhite">
 
 
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
 
         <Button
                 android:text="시간 설정"
-                android:id="@+id/setTime"
+                android:id="@+id/btnSetTime"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
@@ -57,5 +58,7 @@
                 android:background="@drawable/gray_bottom_border"/>
 
     </LinearLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

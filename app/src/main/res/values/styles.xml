@@ -19,4 +19,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="myTimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:numbersTextColor">#2B2B2B</item>
+        <item name="android:numbersBackgroundColor">#C6C6C6</item>
+        <item name="android:numbersSelectorColor">#78DEB0</item>
+        <item name="android:headerBackground">#FFFFFF</item>
+    </style>
+
+    <style name="AlertDialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorPrimary">#595959</item>
+        <item name="android:colorAccent">#1b5e20</item>
+    </style>
+
 </resources>
