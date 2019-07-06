@@ -1,4 +1,4 @@
-package com.example.mindgarden
+package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import com.example.mindgarden.R
-import android.widget.RelativeLayout
-import android.widget.TableLayout
+import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {

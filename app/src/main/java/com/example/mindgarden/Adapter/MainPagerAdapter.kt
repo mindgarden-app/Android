@@ -4,12 +4,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.example.mindgarden.Fragment.DiaryListFragment
+import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
 
 class MainPagerAdapter(fm: FragmentManager, private val num_fragment: Int): FragmentStatePagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
         return when(p0){
-            0 -> DiaryListFragment()
+            0 -> MainFragment()
             1 -> DiaryListFragment()
             2 -> DiaryListFragment()
             else -> null

@@ -1,8 +1,10 @@
-package com.example.mindgarden
+package com.example.mindgarden.Activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridView
+import com.example.mindgarden.Adapter.GridViewAdapter
+import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.R
 
 
@@ -13,7 +15,7 @@ class InventoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_inventory)
 
         val GV=this.findViewById(R.id.gridView) as GridView
-        val adapter=GridViewAdapter(this,R.layout.gridview_inventory,data)
+        val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
 
         GV.adapter=adapter
     }

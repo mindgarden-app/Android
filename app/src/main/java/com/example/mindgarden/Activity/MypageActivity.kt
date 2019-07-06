@@ -1,12 +1,12 @@
-package com.example.mindgarden
+package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
-import com.example.mindgarden.R
 
 class MypageActivity : AppCompatActivity() {
 
@@ -45,7 +45,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
         fontSetting.setOnClickListener {
-         val intent3=Intent(this,InventoryActivity::class.java)
+         val intent3=Intent(this, InventoryActivity::class.java)
             startActivity(intent3)
             finish()
         }

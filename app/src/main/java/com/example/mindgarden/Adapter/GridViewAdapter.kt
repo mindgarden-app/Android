@@ -1,13 +1,13 @@
-package com.example.mindgarden
+package com.example.mindgarden.Adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.R
 
 

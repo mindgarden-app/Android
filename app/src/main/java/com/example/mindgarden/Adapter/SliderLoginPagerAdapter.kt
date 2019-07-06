@@ -1,14 +1,15 @@
-package com.example.mindgarden
+package com.example.mindgarden.Adapter
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.example.mindgarden.R
+import com.example.mindgarden.Fragment.SliderLoginFragment
 
 class SliderLoginPagerAdapter (fm: FragmentManager?,val num_fragment:Int): FragmentPagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {
-        var fragment:SliderLoginFragment=SliderLoginFragment()
+        var fragment: SliderLoginFragment =
+            SliderLoginFragment()
         var bundle: Bundle=Bundle(1)
 
        when(p0){

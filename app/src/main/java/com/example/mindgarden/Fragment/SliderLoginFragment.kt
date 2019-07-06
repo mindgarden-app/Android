@@ -1,4 +1,4 @@
-package com.example.mindgarden
+package com.example.mindgarden.Fragment
 
 
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_slider_login.*
 
 
