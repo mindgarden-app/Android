@@ -10,7 +10,7 @@
     >
 
         <ImageView
-                android:id="@+id/btn_left"
+                android:id="@+id/btn_left_toolbar_main_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_left"/>
@@ -26,7 +26,7 @@
             android:textColor="#2B2B2B"/>
 
         <ImageView
-                android:id="@+id/btn_right"
+                android:id="@+id/btn_right_toolbar_main_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_right"/>

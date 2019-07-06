@@ -1,7 +1,6 @@
 package com.example.mindgarden.Fragment
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -53,7 +52,7 @@ class DiaryListFragment : Fragment() {
         }
         txt_month.setText(month)
 
-        btn_left.setOnClickListener {
+        btn_left_toolbar_main_calendar.setOnClickListener {
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString()
                 year = (year.toInt() - 1).toString()
@@ -71,7 +70,7 @@ class DiaryListFragment : Fragment() {
             }
         }
 
-        btn_right.setOnClickListener {
+        btn_right_toolbar_main_calendar.setOnClickListener {
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
                 year = (year.toInt() + 1).toString()
