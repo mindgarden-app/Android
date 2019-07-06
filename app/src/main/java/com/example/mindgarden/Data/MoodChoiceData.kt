@@ -1,4 +1,4 @@
-package com.example.mindgarden_2.Data
+package com.example.mindgarden.Data
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable

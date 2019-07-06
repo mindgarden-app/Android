@@ -1,4 +1,4 @@
-package com.example.mindgarden_2.Adapter
+package com.example.mindgarden.Adapter
 
 import android.content.Context
 import android.content.DialogInterface

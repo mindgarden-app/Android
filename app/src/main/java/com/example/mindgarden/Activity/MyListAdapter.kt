@@ -1,4 +1,4 @@
-package com.example.mindgarden_2.Activity
+package com.example.mindgarden.Activity
 
 import android.app.Activity
 import android.view.View

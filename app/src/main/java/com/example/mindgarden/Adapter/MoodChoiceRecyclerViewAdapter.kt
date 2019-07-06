@@ -1,5 +1,4 @@
-package com.example.writediary
-
+package com.example.mindgarden.Adapter
 import android.app.Activity
 import android.app.RemoteInput
 import android.content.Context

@@ -1,4 +1,4 @@
-package com.example.mindgarden_2.Activity
+package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
