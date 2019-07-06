@@ -10,6 +10,8 @@ import android.view.WindowManager
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
 
+
+
 class MainCalendarActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,14 +19,14 @@ class MainCalendarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_calendar)
 
         setWindow()
-        clickText()
+       clickText()
     }
 
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-        val width = (display.width * 0.8).toInt() //Display 사이즈의 20%
-        val height = (display.height * 0.5).toInt()  //Display 사이즈의 20%
+        val width = (display.width * 0.7).toInt() //Display 사이즈의 20%
+        val height = (display.height * 0.4).toInt()  //Display 사이즈의 20%
 
         //테두리 없애기
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -32,42 +34,174 @@ class MainCalendarActivity : AppCompatActivity() {
         window.attributes.width = width
         window.attributes.height = height
     }
+
     fun clickText(){
-        txt_1_main_calendar.setOnClickListener {
-            img_1_main_calendar.visibility = View.VISIBLE
-        }
-        txt_2_main_calendar.setOnClickListener {
-            img_2_main_calendar.visibility = View.VISIBLE
-        }
-        txt_3_main_calendar.setOnClickListener {
-            img_3_main_calendar.visibility = View.VISIBLE
-        }
-        txt_4_main_calendar.setOnClickListener {
-            img_4_main_calendar.visibility = View.VISIBLE
-        }
-        txt_5_main_calendar.setOnClickListener {
-            img_5_main_calendar2.visibility = View.VISIBLE
-        }
-        txt_6_main_calendar.setOnClickListener {
-            img_6_main_calendar2.visibility = View.VISIBLE
-        }
-        txt_7_main_calendar.setOnClickListener {
-            img_7_main_calendar2.visibility = View.VISIBLE
-        }
-        txt_8_main_calendar.setOnClickListener {
-            img_8_main_calendar.visibility = View.VISIBLE
-        }
-        txt_9_main_calendar.setOnClickListener {
-            img_9_main_calendar2.visibility = View.VISIBLE
-        }
-        txt_10_main_calendar.setOnClickListener {
-            img_10_main_calendar.visibility = View.VISIBLE
-        }
-        txt_11_main_calendar.setOnClickListener {
-            img_11_main_calendar.visibility = View.VISIBLE
-        }
-        txt_12_main_calendar.setOnClickListener {
-            img_12_main_calendar.visibility = View.VISIBLE
-        }
+        txt_1_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_1_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_1_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_2_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_2_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_2_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_3_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_3_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_3_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_4_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_4_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_4_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+        txt_5_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_5_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_5_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_6_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_6_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_6_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_7_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_7_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_7_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_8_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_8_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_8_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_9_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_9_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_9_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_10_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_10_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_10_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_11_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_11_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_11_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
+
+        txt_12_main_cal.setOnClickListener(object : View.OnClickListener {
+            private var state = false
+            override fun onClick(v: View) {
+                if (state) {
+                    state = false
+                    txt_12_main_cal.setBackgroundResource(0)
+                } else {
+                    state = true
+                    txt_12_main_cal.setBackgroundResource(R.drawable.round_btn)
+
+                }
+            }
+        })
     }
+
 }
