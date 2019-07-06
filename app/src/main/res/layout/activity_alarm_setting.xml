@@ -28,6 +28,7 @@
         <Switch
                 android:id="@+id/alarmSwitch"
                 android:text="푸시 알림"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
                 android:paddingStart="20dp"
@@ -44,6 +45,7 @@
 
         <Button
                 android:text="시간 설정"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:id="@+id/btnSetTime"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
