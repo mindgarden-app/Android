@@ -20,24 +20,34 @@ class PasswordActivity : AppCompatActivity() {
     var firstPassword: String = ""
     var secondPassword: String = ""
 
-    //var isSet = true
+    var isSet = true
 
     var previousPassword:String=""
-    lateinit var whereFrom:String
+    var whereFrom:String =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
         toast("넘어왔다!")
+        txtPassword.text="비밀번호를 입력해주세요."
 
-        intent= Intent()
-        if(intent.hasExtra("whereFrom")){
-            whereFrom=intent.getStringExtra("whereFrom").toString()
-        }
+        val intent=getIntent()
+       intent.getStringExtra("whereFrom")?.let {
+           whereFrom = it
+           Log.e("from", whereFrom)
+           if(whereFrom=="login"){
+           txtPassword.text="비밀번호를 입력해주세요."
+       }
+
+       }
+
+        toast(whereFrom.toString())
+
         SharedPreferenceController.setPassword(this,"1234")
         //SharedPreferenceController.setPassword(this,"")
         previousPassword=SharedPreferenceController.getPassword(this)
         // TODO
         // Get isPasswordSet to isSet from innerDB
+
 
         Log.e("isSet", previousPassword)
 
@@ -51,7 +61,7 @@ class PasswordActivity : AppCompatActivity() {
         } else if (previousPassword != "") {
             //암호 변경하는 경우
             //일단 버튼 클릭
-            txtPassword.text = "기존 암호를 입력하세요"
+           if(whereFrom!="login") txtPassword.text = "기존 암호를 입력하세요"
 
             //intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
@@ -145,14 +155,15 @@ class PasswordActivity : AppCompatActivity() {
                             // 암호설정이 되어있는 경우
                             //previousPassword = "1234"
                             if (whereFrom == "login") {
-                                txtPassword.text="비밀번호를 입력하세요."
+                                //txtPassword.text="비밀번호를 입력하세요."
                                 if (previousPassword == subPassword){
                                     Log.e("login","이제 메인으로 넘어갈거야")
                                     val intent2 = Intent(this, MainActivity::class.java)
                                     startActivity(intent2)
+                                    finish()
                                 }
                             }
-                            else{
+
                                 // TODO
                                 // Load previous password to previousPassword
                                 // 암호변경 하는 경우
@@ -204,4 +215,3 @@ class PasswordActivity : AppCompatActivity() {
             }
         }
     }
-}

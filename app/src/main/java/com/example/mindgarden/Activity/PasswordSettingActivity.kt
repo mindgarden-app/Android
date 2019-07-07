@@ -29,7 +29,7 @@ class PasswordSettingActivity : AppCompatActivity() {
 
             finish()
         }
-        val passwordSwitch: Switch = findViewById(R.id.passwordSwitch)
+        val passwordSwitch: Switch =findViewById(R.id.passwordSwitch)
         val changePassword: Button =findViewById(R.id.changePassword)
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
 
@@ -40,7 +40,7 @@ class PasswordSettingActivity : AppCompatActivity() {
 
                 val passwordIntent = Intent(this, PasswordActivity::class.java)
                 // 암호 처음 설정합니다!
-                passwordIntent.putExtra("whereFrom","passwordSetting")
+                passwordIntent.putExtra("from","passwordSetting")
                 startActivity(passwordIntent)
 
                 // val intent = Intent(this, PasswordActivity::class.java)
@@ -60,7 +60,7 @@ class PasswordSettingActivity : AppCompatActivity() {
         changePassword.setOnClickListener {
             val passwordIntent2 = Intent(this, PasswordActivity::class.java)
             // 암호변겅을 누르면
-            passwordIntent2.putExtra("isSet",true)
+            passwordIntent2.putExtra("isSet",false)
             startActivityForResult(passwordIntent2,REQUEST_CODE_PASSWORD_SETTING_ACTIVITY)
             finish()
 

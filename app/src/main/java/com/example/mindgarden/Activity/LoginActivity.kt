@@ -11,22 +11,28 @@ import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.startActivity
 
 class LoginActivity : AppCompatActivity() {
 
+    val REQUEST_CODE_LOGIN_ACTIVITY=100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         configureMainTab()
+
+
         btnLogin.setOnClickListener {
-            val intent = Intent(this, PasswordActivity::class.java)
+
+            val loginIntent= Intent(this, PasswordActivity::class.java)
+            // 암호변겅을 누르면
+            loginIntent.putExtra("whereFrom","login")
+            startActivity(loginIntent)
+            //startActivityForResult(passwordIntent2,REQUEST_CODE_LOGIN_ACTIVITY)
+            finish()
             //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
             // 일단 로그인 받아오면?>>>
-             intent.putExtra("whereFrom","Login")
-
-            startActivity(intent)
-
-           // finish()
+          //  startActivity<PasswordActivity>("from" to  "login")
         }
     }
     fun postLoginResponse(u_id:String,u_pw:String){
