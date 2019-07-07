@@ -52,7 +52,7 @@ class DiaryListFragment : Fragment() {
         }
         txt_month.setText(month)
 
-        btn_left_toolbar_main_calendar.setOnClickListener {
+        btn_left.setOnClickListener {
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString()
                 year = (year.toInt() - 1).toString()

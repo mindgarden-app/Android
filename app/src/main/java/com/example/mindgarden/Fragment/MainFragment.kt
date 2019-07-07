@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.mindgarden.Activity.InventoryActivity
+import com.example.mindgarden.Activity.MainCalendarActivity
 import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -49,6 +50,7 @@ class MainFragment : Fragment() {
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR).toString()
         var month = (cal.get(Calendar.MONTH) + 1).toString()
+        var toolbarDate = ll_date_toolbar_diary_list
 
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
@@ -60,6 +62,10 @@ class MainFragment : Fragment() {
             btn_reward.isEnabled = true
         } else {
             btn_reward.isEnabled = false
+        }
+
+        toolbarDate.setOnClickListener {
+            startActivity<MainCalendarActivity>()
         }
 
         btn_left.setOnClickListener {

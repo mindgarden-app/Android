@@ -7,13 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
-import kotlinx.android.synthetic.main.toolbar_diary_list.*
-import kotlinx.android.synthetic.main.toolbar_main_calendar.*
 import java.util.*
 
 
@@ -29,7 +26,7 @@ class MainCalendarActivity : AppCompatActivity() {
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR).toString()
 
-        val btn_left = findViewById<ImageView>(R.id.btn_left_toolbar_main_calendar)
+        val btn_left = findViewById<ImageView>(R.id.btn_left)
         val btn_right = findViewById<ImageView>(R.id.btn_right_toolbar_main_calendar)
         val txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar)
 
