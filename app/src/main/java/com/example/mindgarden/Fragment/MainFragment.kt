@@ -92,8 +92,14 @@ class MainFragment : Fragment() {
                 month = data!!.getStringExtra("month")
                 Log.e("Fyear", year)
                 Log.e("Fmonth", month)
-                //txt_main_year.setText(year)
+
+                if (month.toInt() < 10) {
+                    month = "0$month"
+                }
+
                 txt_main_month.setText(month)
+
+                txt_main_year.setText(year)
 
             }
         }
