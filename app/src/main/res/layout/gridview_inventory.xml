@@ -5,8 +5,11 @@
               android:layout_height="match_parent">
         <ImageView
                 android:id="@+id/gridItemImg"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="51.75dp"
+                android:layout_height="51.75dp"
+                android:layout_marginHorizontal="2.2dp"
+                android:layout_marginVertical="2.2dp"
+                android:background="@drawable/gv_mint_line_border"
                 android:src="@drawable/single_tree">
         </ImageView>
 </LinearLayout>
