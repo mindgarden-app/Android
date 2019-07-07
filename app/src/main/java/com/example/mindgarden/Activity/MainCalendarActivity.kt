@@ -16,14 +16,18 @@ import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
 
 
+
+
 class MainCalendarActivity : AppCompatActivity() {
 
     private var roundStae : Boolean = true  //round_btn 유무
-    val btn_left = findViewById<ImageView>(R.id.btn_left_toolbar_main_calendar)
-    val btn_right = findViewById<ImageView>(R.id.btn_right_toolbar_main_calendar)
-    var txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar)
-    var year : String = ""
-    var month : String = ""
+
+    private val error: TextView? = null
+    private var btn_left : ImageView? = null
+    private var btn_right: ImageView? = null
+    private var txt_year : TextView? = null
+    private var year : String = ""
+    private var month : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,23 +41,26 @@ class MainCalendarActivity : AppCompatActivity() {
         Log.e("year", year)
         Log.e("month" , month)
 
+        btn_right =findViewById(R.id.btn_right_toolbar_main_calendar) as ImageView
+        btn_left = findViewById(R.id.btn_left_toolbar_main_calendar) as ImageView
+        txt_year = findViewById(R.id.txt_year_toolbar_main_calendar) as TextView
         setWindow()
 
         //년도 설정
-        txt_year.setText(year)
+        txt_year?.setText(year)
 
     }
 
     override fun onResume() {
         super.onResume()
 
-        btn_left.setOnClickListener {
+        btn_left?.setOnClickListener {
             year = (year.toInt() - 1).toString()
-            txt_year.setText(year)
+            txt_year?.setText(year)
         }
-        btn_right.setOnClickListener {
+        btn_right?.setOnClickListener {
             year = (year.toInt() + 1).toString()
-            txt_year.setText(year)
+            txt_year?.setText(year)
         }
         clickText()
 

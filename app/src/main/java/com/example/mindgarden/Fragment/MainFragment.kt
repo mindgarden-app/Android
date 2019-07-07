@@ -90,7 +90,7 @@ class MainFragment : Fragment() {
 
                 year = data!!.getStringExtra("year")
                 month = data!!.getStringExtra("month")
-                //Log.e("Fyear", year)
+                Log.e("Fyear", year)
                 Log.e("Fmonth", month)
                 //txt_main_year.setText(year)
                 txt_main_month.setText(month)
