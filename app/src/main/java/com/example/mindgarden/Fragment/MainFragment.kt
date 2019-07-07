@@ -42,6 +42,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
@@ -83,6 +84,21 @@ class MainFragment : Fragment() {
 
     }
 
+    //액티비티 이동했다가 돌아오면 현재 년, 달로 바뀌어있음
+    override fun onStop() {
+        super.onStop()
+
+        //현재 년 월 다시 셋팅
+        year = cal.get(Calendar.YEAR).toString()
+        month = (cal.get(Calendar.MONTH) + 1).toString()
+
+        txt_main_year.setText(year)
+        if (month.toInt() < 10) {
+            month = "0$month"
+        }
+        txt_main_month.setText(month)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_CODE_SET_TOOLBAR_DATE){
@@ -90,8 +106,6 @@ class MainFragment : Fragment() {
 
                 year = data!!.getStringExtra("year")
                 month = data!!.getStringExtra("month")
-                Log.e("Fyear", year)
-                Log.e("Fmonth", month)
 
                 if (month.toInt() < 10) {
                     month = "0$month"
