@@ -1,9 +1,15 @@
 package com.example.mindgarden.Activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -12,15 +18,16 @@ import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class LoginActivity : AppCompatActivity() {
-
+    private val RECORD_REQUEST_CODE = 101
     val REQUEST_CODE_LOGIN_ACTIVITY=100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         configureMainTab()
-
+        setupPermissions()
 
         btnLogin.setOnClickListener {
 
@@ -35,6 +42,53 @@ class LoginActivity : AppCompatActivity() {
           //  startActivity<PasswordActivity>("from" to  "login")
         }
     }
+    private fun setupPermissions() {
+        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.i("tag", "Permission to record denied")
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("Permission to access the microphone is required for this app to record audio.")
+                       .setTitle("Permission required")
+
+                builder.setPositiveButton("OK") { dialog, id ->
+                    Log.i("tag", "Clicked")
+                    makeRequest()
+                }
+
+                val dialog = builder.create()
+                dialog.show()
+            } else {
+                makeRequest()
+            }
+        }
+    }
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            RECORD_REQUEST_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+        when(requestCode) {
+            RECORD_REQUEST_CODE -> {
+//                if(grantResults.isNotEmpty()
+//                            && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    toast("권한거부됨")
+
+                } else {
+                    Log.i("tag", "Permission has been granted by user")
+                }
+                return
+            }
+        }
+    }
+
+
     fun postLoginResponse(u_id:String,u_pw:String){
         SharedPreferenceController.setUserID(this,u_id)
     }
