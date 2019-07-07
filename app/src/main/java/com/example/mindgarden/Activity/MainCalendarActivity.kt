@@ -1,50 +1,63 @@
 package com.example.mindgarden.Activity
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
-import java.util.*
 
 
 class MainCalendarActivity : AppCompatActivity() {
+
+    private var roundStae : Boolean = true  //round_btn 유무
+    val btn_left = findViewById<ImageView>(R.id.btn_left_toolbar_main_calendar)
+    val btn_right = findViewById<ImageView>(R.id.btn_right_toolbar_main_calendar)
+    var txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar)
+    var year : String = ""
+    var month : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_calendar)
 
+        //현재 MainFragment에 있는 년, 월(FY, FM ) -> Calendar에 있는 년, 월(CY, CM)에 셋팅
+        val intent : Intent = getIntent()
+        year = intent.getStringExtra("year")
+        month = intent.getStringExtra("month")
+
+        Log.e("year", year)
+        Log.e("month" , month)
+
         setWindow()
-        clickText()
 
-        val cal = Calendar.getInstance()
-        var year = cal.get(Calendar.YEAR).toString()
-
-        val btn_left = findViewById<ImageView>(R.id.btn_left)
-        val btn_right = findViewById<ImageView>(R.id.btn_right_toolbar_main_calendar)
-        val txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar)
-
+        //년도 설정
         txt_year.setText(year)
-
-        btn_left.setOnClickListener {
-                year = (year.toInt() - 1).toString()
-
-               txt_year.setText(year)
-        }
-        btn_right.setOnClickListener {
-            year = (year.toInt() + 1).toString()
-
-            txt_year.setText(year)
-        }
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        btn_left.setOnClickListener {
+            year = (year.toInt() - 1).toString()
+            txt_year.setText(year)
+        }
+        btn_right.setOnClickListener {
+            year = (year.toInt() + 1).toString()
+            txt_year.setText(year)
+        }
+        clickText()
+
+    }
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
@@ -59,172 +72,45 @@ class MainCalendarActivity : AppCompatActivity() {
     }
 
     fun clickText(){
-        txt_1_main_cal.setOnClickListener(object : View.OnClickListener {
+        clickState(txt_1_main_cal)
+        clickState(txt_2_main_cal)
+        clickState(txt_3_main_cal)
+        clickState(txt_4_main_cal)
+        clickState(txt_5_main_cal)
+        clickState(txt_6_main_cal)
+        clickState(txt_7_main_cal)
+        clickState(txt_8_main_cal)
+        clickState(txt_9_main_cal)
+        clickState(txt_10_main_cal)
+        clickState(txt_11_main_cal)
+        clickState(txt_12_main_cal)
+    }
+
+    fun clickState(tv: TextView){
+        tv.setOnClickListener(object : View.OnClickListener {
             private var state = false
             override fun onClick(v: View) {
                 if (state) {
                     state = false
-                    txt_1_main_cal.setBackgroundResource(0)
+                    tv.setBackgroundResource(0)
                 } else {
                     state = true
-                    txt_1_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_2_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_2_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_2_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_3_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_3_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_3_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_4_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_4_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_4_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-        txt_5_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_5_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_5_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_6_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_6_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_6_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_7_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_7_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_7_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_8_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_8_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_8_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_9_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_9_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_9_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_10_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_10_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_10_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_11_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_11_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_11_main_cal.setBackgroundResource(R.drawable.round_btn)
-
-                }
-            }
-        })
-
-        txt_12_main_cal.setOnClickListener(object : View.OnClickListener {
-            private var state = false
-            override fun onClick(v: View) {
-                if (state) {
-                    state = false
-                    txt_12_main_cal.setBackgroundResource(0)
-                } else {
-                    state = true
-                    txt_12_main_cal.setBackgroundResource(R.drawable.round_btn)
+                    tv.setBackgroundResource(R.drawable.round_btn)
+                    intentToMain(tv)
 
                 }
             }
         })
     }
+
+    fun intentToMain(tv: TextView){
+        val intent : Intent = Intent()
+        intent.putExtra("month", tv.text.toString())
+        intent.putExtra("year", year)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+
 
 }
