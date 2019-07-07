@@ -6,7 +6,7 @@
         android:layout_height="50dp"
         app:contentInsetStart="0dp"
         android:theme="@style/MainTheme"
-        android:background="@drawable/gray_bottom_border">
+        android:background="@drawable/toolbar_border">
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -25,8 +25,9 @@
         <TextView
                 android:id="@+id/txtSetting"
                 android:text="환경설정"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:gravity="center|center"

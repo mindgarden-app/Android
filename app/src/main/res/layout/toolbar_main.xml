@@ -27,14 +27,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="41.18dp"
                     android:text="0000"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/notosanscjkr_medium"
+                    android:textSize="14dp"
                     android:textColor="#2B2B2B"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="년"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/notosanscjkr_medium"
+                    android:textSize="14dp"
                     android:textColor="#2B2B2B"/>
 
             <TextView
@@ -43,14 +45,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="00"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/notosanscjkr_medium"
+                    android:textSize="14dp"
                     android:textColor="#2B2B2B"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="월"
-                    android:textSize="15dp"
+                    android:fontFamily="@font/notosanscjkr_medium"
+                    android:textSize="14dp"
                     android:textColor="#2B2B2B"/>
 
             <ImageView

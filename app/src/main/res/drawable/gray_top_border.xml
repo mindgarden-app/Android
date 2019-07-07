@@ -9,8 +9,7 @@
         <shape android:shape="rectangle" >
             <stroke
                     android:width="1dp"
-                    android:color="#dcdcdc" />
-
+                    android:color="@color/colorLightGray" />
             <solid android:color="#FFF" />
         </shape>
     </item>

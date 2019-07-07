@@ -4,14 +4,14 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@color/colorWhite">
+                                             android:background="@color/colorLightGray">
 
 
 
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="200dp"
             android:id="@+id/linearLayout"
             tools:ignore="MissingConstraints"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +28,7 @@
         <Switch
                 android:id="@+id/alarmSwitch"
                 android:text="푸시 알림"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
                 android:paddingStart="20dp"
@@ -35,7 +36,6 @@
                 android:gravity="start|center"
                 android:textColor="@color/colorBlack"
                 android:textSize="13sp"
-                android:layout_weight="1"
                 android:track="@drawable/switch_track_selector"
                 android:thumb="@drawable/switch_thumb"
                 android:background="@drawable/gray_bottom_border"
@@ -45,17 +45,17 @@
 
         <Button
                 android:text="시간 설정"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:id="@+id/btnSetTime"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
-                android:layout_weight="1"
                 android:elevation="10dp"
                 android:textColor="@color/colorBlockGray"
                 android:textSize="13sp"
-                android:background="@drawable/gray_bottom_border"/>
+                android:background="@drawable/toolbar_border"/>
 
     </LinearLayout>
 
