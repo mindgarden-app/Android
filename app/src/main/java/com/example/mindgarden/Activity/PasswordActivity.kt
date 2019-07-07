@@ -163,7 +163,7 @@ class PasswordActivity : AppCompatActivity() {
                                     finish()
                                 }
                             }
-
+                                else{
                                 // TODO
                                 // Load previous password to previousPassword
                                 // 암호변경 하는 경우
@@ -185,6 +185,7 @@ class PasswordActivity : AppCompatActivity() {
                                 txtPassword.text = "새 암호를 입력하세요"
                                 isSet = false*/
                                 }
+                        }
                         }
                     }
                     }
