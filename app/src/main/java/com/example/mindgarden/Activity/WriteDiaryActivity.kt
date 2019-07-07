@@ -38,7 +38,7 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         btn_save_diary_toolbar.setOnClickListener {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
-            startActivity<ReadDiaryActivity>("requestCode" to REQUEST_CODE_WRITE_ACTIVITY)
+            startActivity<ReadDiaryActivity>("requestCode" to 1000)
 
         }
 

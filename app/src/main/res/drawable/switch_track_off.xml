@@ -6,11 +6,11 @@
             android:radius="15dp" />
 
     <size
-            android:width="51dp"
-            android:height="30dp" />
+            android:width="29dp"
+            android:height="13dp" />
 
     <solid
-            android:color="@color/colorBlockGray" />
+            android:color="@color/colorPopupGray" />
 
     <!--stroke
         android:width="2dp"

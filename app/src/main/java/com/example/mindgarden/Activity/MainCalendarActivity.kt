@@ -24,15 +24,17 @@ class MainCalendarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_calendar)
 
         setWindow()
-       clickText()
+        clickText()
 
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR).toString()
 
         val btn_left = findViewById<ImageView>(R.id.btn_left_toolbar_main_calendar)
         val btn_right = findViewById<ImageView>(R.id.btn_right_toolbar_main_calendar)
-        val txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar
-        )
+        val txt_year = findViewById<TextView>(R.id.txt_year_toolbar_main_calendar)
+
+        txt_year.setText(year)
+
         btn_left.setOnClickListener {
                 year = (year.toInt() - 1).toString()
 

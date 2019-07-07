@@ -6,7 +6,6 @@
         android:layout_height="wrap_content"
         app:contentInsetStart="0dp"
         android:background="@drawable/toolbar_border"
-
 >
 
     <RelativeLayout
@@ -27,22 +26,31 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="작성날짜"
+                android:fontFamily="@font/notosanscjkr_regular"
                 android:textColor="#000000"
-                android:textSize="15dp"
-        />
-        <Button
-                android:layout_width="45dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:text="수정"
-                android:textColor="#505050"
-                android:background="@drawable/round_border"
-                android:id="@+id/btn_save_diary_toolbar"/>
+                android:textSize="14dp"
+                android:id="@+id/txt_date_read_diary"/>
 
-    </RelativeLayout>
+            <ImageButton
+                    android:layout_width="44dp"
+                    android:layout_height="26dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/gray_border_fill"
+                    android:id="@+id/btn_modify_diary_toolbar"
+            />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_centerVertical="true"
+                      android:layout_alignParentRight="true"
+                      android:text="수정"
+                      android:textSize="13dp"
+                      android:layout_marginRight="25dp"
+                      android:fontFamily="@font/notosanscjkr_regular"
+                      android:textColor="#505050"
+            />
 
+        </RelativeLayout>
 
 
 </android.support.v7.widget.Toolbar>
