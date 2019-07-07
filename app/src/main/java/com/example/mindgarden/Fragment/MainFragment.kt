@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        btn_reward.isEnabled = false
 
         val cal = Calendar.getInstance()
         var year = cal.get(Calendar.YEAR).toString()
@@ -56,7 +57,9 @@ class MainFragment : Fragment() {
         txt_main_month.setText(month)
 
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+            btn_reward.isEnabled = true
         } else {
+            btn_reward.isEnabled = false
         }
 
         btn_left.setOnClickListener {
@@ -70,7 +73,9 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                    btn_reward.isEnabled = true
                 } else {
+                    btn_reward.isEnabled = false
                 }
             } else {
                 month = (month.toInt() - 1).toString()
@@ -80,7 +85,9 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                    btn_reward.isEnabled = true
                 } else {
+                    btn_reward.isEnabled = false
                 }
             }
         }
@@ -96,7 +103,9 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                    btn_reward.isEnabled = true
                 } else {
+                    btn_reward.isEnabled = false
                 }
             } else {
                 month = (month.toInt() + 1).toString()
@@ -106,12 +115,19 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                    btn_reward.isEnabled = true
                 } else {
+                    btn_reward.isEnabled = false
                 }
             }
         }
 
-
+        if (btn_reward.isEnabled) {
+            btn_reward.setOnClickListener {
+                var intent: Intent = Intent(context, InventoryActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()

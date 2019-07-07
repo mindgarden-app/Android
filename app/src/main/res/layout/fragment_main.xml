@@ -330,4 +330,61 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintStart_toStartOf="@+id/img_land" app:layout_constraintEnd_toEndOf="@+id/img_land"
             app:layout_constraintHorizontal_bias="0.498"/>
+
+    <TextView
+            android:text="요일"
+            android:textSize="15.5dp"
+            android:textColor="#04040F"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_main_day_text_word"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" android:layout_marginTop="56dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+    <TextView
+            android:text="토"
+            android:textSize="15.5dp"
+            android:textColor="#04040F"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_main_day_text"
+            app:layout_constraintEnd_toStartOf="@+id/txt_main_day_text_word" android:layout_marginTop="56dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+    <TextView
+            android:text="일"
+            android:textSize="15.5dp"
+            android:textColor="#04040F"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_main_day_num_word" android:layout_marginTop="56dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/txt_main_day_text" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="24"
+            android:textSize="15.5dp"
+            android:textColor="#04040F"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_main_day_num" android:layout_marginTop="56dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toStartOf="@+id/txt_main_day_num_word"/>
+    <TextView
+            android:text="정원이 복작복작 해졌어요. 이번 달 마무리를 잘 해봅시다!"
+            android:textSize="12.5dp"
+            android:textColor="#2B2B2B"
+            android:layout_width="153dp"
+            android:layout_height="37dp"
+            android:gravity="right"
+            android:id="@+id/txt_main_exp" android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_main_day_text" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="15dp"/>
+    <ImageView
+            android:src="@drawable/btn_reward_selector"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:id="@+id/btn_reward"
+            android:layout_marginTop="57dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_main_exp" app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
