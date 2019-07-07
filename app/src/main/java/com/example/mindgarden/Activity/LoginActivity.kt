@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -18,15 +19,19 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         configureMainTab()
         btnLogin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, PasswordActivity::class.java)
             //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
+            // 일단 로그인 받아오면?>>>
+             intent.putExtra("whereFrom","Login")
 
             startActivity(intent)
 
-            finish()
+           // finish()
         }
     }
-
+    fun postLoginResponse(u_id:String,u_pw:String){
+        SharedPreferenceController.setUserID(this,u_id)
+    }
     private fun configureMainTab() {
 
         vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
