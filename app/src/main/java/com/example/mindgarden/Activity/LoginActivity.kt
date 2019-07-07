@@ -39,30 +39,17 @@ class LoginActivity : AppCompatActivity() {
             finish()
             //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
             // 일단 로그인 받아오면?>>>
-          //  startActivity<PasswordActivity>("from" to  "login")
+            //  startActivity<PasswordActivity>("from" to  "login")
         }
     }
     private fun setupPermissions() {
-        val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        //스토리지 읽기 퍼미션을 permission 변수에 담는다
+        val permission = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_EXTERNAL_STORAGE)
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.i("tag", "Permission to record denied")
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                val builder = AlertDialog.Builder(this)
-                builder.setMessage("Permission to access the microphone is required for this app to record audio.")
-                       .setTitle("Permission required")
-
-                builder.setPositiveButton("OK") { dialog, id ->
-                    Log.i("tag", "Clicked")
-                    makeRequest()
-                }
-
-                val dialog = builder.create()
-                dialog.show()
-            } else {
-                makeRequest()
-            }
+            Log.e("TAG", "Permission to record denied")
+            makeRequest()
         }
     }
     private fun makeRequest() {
@@ -71,16 +58,19 @@ class LoginActivity : AppCompatActivity() {
             RECORD_REQUEST_CODE)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 
-        when(requestCode) {
-            RECORD_REQUEST_CODE -> {
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+
+        when(requestCode){
+            RECORD_REQUEST_CODE ->{
 //                if(grantResults.isNotEmpty()
 //                            && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    toast("권한거부됨")
+                    toast("권한거부됨");
 
-                } else {
+                }else{
+                 toast("권한 자 ㄹ있어")
                     Log.i("tag", "Permission has been granted by user")
                 }
                 return
@@ -113,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
-               p0!!.customView!!.isSelected=false
+                p0!!.customView!!.isSelected=false
             }
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
