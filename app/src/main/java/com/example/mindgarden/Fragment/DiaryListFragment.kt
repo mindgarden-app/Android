@@ -70,7 +70,7 @@ class DiaryListFragment : Fragment() {
             }
         }
 
-        btn_right_toolbar_main_calendar.setOnClickListener {
+        btn_right.setOnClickListener {
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
                 year = (year.toInt() + 1).toString()
