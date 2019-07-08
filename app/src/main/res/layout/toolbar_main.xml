@@ -2,8 +2,7 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
-                                   android:elevation="3dp"
-                                   android:background="#ffffff">
+                                   android:background="@drawable/toolbar_border">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -17,8 +16,8 @@
 
             <ImageView
                     android:id="@+id/btn_left"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/btn_left"/>
 
             <TextView
@@ -59,8 +58,8 @@
 
             <ImageView
                     android:id="@+id/btn_right"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="41.15dp"
                     android:src="@drawable/btn_right"/>
 
@@ -75,6 +74,7 @@
                     android:id="@+id/btn_main_setting"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="16.39dp"
                     android:src="@drawable/btn_setting"/>
 

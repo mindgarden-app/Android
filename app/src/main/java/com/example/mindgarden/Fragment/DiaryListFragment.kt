@@ -96,19 +96,25 @@ class DiaryListFragment : Fragment() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
         dataList.add(
             DiaryListData(
-                0, 2019, 6, 25, "월",
+                0, 2019, 6, 25, "Mon",
                 "hi"
             )
         )
         dataList.add(
             DiaryListData(
-                1, 2019, 6, 18, "일",
+                1, 2019, 6, 18, "Fri",
                 "good good good good good"
             )
         )
         dataList.add(
             DiaryListData(
-                2, 2019, 6, 20, "목",
+                2, 2019, 6, 20, "Sat",
+                "bad bad"
+            )
+        )
+        dataList.add(
+            DiaryListData(
+                3, 2019, 6, 8, "Wed",
                 "bad bad"
             )
         )
@@ -129,7 +135,6 @@ class DiaryListFragment : Fragment() {
 
         btn_setting.setOnClickListener {
             startActivity<MypageActivity>()
-           // 환경설정 페이지로 넘어감
         }
 
         diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
