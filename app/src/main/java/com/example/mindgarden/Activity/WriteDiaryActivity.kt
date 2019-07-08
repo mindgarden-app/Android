@@ -17,7 +17,9 @@ import android.provider.MediaStore.Images
 import android.view.View
 import android.widget.*
 import android.graphics.Bitmap
+import android.opengl.Visibility
 import com.example.mindgarden.Adapter.MyListAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class WriteDiaryActivity : AppCompatActivity() {
@@ -52,7 +54,7 @@ class WriteDiaryActivity : AppCompatActivity() {
         }
 
         //갤러리 접근하여 이미지 얻어오기
-        img_gallary_write_diary.setOnClickListener{
+       img_gallary_write_diary.setOnClickListener{
             val builder = AlertDialog.Builder(this)
 
             val inflater = layoutInflater

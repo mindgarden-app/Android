@@ -85,6 +85,19 @@ class MainFragment : Fragment() {
             // 환경설정 페이지로 넘어감
         }
 
+        //툴바 년/월 설정(MainCalendar로 전달)
+        toolbarYear = txt_main_year.text.toString()
+        toolbarMonth = txt_main_month.text.toString()
+
+        //툴바 날짜 클릭했을 때 -> 팝업 띄우기
+        ll_date_toolbar_main.setOnClickListener {
+            startActivityForResult<MainCalendarActivity>(
+                REQUEST_CODE_SET_TOOLBAR_DATE,
+                "year" to toolbarYear,
+                "month" to toolbarMonth
+            )
+        }
+
 
     }
 
