@@ -12,9 +12,9 @@
             android:layout_height="190dp"
             android:id="@+id/linearLayout"
             tools:ignore="MissingConstraints"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="0dp"
+            android:layout_marginTop="0dp" app:layout_constraintTop_toTopOf="parent"
     >
         <include
                 android:id="@+id/toolbar_mypage_main"

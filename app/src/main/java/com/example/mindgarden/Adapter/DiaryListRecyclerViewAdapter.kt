@@ -40,9 +40,6 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             false
         }
 
-        /*
-        일기 내용 눌렀을 때 일기 편집 페이지로 넘어감
-        */
         holder.content.setOnClickListener {
             ctx.startActivity<ReadDiaryActivity>()
         }

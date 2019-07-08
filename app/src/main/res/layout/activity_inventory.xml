@@ -19,4 +19,29 @@
             android:layout_marginBottom="167dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="13.6dp" android:layout_marginStart="13.6dp"
             app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+            android:id="@+id/lay_inventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/inventory_layout_border">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <ImageView
+            android:id="@+id/btn_check"
+            android:layout_width="28.04dp"
+            android:layout_height="27.14dp"
+            app:layout_constraintBottom_toTopOf="@+id/lay_inventory"
+            android:layout_marginBottom="10.7dp"
+            android:layout_marginRight="16dp"
+            app:srcCompat="@drawable/btn_mood_show" app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
