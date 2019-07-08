@@ -27,19 +27,13 @@ import kotlinx.android.synthetic.main.fragment_write_diary.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+val REQUEST_CODE_WRITE_ACTIVITY = 1000
+val REQUEST_CODE_SELECT_IMAGE = 1004
 
-/**
- * A simple [Fragment] subclass.
- *
- */
+val choiceList = arrayOf<String>("이미지 선택", "삭제")
+
 class WriteDiaryFragment : Fragment() {
 
-    val REQUEST_CODE_WRITE_ACTIVITY = 1000
-    val REQUEST_CODE_SELECT_IMAGE = 1004
-
-    val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
