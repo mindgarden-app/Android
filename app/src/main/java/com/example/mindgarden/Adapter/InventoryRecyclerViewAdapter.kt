@@ -17,6 +17,7 @@ import com.example.mindgarden.Data.InventoryData
 import com.example.mindgarden.R
 
 class InventoryRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<InventoryData>): RecyclerView.Adapter<InventoryRecyclerViewAdapter.Holder>() {
+    lateinit var inventoryActivity: InventoryActivity
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_inventory, viewGroup, false)
@@ -32,8 +33,29 @@ class InventoryRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Inv
 
         val btm = dataList[position].icn_tree
 
-        holder.container.isSelected = true
         holder.container.setOnClickListener{
+            /*if (inventoryActivity.isClickAvailable) {
+                holder.container.isSelected = true
+                inventoryActivity.isClickAvailable = false
+
+                if (holder.container.isSelected) {
+                    holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                } else {
+                    holder.container.setBackgroundResource(R.drawable.inventory_border)
+                }
+            }
+
+            if (!inventoryActivity.isClickAvailable && holder.container.isSelected) {
+                holder.container.isSelected = false
+                inventoryActivity.isClickAvailable = true
+
+                if (holder.container.isSelected) {
+                    holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                } else {
+                    holder.container.setBackgroundResource(R.drawable.inventory_border)
+                }
+            }*/
+
             if (holder.container.isSelected) {
                 holder.container.setBackgroundResource(R.drawable.inventory_click_border)
             } else {

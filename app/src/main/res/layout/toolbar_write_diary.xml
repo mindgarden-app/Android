@@ -29,20 +29,26 @@
                 android:text="작성날짜"
                 android:fontFamily="@font/notosanscjkr_regular"
                 android:textColor="#000000"
-                android:textSize="15dp"
+                android:textSize="14dp"
         />
-        <Button
-                android:layout_width="45dp"
-                android:layout_height="30dp"
+        <ImageButton
+                android:layout_width="44dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:text="등록"
-                android:fontFamily="@font/notosanscjkr_regular"
-                android:textColor="#ffffff"
                 android:background="@drawable/green_border_fill"
                 android:id="@+id/btn_save_diary_toolbar"/>
 
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_alignParentRight="true"
+                  android:text="등록"
+                  android:textSize="13dp"
+                  android:layout_marginRight="25dp"
+                  android:fontFamily="@font/notosanscjkr_regular"
+                  android:textColor="#ffffff"
+        />
     </RelativeLayout>
 
 

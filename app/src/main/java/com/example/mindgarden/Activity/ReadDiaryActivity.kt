@@ -3,6 +3,8 @@ package com.example.mindgarden.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.view.ViewPager
+import android.util.Log
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import org.jetbrains.anko.startActivity
 import com.example.mindgarden.R
@@ -10,21 +12,26 @@ import com.example.mindgarden.R
 
 class ReadDiaryActivity : AppCompatActivity() {
 
+        private var pager : ViewPager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_diary)
 
+        val intent : Intent = getIntent()
+        val requestCode : Int = intent.getIntExtra("requestCode", 0)
 
-
-        //2. 목록에서 넘어왔을 경우 : 서버
+        Log.e("requestCode" , requestCode.toString())
 
         //수정버튼 -> WriteDiaryActivity로 넘어가기
-        btn_save_diary_toolbar.setOnClickListener {
-            startActivity<WriteDiaryActivity>()
-        }
+            btn_modify_diary_toolbar.setOnClickListener {
+                startActivity<WriteDiaryActivity>()
+            }
+
+
         //뒤로가기 -> DiaryListAcitivy로 이동
         btn_back_toolbar.setOnClickListener{
-          // startActivity<DiaryListActivity>()
+
         }
 
         /*

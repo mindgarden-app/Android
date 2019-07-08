@@ -17,7 +17,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
+        <activity android:name=".Activity.MainCalendarActivity"
+                  android:theme="@style/Theme.MyPopUpWindow">
+        </activity>
         <activity
                 android:name=".Activity.MoodChoiceActivity"
                 android:theme="@style/Theme.MyPopUpWindow">
@@ -44,10 +46,10 @@
         </activity>
         <activity android:name=".Activity.LoginActivity">
         </activity>
-
         <activity
                 android:name=".Activity.SplashActivity"
                 android:theme="@style/SplashTheme">
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

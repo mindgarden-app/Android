@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".Activity.MainCalendarActivity"
+        android:background="@drawable/round_layout_border"
+        android:orientation="vertical"
+>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <include layout="@layout/toolbar_main_calendar"/>
+    </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:splitMotionEvents="false"
+
+        >
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="1" android:textSize="17dp" android:layout_marginRight="20dp"
+                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:paddingBottom="5dp" android:paddingTop="5dp"
+                      android:id="@+id/txt_1_main_cal"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="2" android:textSize="17dp" android:layout_marginRight="20dp"
+                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:paddingBottom="5dp" android:paddingTop="5dp"
+                      android:id="@+id/txt_2_main_cal"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="3" android:textSize="17dp" android:layout_marginRight="20dp"
+                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:paddingBottom="5dp" android:paddingTop="5dp"
+                      android:id="@+id/txt_3_main_cal"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="4" android:textSize="17dp"
+                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:paddingBottom="5dp" android:paddingTop="5dp"
+                      android:id="@+id/txt_4_main_cal"/>
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="17dp"
+            android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="5" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_5_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="6" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_6_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="7" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+
+                  android:id="@+id/txt_7_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:text="8" android:textSize="17dp"
+                  android:id="@+id/txt_8_main_cal"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp"
+            android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="9" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_9_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="10" android:textSize="17dp" android:layout_marginRight="18dp"
+                  android:paddingRight="8dp" android:paddingLeft="8dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_10_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="11" android:textSize="17dp" android:layout_marginRight="18dp"
+                  android:paddingRight="8dp" android:paddingLeft="8dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_11_main_cal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="12" android:textSize="17dp"
+                  android:paddingRight="8dp" android:paddingLeft="8dp"
+                  android:paddingBottom="5dp" android:paddingTop="5dp"
+                  android:id="@+id/txt_12_main_cal"/>
+    </LinearLayout>
+</LinearLayout>

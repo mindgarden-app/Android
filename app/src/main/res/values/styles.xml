@@ -18,6 +18,7 @@
     <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
