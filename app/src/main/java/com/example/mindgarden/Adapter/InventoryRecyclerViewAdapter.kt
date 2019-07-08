@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.mindgarden.Activity.InventoryActivity
 import com.example.mindgarden.Data.InventoryData
 import com.example.mindgarden.R
 

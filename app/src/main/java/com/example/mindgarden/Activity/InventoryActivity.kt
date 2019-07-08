@@ -21,6 +21,7 @@ import org.jetbrains.anko.startActivity
 
 class InventoryActivity : AppCompatActivity() {
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
+    var isClickAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +34,8 @@ class InventoryActivity : AppCompatActivity() {
 
         configureRecyclerView()
 
-        btn_check.setOnClickListener {
-            startActivity<MainActivity>()
+        btn_choose.setOnClickListener {
+            finish()
         }
     }
 
