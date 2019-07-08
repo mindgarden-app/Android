@@ -41,9 +41,10 @@ class BlankFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
         startActivity<WriteDiaryActivity>()
+
     }
 
 }

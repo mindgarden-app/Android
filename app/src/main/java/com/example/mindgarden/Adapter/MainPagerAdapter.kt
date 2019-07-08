@@ -16,8 +16,7 @@ class MainPagerAdapter(fm: FragmentManager, private val num_fragment: Int): Frag
     override fun getItem(p0: Int): Fragment? {
         return when(p0){
             0 -> MainFragment()
-            1 -> BlankFragment()
-            2 -> DiaryListFragment()
+            1 -> DiaryListFragment()
             else -> null
         }
     }
