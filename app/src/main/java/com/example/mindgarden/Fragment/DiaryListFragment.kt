@@ -13,10 +13,13 @@ import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
+import android.widget.TabHost
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

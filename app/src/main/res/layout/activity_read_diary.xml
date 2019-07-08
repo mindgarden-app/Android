@@ -53,7 +53,7 @@ android:background="#FFFFFF"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/icn_logo"
+                        android:src="@drawable/logo_01"
                         android:id="@+id/img_mood_icon_read_diary"
                 />
             </RelativeLayout>

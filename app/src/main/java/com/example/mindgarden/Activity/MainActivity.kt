@@ -3,6 +3,8 @@ package com.example.mindgarden.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
@@ -18,11 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         configureMainTab()
 
-        //val intent = Intent(this, DiaryListActivity::class.java)
-
-        /*button.setOnClickListener {
-            startActivity(intent)
-        }*/
     }
 
     private fun configureMainTab() {
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.rl_nav_category_main_home) as RelativeLayout
         tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
             findViewById(R.id.rl_nav_category_main_write) as RelativeLayout
-        tl_main_category.getTabAt(2)!!.customView = navCategoryMainLayout.
-            findViewById(R.id.rl_nav_category_main_list) as RelativeLayout
+       tl_main_category.getTabAt(2)!!.customView = navCategoryMainLayout.
+           findViewById(R.id.rl_nav_category_main_list) as RelativeLayout
     }
 }

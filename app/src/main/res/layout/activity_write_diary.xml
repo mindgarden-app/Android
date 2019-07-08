@@ -34,11 +34,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:id="@+id/txt_mood_text_write_diary"
                     android:text="기분을 선택하세요."
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:textColor="#2B2B2B"
-                    android:textSize="14dp"/>
+                    android:textSize="14dp"
+                    android:id="@+id/txt_mood_text_write_diary"
+            />
 
             <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -51,7 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/icn_logo"
+                        android:src="@drawable/logo_01"
                         android:id="@+id/btn_mood_icon_write_diary"
                 />
             </RelativeLayout>

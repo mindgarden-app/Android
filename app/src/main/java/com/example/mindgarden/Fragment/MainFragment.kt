@@ -3,6 +3,7 @@ package com.example.mindgarden.Fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -20,6 +21,8 @@ import kotlinx.android.synthetic.main.toolbar_main.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
+import android.support.design.widget.TabLayout
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,6 +53,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
 
         btn_reward.isEnabled = false
 
@@ -200,7 +204,7 @@ class MainFragment : Fragment() {
                     btn_reward.isEnabled = false
                 }
             }
-        }
+        //툴바 날짜 클릭했을 때 -> 팝업 띄우기
         ll_date_toolbar_main.setOnClickListener {
             startActivityForResult<MainCalendarActivity>(
                 REQUEST_CODE_SET_TOOLBAR_DATE,
@@ -210,4 +214,5 @@ class MainFragment : Fragment() {
         }
     }
 
+}
 }

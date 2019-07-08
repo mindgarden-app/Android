@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".Fragment.WriteDiaryFragment"
+              android:orientation="vertical"
+              android:background="#FFFFFF"
+>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <include layout="@layout/toolbar_write_diary"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+    >
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_moodchoice"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/img_mood_text_fragment_write_diary"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="기분을 선택하세요."
+                    android:fontFamily="@font/notosanscjkr_regular"
+                    android:textColor="#2B2B2B"
+                    android:textSize="14dp"
+                    android:id="@+id/txt_mood_text_fragment_write_diary"
+            />
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignLeft="@id/img_mood_text_fragment_write_diary">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_mood_show"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/logo_01"
+                    android:id="@+id/btn_mood_icon_fragment_write_diary"/>
+        </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1.0"
+                      android:orientation="vertical">
+
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="230dp"
+            >
+            <ImageView android:layout_width="match_parent"
+                       android:layout_height="210dp"
+                       android:layout_marginRight="40dp"
+                       android:layout_marginLeft="40dp"
+                       android:layout_centerInParent="true"
+                       android:background="@drawable/img_shadow"
+                       android:id="@+id/img_gallary_fragment_write_diary"/>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icn_gallary"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/icn_gallary_fragment_write_diary"/>
+            </RelativeLayout>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="내용"
+                    android:fontFamily="@font/notosanscjkr_regular"
+                    android:textSize="13.5dp"
+                    android:textColor="#2B2B2B"
+                    android:background="@null"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/edt_content_fragment_write_diary"/>
+        </LinearLayout>
+        </ScrollView>
+    </LinearLayout>

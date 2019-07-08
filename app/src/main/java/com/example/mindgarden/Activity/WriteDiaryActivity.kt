@@ -88,14 +88,6 @@ class WriteDiaryActivity : AppCompatActivity() {
         }
     }
 
-
-
-    //MoodChoice액티비티 팝업
-    fun moodChoice(){
-        val intent : Intent = Intent(this, MoodChoiceActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE_WRITE_ACTIVITY)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -110,12 +102,19 @@ class WriteDiaryActivity : AppCompatActivity() {
         if(requestCode == REQUEST_CODE_WRITE_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
                 //선택한 기분 아이콘 넣어주기
-               btn_mood_icon_write_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
+                btn_mood_icon_write_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
                 //선택한 기분 텍스트 넣어주기
                 txt_mood_text_write_diary.text = data!!.getStringExtra("moodTxt")
             }
         }
+    }
+
+
+    //MoodChoice액티비티 팝업
+    fun moodChoice(){
+        val intent : Intent = Intent(this, MoodChoiceActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_WRITE_ACTIVITY)
     }
 
     //갤러리에서 선택된 이미지를 ImageView에 넣어주기
