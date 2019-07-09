@@ -2,8 +2,7 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
-                                   android:elevation="1dp"
-                                   android:background="#ffffff">
+                                   android:background="@drawable/toolbar_border">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -19,7 +18,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="3dp"
                     android:src="@drawable/btn_updown"/>
 
         </LinearLayout>

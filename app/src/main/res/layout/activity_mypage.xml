@@ -12,16 +12,16 @@
             android:layout_height="190dp"
             android:id="@+id/linearLayout"
             tools:ignore="MissingConstraints"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="0dp"
+            android:layout_marginTop="0dp" app:layout_constraintTop_toTopOf="parent"
     >
         <include
                 android:id="@+id/toolbar_mypage_main"
                 layout="@layout/toolbar_mypage_main"/>
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:paddingVertical="10dp"
                 android:paddingHorizontal="10dp"
                 android:background="@drawable/gray_bottom_border"
@@ -30,48 +30,46 @@
                     android:id="@+id/myImage"
                     android:layout_width="38dp"
                     android:layout_height="50dp"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="10dp"
+
                     android:layout_alignParentTop="true"
-                    app:srcCompat="@drawable/single_tree"
-                    android:layout_marginTop="0dp"/>
+                    app:srcCompat="@drawable/tree0"
+                    android:background="@drawable/gray_bottom_border"
+                    android:layout_marginTop="10dp" android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"/>
 
 
             <TextView
                     android:id="@+id/userName"
                     android:text="정은이님"
                     android:fontFamily="@font/notosanscjkr_medium"
-                    android:layout_marginTop="5dp"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
                     android:textSize="14dp"
-                    android:layout_alignTop="@id/myImage"
                     android:layout_toEndOf="@id/myImage"
+                    android:layout_alignTop="@+id/myImage"
                     android:gravity="center|center"
-            >
+                    android:layout_marginStart="10dp"
+                    android:layout_alignParentTop="true">
             </TextView>
             <TextView
                     android:id="@+id/level"
                     android:text="무료회원"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:layout_marginTop="5dp"
+                    android:paddingVertical="3dp"
                     android:gravity="center|center"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_width="50dp"
                     android:layout_toEndOf="@id/userName"
+                    android:layout_alignTop="@+id/myImage"
                     android:textSize="9dp"
-                    android:layout_alignTop="@id/myImage"
-                    android:background="@drawable/gray_border_fill">
+                    android:background="@drawable/gray_border_fill" android:layout_marginTop="0dp"
+                    android:layout_marginStart="10dp">
             </TextView>
             <TextView
                     android:text="chungee375@gmail.com"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:gravity="center|center"
+                    android:gravity="start|center"
                     android:layout_height="20dp"
                     android:layout_width="150dp"
                     android:layout_alignBottom="@id/myImage"

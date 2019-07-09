@@ -40,9 +40,6 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             false
         }
 
-        /*
-        일기 내용 눌렀을 때 일기 편집 페이지로 넘어감
-        */
         holder.content.setOnClickListener {
             ctx.startActivity<ReadDiaryActivity>()
         }
@@ -64,16 +61,17 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
                 val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
                     when(which) {
-                        DialogInterface.BUTTON_POSITIVE -> do_p()
+                        DialogInterface.BUTTON_NEUTRAL -> do_p()
                     }
                 }
 
-                dlg.setPositiveButton("네", dlg_listener)
-                dlg.setNegativeButton("아니오", null)
+                dlg.setNeutralButton("네", dlg_listener)
+                dlg.setPositiveButton("아니오", null)
 
                 var dlgNew: AlertDialog = dlg.show()
                 var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
                 messageText!!.gravity = Gravity.CENTER
+                dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                 dlgNew.show()
             }
