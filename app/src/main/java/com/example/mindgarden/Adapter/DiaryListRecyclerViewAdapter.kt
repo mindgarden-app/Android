@@ -15,7 +15,6 @@ import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
-import org.w3c.dom.Text
 import org.jetbrains.anko.startActivity
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
@@ -30,9 +29,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     var isPressed = false
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.day_num.text = dataList[position].day_num.toString()
-        holder.day_text.text = dataList[position].day_text
-        holder.content.text = dataList[position].content
+        holder.day_num.text = dataList[position].date.substring(8, 9)
+        holder.day_text.text = dataList[position].date.substring(11, 13)
+        holder.content.text = dataList[position].diary_content
 
         holder.container.setOnLongClickListener {
             isPressed = !isPressed
