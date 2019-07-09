@@ -31,7 +31,11 @@
                 android:id="@+id/rv_inventory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"></android.support.v7.widget.RecyclerView>
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+        ></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

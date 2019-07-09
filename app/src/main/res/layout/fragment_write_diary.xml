@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/logo_01"
+                    android:src="@drawable/img_weather11_none"
                     android:id="@+id/btn_mood_icon_fragment_write_diary"/>
         </RelativeLayout>
         </RelativeLayout>

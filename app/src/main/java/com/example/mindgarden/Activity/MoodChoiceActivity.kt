@@ -38,7 +38,7 @@ class MoodChoiceActivity : AppCompatActivity() {
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val width = (display.width * 0.6).toInt() //Display 사이즈의 60%
-        val height = (display.height * 0.85).toInt()  //Display 사이즈의 85%
+        val height = (display.height * 0.65).toInt()  //Display 사이즈의 85%
 
         //테두리 없애기
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -61,7 +61,8 @@ class MoodChoiceActivity : AppCompatActivity() {
         val icn8 = drawableToBitmap(R.drawable.img_weather8_sad)
         val icn9 = drawableToBitmap(R.drawable.img_weather9_annoying)
         val icn10 = drawableToBitmap(R.drawable.img_weather10_lightning)
-      //  val icn11 = drawableToBitmap(R.drawable.)
+        val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
+
         var dataList : ArrayList<MoodChoiceData> = ArrayList()
         dataList.add(MoodChoiceData(icn1, "좋아요"))
         dataList.add(MoodChoiceData(icn2, "신나요"))
@@ -73,7 +74,7 @@ class MoodChoiceActivity : AppCompatActivity() {
         dataList.add(MoodChoiceData(icn8, "우울해요"))
         dataList.add(MoodChoiceData(icn9, "짜증나요"))
         dataList.add(MoodChoiceData(icn10, "화가나요"))
-       // dataList.add(MoodChoiceData(icn11, "기분없음"))
+        dataList.add(MoodChoiceData(icn11, "기분없음"))
 
 
         rv_mood_mood_choice_list.adapter = MoodChoiceRecyclerViewAdapter(this, dataList)

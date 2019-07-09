@@ -123,10 +123,10 @@ class AlarmSettingActivity : AppCompatActivity() {
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo_01)
+        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.img_weather11_none)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.logo_01)
+            .setSmallIcon(R.drawable.img_weather11_none)
             .setLargeIcon(bitmap)
             .setContentTitle("마인드 가든")
             .setContentText("오늘의 정원을 가꿀 시간이에요.")
@@ -207,7 +207,6 @@ class AlarmSettingActivity : AppCompatActivity() {
             timePicker.currentMinute = minute
         }
     }
-
 
     // Custom method to get a random number from the provided range
     private fun randomInRange(min:Int, max:Int):Int{
