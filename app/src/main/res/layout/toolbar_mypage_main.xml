@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:background="@drawable/toolbar_border">
-
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
-                android:layout_margin="18dp"
-                android:src="@drawable/btn_back"
-                android:contentDescription="TODO"
-                android:scaleType="centerCrop"
-                android:background="@color/colorWhite"
-        />
-        <TextView
-                android:id="@+id/txtSetting"
-                android:text="환경설정"
-                android:fontFamily="@font/notosanscjkr_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:textColor="#2B2B2B"
-                android:gravity="center|center"
-                android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            android:background="@drawable/toolbar_border"
+    >
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_margin="18dp"
+                    android:src="@drawable/btn_back"
+                    android:background="@color/colorWhite"
+                    android:id="@+id/btnBack"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/txtSetting"
+                    android:text="환경설정"
+                    android:fontFamily="@font/notosanscjkr_regular"
+                    android:textSize="14dp"
+                    android:textColor="#2B2B2B"
+                    android:gravity="center|center"
+
         />
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>
