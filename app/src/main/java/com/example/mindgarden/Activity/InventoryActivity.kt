@@ -22,7 +22,10 @@ import org.jetbrains.anko.startActivity
 
 class InventoryActivity : AppCompatActivity() {
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
-    var isClickAvailable: Boolean = true
+
+    companion object {
+        var isClickAvailable: Boolean = true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
