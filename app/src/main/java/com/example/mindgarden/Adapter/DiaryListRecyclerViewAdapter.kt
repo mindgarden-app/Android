@@ -71,6 +71,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 var dlgNew: AlertDialog = dlg.show()
                 var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
                 messageText!!.gravity = Gravity.CENTER
+                dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                 dlgNew.show()
             }
