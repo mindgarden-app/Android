@@ -126,7 +126,7 @@ class AlarmSettingActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo_01)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.android_land)
+            .setSmallIcon(R.drawable.logo_01)
             .setLargeIcon(bitmap)
             .setContentTitle("마인드 가든")
             .setContentText("오늘의 정원을 가꿀 시간이에요.")

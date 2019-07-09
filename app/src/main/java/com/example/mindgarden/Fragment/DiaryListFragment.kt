@@ -110,40 +110,22 @@ class DiaryListFragment : Fragment() {
 
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
-        /*dataList.add(
-            DiaryListData(
-                0, 2019, 6, 25, "Mon",
-                "hi"
-            )
-        )
         dataList.add(
             DiaryListData(
-                1, 2019, 6, 18, "Fri",
-                "good good good good good"
+                0, 2019, 7, "금",
+                24, "hi"
             )
         )
-        dataList.add(
-            DiaryListData(
-                2, 2019, 6, 20, "Sat",
-                "bad bad"
-            )
-        )
-        dataList.add(
-            DiaryListData(
-                3, 2019, 6, 8, "Wed",
-                "bad bad"
-            )
-        )*/
 
         dataList.sortBy { data ->
-            data.date.substring(8, 9) }
+            data.day_num }
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                dataList.sortBy { data ->  data.date.substring(8, 9) }
+                dataList.sortBy { data ->  data.day_num }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                dataList.sortByDescending { data ->  data.date.substring(8, 9) }
+                dataList.sortByDescending { data ->  data.day_num }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 
@@ -159,9 +141,10 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-        getDiaryListResponse()
+       // getDiaryListResponse()
     }
 
+    /*
     private fun getDiaryListResponse(){
         var jsonObject = JSONObject()
         //userIdx도 put해줘야
@@ -186,4 +169,6 @@ class DiaryListFragment : Fragment() {
             }
         })
     }
+     */
+
 }

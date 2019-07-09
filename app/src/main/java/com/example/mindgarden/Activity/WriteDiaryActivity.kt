@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import android.opengl.Visibility
 import com.example.mindgarden.Adapter.MyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivityForResult
 
 
 class WriteDiaryActivity : AppCompatActivity() {
@@ -40,8 +41,8 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         btn_save_diary_toolbar.setOnClickListener {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
-            startActivity<ReadDiaryActivity>("requestCode" to 1000)
-
+            //startActivity<ReadDiaryActivity>()
+            startActivityForResult<ReadDiaryActivity>(1100)
         }
 
         //기분선택 팝업 띄우기
@@ -109,6 +110,10 @@ class WriteDiaryActivity : AppCompatActivity() {
                 //선택한 기분 텍스트 넣어주기
                 txt_mood_text_write_diary.text = data!!.getStringExtra("moodTxt")
             }
+        }
+        if(requestCode == 1100){
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.mindgarden.Activity
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.example.mindgarden.Adapter.MainPagerAdapter
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.startActivityForResult
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         configureMainTab()
 
         btn_write.setOnClickListener {
-            startActivity<WriteDiaryActivity>()
+            startActivityForResult<WriteDiaryActivity>(1100)
         }
     }
 
@@ -39,5 +41,17 @@ class MainActivity : AppCompatActivity() {
          //   findViewById(R.id.rl_nav_category_main_write) as RelativeLayout
        tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
            findViewById(R.id.rl_nav_category_main_list) as RelativeLayout
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 1100){
+            if(resultCode == Activity.RESULT_OK)
+            {
+                //3번으로 바꿔주기
+                val vp = findViewById<ViewPager>(R.id.vp_main)
+                vp.setCurrentItem(1,true)
+            }
+        }
     }
 }

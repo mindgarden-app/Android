@@ -13,11 +13,10 @@ import org.jetbrains.anko.support.v4.fragmentTabHost
 import android.R.attr.fragment
 import android.support.v4.app.Fragment
 import android.R.attr.fragment
+import android.app.Activity
 import android.support.v4.app.FragmentManager
+import android.support.v4.view.PagerAdapter
 import com.example.mindgarden.Fragment.MainFragment
-
-
-
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -29,9 +28,6 @@ class ReadDiaryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_read_diary)
 
         val intent : Intent = getIntent()
-        val requestCode : Int = intent.getIntExtra("requestCode", 0)
-
-        Log.e("requestCode" , requestCode.toString())
 
         //수정버튼 -> WriteDiaryActivity로 넘어가기
             btn_modify_diary_toolbar.setOnClickListener {
@@ -41,10 +37,8 @@ class ReadDiaryActivity : AppCompatActivity() {
 
         //뒤로가기 -> DiaryListAcitivy로 이동
         btn_back_toolbar.setOnClickListener{
-
-            //var mFragment: Fragment? = null
-            //val fragmentManager = supportFragmentManager
-            //fragmentManager.beginTransaction().replace(R.id.frame_container, DiaryListFragment).commit()
+                setResult(Activity.RESULT_OK)
+                finish()
         }
 
         /*
@@ -54,15 +48,5 @@ class ReadDiaryActivity : AppCompatActivity() {
          */
     }
 
-    fun sharedPreference(){
-        //writeActivity에서 넘어왔는지 확인
-        var requestCode : Int
-        val intent : Intent = Intent()
-        requestCode = intent.getIntExtra("reauestCode", 0)
-        if(requestCode == 1000) {
-            //내부 DB에서 내용 받아와서 보여주기
-
-        }
-    }
 
 }
