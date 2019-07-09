@@ -24,16 +24,16 @@
             android:src="@drawable/android_land"
             android:id="@+id/img_land"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="320dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="270dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.45"/>
     <ImageView
-            android:src="@drawable/android_tree12"
+            android:src="@drawable/android_tree7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img1"
-            android:layout_marginBottom="282dp" app:layout_constraintBottom_toBottomOf="@+id/img_land"
+            android:layout_marginBottom="280dp" app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintStart_toStartOf="@+id/img_land" app:layout_constraintEnd_toEndOf="@+id/img_land"
             app:layout_constraintHorizontal_bias="0.498"/>
     <ImageView
@@ -54,19 +54,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_land" app:layout_constraintStart_toEndOf="@+id/img2_1"
     />
     <ImageView
-            android:src="@drawable/android_tree16"
+            android:src="@drawable/android_tree8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img3_1"
             app:layout_constraintStart_toStartOf="@+id/img_land"
-            android:layout_marginStart="72dp" android:layout_marginBottom="250dp"
+            android:layout_marginStart="75dp" android:layout_marginBottom="251dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"/>
     <ImageView
-            android:src="@drawable/android_tree15"
+            android:src="@drawable/android_tree2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img3_2"
-            android:layout_marginBottom="250dp"
+            android:layout_marginBottom="251dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toStartOf="@+id/img3_3"
             app:layout_constraintStart_toEndOf="@+id/img3_1"/>
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img3_3"
-            android:layout_marginBottom="250dp"
+            android:layout_marginBottom="251dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land" android:layout_marginEnd="76dp"
     />
@@ -124,7 +124,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toStartOf="@+id/img3_1" app:layout_constraintHorizontal_bias="0.0"/>
     <ImageView
-            android:src="@drawable/android_tree4"
+            android:src="@drawable/android_tree16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img5_2"
@@ -132,7 +132,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
     />
     <ImageView
-            android:src="@drawable/android_tree15"
+            android:src="@drawable/android_tree3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img5_4"
@@ -181,7 +181,7 @@
             android:layout_marginBottom="208dp" app:layout_constraintBottom_toBottomOf="@+id/img_land"
     />
     <ImageView
-            android:src="@drawable/android_tree7"
+            android:src="@drawable/android_tree5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img7_1"
@@ -203,16 +203,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/img7_4"
             android:layout_marginBottom="192dp" app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            app:layout_constraintStart_toEndOf="@+id/img7_2" android:layout_marginStart="52dp"/>
+            app:layout_constraintStart_toEndOf="@+id/img7_2" android:layout_marginStart="52dp"
+            app:layout_constraintEnd_toStartOf="@+id/img7_5"/>
     <ImageView
             android:src="@drawable/android_tree7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img7_5"
-            app:layout_constraintStart_toEndOf="@+id/img7_4"
             android:layout_marginBottom="192dp" app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            android:layout_marginEnd="24dp" app:layout_constraintEnd_toEndOf="@+id/img_land"
-            app:layout_constraintHorizontal_bias="1.0"/>
+            android:layout_marginEnd="25dp" app:layout_constraintEnd_toEndOf="@+id/img_land"
+    />
     <ImageView
             android:src="@drawable/android_tree9"
             android:layout_width="wrap_content"
@@ -221,7 +221,7 @@
             app:layout_constraintEnd_toEndOf="@+id/img_land" android:layout_marginBottom="208dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_land" app:layout_constraintHorizontal_bias="0.501"/>
     <ImageView
-            android:src="@drawable/android_tree8"
+            android:src="@drawable/android_tree15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img8_1"
@@ -265,7 +265,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_land" android:layout_marginStart="76dp"
             app:layout_constraintStart_toStartOf="@+id/img_land"/>
     <ImageView
-            android:src="@drawable/android_tree9"
+            android:src="@drawable/android_tree5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img9_2"
@@ -287,8 +287,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img10_1"
-            android:layout_marginBottom="148dp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_land" android:layout_marginStart="100dp"
+            android:layout_marginBottom="150dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_land" android:layout_marginStart="102dp"
             app:layout_constraintStart_toStartOf="@+id/img_land"/>
     <ImageView
             android:src="@drawable/android_tree10"
@@ -300,7 +300,7 @@
             android:layout_marginEnd="101dp" app:layout_constraintEnd_toEndOf="@+id/img_land"
             app:layout_constraintHorizontal_bias="1.0"/>
     <ImageView
-            android:src="@drawable/android_tree10"
+            android:src="@drawable/android_tree8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/img11"

@@ -84,7 +84,7 @@ class WriteDiaryActivity : AppCompatActivity() {
                 }
                 dialog.dismiss()
             })
-            dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             dialog.show()
         }

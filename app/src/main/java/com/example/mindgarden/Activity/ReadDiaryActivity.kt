@@ -5,9 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.util.Log
+import com.example.mindgarden.Fragment.DiaryListFragment
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import org.jetbrains.anko.startActivity
 import com.example.mindgarden.R
+import org.jetbrains.anko.support.v4.fragmentTabHost
+import android.R.attr.fragment
+import android.support.v4.app.Fragment
+import android.R.attr.fragment
+import android.support.v4.app.FragmentManager
+import com.example.mindgarden.Fragment.MainFragment
+
+
+
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -32,6 +42,9 @@ class ReadDiaryActivity : AppCompatActivity() {
         //뒤로가기 -> DiaryListAcitivy로 이동
         btn_back_toolbar.setOnClickListener{
 
+            //var mFragment: Fragment? = null
+            //val fragmentManager = supportFragmentManager
+            //fragmentManager.beginTransaction().replace(R.id.frame_container, DiaryListFragment).commit()
         }
 
         /*

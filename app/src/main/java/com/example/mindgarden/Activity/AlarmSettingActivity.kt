@@ -1,9 +1,11 @@
 package com.example.mindgarden.Activity
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -13,14 +15,32 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.toast
 import java.util.*
 import com.example.mindgarden.R
+import android.content.DialogInterface
+import android.support.v4.app.NotificationCompat
+import android.util.Log
+import android.widget.TimePicker
+import kotlinx.android.synthetic.main.dialog_alarm_setting.*
+import org.jetbrains.anko.textColorResource
+import android.content.Context.NOTIFICATION_SERVICE
+import android.support.v4.app.NotificationManagerCompat
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+
+
+
 
 class AlarmSettingActivity : AppCompatActivity() {
 
     @SuppressLint("ResourceAsColor")
+    val c = Calendar.getInstance()
+    var hour = c.get(Calendar.HOUR)
+    var minute = c.get(Calendar.MINUTE)
+    var time : Long  = 0
+    val CHANNEL_ID = "MINDGARDEN"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_setting)
-        txtSetting.text = "얼람 설정"
+        txtSetting.text = "알람 설정"
 
         btnBack.setOnClickListener {
             val intent = Intent(this, MypageActivity::class.java)
@@ -30,80 +50,139 @@ class AlarmSettingActivity : AppCompatActivity() {
 
             finish()
         }
-       val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)
+
+        val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)
         val btnSetTime: Button =findViewById(R.id.btnSetTime)
+
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
             btnSetTime.setTextColor(Color.BLACK)
             if (isChecked) {
                 // The toggle is enabled
                 btnSetTime.setOnClickListener {
-                    //TODO
-                    val c = Calendar.getInstance()
-                    val hour = c.get(Calendar.HOUR)
-                    val minute = c.get(Calendar.MINUTE)
-
-                    val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
-                    val builder = AlertDialog.Builder(this)
-
-                    val color= getColor(R.color.colorPrimaryMint)
-                    val alarmTimePicker= dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
-
-
-
-
-
-
-                  alarmTimePicker.setOnTimeChangedListener{
-                            view,hourOfDay,minute->Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
-                        //toast("Time(HH:MM)"+ ${getHourAMPM(hourOfDay)} + ": $minute ${getAMPM(hourOfDay)}")
-                    }
-                     builder.setView(dialogView)
-                        .setPositiveButton("확인") { dialogInterface, i ->
-
-                            /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
-
-                        }
-                        .setNegativeButton("취소") { dialogInterface, i ->
-                            /* 취소일 때 아무 액션이 없으므로 빈칸 */
-                        }
-                        .show()
-
-                //이 부분에 타임피커 다이얼 로그
-
-               // clickTimePicker(btnSetTime)
+                  showDialog()
                 }
                 toast("ddksk")
                 ///팝업창
-                //color에 있는 검정색 어떻게 쓰는지 모르겠어
             } else {
-                // The toggle is disabled
+                //버튼 비활성화 + 글씨 색 바꾸기
+                btnSetTime.isClickable = false
+                val color : String = "#c6c6c6"
+                btnSetTime.setTextColor(Color.parseColor(color))
             }
         }
     }
 
-    // Custom method to get time picker current time as string
-    private fun getPickerTime(timePicker: TimePicker):String{
-        val hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+    fun showDialog(){
+
+        val builder = AlertDialog.Builder(this)
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
+
+        val alarmTimePicker= dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
+        builder.setView(dialogView)
+
+        //val dialog = builder.create()
+
+        //dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        builder.setView(dialogView)
+            .setPositiveButton("확인") { dialogInterface, i ->
+
+                notification(time)
+                Log.e("time", time.toString())
+
+            }
+            .setNegativeButton("취소") { dialogInterface, i ->
+                /* 취소일 때 아무 액션이 없으므로 빈칸 */
+            }
+        builder.show()
+        alarmTimePicker.setOnTimeChangedListener{
+                view,hourOfDay,minute->Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
+                time = getPickerTime(alarmTimePicker)
+        }
+
+
+    }
+
+    //푸시 알람 설정
+    fun notification(time : Long){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.logo_01)
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.android_land)
+            .setLargeIcon(bitmap)
+            .setContentTitle("마인드 가든")
+            .setContentText("오늘의 정원을 가꿀 시간이에요.")
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText("당신의 이야기를 들려주세요"))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            // Set the intent that will fire when the user taps the notification
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(0, builder.build())
+        }
+    }
+
+    /*
+    알람 해제
+     */
+
+
+    private fun getPickerTime(timePicker: TimePicker) : Long {
+        hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePicker.hour
         } else {
             timePicker.currentHour
         }
 
-        val minute = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+       minute = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             timePicker.minute
         }else{
             timePicker.currentMinute
         }
 
-        return "${getHourAMPM(hour)} : $minute ${getAMPM(hour)}"
+
+        val hourToMs1 = HourAMPM() * 3600000
+        val minuteToMs = minute * 6000
+
+        val a = (hourToMs1 + minuteToMs).toLong()
+
+        val milliseconds : Long = a
+        return milliseconds
     }
 
+
+    fun HourAMPM() : Int {
+        val pmHour = hour +12
+        val amHour = hour
+
+        return if(hour>11) pmHour else amHour
+    }
 
     // Custom method to get AM PM value from provided hour
     private fun getAMPM(hour:Int):String{
         return if(hour>11)"PM" else "AM"
     }
-
 
     // Custom method to get hour for AM PM time format
     private fun getHourAMPM(hour:Int):Int{
@@ -139,22 +218,5 @@ class AlarmSettingActivity : AppCompatActivity() {
         // Including both minimum and maximum number
         return r.nextInt((max - min) + 1) + min;
     }
-
-   /* @RequiresApi(Build.VERSION_CODES.N)
-    fun clickTimePicker(view: View) {
-        val c = Calendar.getInstance()
-        val hour = c.get(Calendar.HOUR)
-        val minute = c.get(Calendar.MINUTE)
-
-        val tpd = TimePickerDialog(this,TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
-
-
-            Toast.makeText(this, h.toString() + " : " + m +" : " , Toast.LENGTH_LONG).show()
-
-        }),hour,minute,false)
-
-        tpd.show()
-    }
-*/
 
 }
