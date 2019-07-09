@@ -29,8 +29,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     var isPressed = false
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.day_num.text = dataList[position].date.substring(8, 9)
-        holder.day_text.text = dataList[position].date.substring(11, 13)
+        holder.day_num.text = dataList[position].day_num.toString()
+        holder.day_text.text = dataList[position].day_num_text.toString()
         holder.content.text = dataList[position].diary_content
 
         holder.container.setOnLongClickListener {
