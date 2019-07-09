@@ -1,3 +1,4 @@
 package com.example.mindgarden.Data
 
-data class DiaryListData(var list_id: Int, var year_num: Int, var month_num: Int, var day_num: Int, var day_text: String, var content: String)
+data class DiaryListData(var userIdx: Int, var diaryIdx: Int, var date: String, var diary_content: String,
+                         var weatherIdx: Int, var diary_img: String)
