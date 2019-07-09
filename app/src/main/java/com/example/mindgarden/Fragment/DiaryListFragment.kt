@@ -85,6 +85,8 @@ class DiaryListFragment : Fragment() {
                 }
                 txt_month.setText(month)
             }
+
+            //getDiaryListResponse()
         }
 
         btn_right.setOnClickListener {
@@ -103,6 +105,8 @@ class DiaryListFragment : Fragment() {
                 }
                 txt_month.setText(month)
             }
+
+            //getDiaryListResponse()
         }
 
         configureRecyclerView()
@@ -112,20 +116,34 @@ class DiaryListFragment : Fragment() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
         dataList.add(
             DiaryListData(
-                0, 2019, 7, "금",
-                24, "hi"
+                0, "2019-07-07 Sun 18:40:35", "hi", 5,
+                1, "hi"
+            )
+        )
+
+        dataList.add(
+            DiaryListData(
+                0, "2019-07-05 Fri 18:40:35", "hi", 5,
+                1, "hi"
+            )
+        )
+
+        dataList.add(
+            DiaryListData(
+                0, "2019-07-25 Wed 18:40:35", "hi", 5,
+                1, "hi"
             )
         )
 
         dataList.sortBy { data ->
-            data.day_num }
+            data.date.substring(8, 10).toInt() }
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                dataList.sortBy { data ->  data.day_num }
+                dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                dataList.sortByDescending { data ->  data.day_num }
+                dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 
@@ -144,10 +162,10 @@ class DiaryListFragment : Fragment() {
         //getDiaryListResponse()
     }
 
-    /*private fun getDiaryListResponse(){
+    private fun getDiaryListResponse(){
         var jsonObject = JSONObject()
         //userIdx도 put해줘야
-        jsonObject.put("date", txt_month.toString() + "_" + txt_year.toString())
+        jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val getDiaryListResponse = networkService.getDiaryListResponse(
@@ -167,5 +185,5 @@ class DiaryListFragment : Fragment() {
                 }
             }
         })
-    }*/
+    }
 }
