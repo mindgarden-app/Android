@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.TabLayout
@@ -16,14 +17,24 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.Get.GetLoginResponse
+import com.example.mindgarden.Network.NetworkService
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -32,6 +43,9 @@ class LoginActivity : AppCompatActivity() {
     private var permissionStatus: SharedPreferences? = null
     private var sentToSettings = false
 
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -42,10 +56,21 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[0])
         //setupPermissions(permissionsRequired[1])
         //setupPermissions(permissionsRequired[2])
+        val myWebView = findViewById<View>(R.id.webView) as WebView 
+        
 
         btnLogin.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                WebView.setWebContentsDebuggingEnabled(true)
+            }
+            val settings = myWebView.settings
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
 
-            val loginIntent= Intent(this, PasswordActivity::class.java)
+            myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
+            //getLoginResponse()
+
+            /*val loginIntent= Intent(this, PasswordActivity::class.java)
             // 암호변겅을 누르면
             loginIntent.putExtra("whereFrom","login")
             startActivity(loginIntent)
@@ -54,7 +79,30 @@ class LoginActivity : AppCompatActivity() {
             //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
             // 일단 로그인 받아오면?>>>
             //  startActivity<PasswordActivity>("from" to  "login")
+            */
         }
+    }
+
+    private fun getLoginResponse(){
+        var jsonObject = JSONObject()
+        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+
+        val getLoginResponse = networkService.getLoginResponse(
+            "application/json", gsonObject)
+        getLoginResponse.enqueue(object:Callback<GetLoginResponse>{
+            override fun onFailure(call: Call<GetLoginResponse>, t: Throwable) {
+                Log.e("login", t.toString())
+            }
+
+            override fun onResponse(call:  Call<GetLoginResponse>, response: Response<GetLoginResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 500) {
+                        val tmp: ArrayList<Int> = response.body()!!.data!!
+                        //데베에 저장
+                    }
+                }
+            }
+        })
     }
     private fun requestPermission() {
         if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED
