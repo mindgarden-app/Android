@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,21 +13,12 @@ import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
-import android.widget.TabHost
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Get.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import kotlin.collections.ArrayList
 
 

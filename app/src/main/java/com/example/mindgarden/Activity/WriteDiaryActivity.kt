@@ -51,7 +51,6 @@ class WriteDiaryActivity : AppCompatActivity() {
        }
         txt_mood_text_write_diary.setOnClickListener {
             moodChoice()
-
         }
 
         //갤러리 접근하여 이미지 얻어오기

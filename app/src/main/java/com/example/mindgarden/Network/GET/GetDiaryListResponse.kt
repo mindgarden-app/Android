@@ -1,4 +1,4 @@
-package com.example.mindgarden.Network.Get
+package com.example.mindgarden.Network.GET
 
 import com.example.mindgarden.Data.DiaryListData
 

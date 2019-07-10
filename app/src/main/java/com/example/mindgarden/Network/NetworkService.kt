@@ -1,6 +1,6 @@
 package com.example.mindgarden.Network
 
-import com.example.mindgarden.Network.Get.GetDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutReadDiaryResponse
 import com.google.gson.JsonObject

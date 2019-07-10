@@ -17,6 +17,7 @@ import android.app.Activity
 import android.support.v4.app.FragmentManager
 import android.support.v4.view.PagerAdapter
 import com.example.mindgarden.Fragment.MainFragment
+import org.jetbrains.anko.startActivityForResult
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class ReadDiaryActivity : AppCompatActivity() {
 
         //수정버튼 -> WriteDiaryActivity로 넘어가기
             btn_modify_diary_toolbar.setOnClickListener {
-                startActivity<WriteDiaryActivity>()
+                startActivityForResult<WriteDiaryActivity>(1100)
             }
 
 
@@ -41,12 +42,15 @@ class ReadDiaryActivity : AppCompatActivity() {
                 finish()
         }
 
-        /*
-        이미지가 있다면
-         img_gallary_read_diary.visibility = View.VISIBLE
-         서버에 받아온 이미지 넣어주기
-         */
+
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+         if(requestCode == 1100){
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
+    }
 
 }
