@@ -84,7 +84,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            //getDiaryListResponse()
+            getDiaryListResponse()
         }
 
         btn_right.setOnClickListener {
@@ -104,7 +104,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            //getDiaryListResponse()
+            getDiaryListResponse()
         }
 
         configureRecyclerView()
@@ -112,7 +112,7 @@ class DiaryListFragment : Fragment() {
 
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
-        dataList.add(
+        /*dataList.add(
             DiaryListData(
                 0, "2019-07-07 Sun 18:40:35", "hi", 5,
                 1, "hi"
@@ -131,7 +131,7 @@ class DiaryListFragment : Fragment() {
                 0, "2019-07-25 Wed 18:40:35", "hi", 5,
                 1, "hi"
             )
-        )
+        )*/
 
         dataList.sortBy { data ->
             data.date.substring(8, 10).toInt() }
@@ -157,25 +157,29 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-        //getDiaryListResponse()
+        getDiaryListResponse()
     }
 
     private fun getDiaryListResponse(){
-        var jsonObject = JSONObject()
+        //var jsonObject = JSONObject()
+        //jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
+        //jsonObject.put("userIdx", 3)
         //userIdx도 put해줘야
-        jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
 
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+        //val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", gsonObject)
+            "application/json", 1, txt_year.text.toString() + "-" + txt_month.text.toString())
+         Log.e("통신","통신시작")
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
+                Log.e("통신","통신시작2")
             }
 
             override fun onResponse(call: Call<GetDiaryListResponse>, response: Response<GetDiaryListResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
+                        Log.e("통신","통신시작3")
                         val tmp: ArrayList<DiaryListData> = response.body()!!.data!!
                         diaryListRecyclerViewAdapter.dataList = tmp
                         diaryListRecyclerViewAdapter.notifyDataSetChanged()

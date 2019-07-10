@@ -16,22 +16,26 @@ import retrofit2.http.Header
 import retrofit2.http.*
 
 interface NetworkService {
-    @GET("/diarylist")
+    @GET("/diarylist/{userIdx}/{date}")
     fun getDiaryListResponse(
         @Header("Content-Type") content_type: String,
-        @Body() body: JsonObject
+        @Path("userIdx") userIdx: Int,
+        @Path("date") date: String
+        //@Body() body: JsonObject
     ): Call<GetDiaryListResponse>
 
-    @GET("/diarylist/click")
+    @GET("/diarylist/click/{userIdx}/{date}")
     fun getDiaryListClickResponse(
         @Header("Content-Type") content_type: String,
-        @Body() body: JsonObject
+        @Path("userIdx") userIdx: Int,
+        @Path("date") date: String
     ): Call<GetDiaryListClickResponse>
 
     @DELETE("/diarylist/delete")
     fun deleteDiaryListResponse(
         @Header("Content-Type") content_type: String,
-        @Body() body: JsonObject
+        @Query("date") date: String,
+        @Query("userIdx") userIdx: Int
     ): Call<DeleteDiaryListResponse>
 
     //일기 등록

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4.4dp"
+                android:background="#ffffff">
+
+    <LinearLayout
+            android:id="@+id/ll_rv_item_grid_container"
+            android:layout_width="51.75dp"
+            android:layout_height="51.75dp"
+            android:gravity="center"
+            android:background="@drawable/inventory_click_border">
+
+        <ImageView
+                android:id="@+id/img_rv_item_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tree_size"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -56,8 +56,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            //getDiaryListClickResponse(dataList[position].diaryIdx, dataList[position].date.substring(0, 10))
-            ctx.startActivity<ReadDiaryActivity>() //서버 통신하고 나서 삭제
+            getDiaryListClickResponse(dataList[position].date.substring(0, 10))
+            //ctx.startActivity<ReadDiaryActivity>() //서버 통신하고 나서 삭제
         }
 
         if (isPressed) {
@@ -70,7 +70,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
-                    //deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
+                    //deleteDiaryListResponse(dataList[position].date.substring(0, 10))
                     //밑에는 서버 통신하고 삭제
                     dataList.removeAt(holder.adapterPosition)
                     notifyItemRemoved(holder.adapterPosition)
@@ -98,14 +98,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
     }
 
-    private fun getDiaryListClickResponse(index: Int, clickDate: String){
-        var jsonObject = JSONObject()
-        jsonObject.put("diaryIdx", index)
-        jsonObject.put("date", clickDate)
-
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+    private fun getDiaryListClickResponse(clickDate: String){
         val getDiaryListClickResponse = networkService.getDiaryListClickResponse(
-            "application/json", gsonObject)
+            "application/json", 1, clickDate)
         getDiaryListClickResponse.enqueue(object: Callback<GetDiaryListClickResponse> {
             override fun onFailure(call: Call<GetDiaryListClickResponse>, t: Throwable) {
                 Log.e("일기 조희 실패", t.toString())
@@ -114,7 +109,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             override fun onResponse(call: Call<GetDiaryListClickResponse>, response: Response<GetDiaryListClickResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-
+                        ctx.startActivity<ReadDiaryActivity>()
                     }
                 }
             }
@@ -122,13 +117,13 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
     }
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
-        var jsonObject = JSONObject()
+        //var jsonObject = JSONObject()
+        //jsonObject.put("date", deleteDate)
         //userIdx 넣어야
-        jsonObject.put("date", deleteDate)
 
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+        //val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", gsonObject)
+            "application/json", deleteDate, 3)
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
