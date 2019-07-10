@@ -5,7 +5,6 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -15,18 +14,12 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.toast
 import java.util.*
 import com.example.mindgarden.R
-import android.content.DialogInterface
-import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.widget.TimePicker
-import kotlinx.android.synthetic.main.dialog_alarm_setting.*
-import org.jetbrains.anko.textColorResource
-import android.content.Context.NOTIFICATION_SERVICE
-import android.support.v4.app.NotificationManagerCompat
-import android.graphics.BitmapFactory
+import android.app.AlarmManager
 import android.graphics.Bitmap
-
-
+import android.graphics.BitmapFactory
+import com.example.mindgarden.Service.BroadcastD
 
 
 class AlarmSettingActivity : AppCompatActivity() {
@@ -37,6 +30,7 @@ class AlarmSettingActivity : AppCompatActivity() {
     var minute = c.get(Calendar.MINUTE)
     var time : Long  = 0
     val CHANNEL_ID = "MINDGARDEN"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_setting)
@@ -88,7 +82,7 @@ class AlarmSettingActivity : AppCompatActivity() {
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
 
-                notification(time)
+                setAlarm(time)
                 Log.e("time", time.toString())
 
             }
@@ -101,11 +95,13 @@ class AlarmSettingActivity : AppCompatActivity() {
                 time = getPickerTime(alarmTimePicker)
         }
 
-
     }
 
-    //푸시 알람 설정
-    fun notification(time : Long){
+    /*
+    알람 해제
+     */
+
+    fun setChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.channel_name)
             val descriptionText = getString(R.string.channel_description)
@@ -118,36 +114,33 @@ class AlarmSettingActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
-        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, R.drawable.img_weather11_none)
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.img_weather11_none)
-            .setLargeIcon(bitmap)
-            .setContentTitle("마인드 가든")
-            .setContentText("오늘의 정원을 가꿀 시간이에요.")
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText("당신의 이야기를 들려주세요"))
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(0, builder.build())
-        }
     }
 
     /*
-    알람 해제
+    [알람설정]
+    AlaramManager에게
+    set 정보 : 1. PendingIntent(어떤 receiver를 호출할지에 대한 intent를 가짐)
+                2. delay(얼마 delay된 후 실행시킬지)
+    Alarm set -> AlarmManager가 receiver에게 broadcast -> receiver는 service를 호출하여 기능 실행
      */
 
+    //알람 매니저 setting
+    fun setAlarm(time : Long){
+        setChannel()
 
+        //AlarmManager에게 알림 행위 등록
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        //알람이 발생했을 경우 BroadcastD에게 방송을 해주기위해 명시시
+       val intent = Intent(this, BroadcastD::class.java)
+        val sender : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        //알람 예약
+        //RTC_WAKEUP 대기 상태일 경우 단말기를 활성화 시킴
+        am.set(AlarmManager.RTC_WAKEUP, time, sender)
+
+    }
+    //Push 알림 울릴 시간 설정
     private fun getPickerTime(timePicker: TimePicker) : Long {
         hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePicker.hour
@@ -171,7 +164,7 @@ class AlarmSettingActivity : AppCompatActivity() {
         return milliseconds
     }
 
-
+    //시간이 AM, PM인지 판별
     fun HourAMPM() : Int {
         val pmHour = hour +12
         val amHour = hour
@@ -179,12 +172,12 @@ class AlarmSettingActivity : AppCompatActivity() {
         return if(hour>11) pmHour else amHour
     }
 
-    // Custom method to get AM PM value from provided hour
+    // AM, PM 문자 반환 (토스트에 쓰고 있음 추후 지우자)
     private fun getAMPM(hour:Int):String{
         return if(hour>11)"PM" else "AM"
     }
 
-    // Custom method to get hour for AM PM time format
+    // 추후 지워도 될듯
     private fun getHourAMPM(hour:Int):Int{
         // Return the hour value for AM PM time format
         var modifiedHour = if (hour>11)hour-12 else hour
