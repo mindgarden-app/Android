@@ -31,11 +31,11 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<GetDiaryListClickResponse>
 
-    @DELETE("/diarylist/delete")
+    @DELETE("/diarylist/delete/{userIdx}/{date}")
     fun deleteDiaryListResponse(
         @Header("Content-Type") content_type: String,
-        @Query("date") date: String,
-        @Query("userIdx") userIdx: Int
+        @Path("userIdx") userIdx: Int,
+        @Path("date") date: String
     ): Call<DeleteDiaryListResponse>
 
     //일기 등록

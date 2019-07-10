@@ -1,7 +1,6 @@
 package com.example.mindgarden.Activity
 
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,15 +10,12 @@ import android.widget.GridView
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.GridViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
-import com.example.mindgarden.Adapter.MoodChoiceRecyclerViewAdapter
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
-import com.example.mindgarden.Data.MoodChoiceData
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.activity_mood_choice.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
 import org.jetbrains.anko.startActivity
 
@@ -58,7 +54,7 @@ class InventoryActivity : AppCompatActivity() {
 
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
-        gridList.add(GridData(100, Color.BLUE)) // 호수
+        gridList.add(GridData(100, R.drawable.tree_size)) // 호수
         gridList.add(GridData(101, R.drawable.tree_size)) // 호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))

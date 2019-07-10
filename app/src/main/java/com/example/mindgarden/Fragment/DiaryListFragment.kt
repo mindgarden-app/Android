@@ -21,9 +21,6 @@ import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -161,25 +158,16 @@ class DiaryListFragment : Fragment() {
     }
 
     private fun getDiaryListResponse(){
-        //var jsonObject = JSONObject()
-        //jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
-        //jsonObject.put("userIdx", 3)
-        //userIdx도 put해줘야
-
-        //val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", 1, txt_year.text.toString() + "-" + txt_month.text.toString())
-         Log.e("통신","통신시작")
+            "application/json", 5, txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
-                Log.e("통신","통신시작2")
             }
 
             override fun onResponse(call: Call<GetDiaryListResponse>, response: Response<GetDiaryListResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        Log.e("통신","통신시작3")
                         val tmp: ArrayList<DiaryListData> = response.body()!!.data!!
                         diaryListRecyclerViewAdapter.dataList = tmp
                         diaryListRecyclerViewAdapter.notifyDataSetChanged()

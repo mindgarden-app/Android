@@ -20,31 +20,45 @@
                 android:layout_height="69.03dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/img_minigarden"
-                android:id="@+id/img_minigarden" />
+                app:srcCompat="@drawable/img_map"
+                android:id="@+id/img_map" />
 
     </LinearLayout>
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="0px" android:layout_weight="6">
+    <ImageView
+            android:layout_width="20.15dp"
+            android:layout_height="20.15dp"
+            android:src="@drawable/img_point_n"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"/>
 
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                        tools:layout_editor_absoluteY="220dp" tools:layout_editor_absoluteX="0dp">
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-            <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_grid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentTop="true"
-            ></android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
-    </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+        ></android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <ImageView
+            android:layout_width="20.15dp"
+            android:layout_height="20.15dp"
+            android:src="@drawable/img_point_s"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"/>
 
     <ImageView
             android:id="@+id/btn_choose"
             android:layout_width="28.04dp"
             android:layout_height="27.14dp"
             android:layout_gravity="right"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10.7dp"
             android:layout_marginRight="15dp"
             app:srcCompat="@drawable/btn_choose"/>

@@ -1,8 +1,8 @@
 package com.example.mindgarden.Adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +24,12 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
         Glide.with(ctx)
             .load(gridDataList[position].img)
             .into(holder.grid_img)
+
+        gridDataList[14].img = R.drawable.img_small_lake
+        gridDataList[15].img = R.drawable.img_small_lake
+        gridDataList[20].img = R.drawable.img_small_lake
+        gridDataList[21].img = R.drawable.img_small_lake
+        Log.e("grid", gridDataList[14].product_id.toString())
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
