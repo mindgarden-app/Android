@@ -47,7 +47,7 @@ class WriteDiaryActivity : AppCompatActivity() {
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
     lateinit var selectPicUri : Uri
-    var userIdx = 3 //유저 인덱스
+    var userIdx = 5 //유저 인덱스
     var weatherIdx  = 0 //날씨 인덱스
 
 

@@ -86,7 +86,7 @@
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/icn_gallary"
+                            android:src="@drawable/icn_gallery"
                             android:layout_centerInParent="true"
                             android:id="@+id/icn_gallary_write_diary"/>
                 </RelativeLayout>

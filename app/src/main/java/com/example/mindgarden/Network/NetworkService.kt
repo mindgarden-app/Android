@@ -55,4 +55,6 @@ interface NetworkService {
         @Part("date") date : RequestBody,
         @Part diary_img: MultipartBody.Part
     ) : Call<PutReadDiaryResponse>
+
+
 }

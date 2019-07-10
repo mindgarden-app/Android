@@ -1,10 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Activity.ModifyDiaryActivity">
+        tools:context=".Activity.MoodChoiceActivity"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <include layout="@layout/toolbar_write_diary"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+    >
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_moodchoice"
+                    android:id="@+id/img_mood_text_modify_diary"
+                    android:layout_centerInParent="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="기분을 선택하세요."
+                    android:fontFamily="@font/notosanscjkr_regular"
+                    android:textColor="#2B2B2B"
+                    android:textSize="14dp"
+                    android:id="@+id/txt_mood_text_modify_diary"/>
+
+            <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignLeft="@id/img_mood_text_modify_diary">
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/btn_mood_show"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/img_weather11_none"
+                        android:id="@+id/btn_mood_icon_modify_diary"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1.0"
+                      android:orientation="vertical">
+
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="230dp"
+            >
+
+                <ImageView android:layout_width="match_parent"
+                           android:layout_height="210dp"
+                           android:layout_marginRight="40dp"
+                           android:layout_marginLeft="40dp"
+                           android:layout_centerInParent="true"
+                           android:background="@drawable/img_shadow"
+                           android:id="@+id/img_gallary_modify_diary"/>
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icn_gallery"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/icn_gallary_modify_diary"/>
+
+            </RelativeLayout>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="내용"
+                    android:fontFamily="@font/notosanscjkr_regular"
+                    android:textSize="13.5dp"
+                    android:textColor="#2B2B2B"
+                    android:background="@null"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/edt_content_modify_diary"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
+

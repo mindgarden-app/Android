@@ -32,7 +32,7 @@ class ReadDiaryActivity : AppCompatActivity() {
 
         //수정버튼 -> WriteDiaryActivity로 넘어가기
             btn_modify_diary_toolbar.setOnClickListener {
-                startActivityForResult<WriteDiaryActivity>(1100)
+                startActivityForResult<ModifyDiaryActivity>(1100)
             }
 
 

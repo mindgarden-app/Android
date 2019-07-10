@@ -48,6 +48,7 @@
                   android:layout_marginRight="25dp"
                   android:fontFamily="@font/notosanscjkr_regular"
                   android:textColor="#ffffff"
+                  android:id="@+id/txt_save_toolbar"
         />
     </RelativeLayout>
 
