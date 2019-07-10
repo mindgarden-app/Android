@@ -26,15 +26,19 @@ import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Get.GetLoginResponse
 import com.example.mindgarden.Network.NetworkService
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_login.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -70,6 +74,26 @@ class LoginActivity : AppCompatActivity() {
             myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
             //getLoginResponse()
 
+            val url = "http://13.125.190.74:3000/auth/login/success"
+            val request = Request.Builder().url(url).build()
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : okhttp3.Callback{
+
+                override fun onFailure(call: okhttp3.Call, e: IOException) {
+                    Log.d("요청","요청 완료")
+                    Log.e("","")
+
+                }
+
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    Log.d("요청","요청 실패 ")
+                }
+            })
+
+
+
+
             /*val loginIntent= Intent(this, PasswordActivity::class.java)
             // 암호변겅을 누르면
             loginIntent.putExtra("whereFrom","login")
@@ -82,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
             */
         }
     }
+
 
     private fun getLoginResponse(){
         var jsonObject = JSONObject()
