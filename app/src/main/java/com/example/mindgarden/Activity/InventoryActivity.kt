@@ -47,8 +47,8 @@ class InventoryActivity : AppCompatActivity() {
     get(){
         val itemList :ArrayList<CustomGridViewLayout> = ArrayList<CustomGridViewLayout>()
 
-        //1
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
+        /*
+        itemList.add(CustomGridViewLayout(R.drawable))
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
@@ -94,7 +94,7 @@ class InventoryActivity : AppCompatActivity() {
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
+*/
         return itemList
     }
 

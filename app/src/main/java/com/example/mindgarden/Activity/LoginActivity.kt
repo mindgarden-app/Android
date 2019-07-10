@@ -1,10 +1,13 @@
 package com.example.mindgarden.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +20,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
@@ -29,6 +33,7 @@ import com.example.mindgarden.Network.NetworkService
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -39,6 +44,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import java.util.logging.Logger
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -47,9 +53,14 @@ class LoginActivity : AppCompatActivity() {
     private var permissionStatus: SharedPreferences? = null
     private var sentToSettings = false
 
+
+
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
+
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -60,41 +71,69 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[0])
         //setupPermissions(permissionsRequired[1])
         //setupPermissions(permissionsRequired[2])
-        val myWebView = findViewById<View>(R.id.webView) as WebView 
-        
+        val myWebView = findViewById<AdvancedWebView>(R.id.webView) as AdvancedWebView
+        val settings = myWebView.settings
 
         btnLogin.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 WebView.setWebContentsDebuggingEnabled(true)
             }
-            val settings = myWebView.settings
-            settings.javaScriptEnabled = true
-            settings.domStorageEnabled = true
+            myWebView.apply {
+                setListener(this@LoginActivity, object : AdvancedWebView.Listener {
+                    override fun onDownloadRequested(
+                        url: String?,
+                        suggestedFilename: String?,
+                        mimeType: String?,
+                        contentLength: Long,
+                        contentDisposition: String?,
+                        userAgent: String?
+                    ) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
 
+                    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onPageFinished(url: String?) {
+
+                        url?.let {
+                            if (it.endsWith("http://13.125.190.74:3000/auth/login/success")) {
+                                myWebView.visibility = View.GONE
+                                myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
+
+                                val loginIntent= Intent(this@LoginActivity, PasswordActivity::class.java)
+                                // 암호변겅을 누르면
+                                loginIntent.putExtra("whereFrom","login")
+                                startActivity(loginIntent)
+                            }
+                        }
+                    }
+                    override fun onPageStarted(url: String?, favicon: Bitmap?) {
+                        Log.e("로그인", "웹뷰 시작한당 $url")
+                    }
+
+                    override fun onExternalPageRequest(url: String?) {
+                        Log.e("로그인", "웹뷰 리퀘스트 $url")
+                    }
+                })
+
+                settings.javaScriptEnabled = true
+                addJavascriptInterface(MyJavaScriptInterface(), "Android")
+            }
             myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
-            //getLoginResponse()
-
-            val url = "http://13.125.190.74:3000/auth/login/success"
-            val request = Request.Builder().url(url).build()
-            val client = OkHttpClient()
-
-            client.newCall(request).enqueue(object : okhttp3.Callback{
-
-                override fun onFailure(call: okhttp3.Call, e: IOException) {
-                    Log.d("요청","요청 완료")
-                    Log.e("","")
-
-                }
-
-                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                    Log.d("요청","요청 실패 ")
-                }
-            })
 
 
+            //settings.domStorageEnabled = true
+
+        }
+
+        //getLoginResponse()
+
+        // val url = "http://13.125.190.74:3000/auth/login/success"
 
 
-            /*val loginIntent= Intent(this, PasswordActivity::class.java)
+        /*val loginIntent= Intent(this, PasswordActivity::class.java)
             // 암호변겅을 누르면
             loginIntent.putExtra("whereFrom","login")
             startActivity(loginIntent)
@@ -104,9 +143,25 @@ class LoginActivity : AppCompatActivity() {
             // 일단 로그인 받아오면?>>>
             //  startActivity<PasswordActivity>("from" to  "login")
             */
+
+    }
+    inner class MyJavaScriptInterface() {
+        @Suppress()
+        @JavascriptInterface
+        fun getResponse(response: String) {
+            val json = JsonParser().parse(response).asJsonObject
+            Log.e("get response $json \nfrom $response","get response $json \nfrom $response")
+            if (json == null || !json.has("data") || json["data"].asString.isNullOrEmpty()) {
+                setResult(Activity.RESULT_CANCELED)
+            }
+            else {
+                setResult(Activity.RESULT_OK, Intent().apply {
+                    putExtra("token", json["data"].asString)
+                })
+            }
+            finish()
         }
     }
-
 
     private fun getLoginResponse(){
         var jsonObject = JSONObject()
@@ -119,9 +174,10 @@ class LoginActivity : AppCompatActivity() {
                 Log.e("login", t.toString())
             }
 
-            override fun onResponse(call:  Call<GetLoginResponse>, response: Response<GetLoginResponse>) {
+            override fun onResponse(call:  Call<GetLoginResponse>, response: Response<GetLoginResponse>)  {
+
                 if (response.isSuccessful) {
-                    if (response.body()!!.status == 500) {
+                    if (response.body()!!.status == 200) {
                         val tmp: ArrayList<Int> = response.body()!!.data!!
                         //데베에 저장
                     }
@@ -268,3 +324,4 @@ private fun makeRequest(requestPermission: String) {
         })
     }
 }
+

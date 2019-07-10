@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent" tools:ignore="MissingConstraints"
             android:layout_marginBottom="100dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <WebView
+    <im.delight.android.webview.AdvancedWebView
             android:id="@+id/webView"
             android:layout_width="416dp"
             android:layout_height="316dp"
