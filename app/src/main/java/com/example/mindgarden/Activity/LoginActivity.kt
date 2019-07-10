@@ -102,6 +102,7 @@ class LoginActivity : AppCompatActivity() {
                                 myWebView.visibility = View.GONE
                                 myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
 
+
                                 val loginIntent= Intent(this@LoginActivity, PasswordActivity::class.java)
                                 // 암호변겅을 누르면
                                 loginIntent.putExtra("whereFrom","login")
@@ -120,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
 
                 settings.javaScriptEnabled = true
                 addJavascriptInterface(MyJavaScriptInterface(), "Android")
+
             }
             myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
 
@@ -145,18 +147,22 @@ class LoginActivity : AppCompatActivity() {
             */
 
     }
-    inner class MyJavaScriptInterface() {
+    inner class MyJavaScriptInterface{
         @Suppress()
         @JavascriptInterface
         fun getResponse(response: String) {
             val json = JsonParser().parse(response).asJsonObject
+            val gsonObject = JsonParser().parse(json.toString()) as JsonObject
             Log.e("get response $json \nfrom $response","get response $json \nfrom $response")
-            if (json == null || !json.has("data") || json["data"].asString.isNullOrEmpty()) {
+            if (json == null || !gsonObject.has("userIdx")) {
                 setResult(Activity.RESULT_CANCELED)
             }
             else {
+                val temp :Int=gsonObject["userIdx"]!!.asInt
+                SharedPreferenceController.setUserID(this@LoginActivity,temp)
+                Log.e("userID",SharedPreferenceController.getUserID(this@LoginActivity).toString())
                 setResult(Activity.RESULT_OK, Intent().apply {
-                    putExtra("token", json["data"].asString)
+                    putExtra("userId", temp)
                 })
             }
             finish()
@@ -178,7 +184,10 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        val tmp: ArrayList<Int> = response.body()!!.data!!
+                        val tmp: Int = response.body()!!.data!!
+                        Log.e("json",tmp.toString())
+                        SharedPreferenceController.setUserID(this@LoginActivity,tmp)
+                        Log.e("userID",SharedPreferenceController.getUserID(this@LoginActivity).toString())
                         //데베에 저장
                     }
                 }

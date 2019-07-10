@@ -4,5 +4,5 @@ class GetLoginResponse (
     val status: Int,
     val success: Boolean,
     val message: String,
-    val data: ArrayList<Int>?
+    val data: Int?
 )
