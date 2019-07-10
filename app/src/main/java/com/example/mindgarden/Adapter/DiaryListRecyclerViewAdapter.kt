@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,27 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.Data.DiaryListData
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryListClickResponse
+import com.example.mindgarden.Network.GET.GetDiaryListResponse
+import com.example.mindgarden.Network.NetworkService
 
 import com.example.mindgarden.R
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
     var context : Context = ctx
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -29,8 +45,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     var isPressed = false
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.day_num.text = dataList[position].day_num.toString()
-        holder.day_text.text = dataList[position].day_num_text.toString()
+        holder.day_num.text = dataList[position].date.substring(8, 10)
+        holder.day_text.text = dataList[position].date.substring(11, 14)
         holder.content.text = dataList[position].diary_content
 
         holder.container.setOnLongClickListener {
@@ -40,7 +56,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            ctx.startActivity<ReadDiaryActivity>()
+            //getDiaryListClickResponse(dataList[position].diaryIdx, dataList[position].date.substring(0, 10))
+            ctx.startActivity<ReadDiaryActivity>() //서버 통신하고 나서 삭제
         }
 
         if (isPressed) {
@@ -53,6 +70,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
+                    //deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
+                    //밑에는 서버 통신하고 삭제
                     dataList.removeAt(holder.adapterPosition)
                     notifyItemRemoved(holder.adapterPosition)
                     notifyItemRangeChanged(holder.adapterPosition, dataList.size)
@@ -77,6 +96,54 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         } else {
             holder.lay1.visibility = View.GONE
         }
+    }
+
+    private fun getDiaryListClickResponse(index: Int, clickDate: String){
+        var jsonObject = JSONObject()
+        jsonObject.put("diaryIdx", index)
+        jsonObject.put("date", clickDate)
+
+        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+        val getDiaryListClickResponse = networkService.getDiaryListClickResponse(
+            "application/json", gsonObject)
+        getDiaryListClickResponse.enqueue(object: Callback<GetDiaryListClickResponse> {
+            override fun onFailure(call: Call<GetDiaryListClickResponse>, t: Throwable) {
+                Log.e("일기 조희 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetDiaryListClickResponse>, response: Response<GetDiaryListClickResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+
+                    }
+                }
+            }
+        })
+    }
+
+    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
+        var jsonObject = JSONObject()
+        //userIdx 넣어야
+        jsonObject.put("date", deleteDate)
+
+        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+        val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
+            "application/json", gsonObject)
+        deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
+            override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
+                Log.e("일기 삭제 실패", t.toString())
+            }
+
+            override fun onResponse(call: Call<DeleteDiaryListResponse>, response: Response<DeleteDiaryListResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        dataList.removeAt(deleteIndex)
+                        notifyItemRemoved(deleteIndex)
+                        notifyItemRangeChanged(deleteIndex, dataList.size)
+                    }
+                }
+            }
+        })
     }
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {

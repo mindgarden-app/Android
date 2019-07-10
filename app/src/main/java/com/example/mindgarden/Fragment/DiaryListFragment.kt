@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,14 @@ import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
 import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.collections.ArrayList
 
 
@@ -75,6 +83,8 @@ class DiaryListFragment : Fragment() {
                 }
                 txt_month.setText(month)
             }
+
+            //getDiaryListResponse()
         }
 
         btn_right.setOnClickListener {
@@ -93,6 +103,8 @@ class DiaryListFragment : Fragment() {
                 }
                 txt_month.setText(month)
             }
+
+            //getDiaryListResponse()
         }
 
         configureRecyclerView()
@@ -102,20 +114,34 @@ class DiaryListFragment : Fragment() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
         dataList.add(
             DiaryListData(
-                0, 2019, 7, "금",
-                24, "hi"
+                0, "2019-07-07 Sun 18:40:35", "hi", 5,
+                1, "hi"
+            )
+        )
+
+        dataList.add(
+            DiaryListData(
+                0, "2019-07-05 Fri 18:40:35", "hi", 5,
+                1, "hi"
+            )
+        )
+
+        dataList.add(
+            DiaryListData(
+                0, "2019-07-25 Wed 18:40:35", "hi", 5,
+                1, "hi"
             )
         )
 
         dataList.sortBy { data ->
-            data.day_num }
+            data.date.substring(8, 10).toInt() }
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                dataList.sortBy { data ->  data.day_num }
+                dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                dataList.sortByDescending { data ->  data.day_num }
+                dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 
@@ -131,14 +157,13 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-       // getDiaryListResponse()
+        //getDiaryListResponse()
     }
 
-    /*
     private fun getDiaryListResponse(){
         var jsonObject = JSONObject()
         //userIdx도 put해줘야
-        jsonObject.put("date", txt_month.toString() + "_" + txt_year.toString())
+        jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val getDiaryListResponse = networkService.getDiaryListResponse(
@@ -159,6 +184,4 @@ class DiaryListFragment : Fragment() {
             }
         })
     }
-     */
-
 }
