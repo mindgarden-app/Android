@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -18,9 +17,13 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activity.MainCalendarActivity"
-                  android:theme="@style/Theme.MyPopUpWindow">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.ModifyDiaryActivity">
+        </activity>
+        <activity
+                android:name=".Activity.MainCalendarActivity"
+                android:theme="@style/Theme.MyPopUpWindow">
         </activity>
         <activity
                 android:name=".Activity.MoodChoiceActivity"
@@ -58,9 +61,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Service.BroadcastD"
-                  android:enabled="true"
-                  android:exported="true"></receiver>
+        <receiver
+                android:name=".Service.BroadcastD"
+                android:enabled="true"
+                android:exported="true"/>
     </application>
 
 </manifest>

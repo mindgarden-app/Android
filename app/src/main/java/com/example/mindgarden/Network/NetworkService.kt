@@ -38,21 +38,21 @@ interface NetworkService {
     @Multipart
     @POST("/diary/save")
     fun postWriteDiaryResponse(
-        @Header("Content-Type") content_type: RequestBody,
         @Part("diary_content") diary_content : RequestBody,
         @Part("userIdx") userIdx : Int,
-        @Part diary_img : MultipartBody.Part,
-        @Part("weatherIdx") weatherIdx : Int
+        @Part("weatherIdx") weatherIdx : Int,
+        @Part diary_img : MultipartBody.Part
+
     ): Call<PostWriteDiaryResponse>
 
     //일기 수정
     @Multipart
     @PUT("/garden/complete")
     fun putReadDiaryResponse(
-        @Header("Content-Type") content_type: RequestBody,
+        @Header("Content-Type") content_type: String,
         @Part("userIdx") userIdx: Int,
-        @Part diary_img: MultipartBody.Part,
         @Part("weatherIdx") weatherIdx: Int,
-        @Part("date") date : RequestBody
+        @Part("date") date : RequestBody,
+        @Part diary_img: MultipartBody.Part
     ) : Call<PutReadDiaryResponse>
 }

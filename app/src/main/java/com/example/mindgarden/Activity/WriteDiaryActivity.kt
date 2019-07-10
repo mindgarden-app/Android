@@ -17,10 +17,26 @@ import android.provider.MediaStore.Images
 import android.view.View
 import android.widget.*
 import android.graphics.Bitmap
-import android.opengl.Visibility
+import android.graphics.BitmapFactory
+import android.util.Log
+import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.jetbrains.anko.startActivityForResult
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class WriteDiaryActivity : AppCompatActivity() {
@@ -29,6 +45,15 @@ class WriteDiaryActivity : AppCompatActivity() {
     val REQUEST_CODE_SELECT_IMAGE = 1004
 
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
+
+    lateinit var selectPicUri : Uri
+    var userIdx = 3 //유저 인덱스
+    var weatherIdx  = 0 //날씨 인덱스
+
+
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +66,8 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         btn_save_diary_toolbar.setOnClickListener {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
-            //startActivity<ReadDiaryActivity>()
+            postWriteDiaryResponse()
+            Log.e("postWriteDiary", "ok")
             startActivityForResult<ReadDiaryActivity>(1100)
         }
 
@@ -96,13 +122,20 @@ class WriteDiaryActivity : AppCompatActivity() {
         //갤러리 접근
         if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                selectImage(data)
+                //gallaryImg = selectImage(data)
+                data?.let {
+                    selectPicUri = it.data
+                    Glide.with(this).load(selectPicUri)
+                        .into(img_gallary_write_diary)
+                    icn_gallary_write_diary.visibility = View.INVISIBLE
+                }
             }
         }
 
         //기분선택 팝업 -> this
         if(requestCode == REQUEST_CODE_WRITE_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
+                weatherIdx = data!!.getIntExtra("weatherIdx", 0)
                 //선택한 기분 아이콘 넣어주기
                 btn_mood_icon_write_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
@@ -123,45 +156,59 @@ class WriteDiaryActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE_WRITE_ACTIVITY)
     }
 
-    //갤러리에서 선택된 이미지를 ImageView에 넣어주기
-    private fun selectImage(data : Intent?){
-        /*
-        이미지를 EditText 중간중간에 삽입 -> 서버 통신이 어려울 것 같아서 바꿈
-        val st_index = edt_content_write_diary.getSelectionStart()
-        edt_content_write_diary.getText().insert(st_index, "****")
-        val et_index = edt_content_write_diary.getSelectionEnd()
-        val span = edt_content_write_diary.getText()
-        val image_bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data!!.getData())
-
-        span.setSpan(ImageSpan(image_bitmap), st_index, et_index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        */
-
-        //이미지를 글 상단 이미지뷰에 삽입
-        val name_Str = getImageNameToUri(data!!.getData())
-
-        //이미지를 비트맵으로 받아오기
-        val image_bitmap = Images.Media.getBitmap(contentResolver, data.data)
-        img_gallary_write_diary.setImageBitmap(image_bitmap)
-        icn_gallary_write_diary.visibility = View.INVISIBLE
-
-    }
-
     //이미지 삭제
     private fun deleteImage(){
         icn_gallary_write_diary.visibility = View.VISIBLE
         img_gallary_write_diary.setImageBitmap(null)
     }
 
-    //이미지 파일명 가져오기
-    fun getImageNameToUri(data : Uri?) : String{
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = managedQuery(data, proj, null, null, null)
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
 
-        cursor.moveToFirst()
-        val imgPath = cursor.getString(column_index)
-        val imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1)
 
-        return imgName
+    private fun postWriteDiaryResponse(){
+
+
+        val content = edt_content_write_diary.text.toString()
+        //타입 변환(String->RequestBody)
+        val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)
+        //val date_rb = RequestBody.create(MediaType.parse("text/plain"), simpleDateFormat.toString())
+
+        Log.e("content" , content)
+        Log.e("w",weatherIdx.toString())
+
+        val options = BitmapFactory.Options()
+        val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
+
+
+
+
+        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+
+        val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
+        Log.e("picture_rb", picture_rb.toString())
+       val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
+
+        postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
+            override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
+                Log.e("WriteDiary failed", t.toString())
+            }
+
+            override fun onResponse(call: Call<PostWriteDiaryResponse>, response: Response<PostWriteDiaryResponse>) {
+                if(response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("writeDiary", response.body()!!.message)
+
+                    }
+                }
+                else{
+                    // 400 :
+                }
+            }
+        })
     }
+
+
+
 }

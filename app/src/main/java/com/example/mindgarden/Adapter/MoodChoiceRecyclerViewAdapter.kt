@@ -31,11 +31,14 @@ class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<
 
         val btm = dataList[position].moodIcn
 
-        holder.moodTxt.text = dataList[position].moodTxt
+        //날씨 인덱스
+        val weatherIdx = dataList[position].weatherIdx
 
+        holder.moodTxt.text = dataList[position].moodTxt
 
         holder.container.setOnClickListener{
             var intent: Intent = Intent()
+            intent.putExtra("weatherIdx", dataList[position].weatherIdx)
             intent.putExtra("moodTxt", dataList[position].moodTxt)
             intent.putExtra("moodIcn", btm)
             (ctx as Activity).setResult(Activity.RESULT_OK, intent)

@@ -23,7 +23,7 @@ class BroadcastD() : BroadcastReceiver(){
 
 
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
-        // val largeIcon : Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.img_weather11_none)
+
 
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.img_weather11_none)
