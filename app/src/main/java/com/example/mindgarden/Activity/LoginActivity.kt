@@ -167,8 +167,8 @@ private fun makeRequest(requestPermission: String) {
     }
     private fun configureMainTab() {
 
-        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
-        vpLoginSlider.offscreenPageLimit = 2
+        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 4)
+        vpLoginSlider.offscreenPageLimit = 3
         tlLoginIndicator.setupWithViewPager(vpLoginSlider)
 
         val navIndicatorLoginLayout: View =
@@ -180,6 +180,8 @@ private fun makeRequest(requestPermission: String) {
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin2) as ImageView
         tlLoginIndicator.getTabAt(2)!!.customView =
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin3) as ImageView
+        tlLoginIndicator.getTabAt(3)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin4) as ImageView
 
         tlLoginIndicator.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(p0: TabLayout.Tab?) {

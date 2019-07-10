@@ -1,30 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@color/colorWhite">
+                                             android:background="@color/colorWhite"
+                                            android:orientation="vertical">
     <include
             android:id="@+id/toolbar_mypage_main"
             layout="@layout/toolbar_mypage_main"/>
-    <GridView
-            android:id="@+id/gridView"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:numColumns="6"
-            android:stretchMode="columnWidth"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="218dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="167dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="13.6dp" android:layout_marginStart="13.6dp"
-            app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+        <ImageView
+                android:layout_width="89.58dp"
+                android:layout_height="69.03dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/img_minigarden"
+                android:id="@+id/img_minigarden" />
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0px" android:layout_weight="6">
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                        tools:layout_editor_absoluteY="220dp" tools:layout_editor_absoluteX="0dp">
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_grid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentTop="true"
+            ></android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+            android:id="@+id/btn_choose"
+            android:layout_width="28.04dp"
+            android:layout_height="27.14dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="10.7dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/btn_choose"/>
 
     <LinearLayout
             android:id="@+id/lay_inventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/inventory_layout_border">
 
         <android.support.v7.widget.RecyclerView
@@ -34,25 +62,20 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
         ></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
-    <ImageView
-            android:id="@+id/btn_choose"
-            android:layout_width="28.04dp"
-            android:layout_height="27.14dp"
-            app:layout_constraintBottom_toTopOf="@+id/lay_inventory"
-            android:layout_marginBottom="10.7dp"
-            android:layout_marginRight="16dp"
-            app:srcCompat="@drawable/btn_choose" app:layout_constraintEnd_toEndOf="parent"/>
+    <!--<GridView
+            android:id="@+id/gridView"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:numColumns="6"
+            android:stretchMode="columnWidth"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="218dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="167dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="13.6dp" android:layout_marginStart="13.6dp"
+            app:layout_constraintStart_toStartOf="parent"/>-->
 
-    <ImageView
-            android:layout_width="152.86dp"
-            android:layout_height="76.83dp" app:srcCompat="@drawable/img_minigarden"
-            android:id="@+id/img_minigarden" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginTop="36.33dp"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_mypage_main"/>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
