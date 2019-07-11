@@ -4,6 +4,7 @@ import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.GET.GetMainResponse
+import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.google.gson.JsonObject
@@ -80,10 +81,10 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<GetMainResponse>
 
-    /*//나무심기
+    //나무심기
     @POST("/garden/plant")
     fun postPlantResponse(
         @Header("Content-Type") content_type: String,
-        @Path()
-    )*/
+        @Body() body:JsonObject
+    ): Call<PostPlantResponse>
 }

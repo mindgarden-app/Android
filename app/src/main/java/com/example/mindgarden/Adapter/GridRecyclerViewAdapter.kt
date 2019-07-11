@@ -32,8 +32,6 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
         gridDataList[20].img = R.drawable.img_small_lake
         gridDataList[21].img = R.drawable.img_small_lake
 
-        Log.e("grid", gridDataList[14].product_id.toString())
-
         holder.container.setOnClickListener{
             if (InventoryActivity.isGridClick) {
                 holder.container.isSelected = true
@@ -46,6 +44,8 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
             }
 
             if (holder.container.isSelected) {
+                InventoryActivity.gridIdx = holder.adapterPosition
+                Log.e("grid", InventoryActivity.gridIdx.toString())
                 if (InventoryActivity.inventoryIdx == 0) {
                     holder.grid_img.setImageResource(R.drawable.img_selcted011)
                 } else if (InventoryActivity.inventoryIdx == 1) {
