@@ -4,26 +4,26 @@ import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
+import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.*
 
 interface NetworkService {
-
     //일기 목록 조회
     @GET("/diarylist/{userIdx}/{date}")
     fun getDiaryListResponse(
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int,
         @Path("date") date: String
-        //@Body() body: JsonObject
     ): Call<GetDiaryListResponse>
 
     //일기 삭제
@@ -42,6 +42,7 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<GetDiaryListClickResponse>
      */
+
     //일기 상세보기
     @GET("/diarylist/click/{userIdx}/{date}")
     fun getDiaryResponse(
@@ -58,32 +59,37 @@ interface NetworkService {
         @Part("userIdx") userIdx : Int,
         @Part("weatherIdx") weatherIdx : Int,
         @Part diary_img : MultipartBody.Part?
+
     ): Call<PostWriteDiaryResponse>
 
     //일기 수정
     @Multipart
-    @PUT("/garden/complete")
-    fun putReadDiaryResponse(
-        @Header("Content-Type") content_type: String,
+    @PUT("/diary/complete")
+    fun putModifyDiaryResponse(
+        @Part("diary_content") diary_content : RequestBody,
         @Part("userIdx") userIdx: Int,
         @Part("weatherIdx") weatherIdx: Int,
         @Part("date") date : RequestBody,
         @Part diary_img: MultipartBody.Part?
     ) : Call<PutModifyDiaryResponse>
 
-    @GET("/auth/mail")
-    fun getForgetPasswordResponse(
-        @Header("Content-Type") content_type: String,
-        @Body()body:JsonObject
-    ):Call<GetForgetPasswordResponse>
-    /*
     //메인
     @GET("/garden/{userIdx}/{date}")
     fun getMainResponse(
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int,
         @Path("date") date: String
-    ) : Call<>
-     */
+    ): Call<GetMainResponse>
 
+    @GET("/auth/mail/{userIdx}")
+    fun getForgetPasswordResponse(
+        @Header("Content-Type") content_type: String,
+        @Path("userIdx") userIdx: Int
+    ):Call<GetForgetPasswordResponse>
+    /*//나무심기
+    @POST("/garden/plant")
+    fun postPlantResponse(
+        @Header("Content-Type") content_type: String,
+        @Path()
+    )*/
 }

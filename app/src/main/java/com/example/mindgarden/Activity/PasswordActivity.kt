@@ -7,13 +7,26 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
+import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_password.*
 import org.jetbrains.anko.toast
 import com.example.mindgarden.R
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 @Suppress("NAME_SHADOWING")
 class PasswordActivity : AppCompatActivity() {
+
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
 
     val REQUEST_CODE_PASSWORD_ACTIVITY = 1000
     var subPassword: String = ""
@@ -66,9 +79,42 @@ class PasswordActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
         }
 
+        btnForgetPw.setOnClickListener {
+
+         getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
+         Log.e("메일로 4자리 받았어요!",SharedPreferenceController.getPassword(this))
+        }
+
 
     }
+    fun getForgetPasswordResponse(u_id:Int){
 
+
+        val getForgetPasswordResponse: Call<GetForgetPasswordResponse> =
+            networkService.getForgetPasswordResponse("application/json",u_id)
+        getForgetPasswordResponse.enqueue(object:Callback<GetForgetPasswordResponse>{
+            override fun onFailure(call: Call<GetForgetPasswordResponse>, t: Throwable) {
+                Log.e("Fail: send email",t.toString())
+            }
+
+            override fun onResponse(call: Call<GetForgetPasswordResponse>, response: Response<GetForgetPasswordResponse>
+            ) {
+                if(response.isSuccessful){
+                    if(response.body()!!.status==200){
+                        Log.e("응답 받아오는 데이터","$response")
+
+                        val tmp=response.body()!!.message
+                        Log.e("임시비밀번호는",tmp)
+                        val tep2=response.body()!!.rand!!
+                        Log.e("비밀번호의 임시값은",tep2)
+                        SharedPreferenceController.setPassword(this@PasswordActivity,tmp)
+                    }
+                }
+            }
+
+        }
+        )
+    }
     fun setNumBtnClickListener() {
         btn1.setOnClickListener {
             clickBtn(1)
