@@ -27,10 +27,10 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
             .load(gridDataList[position].img)
             .into(holder.grid_img)
 
-        gridDataList[14].img = R.drawable.img_small_lake
+        /*gridDataList[14].img = R.drawable.img_small_lake
         gridDataList[15].img = R.drawable.img_small_lake
         gridDataList[20].img = R.drawable.img_small_lake
-        gridDataList[21].img = R.drawable.img_small_lake
+        gridDataList[21].img = R.drawable.img_small_lake*/
 
         holder.container.setOnClickListener{
             if (InventoryActivity.isGridClick) {
@@ -43,49 +43,97 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                 InventoryActivity.isGridClick = true
             }
 
-            if (holder.adapterPosition == 14) {
-                holder.container.isEnabled = false
-            }
-
             if (holder.container.isSelected) {
                 InventoryActivity.gridIdx = holder.adapterPosition
                 Log.e("grid", InventoryActivity.gridIdx.toString())
                 if (InventoryActivity.inventoryIdx == 0) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted011)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted011)
                 } else if (InventoryActivity.inventoryIdx == 1) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted012)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted012)
                 } else if (InventoryActivity.inventoryIdx == 2) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted015)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted015)
                 } else if (InventoryActivity.inventoryIdx == 3) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted016)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted016)
                 } else if (InventoryActivity.inventoryIdx == 4) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted007)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted007)
                 } else if (InventoryActivity.inventoryIdx == 5) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted013)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted013)
                 } else if (InventoryActivity.inventoryIdx == 6) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted014)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted014)
                 } else if (InventoryActivity.inventoryIdx == 7) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted008)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted008)
                 } else if (InventoryActivity.inventoryIdx == 8) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted010)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted010)
                 } else if (InventoryActivity.inventoryIdx == 9) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted004)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted004)
                 } else if (InventoryActivity.inventoryIdx == 10) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted005)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted005)
                 } else if (InventoryActivity.inventoryIdx == 11) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted003)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted003)
                 } else if (InventoryActivity.inventoryIdx == 12) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted009)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted009)
                 } else if (InventoryActivity.inventoryIdx == 13) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted002)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted002)
                 } else if (InventoryActivity.inventoryIdx == 14) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted006)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted006)
                 } else if (InventoryActivity.inventoryIdx == 15) {
-                    holder.grid_img.setImageResource(R.drawable.img_selcted001)
+                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                    }
+                    else holder.grid_img.setImageResource(R.drawable.img_selcted001)
                 }
             } else {
-                holder.grid_img.setImageResource(R.drawable.tree_size)
+                if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
+                    holder.grid_img.setImageResource(R.drawable.img_small_lake)
+                }
+                else {holder.grid_img.setImageResource(R.drawable.tree_size)}
             }
+
             holder.container.isSelected = !holder.container.isSelected
         }
     }

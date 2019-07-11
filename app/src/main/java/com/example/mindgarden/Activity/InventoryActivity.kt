@@ -75,15 +75,15 @@ class InventoryActivity : AppCompatActivity() {
 
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
-        gridList.add(GridData(100, R.drawable.tree_size)) // 호수
-        gridList.add(GridData(101, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(100, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(101, R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))
 
         gridList.add(GridData(7, R.drawable.tree_size))
         gridList.add(GridData(12, R.drawable.tree_size))
-        gridList.add(GridData(102, R.drawable.tree_size)) // 호수
-        gridList.add(GridData(103, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(102, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(103, R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(25, R.drawable.tree_size))
         gridList.add(GridData(29, R.drawable.tree_size))
 
