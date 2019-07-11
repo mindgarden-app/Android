@@ -42,8 +42,6 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[0])
         //setupPermissions(permissionsRequired[1])
         //setupPermissions(permissionsRequired[2])
-        val myWebView = findViewById<AdvancedWebView>(R.id.webView) as AdvancedWebView
-        val settings = myWebView.settings
 
         btnLogin.setOnClickListener {
             val loginIntent= Intent(this, SocialLoginActivity::class.java)
@@ -74,31 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    /*private fun getLoginResponse(){
-        var jsonObject = JSONObject()
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
-        val getLoginResponse = networkService.getLoginResponse(
-            "application/json", gsonObject)
-        getLoginResponse.enqueue(object:Callback<GetLoginResponse>{
-            override fun onFailure(call: Call<GetLoginResponse>, t: Throwable) {
-                Log.e("login", t.toString())
-            }
-
-            override fun onResponse(call:  Call<GetLoginResponse>, response: Response<GetLoginResponse>)  {
-
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        val tmp: Int = response.body()!!.data!!
-                        Log.e("json",tmp.toString())
-                        SharedPreferenceController.setUserID(this@LoginActivity,tmp)
-                        Log.e("userID",SharedPreferenceController.getUserID(this@LoginActivity).toString())
-                        //데베에 저장
-                    }
-                }
-            }
-        })
-    }*/
                 private fun requestPermission() {
                     if (ActivityCompat.checkSelfPermission(
                             this,
@@ -219,8 +193,8 @@ private fun makeRequest(requestPermission: String) {
     }
     private fun configureMainTab() {
 
-        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
-        vpLoginSlider.offscreenPageLimit = 2
+        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 4)
+        vpLoginSlider.offscreenPageLimit = 3
         tlLoginIndicator.setupWithViewPager(vpLoginSlider)
 
         val navIndicatorLoginLayout: View =
@@ -232,6 +206,8 @@ private fun makeRequest(requestPermission: String) {
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin2) as ImageView
         tlLoginIndicator.getTabAt(2)!!.customView =
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin3) as ImageView
+        tlLoginIndicator.getTabAt(3)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin4) as ImageView
 
         tlLoginIndicator.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(p0: TabLayout.Tab?) {
