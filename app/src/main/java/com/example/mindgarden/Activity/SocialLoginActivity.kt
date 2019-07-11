@@ -122,7 +122,14 @@ class SocialLoginActivity : AppCompatActivity() {
     else {
         val temp =json["data"]!!.asJsonObject
         val temp2=temp["userIdx"].asInt
+        val temp3=temp["emaail"].asString
+        val temp4=temp["name"].asString
+
+
         SharedPreferenceController.setUserID(this@SocialLoginActivity,temp2)
+        SharedPreferenceController.setUserMail(this@SocialLoginActivity,temp3)
+        SharedPreferenceController.setUserName(this@SocialLoginActivity,temp4)
+
         Log.e("userID",SharedPreferenceController.getUserID(this@SocialLoginActivity).toString())
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("userId", temp2)

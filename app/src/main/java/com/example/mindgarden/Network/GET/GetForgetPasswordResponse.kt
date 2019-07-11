@@ -4,5 +4,5 @@ data class GetForgetPasswordResponse(
     val status: Int,
     val success: Boolean,
     val message: String,
-    val rand: String
+    val data: String
 )

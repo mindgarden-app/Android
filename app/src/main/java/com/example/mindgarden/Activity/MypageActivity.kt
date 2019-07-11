@@ -15,6 +15,9 @@ class MypageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
 
+        userName.text=SharedPreferenceController.getUserName(this)
+        userMail.text=SharedPreferenceController.getUserMail(this)
+
         //Toolbar
         btnBack.setOnClickListener {
             //뒤로가기

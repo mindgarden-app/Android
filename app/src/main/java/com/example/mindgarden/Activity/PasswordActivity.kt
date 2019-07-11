@@ -2,10 +2,14 @@ package com.example.mindgarden.Activity
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
@@ -80,13 +84,28 @@ class PasswordActivity : AppCompatActivity() {
         }
 
         btnForgetPw.setOnClickListener {
-
          getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
          Log.e("메일로 4자리 받았어요!",SharedPreferenceController.getPassword(this))
+            //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
+            val where= intent.getStringExtra("whereFrom")
+            Log.e("from", where)
+            if(where=="login"){
+                val intent2 = Intent(this, LoginActivity::class.java)
+                // 백 스페이스 누르면 다시 메인 페이지로
+                startActivity(intent2)
+                finish()
+            }
+            else{
+                val intent2 = Intent(this, PasswordSettingActivity::class.java)
+                // 백 스페이스 누르면 다시 메인 페이지로
+                startActivity(intent2)
+                finish()
+            }
+            }
+
         }
 
 
-    }
     fun getForgetPasswordResponse(u_id:Int){
 
 
@@ -103,11 +122,10 @@ class PasswordActivity : AppCompatActivity() {
                     if(response.body()!!.status==200){
                         Log.e("응답 받아오는 데이터","$response")
 
-                        val tmp=response.body()!!.message
-                        Log.e("임시비밀번호는",tmp)
-                        val tep2=response.body()!!.rand!!
+
+                        val tep2=response.body()!!.data
                         Log.e("비밀번호의 임시값은",tep2)
-                        SharedPreferenceController.setPassword(this@PasswordActivity,tmp)
+                        SharedPreferenceController.setPassword(this@PasswordActivity,tep2)
                     }
                 }
             }
