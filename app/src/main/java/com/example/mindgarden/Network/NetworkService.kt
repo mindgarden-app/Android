@@ -30,7 +30,7 @@ interface NetworkService {
         @Body() body: JsonObject
     ): Call<DeleteDiaryListResponse>
 
-    @GET("/auth/login/kakao")
+    @GET("/auth/login/success")
     fun getLoginResponse(
         @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
