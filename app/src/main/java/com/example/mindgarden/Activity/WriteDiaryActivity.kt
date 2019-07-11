@@ -63,14 +63,14 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //오늘의 날짜
         //툴바에 들어갈 format
-        val dateT  = SimpleDateFormat("YY.MM.dd. (E)")
+        val dateT  = SimpleDateFormat("YY.MM.dd. (E)", Locale.KOREA)
         val dateText = dateT.format(Date()).toString()  //intent
         txt_date_toolbar_write_diary.setText(dateT.format(Date()))  //setText
 
         Log.e("dateText", dateText)
 
         //서버에 보낼 format
-        val dateV  = SimpleDateFormat("YYYY-MM-dd")
+        val dateV  = SimpleDateFormat("YYYY-MM-dd", Locale.KOREA)
        val dateValue = dateV.format(Date()).toString()
         Log.e("dateValue" ,dateValue)
 
