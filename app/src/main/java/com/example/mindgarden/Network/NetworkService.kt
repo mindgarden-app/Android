@@ -3,14 +3,13 @@ package com.example.mindgarden.Network
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
-import com.example.mindgarden.Network.Get.GetLoginResponse
+import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -59,7 +58,6 @@ interface NetworkService {
         @Part("userIdx") userIdx : Int,
         @Part("weatherIdx") weatherIdx : Int,
         @Part diary_img : MultipartBody.Part?
-
     ): Call<PostWriteDiaryResponse>
 
     //일기 수정
@@ -73,6 +71,11 @@ interface NetworkService {
         @Part diary_img: MultipartBody.Part?
     ) : Call<PutModifyDiaryResponse>
 
+    @GET("/auth/mail")
+    fun getForgetPasswordResponse(
+        @Header("Content-Type") content_type: String,
+        @Body()body:JsonObject
+    ):Call<GetForgetPasswordResponse>
     /*
     //메인
     @GET("/garden/{userIdx}/{date}")
@@ -83,10 +86,4 @@ interface NetworkService {
     ) : Call<>
      */
 
-
-    @GET("/auth/login/success")
-    fun getLoginResponse(
-        @Header("Content-Type") content_type: String,
-        @Body() body: JsonObject
-    ):Call<GetLoginResponse>
 }

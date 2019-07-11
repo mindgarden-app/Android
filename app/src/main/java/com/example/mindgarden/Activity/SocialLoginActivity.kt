@@ -13,14 +13,10 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Get.GetLoginResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SocialLoginActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy {
@@ -61,11 +57,19 @@ class SocialLoginActivity : AppCompatActivity() {
                                 myWebView.visibility = View.GONE
                                 myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
 
+                                if(SharedPreferenceController.getPassword(this@SocialLoginActivity)==""){
+                                    val loginIntent= Intent(this@SocialLoginActivity, MainActivity::class.java)
+                                    // 암호변겅을 누르면
+                                    loginIntent.putExtra("whereFrom","login")
+                                    startActivity(loginIntent)
+                                }
+                                else{
+                                    val loginIntent= Intent(this@SocialLoginActivity, PasswordActivity::class.java)
+                                    // 암호변겅을 누르면
+                                    loginIntent.putExtra("whereFrom","login")
+                                    startActivity(loginIntent)
+                                }
 
-                                val loginIntent= Intent(this@SocialLoginActivity, PasswordActivity::class.java)
-                                // 암호변겅을 누르면
-                                loginIntent.putExtra("whereFrom","login")
-                                startActivity(loginIntent)
                             }
                         }
                     }

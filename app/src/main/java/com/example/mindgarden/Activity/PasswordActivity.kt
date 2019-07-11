@@ -42,7 +42,7 @@ class PasswordActivity : AppCompatActivity() {
 
         toast(whereFrom.toString())
 
-        SharedPreferenceController.setPassword(this,"1234")
+        //SharedPreferenceController.setPassword(this,"1234")
         //SharedPreferenceController.setPassword(this,"")
         previousPassword=SharedPreferenceController.getPassword(this)
         // TODO
@@ -54,7 +54,6 @@ class PasswordActivity : AppCompatActivity() {
         setNumBtnClickListener()
 
         if (previousPassword == "") {
-
             //처음 암호를 설정하는 경우
             //새 암호를 입력하세요라는 문구로 바뀐 후
             txtPassword.text = "새 암호를 입력하세요"
@@ -69,7 +68,6 @@ class PasswordActivity : AppCompatActivity() {
 
 
     }
-
 
     fun setNumBtnClickListener() {
         btn1.setOnClickListener {
@@ -143,6 +141,7 @@ class PasswordActivity : AppCompatActivity() {
                                     //TODO
                                     //내부DB에 비밀번호 저장
                                     SharedPreferenceController.setPassword(this, firstPassword)
+                                    Log.e("바뀐 비밀번호",firstPassword)
                                     finish()
                                 } else {
                                     toast("비밀번호가 다릅니다")
@@ -171,6 +170,7 @@ class PasswordActivity : AppCompatActivity() {
                                     subPassword = ""
                                     txtPassword.text = "새 암호를 입력하세요"
                                     previousPassword = ""
+
                                 } else {// 기존 비
                                     toast("비밀번호 틀렸어")
                                     subPassword = ""

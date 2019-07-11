@@ -1,50 +1,26 @@
 package com.example.mindgarden.Activity
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Get.GetLoginResponse
-import com.example.mindgarden.Network.NetworkService
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
-import java.util.logging.Logger
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
