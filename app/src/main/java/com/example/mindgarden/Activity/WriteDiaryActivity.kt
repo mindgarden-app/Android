@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
@@ -47,7 +48,7 @@ class WriteDiaryActivity : AppCompatActivity() {
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
     var selectPicUri : Uri? = null
-    var userIdx = 7 //유저 인덱스
+    var userIdx : Int = 0
     var weatherIdx  = 0 //날씨 인덱스
     var status : Boolean = true
     lateinit var date : String  //ReadDairy에 현재 날짜 intent
@@ -202,7 +203,7 @@ class WriteDiaryActivity : AppCompatActivity() {
 
            Log.e("picture_rb", picture_rb.toString())
 
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, picture_rb)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -225,7 +226,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            })
        }else{
           // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, null)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,SharedPreferenceController.getUserID(this), weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {

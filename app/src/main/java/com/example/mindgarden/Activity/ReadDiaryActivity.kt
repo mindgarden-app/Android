@@ -13,11 +13,16 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import com.bumptech.glide.Glide
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_read_diary.*
+import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +33,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
-    var userIdx = 7
+   var userIdx : Int = 0
     var dateText : String = ""
     var dateValue : String = ""
     var from = 0
@@ -40,6 +45,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_diary)
+
 
         //목록에서, 일기 쓰기, 일기 수정
         val intent : Intent = getIntent()
@@ -110,7 +116,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", userIdx, dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse("application/json", SharedPreferenceController.getUserID(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
@@ -164,6 +170,17 @@ class ReadDiaryActivity : AppCompatActivity() {
         })
     }
 
+    fun isValid(userIdx: Int, date: String): Boolean {
+        if(userIdx.toString() == "")
+            toast("로그인하세요")
+
+        else if(date == "")
+            toast("보고 싶은 달을 선택하세요")
+
+        else return true
+
+        return false
+    }
 
 
     //setIcon

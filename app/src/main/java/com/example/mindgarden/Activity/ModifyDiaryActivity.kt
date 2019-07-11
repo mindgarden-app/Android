@@ -18,6 +18,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
@@ -51,7 +52,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
     val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
     var selectPicUri : Uri? = null
-    var userIdx = 7 //유저 인덱스
+    var userIdx : Int = 0
 
     var weatherIdx : Int = 0
     var content : String = ""
@@ -142,7 +143,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", userIdx, dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse("application/json", SharedPreferenceController.getUserID(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
@@ -212,7 +213,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
             Log.e("picture_rb", picture_rb.toString())
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, userIdx, weatherIdx, date_rb, picture_rb)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, date_rb, picture_rb)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
@@ -233,7 +234,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
             })
         }else{
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, userIdx, weatherIdx, date_rb, null)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, date_rb, null)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
