@@ -18,11 +18,14 @@ import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 
 
 class InventoryActivity : AppCompatActivity() {
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
+    lateinit var inventoryList : List<Bitmap>
 
     companion object {
         var isClickAvailable: Boolean = true
@@ -187,11 +190,31 @@ class InventoryActivity : AppCompatActivity() {
         inventoryRecyclerViewAdapter = InventoryRecyclerViewAdapter(this, inventory_dataList)
         rv_inventory.adapter = inventoryRecyclerViewAdapter
         rv_inventory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        inventoryList = listOf<Bitmap>(image1, image2, image3, image4,
+            image5, image6, image7, image8,
+            image9, image10, image11, image12,
+            image13, image14, image15, image16)
     }
 
     private fun drawableToBitmap(icnName : Int): Bitmap {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap
+    }
+
+    fun isValid(userIdx: Int, location: Int, treeIdx: Int): Boolean {
+        if(userIdx.toString() == "")
+            toast("로그인하세요")
+
+        else if(location.toString() == "")
+            toast("위치를 고르세요")
+
+        else if(treeIdx.toString() == "")
+            toast("나무를 선택하세요")
+
+        else return true
+
+        return false
     }
 }

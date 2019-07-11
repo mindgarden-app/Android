@@ -22,8 +22,8 @@ import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -84,7 +84,9 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            getDiaryListResponse()
+            if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+                getDiaryListResponse()
+            }
         }
 
         btn_right.setOnClickListener {
@@ -104,7 +106,9 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            getDiaryListResponse()
+            if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+                getDiaryListResponse()
+            }
         }
 
         configureRecyclerView()
@@ -137,7 +141,21 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-        getDiaryListResponse()
+        if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            getDiaryListResponse()
+        }
+    }
+
+    fun isValid(userIdx: Int, date: String): Boolean {
+        if(userIdx.toString() == "")
+            toast("로그인하세요")
+
+        else if(date == "")
+            toast("보고 싶은 달을 선택하세요")
+
+        else return true
+
+        return false
     }
 
     private fun getDiaryListResponse(){

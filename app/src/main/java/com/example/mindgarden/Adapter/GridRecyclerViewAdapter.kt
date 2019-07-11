@@ -1,7 +1,6 @@
 package com.example.mindgarden.Adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,7 +46,6 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
             }
 
             if (holder.container.isSelected) {
-
                 if (InventoryActivity.inventoryIdx == 0) {
                     holder.grid_img.setImageResource(R.drawable.img_selcted011)
                 } else if (InventoryActivity.inventoryIdx == 1) {
