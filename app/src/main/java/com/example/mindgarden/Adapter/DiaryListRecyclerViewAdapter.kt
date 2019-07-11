@@ -12,13 +12,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -52,7 +55,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to SharedPreferenceController.getUserID(ctx),"date" to dataList[position].date.substring(0, 14))
+            var dateText = dataList[position].date.substring(2,3) + "." + dataList[position].date.substring(5,6) + "-" + dataList[position].date.substring(8,9)
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,14))
         }
 
         if (isPressed) {
