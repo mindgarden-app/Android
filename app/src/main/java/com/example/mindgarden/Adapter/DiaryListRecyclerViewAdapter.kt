@@ -17,8 +17,9 @@ import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-
+//import com.example.mindgarden.Network.GET.GetDiaryListClickResponse
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,9 +51,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            val date = dataList[position].date.substring(0, 10)
-            //intent로 date값 넘기기
-            ctx.startActivity<ReadDiaryActivity>("date" to date)
+           // getDiaryListClickResponse(dataList[position].date.substring(0, 114))
         }
 
         if (isPressed) {
@@ -65,11 +64,14 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
+                    deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
+                    //아래는 서버 통신하고 나서 삭제
+                    /*dataList.removeAt(holder.adapterPosition)
                     deleteDiaryListResponse(dataList[position].date.substring(0, 10),holder.adapterPosition)
                     //밑에는 서버 통신하고 삭제
                     dataList.removeAt(holder.adapterPosition)
                     notifyItemRemoved(holder.adapterPosition)
-                    notifyItemRangeChanged(holder.adapterPosition, dataList.size)
+                    notifyItemRangeChanged(holder.adapterPosition, dataList.size)*/
                 }
 
                 val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
@@ -92,8 +94,28 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             holder.lay1.visibility = View.GONE
         }
     }
+/*
+    private fun getDiaryListClickResponse(clickDate: String){
+        val getDiaryListClickResponse = networkService.getDiaryListClickResponse(
+            "application/json", 5, clickDate)
+        Log.e("통신","일기내용1")
+        Log.e("통신",clickDate)
+        getDiaryListClickResponse.enqueue(object: Callback<GetDiaryListClickResponse> {
+            override fun onFailure(call: Call<GetDiaryListClickResponse>, t: Throwable) {
+                Log.e("일기 조희 실패", t.toString())
+            }
 
-
+            override fun onResponse(call: Call<GetDiaryListClickResponse>, response: Response<GetDiaryListClickResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("통신","일기내용2")
+                        ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 2,"date" to clickDate)
+                    }
+                }
+            }
+        })
+    }
+*/
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         //var jsonObject = JSONObject()
         //jsonObject.put("date", deleteDate)
@@ -101,7 +123,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
         //val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", deleteDate, 5)
+            "application/json", 2, deleteDate)
+        Log.e("delete", "delete1")
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
@@ -113,6 +136,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                         dataList.removeAt(deleteIndex)
                         notifyItemRemoved(deleteIndex)
                         notifyItemRangeChanged(deleteIndex, dataList.size)
+                        Log.e("delete", "delete2")
                     }
                 }
             }

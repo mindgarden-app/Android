@@ -8,6 +8,7 @@ import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -24,13 +25,22 @@ interface NetworkService {
         //@Body() body: JsonObject
     ): Call<GetDiaryListResponse>
 
-    @DELETE("/diarylist/delete")
+    //일기 삭제
+    @DELETE("/diarylist/delete/{userIdx}/{date}")
     fun deleteDiaryListResponse(
         @Header("Content-Type") content_type: String,
-        @Query("date") date: String,
-        @Query("userIdx") userIdx: Int
+        @Path("userIdx") userIdx: Int,
+        @Path("date") date: String
     ): Call<DeleteDiaryListResponse>
 
+    /*
+     @GET("/diarylist/click/{userIdx}/{date}")
+    fun getDiaryListClickResponse(
+        @Header("Content-Type") content_type: String,
+        @Path("userIdx") userIdx: Int,
+        @Path("date") date: String
+    ): Call<GetDiaryListClickResponse>
+     */
     //일기 상세보기
     @GET("/diarylist/click/{userIdx}/{date}")
     fun getDiaryResponse(

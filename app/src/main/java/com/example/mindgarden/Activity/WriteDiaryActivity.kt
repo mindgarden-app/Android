@@ -47,7 +47,7 @@ class WriteDiaryActivity : AppCompatActivity() {
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
     var selectPicUri : Uri? = null
-    var userIdx = 5 //유저 인덱스
+    var userIdx = 7 //유저 인덱스
     var weatherIdx  = 0 //날씨 인덱스
 
     lateinit var date : String  //ReadDairy에 현재 날짜 intent
