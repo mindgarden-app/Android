@@ -315,7 +315,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
         val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
 
         //indexList = listOf<Int>(0,1,2,3,4,5,6,7,8,9,10)
-        iconList = listOf<Bitmap>(icn1, icn2, icn3, icn4, icn4, icn5, icn6, icn7, icn8, icn9, icn10, icn11)
+        iconList = listOf<Bitmap>(icn1, icn2, icn3, icn4, icn5, icn6, icn7, icn8, icn9, icn10, icn11)
         textList = listOf<String>("좋아요", "신나요", "그냥 그래요", "심심해요", "재미있어요", "설레요",
             "별로에요", "우울해요", "짜증나요", "화가나요", "기분없음")
     }
