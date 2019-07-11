@@ -122,7 +122,7 @@ class SocialLoginActivity : AppCompatActivity() {
     else {
         val temp =json["data"]!!.asJsonObject
         val temp2=temp["userIdx"].asInt
-        val temp3=temp["emaail"].asString
+        val temp3=temp["email"].asString
         val temp4=temp["name"].asString
 
 
