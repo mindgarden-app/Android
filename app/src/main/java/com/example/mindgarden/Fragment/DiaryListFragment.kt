@@ -112,26 +112,6 @@ class DiaryListFragment : Fragment() {
 
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
-        /*dataList.add(
-            DiaryListData(
-                0, "2019-07-07 Sun 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )
-
-        dataList.add(
-            DiaryListData(
-                0, "2019-07-05 Fri 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )
-
-        dataList.add(
-            DiaryListData(
-                0, "2019-07-25 Wed 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )*/
 
         dataList.sortBy { data ->
             data.date.substring(8, 10).toInt() }

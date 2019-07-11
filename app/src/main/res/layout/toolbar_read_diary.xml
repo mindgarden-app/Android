@@ -29,7 +29,7 @@
                 android:fontFamily="@font/notosanscjkr_regular"
                 android:textColor="#000000"
                 android:textSize="14dp"
-                android:id="@+id/txt_date_read_diary"/>
+                android:id="@+id/txt_date_toolbar_read_diary"/>
 
             <ImageButton
                     android:layout_width="44dp"

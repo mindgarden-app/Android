@@ -66,14 +66,14 @@ class MoodChoiceActivity : AppCompatActivity() {
         var dataList : ArrayList<MoodChoiceData> = ArrayList()
         dataList.add(MoodChoiceData(0, icn1, "좋아요"))
         dataList.add(MoodChoiceData(1, icn2, "신나요"))
-        dataList.add(MoodChoiceData(2,icn3, "그냥 그래요"))
-        dataList.add(MoodChoiceData(3,icn4, "심심해요"))
-        dataList.add(MoodChoiceData(4,icn5, "재미있어요"))
-        dataList.add(MoodChoiceData(5,icn6, "설레요"))
-        dataList.add(MoodChoiceData(6,icn7, "별로에요"))
-        dataList.add(MoodChoiceData(7,icn8, "우울해요"))
-        dataList.add(MoodChoiceData(8,icn9, "짜증나요"))
-        dataList.add(MoodChoiceData(9,icn10, "화가나요"))
+        dataList.add(MoodChoiceData(2, icn3, "그냥 그래요"))
+        dataList.add(MoodChoiceData(3, icn4, "심심해요"))
+        dataList.add(MoodChoiceData(4, icn5, "재미있어요"))
+        dataList.add(MoodChoiceData(5, icn6, "설레요"))
+        dataList.add(MoodChoiceData(6, icn7, "별로에요"))
+        dataList.add(MoodChoiceData(7, icn8, "우울해요"))
+        dataList.add(MoodChoiceData(8, icn9, "짜증나요"))
+        dataList.add(MoodChoiceData(9, icn10, "화가나요"))
         dataList.add(MoodChoiceData(10,icn11, "기분없음"))
 
 
@@ -84,7 +84,7 @@ class MoodChoiceActivity : AppCompatActivity() {
 
     }
 
-    private fun drawableToBitmap(icnName : Int) : Bitmap{
+    public fun drawableToBitmap(icnName : Int) : Bitmap{
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap

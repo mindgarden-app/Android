@@ -46,10 +46,11 @@ class WriteDiaryActivity : AppCompatActivity() {
 
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
-    lateinit var selectPicUri : Uri
+    var selectPicUri : Uri? = null
     var userIdx = 5 //유저 인덱스
     var weatherIdx  = 0 //날씨 인덱스
 
+    lateinit var date : String  //ReadDairy에 현재 날짜 intent
 
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
@@ -58,6 +59,15 @@ class WriteDiaryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_diary)
+
+        //오늘의 날짜
+        //툴바에 들어갈 format
+        val dateText  = SimpleDateFormat("YY.MM.dd. (E)")
+        txt_date_toolbar_write_diary.setText(dateText.format(Date()))
+
+        //ReadDiary에 보낼 format
+       // val dateValue = SimpleDateFormat("YYYY-MM-dd")
+        date = dateText.format(Date()).toString()
 
         //뒤로가기
         btn_back_toolbar.setOnClickListener{
@@ -68,7 +78,7 @@ class WriteDiaryActivity : AppCompatActivity() {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
             postWriteDiaryResponse()
             Log.e("postWriteDiary", "ok")
-            startActivityForResult<ReadDiaryActivity>(1100)
+            startActivityForResult<ReadDiaryActivity>(1100, "from" to 100, "date" to date)
         }
 
         //기분선택 팝업 띄우기
@@ -175,40 +185,61 @@ class WriteDiaryActivity : AppCompatActivity() {
         Log.e("content" , content)
         Log.e("w",weatherIdx.toString())
 
-        val options = BitmapFactory.Options()
-        val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
 
+       if(selectPicUri != null){
+           val options = BitmapFactory.Options()
+           val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
+           val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+           val byteArrayOutputStream = ByteArrayOutputStream()
+           bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+           val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
+           val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
+           Log.e("picture_rb", picture_rb.toString())
 
-        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
-        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
 
-        val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
-        Log.e("picture_rb", picture_rb.toString())
-       val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
+           postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
+               override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
+                   Log.e("WriteDiary failed", t.toString())
+               }
 
-        postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
-            override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
-                Log.e("WriteDiary failed", t.toString())
-            }
+               override fun onResponse(call: Call<PostWriteDiaryResponse>, response: Response<PostWriteDiaryResponse>) {
+                   if(response.isSuccessful) {
+                       if (response.body()!!.status == 200) {
+                           Log.e("writeDiary", response.body()!!.message)
 
-            override fun onResponse(call: Call<PostWriteDiaryResponse>, response: Response<PostWriteDiaryResponse>) {
-                if(response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        Log.e("writeDiary", response.body()!!.message)
+                       }
+                   }
+                   else{
+                       // 400 :
+                   }
+               }
+           })
+       }else{
+          // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, null)
 
-                    }
-                }
-                else{
-                    // 400 :
-                }
-            }
-        })
+           postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
+               override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
+                   Log.e("WriteDiary failed", t.toString())
+               }
+
+               override fun onResponse(call: Call<PostWriteDiaryResponse>, response: Response<PostWriteDiaryResponse>) {
+                   if(response.isSuccessful) {
+                       if (response.body()!!.status == 200) {
+                           Log.e("writeDiary", response.body()!!.message)
+
+                       }
+                   }
+                   else{
+                       // 400 :
+                   }
+               }
+           })
+       }
+
     }
-
-
 
 }
