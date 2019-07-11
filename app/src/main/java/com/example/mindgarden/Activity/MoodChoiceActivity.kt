@@ -38,7 +38,7 @@ class MoodChoiceActivity : AppCompatActivity() {
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val width = (display.width * 0.6).toInt() //Display 사이즈의 60%
-        val height = (display.height * 0.85).toInt()  //Display 사이즈의 85%
+        val height = (display.height * 0.65).toInt()  //Display 사이즈의 85%
 
         //테두리 없애기
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -51,18 +51,30 @@ class MoodChoiceActivity : AppCompatActivity() {
     //데이터
     private fun configureRecyclerView(){
 
-        val icn1 = drawableToBitmap(R.drawable.icn_weather_001)
+        val icn1 = drawableToBitmap(R.drawable.img_weather1_good)
+        val icn2  = drawableToBitmap(R.drawable.img_weather2_excited)
+        val icn3 = drawableToBitmap(R.drawable.img_weather3_soso)
+        val icn4 = drawableToBitmap(R.drawable.img_weather4_bored)
+        val icn5 = drawableToBitmap(R.drawable.img_weather5_funny)
+        val icn6 = drawableToBitmap(R.drawable.img_weather6_rainbow)
+        val icn7 = drawableToBitmap(R.drawable.img_weather7_notgood)
+        val icn8 = drawableToBitmap(R.drawable.img_weather8_sad)
+        val icn9 = drawableToBitmap(R.drawable.img_weather9_annoying)
+        val icn10 = drawableToBitmap(R.drawable.img_weather10_lightning)
+        val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
 
         var dataList : ArrayList<MoodChoiceData> = ArrayList()
-        dataList.add(MoodChoiceData(icn1, "기분이 신나요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 좋아요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 별로에요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 화가나요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 짜증나요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 우울해요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 심심해요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 재미있어요"))
-        dataList.add(MoodChoiceData(icn1, "기분이 설레어요"))
+        dataList.add(MoodChoiceData(0, icn1, "좋아요"))
+        dataList.add(MoodChoiceData(1, icn2, "신나요"))
+        dataList.add(MoodChoiceData(2, icn3, "그냥 그래요"))
+        dataList.add(MoodChoiceData(3, icn4, "심심해요"))
+        dataList.add(MoodChoiceData(4, icn5, "재미있어요"))
+        dataList.add(MoodChoiceData(5, icn6, "설레요"))
+        dataList.add(MoodChoiceData(6, icn7, "별로에요"))
+        dataList.add(MoodChoiceData(7, icn8, "우울해요"))
+        dataList.add(MoodChoiceData(8, icn9, "짜증나요"))
+        dataList.add(MoodChoiceData(9, icn10, "화가나요"))
+        dataList.add(MoodChoiceData(10,icn11, "기분없음"))
 
 
         rv_mood_mood_choice_list.adapter = MoodChoiceRecyclerViewAdapter(this, dataList)
@@ -72,7 +84,7 @@ class MoodChoiceActivity : AppCompatActivity() {
 
     }
 
-    private fun drawableToBitmap(icnName : Int) : Bitmap{
+    public fun drawableToBitmap(icnName : Int) : Bitmap{
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap

@@ -14,18 +14,14 @@ import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
-import android.widget.TabHost
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Get.GetDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import org.json.JSONObject
+import org.jetbrains.anko.backgroundResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -86,7 +82,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            //getDiaryListResponse()
+            getDiaryListResponse()
         }
 
         btn_right.setOnClickListener {
@@ -106,7 +102,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            //getDiaryListResponse()
+            getDiaryListResponse()
         }
 
         configureRecyclerView()
@@ -114,26 +110,6 @@ class DiaryListFragment : Fragment() {
 
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
-        dataList.add(
-            DiaryListData(
-                0, "2019-07-07 Sun 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )
-
-        dataList.add(
-            DiaryListData(
-                0, "2019-07-05 Fri 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )
-
-        dataList.add(
-            DiaryListData(
-                0, "2019-07-25 Wed 18:40:35", "hi", 5,
-                1, "hi"
-            )
-        )
 
         dataList.sortBy { data ->
             data.date.substring(8, 10).toInt() }
@@ -159,17 +135,12 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-        //getDiaryListResponse()
+        getDiaryListResponse()
     }
 
     private fun getDiaryListResponse(){
-        var jsonObject = JSONObject()
-        //userIdx도 put해줘야
-        jsonObject.put("date", txt_year.toString() + "-" + txt_month.toString())
-
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", gsonObject)
+            "application/json", 7, txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())

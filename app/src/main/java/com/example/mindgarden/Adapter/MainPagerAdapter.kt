@@ -16,7 +16,6 @@ class MainPagerAdapter(fm: FragmentManager, private val num_fragment: Int): Frag
         return when(p0){
             0 -> MainFragment()
             1 -> DiaryListFragment()
-            2 -> DiaryListFragment()
             else -> null
         }
     }

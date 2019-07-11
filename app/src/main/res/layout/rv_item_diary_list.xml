@@ -69,7 +69,7 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:gravity="center"
-                    android:src="@drawable/icn_delete"/>
+                    android:src="@drawable/icn_delete_new"/>
 
         </LinearLayout>
 

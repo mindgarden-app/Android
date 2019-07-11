@@ -7,20 +7,27 @@
             android:background="@drawable/dot_selector"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:layout_marginHorizontal="5dp">
+            android:layout_marginHorizontal="2dp">
     </ImageView>
     <ImageView
             android:id="@+id/imgNavIndicatorLogin2"
             android:background="@drawable/dot_selector"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:layout_marginHorizontal="5dp">
+            android:layout_marginHorizontal="2dp">
     </ImageView>
     <ImageView
             android:id="@+id/imgNavIndicatorLogin3"
             android:background="@drawable/dot_selector"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:layout_marginHorizontal="5dp">
+            android:layout_marginHorizontal="2dp">
+    </ImageView>
+    <ImageView
+            android:id="@+id/imgNavIndicatorLogin4"
+            android:background="@drawable/dot_selector"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginHorizontal="2dp">
     </ImageView>
 </LinearLayout>

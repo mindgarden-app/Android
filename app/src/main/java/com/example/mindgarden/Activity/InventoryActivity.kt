@@ -4,24 +4,25 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.GridView
+import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.GridViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
-import com.example.mindgarden.Adapter.MoodChoiceRecyclerViewAdapter
+import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
-import com.example.mindgarden.Data.MoodChoiceData
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.activity_mood_choice.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
 import org.jetbrains.anko.startActivity
 
 
 class InventoryActivity : AppCompatActivity() {
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
+    lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
 
     companion object {
         var isClickAvailable: Boolean = true
@@ -31,10 +32,57 @@ class InventoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
 
-        val GV=this.findViewById(R.id.gridView) as GridView
+        /*val GV=this.findViewById(R.id.gridView) as GridView
         val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
 
-        GV.adapter=adapter
+        GV.adapter=adapter*/
+
+        var gridList: ArrayList<GridData> = ArrayList()
+        gridList.add(GridData(1, R.drawable.tree_size))
+        gridList.add(GridData(3, R.drawable.tree_size))
+        gridList.add(GridData(6, R.drawable.tree_size))
+        gridList.add(GridData(10, R.drawable.tree_size))
+        gridList.add(GridData(14, R.drawable.tree_size))
+        gridList.add(GridData(8, R.drawable.tree_size))
+
+        gridList.add(GridData(2, R.drawable.tree_size))
+        gridList.add(GridData(5, R.drawable.tree_size))
+        gridList.add(GridData(9, R.drawable.tree_size))
+        gridList.add(GridData(13, R.drawable.tree_size))
+        gridList.add(GridData(17, R.drawable.tree_size))
+        gridList.add(GridData(22, R.drawable.tree_size))
+
+        gridList.add(GridData(4, R.drawable.tree_size))
+        gridList.add(GridData(8, R.drawable.tree_size))
+        gridList.add(GridData(100, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(101, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(21, R.drawable.tree_size))
+        gridList.add(GridData(26, R.drawable.tree_size))
+
+        gridList.add(GridData(7, R.drawable.tree_size))
+        gridList.add(GridData(12, R.drawable.tree_size))
+        gridList.add(GridData(102, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(103, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(25, R.drawable.tree_size))
+        gridList.add(GridData(29, R.drawable.tree_size))
+
+        gridList.add(GridData(11, R.drawable.tree_size))
+        gridList.add(GridData(16, R.drawable.tree_size))
+        gridList.add(GridData(20, R.drawable.tree_size))
+        gridList.add(GridData(24, R.drawable.tree_size))
+        gridList.add(GridData(28, R.drawable.tree_size))
+        gridList.add(GridData(31, R.drawable.tree_size))
+
+        gridList.add(GridData(15, R.drawable.tree_size))
+        gridList.add(GridData(19, R.drawable.tree_size))
+        gridList.add(GridData(23, R.drawable.tree_size))
+        gridList.add(GridData(27, R.drawable.tree_size))
+        gridList.add(GridData(30, R.drawable.tree_size))
+        gridList.add(GridData(32, R.drawable.tree_size))
+
+        gridRecyclerViewAdapter = GridRecyclerViewAdapter(this, gridList)
+        rv_grid.adapter = gridRecyclerViewAdapter
+        rv_grid.layoutManager = GridLayoutManager(this, 6)
 
         configureRecyclerView()
 
@@ -43,7 +91,7 @@ class InventoryActivity : AppCompatActivity() {
         }
     }
 
-    val data:ArrayList<CustomGridViewLayout>
+    /*val data:ArrayList<CustomGridViewLayout>
     get(){
         val itemList :ArrayList<CustomGridViewLayout> = ArrayList<CustomGridViewLayout>()
 
@@ -96,7 +144,7 @@ class InventoryActivity : AppCompatActivity() {
         itemList.add(CustomGridViewLayout(R.drawable.tree0))
 */
         return itemList
-    }
+    }*/
 
     private fun configureRecyclerView(){
         val image1 = drawableToBitmap(R.drawable.android_tree1)

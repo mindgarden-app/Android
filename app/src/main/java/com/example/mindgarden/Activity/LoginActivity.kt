@@ -170,13 +170,12 @@ class LoginActivity : AppCompatActivity() {
                         //   txtPermissions.setText("Permissions Required")
 
 
-                    } else {
-                        //You already have the permission, just go ahead.
-                        Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-                /*private fun setupPermissions(requestPermission: String) {
+        } else {
+            //You already have the permission, just go ahead.
+            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+        }
+    }
+    /*private fun setupPermissions(requestPermission: String) {
         //스토리지 읽기 퍼미션을 permission 변수에 담는다
         val permission = ContextCompat.checkSelfPermission(this,requestPermission)
 
@@ -195,91 +194,80 @@ private fun makeRequest(requestPermission: String) {
 }
 
 */
-                override fun onRequestPermissionsResult(
-                    requestCode: Int,
-                    permissions: Array<String>,
-                    grantResults: IntArray
-                ) {
-                    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-                    if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
-                        //check if all permissions are granted
-                        var allgranted = false
-                        for (i in grantResults.indices) {
-                            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                                allgranted = true
-                            } else {
-                                allgranted = false
-                                break
-                            }
-                        }
-
-                        if (allgranted) {
-                            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
-                        } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
-                            || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
-                        ) {
-
-                            getAlertDialog()
-                        } else {
-                            Toast.makeText(applicationContext, "Unable to get Permission", Toast.LENGTH_LONG).show()
-                        }
-                    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+            //check if all permissions are granted
+            var allgranted = false
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true
+                } else {
+                    allgranted = false
+                    break
                 }
+            }
 
-                private fun getAlertDialog() {
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle("Need Multiple Permissions")
-                    builder.setMessage("This app needs permissions.")
-                    builder.setPositiveButton("Grant") { dialog, i ->
-                        dialog.cancel()
-                        ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
-                    }
-                    builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
-                    builder.show()
-                }
+            if (allgranted) {
+                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
+            ) {
 
-                override fun onPostResume() {
-                    super.onPostResume()
-                    if (sentToSettings) {
-                        if (ActivityCompat.checkSelfPermission(
-                                this,
-                                permissionsRequired[0]
-                            ) == PackageManager.PERMISSION_GRANTED
-                        ) {
-                            //Got Permission
-                            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-
-                private fun configureMainTab() {
-
-                    vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
-                    vpLoginSlider.offscreenPageLimit = 2
-                    tlLoginIndicator.setupWithViewPager(vpLoginSlider)
-
-                    val navIndicatorLoginLayout: View =
-                        (this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-                            .inflate(R.layout.navigation_indicator_login, null, false)
-                    tlLoginIndicator.getTabAt(0)!!.customView =
-                        navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin1) as ImageView
-                    tlLoginIndicator.getTabAt(1)!!.customView =
-                        navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin2) as ImageView
-                    tlLoginIndicator.getTabAt(2)!!.customView =
-                        navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin3) as ImageView
-
-                    tlLoginIndicator.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                        override fun onTabReselected(p0: TabLayout.Tab?) {
-                        }
-
-                        override fun onTabUnselected(p0: TabLayout.Tab?) {
-                            p0!!.customView!!.isSelected = false
-                        }
-
-                        override fun onTabSelected(p0: TabLayout.Tab?) {
-                            p0!!.customView!!.isSelected = true
-                        }
-                    })
-                }
-
+                getAlertDialog()
+            } else {
+                Toast.makeText(applicationContext, "Unable to get Permission", Toast.LENGTH_LONG).show()
+            }
         }
+    }
+        private fun getAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Need Multiple Permissions")
+        builder.setMessage("This app needs permissions.")
+        builder.setPositiveButton("Grant") { dialog, i->
+            dialog.cancel()
+            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (sentToSettings) {
+            if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
+                //Got Permission
+                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+    private fun configureMainTab() {
+
+        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
+        vpLoginSlider.offscreenPageLimit = 2
+        tlLoginIndicator.setupWithViewPager(vpLoginSlider)
+
+        val navIndicatorLoginLayout: View =
+            (this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+                .inflate(R.layout.navigation_indicator_login, null, false)
+        tlLoginIndicator.getTabAt(0)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin1) as ImageView
+        tlLoginIndicator.getTabAt(1)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin2) as ImageView
+        tlLoginIndicator.getTabAt(2)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin3) as ImageView
+
+        tlLoginIndicator.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                p0!!.customView!!.isSelected=false
+            }
+
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                p0!!.customView!!.isSelected=true
+            }
+        })
+    }
+}

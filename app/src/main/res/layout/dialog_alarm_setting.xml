@@ -2,22 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="300dp"
-              android:layout_height="299dp"
+              android:layout_height="wrap_content"
               android:gravity="center"
               android:orientation="vertical"
-              android:background="@drawable/rectangle_round_dialog">
+              android:background="@drawable/round_layout_border">
 
     <TimePicker
-        android:id="@+id/alarmTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center"
-        android:numbersTextColor="@color/colorPrimaryMint"
-        android:numbersBackgroundColor="@color/colorPrimaryMint"
-        android:numbersSelectorColor="@color/colorPrimaryMint"
-        android:headerBackground="@color/colorPrimaryMint"
-        android:timePickerMode="spinner">
+            android:id="@+id/alarmTimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center"
+            android:timePickerMode="spinner">
 
-</TimePicker>
-
+    </TimePicker>
+    <!--LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <TextView android:layout_width="0px" android:layout_height="match_parent" android:layout_weight="1"
+                  android:text="취소" android:fontFamily="@font/notosanscjkr_medium" android:textSize="14dp" android:textColor="#2B2B2B"
+                  android:gravity="center" android:layout_marginBottom="5dp" android:layout_marginTop="5dp"
+        />
+        <TextView android:layout_width="0px" android:layout_height="match_parent" android:layout_weight="1"
+                  android:text="확인" android:fontFamily="@font/notosanscjkr_medium" android:textSize="14dp" android:textColor="#2B2B2B"
+                  android:gravity="center" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:id="@+id/btn_ok_alarm_setting"
+        />
+    </LinearLayout!-->
 </LinearLayout>
