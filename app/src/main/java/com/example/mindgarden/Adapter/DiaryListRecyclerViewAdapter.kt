@@ -12,13 +12,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
 //import com.example.mindgarden.Network.GET.GetDiaryListClickResponse
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
@@ -51,7 +54,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-           // getDiaryListClickResponse(dataList[position].date.substring(0, 114))
+            var dateText = dataList[position].date.substring(2,3) + "." + dataList[position].date.substring(5,6) + "-" + dataList[position].date.substring(8,9)
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,14))
         }
 
         if (isPressed) {
@@ -94,28 +98,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             holder.lay1.visibility = View.GONE
         }
     }
-/*
-    private fun getDiaryListClickResponse(clickDate: String){
-        val getDiaryListClickResponse = networkService.getDiaryListClickResponse(
-            "application/json", 5, clickDate)
-        Log.e("통신","일기내용1")
-        Log.e("통신",clickDate)
-        getDiaryListClickResponse.enqueue(object: Callback<GetDiaryListClickResponse> {
-            override fun onFailure(call: Call<GetDiaryListClickResponse>, t: Throwable) {
-                Log.e("일기 조희 실패", t.toString())
-            }
 
-            override fun onResponse(call: Call<GetDiaryListClickResponse>, response: Response<GetDiaryListClickResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        Log.e("통신","일기내용2")
-                        ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 2,"date" to clickDate)
-                    }
-                }
-            }
-        })
-    }
-*/
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         //var jsonObject = JSONObject()
         //jsonObject.put("date", deleteDate)

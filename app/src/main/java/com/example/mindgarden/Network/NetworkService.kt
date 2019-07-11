@@ -62,9 +62,9 @@ interface NetworkService {
 
     //일기 수정
     @Multipart
-    @PUT("/garden/complete")
-    fun putReadDiaryResponse(
-        @Header("Content-Type") content_type: String,
+    @PUT("/diary/complete")
+    fun putModifyDiaryResponse(
+        @Part("diary_content") diary_content : RequestBody,
         @Part("userIdx") userIdx: Int,
         @Part("weatherIdx") weatherIdx: Int,
         @Part("date") date : RequestBody,
