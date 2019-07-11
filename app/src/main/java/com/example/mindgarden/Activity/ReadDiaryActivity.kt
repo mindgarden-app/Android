@@ -151,7 +151,7 @@ class ReadDiaryActivity : AppCompatActivity() {
                         txt_cotent_read_diary.setText(content)
 
                         //time set
-                        val time = response.body()!!.data!![1].date.substring(15,22)
+                        val time = response.body()!!.data!![0].date.substring(15,22)
                         txt_time_read_diary.setText(time)
 
                         /*diary_img set
