@@ -52,7 +52,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            getDiaryListClickResponse(dataList[position].date.substring(0, 10))
+            getDiaryListClickResponse(dataList[position].date.substring(0, 114))
         }
 
         if (isPressed) {
@@ -107,7 +107,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
                         Log.e("통신","일기내용2")
-                        ctx.startActivity<ReadDiaryActivity>()
+                        ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 2,"date" to clickDate)
                     }
                 }
             }
@@ -116,7 +116,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", 5, deleteDate)
+            "application/json", 2, deleteDate)
         Log.e("delete", "delete1")
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {

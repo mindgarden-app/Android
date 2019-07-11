@@ -21,6 +21,7 @@ import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
+import org.jetbrains.anko.backgroundResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -159,7 +160,7 @@ class DiaryListFragment : Fragment() {
 
     private fun getDiaryListResponse(){
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", 5, txt_year.text.toString() + "-" + txt_month.text.toString())
+            "application/json", 2, txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
