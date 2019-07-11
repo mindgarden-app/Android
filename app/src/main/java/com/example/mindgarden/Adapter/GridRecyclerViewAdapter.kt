@@ -43,6 +43,10 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                 InventoryActivity.isGridClick = true
             }
 
+            if (holder.adapterPosition == 14) {
+                holder.container.isEnabled = false
+            }
+
             if (holder.container.isSelected) {
                 InventoryActivity.gridIdx = holder.adapterPosition
                 Log.e("grid", InventoryActivity.gridIdx.toString())

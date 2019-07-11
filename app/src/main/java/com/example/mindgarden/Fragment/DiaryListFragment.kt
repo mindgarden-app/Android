@@ -122,10 +122,10 @@ class DiaryListFragment : Fragment() {
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
+                diaryListRecyclerViewAdapter.dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 
@@ -160,7 +160,8 @@ class DiaryListFragment : Fragment() {
 
     private fun getDiaryListResponse(){
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
+            //SharedPreferenceController.getUserID(ctx)
+            "application/json", 2, txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
