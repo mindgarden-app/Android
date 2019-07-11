@@ -21,6 +21,11 @@
             app:layout_constraintStart_toStartOf="parent" tools:ignore="MissingConstraints"
             android:layout_marginBottom="80dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <im.delight.android.webview.AdvancedWebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" tools:ignore="MissingConstraints"/>
     <RelativeLayout
             android:layout_width="301dp"
             android:layout_height="245dp"

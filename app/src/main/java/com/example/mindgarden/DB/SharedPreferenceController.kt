@@ -7,15 +7,15 @@ object SharedPreferenceController {
     val MY_ACCOUNT="unique_string"
     val PASSWORD="unique_string2"
 
-    fun setUserID(ctx: Context,userId:String){
+    fun setUserID(ctx: Context,userId:Int){
         val  preference: SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)
         val  editor:SharedPreferences.Editor=preference.edit()
-        editor.putString("u_id",userId)
+        editor.putInt("u_id",userId)
         editor.commit()
     }
-    fun getUserID(ctx:Context):String{
+    fun getUserID(ctx:Context):Int{
         val preference:SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)
-        return preference.getString("u_id","")
+        return preference.getInt("u_id",-9)
     }
     fun clearUserID(ctx:Context){
         val preference:SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
@@ -22,6 +23,7 @@ import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.support.v4.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -140,7 +142,7 @@ class DiaryListFragment : Fragment() {
 
     private fun getDiaryListResponse(){
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", 7, txt_year.text.toString() + "-" + txt_month.text.toString())
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())

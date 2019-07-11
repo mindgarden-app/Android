@@ -3,9 +3,11 @@ package com.example.mindgarden.Network
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
+import com.example.mindgarden.Network.Get.GetLoginResponse
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
+import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -83,5 +85,9 @@ interface NetworkService {
 
 
 
-
+    @GET("/auth/login/success")
+    fun getLoginResponse(
+        @Header("Content-Type") content_type: String,
+        @Body() body: JsonObject
+    ):Call<GetLoginResponse>
 }
