@@ -26,6 +26,8 @@ class InventoryActivity : AppCompatActivity() {
 
     companion object {
         var isClickAvailable: Boolean = true
+        var isGridClick: Boolean = true
+        var inventoryIdx: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -90,7 +90,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse(date : String) {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", 8, date)
+        val getDiaryResponse = networkService.getDiaryResponse("application/json", 7, date)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {

@@ -3,6 +3,7 @@ package com.example.mindgarden.Network
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
+import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import okhttp3.MultipartBody
@@ -71,15 +72,15 @@ interface NetworkService {
         @Part diary_img: MultipartBody.Part?
     ) : Call<PutModifyDiaryResponse>
 
-    /*
+
     //메인
     @GET("/garden/{userIdx}/{date}")
     fun getMainResponse(
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int,
         @Path("date") date: String
-    ) : Call<>
-     */
+    ): Call<GetMainResponse>
+
 
 
 
