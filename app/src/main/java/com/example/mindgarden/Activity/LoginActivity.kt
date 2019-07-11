@@ -55,12 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-    val networkService: NetworkService by lazy{
-        ApplicationController.instance.networkService
-    }
 
-
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -75,56 +70,10 @@ class LoginActivity : AppCompatActivity() {
         val settings = myWebView.settings
 
         btnLogin.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                WebView.setWebContentsDebuggingEnabled(true)
-            }
-            myWebView.apply {
-                setListener(this@LoginActivity, object : AdvancedWebView.Listener {
-                    override fun onDownloadRequested(
-                        url: String?,
-                        suggestedFilename: String?,
-                        mimeType: String?,
-                        contentLength: Long,
-                        contentDisposition: String?,
-                        userAgent: String?
-                    ) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+            val loginIntent= Intent(this, SocialLoginActivity::class.java)
+            // 암호변겅을 누르면
 
-                    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
-
-                    override fun onPageFinished(url: String?) {
-
-                        url?.let {
-                            if (it.endsWith("http://13.125.190.74:3000/auth/login/success")) {
-                                myWebView.visibility = View.GONE
-                                myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
-
-
-                                val loginIntent= Intent(this@LoginActivity, PasswordActivity::class.java)
-                                // 암호변겅을 누르면
-                                loginIntent.putExtra("whereFrom","login")
-                                startActivity(loginIntent)
-                            }
-                        }
-                    }
-                    override fun onPageStarted(url: String?, favicon: Bitmap?) {
-                        Log.e("로그인", "웹뷰 시작한당 $url")
-                    }
-
-                    override fun onExternalPageRequest(url: String?) {
-                        Log.e("로그인", "웹뷰 리퀘스트 $url")
-                    }
-                })
-
-                settings.javaScriptEnabled = true
-                addJavascriptInterface(MyJavaScriptInterface(), "Android")
-
-            }
-            myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
-
+            startActivity(loginIntent)
 
             //settings.domStorageEnabled = true
 
@@ -147,49 +96,9 @@ class LoginActivity : AppCompatActivity() {
             */
 
     }
-    inner class MyJavaScriptInterface{
-        @Suppress()
-        @JavascriptInterface
-        fun getResponse(response1: String) {
-            val  response=response1.toString()
-            val json = JsonParser().parse(response).asJsonObject
 
-            Log.e("get response $json \nfrom $response1","get response $json \nfrom $response1")
-            Log.e("$response","$response")
-            val getLoginResponse = networkService.getLoginResponse("application/json", json)
 
-            getLoginResponse.enqueue(object:Callback<GetLoginResponse> {
-                override fun onFailure(call: Call<GetLoginResponse>, t: Throwable) {
-                    Log.e("login", t.toString())
-                }
-                override fun onResponse(call: Call<GetLoginResponse>, response: Response<GetLoginResponse>) {
-                    if (response.isSuccessful) {
-                        if (response.body()!!.status == 200) {
-                            val tmp: Int = response.body()!!.data!!.userIdx
-                            Log.e("json", tmp.toString())
-                            SharedPreferenceController.setUserID(this@LoginActivity, tmp)
-                            Log.e("userID", SharedPreferenceController.getUserID(this@LoginActivity).toString())
-                            //데베에 저장
-                        }
-                    }
-                }
-            })
-                    /*if (json == null || !gsonObject.has("userIdx")) {
-                setResult(Activity.RESULT_CANCELED)
-            }
-            else {
-                val temp :Int=gsonObject["userIdx"]!!.asInt
-                SharedPreferenceController.setUserID(this@LoginActivity,temp)
-                Log.e("userID",SharedPreferenceController.getUserID(this@LoginActivity).toString())
-                setResult(Activity.RESULT_OK, Intent().apply {
-                    putExtra("userId", temp)
-                })
-            }*/
-                  // finish()
-                }
-    }
-
-                /*private fun getLoginResponse(){
+    /*private fun getLoginResponse(){
         var jsonObject = JSONObject()
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 

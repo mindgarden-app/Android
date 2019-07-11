@@ -35,9 +35,9 @@
 
     <im.delight.android.webview.AdvancedWebView
             android:id="@+id/webView"
-            android:layout_width="416dp"
-            android:layout_height="316dp"
-            android:visibility="visible" tools:ignore="MissingConstraints"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" tools:ignore="MissingConstraints"/>
     <RelativeLayout
             android:layout_width="204dp"
             android:layout_height="200dp"

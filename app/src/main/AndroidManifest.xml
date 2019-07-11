@@ -5,22 +5,24 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
-            android:usesCleartextTraffic="true"
             android:name=".Network.ApplicationController"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activity.MainCalendarActivity"
-                  android:theme="@style/Theme.MyPopUpWindow">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.SocialLoginActivity">
+        </activity>
+        <activity
+                android:name=".Activity.MainCalendarActivity"
+                android:theme="@style/Theme.MyPopUpWindow">
         </activity>
         <activity
                 android:name=".Activity.MoodChoiceActivity"
@@ -56,7 +58,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
     </application>
 
