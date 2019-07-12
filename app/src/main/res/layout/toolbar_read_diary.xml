@@ -13,13 +13,14 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:paddingVertical="25dp"
+                android:paddingHorizontal="40dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15dp"
-                android:layout_margin="18dp"
                 android:src="@drawable/btn_back"
-                android:id="@+id/btn_back_toolbar" />
+                android:id="@+id/btnBack" />
 
         <TextView
                 android:layout_width="wrap_content"
@@ -31,24 +32,24 @@
                 android:textSize="14dp"
                 android:id="@+id/txt_date_toolbar_read_diary"/>
 
-            <ImageButton
-                    android:layout_width="44dp"
-                    android:layout_height="26dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/gray_border_fill"
-                    android:id="@+id/btn_modify_diary_toolbar"
-            />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:layout_centerVertical="true"
-                      android:layout_alignParentRight="true"
-                      android:text="수정"
-                      android:textSize="13dp"
-                      android:layout_marginRight="25dp"
-                      android:fontFamily="@font/notosanscjkr_regular"
-                      android:textColor="#505050"
-            />
+        <ImageButton
+                android:layout_width="44dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/gray_border_fill"
+                android:id="@+id/btn_modify_diary_toolbar"
+        />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_centerVertical="true"
+                  android:layout_alignParentRight="true"
+                  android:text="수정"
+                  android:textSize="13dp"
+                  android:layout_marginRight="25dp"
+                  android:fontFamily="@font/notosanscjkr_regular"
+                  android:textColor="#505050"
+        />
 
         </RelativeLayout>
 
