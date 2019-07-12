@@ -59,7 +59,7 @@ class MainFragment : Fragment() {
     var month : String = ""
     val cal = Calendar.getInstance()
     var userIdx : Int = 0
-    var ballon=0
+
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
@@ -78,7 +78,7 @@ class MainFragment : Fragment() {
         setTree()
         setLocation()
 
-
+       txt_main_day_text
 
 
         year = cal.get(Calendar.YEAR).toString()
@@ -86,7 +86,8 @@ class MainFragment : Fragment() {
 
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
-
+        //todo 요일도 받아오기
+        // txt_main_day_text.setText(cal.get(Caledar.))
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
@@ -94,8 +95,7 @@ class MainFragment : Fragment() {
         txt_main_month.setText(month)
         getMainResponse()
 
-        if(ballon==1){ btn_reward.isEnabled=true }
-        else{ btn_reward.isEnabled = false }
+
 
         //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
@@ -281,9 +281,13 @@ class MainFragment : Fragment() {
                         Log.e("mainfragment : ", response.body()!!.message)
 
 
-
-                        ballon = response.body()!!.data!![0].ballon
+                        val ballon = response.body()!!.data!![1].balloon
                         Log.e("ballon", ballon.toString())
+                        Log.e("ballon값을 받아오자", ballon.toString())
+
+                        if(ballon==0){ btn_reward.isEnabled=false}
+                        else{ btn_reward.isEnabled=true}
+
 
                         //나무 수만큼
                         for(i in 0..(response.body()!!.data!!.size-1)) {
