@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -42,22 +44,24 @@ import retrofit2.Response
  *
  */
 class MainFragment : Fragment() {
-    val networkService: NetworkService by lazy {
+    val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
+    var mainList: ArrayList<com.example.mindgarden.Data.MainData> = ArrayList()
+    lateinit var inventoryActivity: InventoryActivity
 
     val REQUEST_CODE_SET_TOOLBAR_DATE = 1005
-    var toolbarYear: String = ""
-    var toolbarMonth: String = ""
-    var year: String = ""
-    var month: String = ""
+    var toolbarYear : String = ""
+    var toolbarMonth : String = ""
+    var year : String =""
+    var month : String = ""
     val cal = Calendar.getInstance()
-    var userIdx: Int = 0
+    var userIdx : Int = 0
     var dayOfWeek = ""      //요일
     var day = ""            //날짜
 
-    lateinit var treeList: List<Bitmap>
-    lateinit var locationList: List<ImageView>
+    lateinit var treeList : List<Bitmap>
+    lateinit var locationList : List<ImageView>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,28 +72,26 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         setTree()
         setLocation()
 
-        btn_reward.isEnabled = false
+
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
 
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
-        //todo 요일도 받아오기
-        //txt_main_day_text.setText(cal.get(Caledar.))
 
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
         }
         txt_main_month.setText(month)
-
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
@@ -98,6 +100,8 @@ class MainFragment : Fragment() {
             getMainResponse()
         }
 
+
+
         if (btn_reward.isEnabled) {
             btn_reward.setOnClickListener {
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
@@ -105,9 +109,12 @@ class MainFragment : Fragment() {
             }
         }
 
+
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()
+            // 환경설정 페이지로 넘어감
         }
+
 
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
@@ -116,8 +123,7 @@ class MainFragment : Fragment() {
         //툴바 날짜 클릭했을 때 -> 팝업 띄우기
         ll_date_toolbar_main.setOnClickListener {
             startActivityForResult<MainCalendarActivity>(
-                REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
-            )
+                REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
         }
     }
 
@@ -146,7 +152,6 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
-
                 txt_main_day_num_word.visibility = View.INVISIBLE
                 txt_main_day_num.visibility = View.INVISIBLE
                 txt_main_day_text.visibility = View.INVISIBLE
@@ -162,6 +167,7 @@ class MainFragment : Fragment() {
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
+
             } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
@@ -181,9 +187,9 @@ class MainFragment : Fragment() {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
+
                     }
                 }
-
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
             }
@@ -198,7 +204,6 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
-
                 if (isValid(
                         SharedPreferenceController.getUserID(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
@@ -206,6 +211,7 @@ class MainFragment : Fragment() {
                 ) {
                     getMainResponse()
                 }
+
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -216,7 +222,6 @@ class MainFragment : Fragment() {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
-
                 if (isValid(
                         SharedPreferenceController.getUserID(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
@@ -224,6 +229,7 @@ class MainFragment : Fragment() {
                 ) {
                     getMainResponse()
                 }
+
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
@@ -235,9 +241,9 @@ class MainFragment : Fragment() {
                     REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
                 )
             }
+
         }
     }
-
     //액티비티 이동했다가 돌아오면 현재 년, 달로 바뀌어있음
     override fun onStop() {
         super.onStop()
@@ -271,8 +277,8 @@ class MainFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SET_TOOLBAR_DATE) {
-            if (resultCode == Activity.RESULT_OK) {
+        if(requestCode == REQUEST_CODE_SET_TOOLBAR_DATE){
+            if(resultCode == Activity.RESULT_OK){
                 year = data!!.getStringExtra("year")
                 month = data!!.getStringExtra("month")
 
@@ -374,6 +380,7 @@ class MainFragment : Fragment() {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
+
                     }
                 }
 
@@ -439,6 +446,7 @@ class MainFragment : Fragment() {
                     }
                 }
             }
+
         }
     }
 
@@ -474,6 +482,7 @@ class MainFragment : Fragment() {
                                 btn_reward.isEnabled = true
                                 img_balloon.visibility=View.VISIBLE
                             }
+                            else btn_reward.isEnabled=false
                         }
                         else {
                             btn_reward.isEnabled = false
@@ -517,6 +526,7 @@ class MainFragment : Fragment() {
         })
     }
 
+
     fun initializeTree(){
         val initTree = drawableToBitmap(R.drawable.tree_size)
         for(i in 0..31) locationList.get(i).setImageBitmap(initTree)
@@ -526,6 +536,7 @@ class MainFragment : Fragment() {
         locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
                             img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,
                             img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32)
+
     }
 
     fun setTree(){
@@ -546,6 +557,7 @@ class MainFragment : Fragment() {
         val tree15 = drawableToBitmap(R.drawable.android_tree15)
         val tree16 = drawableToBitmap(R.drawable.android_tree16)
 
+
         treeList = listOf(tree1,tree2,tree3,tree4, tree5,tree6,tree7,tree8,tree9,
             tree10,tree11,tree12,tree13,tree14, tree15,tree16)
     }
@@ -555,4 +567,5 @@ class MainFragment : Fragment() {
         val bitmap = drawable.bitmap
         return bitmap
     }
+
 }

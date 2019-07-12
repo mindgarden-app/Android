@@ -46,9 +46,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
         fontSetting.setOnClickListener {
-         val intent3=Intent(this, InventoryActivity::class.java)
-            startActivity(intent3)
-            finish()
+
         }
         alarmSetting.setOnClickListener {
             val intent3 = Intent(this, AlarmSettingActivity::class.java)
