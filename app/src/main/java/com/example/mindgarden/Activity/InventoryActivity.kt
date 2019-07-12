@@ -71,22 +71,6 @@ class InventoryActivity : AppCompatActivity() {
 
             finish()
         }
-        /*val GV=this.findViewById(R.id.gridView) as GridView
-        val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
-
-        val basicImage21 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage22 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage23 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage24 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage25 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage26 = drawableToBitmap(R.drawable.tree_size)
-
-        val basicImage27 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage28 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage29 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage30 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage31 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage32 = drawableToBitmap(R.drawable.tree_size)*/
 
         gridList.add(GridData(1, R.drawable.tree_size))
         gridList.add(GridData(3, R.drawable.tree_size))

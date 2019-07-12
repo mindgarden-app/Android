@@ -51,26 +51,5 @@ class FontSettingActivity : AppCompatActivity() {
                 })
                 .show()
         }
-        /*val oItems = arrayOf<CharSequence>("하나", "둘", "셋", "넷", "다셋")
-
-
-        val oDialog = AlertDialog.Builder(
-            this,
-            android.R.style.Theme_DeviceDefault_Light_Dialog_Alert
-        )
-
-        oDialog.setTitle("색상을 선택하세요")
-            .setSingleChoiceItems(oItems, -1,
-                DialogInterface.OnClickListener { dialog, which -> nSelectItem = which })
-            .setNeutralButton("선택", DialogInterface.OnClickListener { dialog, which ->
-                if (which >= 0)
-                    Toast.makeText(
-                        applicationContext,
-                        oItems[nSelectItem], Toast.LENGTH_LONG
-                    ).show()
-            })
-            .setCancelable(false)
-            .show()
-    }*/
 
 }

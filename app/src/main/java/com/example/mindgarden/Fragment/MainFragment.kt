@@ -59,6 +59,8 @@ class MainFragment : Fragment() {
     var userIdx : Int = 0
     var dayOfWeek = ""      //요일
     var day = ""            //날짜
+    var treeNum = 0 //트리수
+    var writeDiary = false //일기 작성 가능 여부
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
@@ -485,8 +487,17 @@ class MainFragment : Fragment() {
                             else btn_reward.isEnabled=false
                         }
                         else {
-                            btn_reward.isEnabled = false
-                            img_balloon.visibility=View.INVISIBLE
+
+                            if(balloon==1){
+                                btn_reward.isEnabled=true
+                                writeDiary = false
+
+                            }else
+                            {
+                                btn_reward.isEnabled = false
+                                writeDiary = true
+                                img_balloon.visibility=View.INVISIBLE
+                            }
                         }
 
                         for(i in 0..(response.body()!!.data!!.size-1)) {
@@ -519,13 +530,31 @@ class MainFragment : Fragment() {
                                 txt_main_day_num.visibility = View.INVISIBLE
                                 txt_main_day_text.visibility = View.INVISIBLE
                             }
+
+                            //문구 설정
+                            treeNum = response.body()!!.data!![i].treeNum
+                            if(treeNum < 1){
+                                txt_main_exp1.setText(getString(R.string.treeNumText0))
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else if(treeNum < 11){
+                                val text = treeNum.toString() + getString( R.string.treeNumText10)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else if(treeNum < 21){
+                                val text = treeNum.toString() + getString(R.string.treeNumText20)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else{
+                                val text = treeNum.toString() + getString(R.string.treeNumText21)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }
                         }
                     }
                 }
             }
         })
     }
-
 
     fun initializeTree(){
         val initTree = drawableToBitmap(R.drawable.tree_size)
