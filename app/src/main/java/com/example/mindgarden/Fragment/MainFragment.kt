@@ -95,16 +95,7 @@ class MainFragment : Fragment() {
         txt_main_month.setText(month)
 
         //미래로 못가게
-        var mmonth = (cal.get(Calendar.MONTH)).toString()
-        if (mmonth.toInt() < 10) {
-            mmonth = "0$mmonth"
-        }
-
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-            btn_right.isEnabled = false
-        } else {
-            btn_right.isEnabled = true
-        }
+        canBeFuture()
 
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
@@ -156,28 +147,9 @@ class MainFragment : Fragment() {
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
 
-        var mmonth = (cal.get(Calendar.MONTH)).toString()
-        if (mmonth.toInt() < 10) {
-            mmonth = "0$mmonth"
-        }
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-            btn_right.isEnabled = false
-        } else {
-            btn_right.isEnabled = true
-        }
-
+        canBeFuture()
         btn_left.setOnClickListener {
-            //미래로 못가게
-            var mmonth = (cal.get(Calendar.MONTH)).toString()
-            if (mmonth.toInt() < 10) {
-                mmonth = "0$mmonth"
-            }
-
-            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                btn_right.isEnabled = false
-            } else {
-                btn_right.isEnabled = true
-            }
+            canBeFuture()
 
             //1월로 갔을때 년도 바뀜
             if (month.toInt() == 1) {
@@ -232,18 +204,7 @@ class MainFragment : Fragment() {
         }
 
         btn_right.setOnClickListener {
-            //미래로 못가게
-            var mmonth = (cal.get(Calendar.MONTH)).toString()
-            if (mmonth.toInt() < 10) {
-                mmonth = "0$mmonth"
-            }
-
-            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                btn_right.isEnabled = false
-            } else {
-                btn_right.isEnabled = true
-            }
-
+            canBeFuture()
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
                 year = (year.toInt() + 1).toString()
@@ -314,17 +275,8 @@ class MainFragment : Fragment() {
         }
         txt_main_month.setText(month)
 
-        //미래로 못가게
-        var mmonth = (cal.get(Calendar.MONTH)).toString()
-        if (mmonth.toInt() < 10) {
-            mmonth = "0$mmonth"
-        }
+       canBeFuture()
 
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-            btn_right.isEnabled = false
-        } else {
-            btn_right.isEnabled = true
-        }
 
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
@@ -347,6 +299,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 txt_main_year.setText(year)
+                canBeFuture()
 
                 if (isValid(
                         SharedPreferenceController.getUserID(ctx),
@@ -361,17 +314,9 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //미래로 못가게
-        var mmonth = (cal.get(Calendar.MONTH)).toString()
-        if (mmonth.toInt() < 10) {
-            mmonth = "0$mmonth"
-        }
 
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-            btn_right.isEnabled = false
-        } else {
-            btn_right.isEnabled = true
-        }
+        canBeFuture()
+
 
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
@@ -386,17 +331,7 @@ class MainFragment : Fragment() {
         toolbarMonth = txt_main_month.text.toString()
 
         btn_left.setOnClickListener {
-            //미래로 못가게
-            var mmonth = (cal.get(Calendar.MONTH)).toString()
-            if (mmonth.toInt() < 10) {
-                mmonth = "0$mmonth"
-            }
-
-            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                btn_right.isEnabled = false
-            } else {
-                btn_right.isEnabled = true
-            }
+            canBeFuture()
 
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString()
@@ -460,17 +395,7 @@ class MainFragment : Fragment() {
             }
 
             btn_right.setOnClickListener {
-                //미래로 못가게
-                var mmonth = (cal.get(Calendar.MONTH)).toString()
-                if (mmonth.toInt() < 10) {
-                    mmonth = "0$mmonth"
-                }
-
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                    btn_right.isEnabled = false
-                } else {
-                    btn_right.isEnabled = true
-                }
+                canBeFuture()
 
                 if (month.toInt() == 12) {
                     month = (month.toInt() - 11).toString()
@@ -627,13 +552,15 @@ class MainFragment : Fragment() {
             }
         })
     }
-    fun isChecked(){
+    fun canBeFuture(){
         //미래로 못가게
         var mmonth = (cal.get(Calendar.MONTH)).toString()
         if (mmonth.toInt() < 10) {
             mmonth = "0$mmonth"
         }
 
+        Log.e("mmonth" ,mmonth)
+        Log.e("txt_main_month",txt_main_month.text.toString())
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
             btn_right.isEnabled = false
         } else {
