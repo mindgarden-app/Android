@@ -272,8 +272,8 @@ class MainFragment : Fragment() {
     }
 
     private fun getMainResponse(){
-        val getMainResponse = networkService.getMainResponse( //SharedPreferenceController.getUserID(ctx)
-            "application/json", 2, txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+        val getMainResponse = networkService.getMainResponse(
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
             Log.e("year" , txt_main_year.text.toString())
             Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
