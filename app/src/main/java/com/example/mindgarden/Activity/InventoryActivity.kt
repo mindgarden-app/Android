@@ -108,7 +108,7 @@ class InventoryActivity : AppCompatActivity() {
         gridList.add(GridData(6, R.drawable.tree_size))
         gridList.add(GridData(10, R.drawable.tree_size))
         gridList.add(GridData(14, R.drawable.tree_size))
-        gridList.add(GridData(8, R.drawable.tree_size))
+        gridList.add(GridData(18, R.drawable.tree_size))
 
         gridList.add(GridData(2, R.drawable.tree_size))
         gridList.add(GridData(5, R.drawable.tree_size))

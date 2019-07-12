@@ -53,5 +53,6 @@ dependencies {
 
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
     implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'com.ibm.mobile.foundation:ibmmobilefirstplatformfoundation:8.0.+'
 
 }

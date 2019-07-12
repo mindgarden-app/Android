@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
 
         setTree()
         setLocation()
-        btn_reward.isEnabled=false
+
 
 
         year = cal.get(Calendar.YEAR).toString()

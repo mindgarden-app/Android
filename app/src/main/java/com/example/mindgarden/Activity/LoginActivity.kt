@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 101
-    private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private var permissionsRequired = arrayOf(Manifest.permission.WAKE_LOCK, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var permissionStatus: SharedPreferences? = null
     private var sentToSettings = false
 
@@ -125,25 +125,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
         }
     }
-    /*private fun setupPermissions(requestPermission: String) {
-        //스토리지 읽기 퍼미션을 permission 변수에 담는다
-        val permission = ContextCompat.checkSelfPermission(this,requestPermission)
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.e("TAG", "Permission to record denied")
-    makeRequest(requestPermission)
-}
-
-}
-
-
-private fun makeRequest(requestPermission: String) {
-    ActivityCompat.requestPermissions(this,
-        arrayOf( requestPermission),
-        RECORD_REQUEST_CODE)
-}
-
-*/
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
