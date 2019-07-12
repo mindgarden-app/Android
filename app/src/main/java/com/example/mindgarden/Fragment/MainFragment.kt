@@ -142,7 +142,6 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
-        getMainResponse()
 
     }
 

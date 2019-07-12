@@ -31,23 +31,27 @@ import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Month
 import java.time.Year
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class InventoryActivity : AppCompatActivity() {
+    val cal = Calendar.getInstance()
+    var month = (cal.get(Calendar.MONTH) + 1).toString()
 
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
 
-    lateinit var inventoryList: List<Bitmap>
+    lateinit var inventoryList: List<Int>
 
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -60,6 +64,12 @@ class InventoryActivity : AppCompatActivity() {
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
         var gridIdx: Int = 0
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //getPlantResponse()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -159,6 +169,8 @@ class InventoryActivity : AppCompatActivity() {
 
         configureRecyclerView()
 
+        getPlantResponse()
+
         btn_choose.setOnClickListener {
             if (isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
                 postPlantResponse(
@@ -212,12 +224,12 @@ class InventoryActivity : AppCompatActivity() {
         rv_inventory.adapter = inventoryRecyclerViewAdapter
         rv_inventory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        inventoryList = listOf<Bitmap>(
-            image1, image2, image3, image4,
-            image5, image6, image7, image8,
-            image9, image10, image11, image12,
-            image13, image14, image15, image16
-        )
+        inventoryList = listOf<Int>(
+            R.drawable.android_tree1, R.drawable.android_tree2, R.drawable.android_tree3, R.drawable.android_tree4,
+            R.drawable.android_tree5, R.drawable.android_tree6, R.drawable.android_tree7, R.drawable.android_tree8,
+            R.drawable.android_tree9, R.drawable.android_tree10, R.drawable.android_tree11, R.drawable.android_tree12,
+            R.drawable.android_tree13, R.drawable.android_tree14, R.drawable.android_tree15, R.drawable.android_tree16
+            )
     }
 
     private fun drawableToBitmap(icnName: Int): Bitmap {
@@ -256,6 +268,52 @@ class InventoryActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
                         // val ballon  = response.body()!!.data!![0].ballon
+                    }
+                }
+            }
+        })
+    }
+
+    fun getPlantResponse() {
+        if (month.toInt() < 10) {
+            month = "0$month"
+        }
+
+        val getPlantResponse = networkService.getPlantResponse(
+            "application/json", SharedPreferenceController.getUserID(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
+        Log.e("why", cal.get(Calendar.YEAR).toString() + "-" + month.toString())
+        getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
+            override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {
+                Log.e("garden select fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetPlantResponse>, response: Response<GetPlantResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("Adapter: mainfragment : ", response.body()!!.message)
+
+                        //나무 수만큼
+                        for(i in 0..(response.body()!!.data!!.size-1)) {
+                            Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
+
+                            var treeIdx = 0
+                            var location = 0
+                            treeIdx = response.body()!!.data!![i].treeIdx
+                            location = response.body()!!.data!![i].location
+
+                            Log.e("Adapter:location ", location.toString())
+                            Log.e("Adapter: treeIdx", treeIdx.toString())
+
+                            if(response.body()!!.data!![i].treeIdx == 16){
+                                Log.e("h", location.toString())
+                            }else{
+                                Log.e("h", location.toString())
+                                //inventoryActivity.gridRecyclerViewAdapter
+                                gridRecyclerViewAdapter.gridDataList[gridList[location].product_id].img = inventoryList.get(treeIdx)
+                                gridRecyclerViewAdapter.notifyDataSetChanged()
+                                Log.e("3", "3")
+                            }
+                        }
                     }
                 }
             }
