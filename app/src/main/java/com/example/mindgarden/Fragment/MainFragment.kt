@@ -86,7 +86,7 @@ class MainFragment : Fragment() {
 
         setTree()
         setLocation()
-
+        btn_reward.isEnabled=false
 
 
         year = cal.get(Calendar.YEAR).toString()
@@ -144,7 +144,7 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
-
+        getMainResponse()
 
     }
 
@@ -193,13 +193,6 @@ class MainFragment : Fragment() {
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
 
-                //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
-            /*    if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                    btn_reward.isEnabled = true
-
-                } else {
-                    btn_reward.isEnabled = false
-                }*/
             } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
