@@ -17,6 +17,8 @@ import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
+import com.kotlinpermissions.ifNotNullOrElse
+import com.kotlinpermissions.notNull
 import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivityForResult
@@ -131,6 +133,10 @@ class ReadDiaryActivity : AppCompatActivity() {
                         //set icon and text
                         Log.e("readdiary", response.body()!!.message)
 
+                        //내용 set
+                        val content = response.body()!!.data!![0].diary_content
+                        Log.e("cotent", content)
+                        txt_cotent_read_diary.setText(content)
 
                         //아이콘 set
                         val weatherIdx : Int = response.body()!!.data!![0].weatherIdx
@@ -145,10 +151,13 @@ class ReadDiaryActivity : AppCompatActivity() {
                             }
                         }
 
+                        /*
                         //내용 set
                         val content = response.body()!!.data!![0].diary_content
                         Log.e("cotent", content)
                         txt_cotent_read_diary.setText(content)
+                         */
+
 
                         //time set
                         val time = response.body()!!.data!![0].date.substring(15,22)

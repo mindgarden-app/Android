@@ -70,7 +70,7 @@ class WriteDiaryActivity : AppCompatActivity() {
         Log.e("dateText", dateText)
 
         //서버에 보낼 format
-        val dateV  = SimpleDateFormat("YYYY-MM-dd")
+        val dateV  = SimpleDateFormat("YYYY-MM-dd", Locale.KOREA)
        val dateValue = dateV.format(Date()).toString()
         Log.e("dateValue" ,dateValue)
 
