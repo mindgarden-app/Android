@@ -28,10 +28,10 @@
         >
             <ImageView
                     android:id="@+id/myImage"
-                    android:layout_width="38dp"
-                    android:layout_height="50dp"
+                    android:layout_width="37.59dp"
+                    android:layout_height="37.59dp"
                     android:layout_alignParentTop="true"
-                    app:srcCompat="@drawable/tree0"
+                    app:srcCompat="@drawable/img_profile_duck"
                     android:background="@drawable/gray_bottom_border"
                     android:layout_marginTop="10dp" android:layout_alignParentBottom="true"
                     android:layout_marginBottom="10dp"/>

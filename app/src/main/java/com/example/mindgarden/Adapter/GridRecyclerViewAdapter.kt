@@ -13,17 +13,13 @@ import com.example.mindgarden.Activity.InventoryActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
 class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
-    val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+    //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
@@ -39,11 +35,6 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
         Glide.with(ctx)
             .load(gridDataList[position].img)
             .into(holder.grid_img)
-
-        /*gridDataList[14].img = R.drawable.img_small_lake
-        gridDataList[15].img = R.drawable.img_small_lake
-        gridDataList[20].img = R.drawable.img_small_lake
-        gridDataList[21].img = R.drawable.img_small_lake*/
 
         holder.container.setOnClickListener{
             if (InventoryActivity.isGridClick) {

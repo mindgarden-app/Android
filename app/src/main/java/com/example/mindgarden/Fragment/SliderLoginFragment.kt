@@ -21,7 +21,6 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class SliderLoginFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,11 +33,8 @@ class SliderLoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val img_url: String = arguments!!.getString("background_url")
 
-        // img_fragment_slider_main.setBackgroundColor(color)
         Glide.with(this)
             .load(img_url)
             .into(imgFragmentSliderLogin)
-            //.into(img_fragment_slider_main)
     }
-
 }
