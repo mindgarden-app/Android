@@ -83,7 +83,8 @@ class MainFragment : Fragment() {
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
-
+        Log.e("year",year)
+        Log.e("month",month)
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
 
@@ -92,6 +93,19 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
+
+        //미래로 못가게
+        var mmonth = (cal.get(Calendar.MONTH)).toString()
+        if (mmonth.toInt() < 10) {
+            mmonth = "0$mmonth"
+        }
+
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+            btn_right.isEnabled = false
+        } else {
+            btn_right.isEnabled = true
+        }
+
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
@@ -141,6 +155,7 @@ class MainFragment : Fragment() {
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
+
         var mmonth = (cal.get(Calendar.MONTH)).toString()
         if (mmonth.toInt() < 10) {
             mmonth = "0$mmonth"
@@ -299,6 +314,18 @@ class MainFragment : Fragment() {
         }
         txt_main_month.setText(month)
 
+        //미래로 못가게
+        var mmonth = (cal.get(Calendar.MONTH)).toString()
+        if (mmonth.toInt() < 10) {
+            mmonth = "0$mmonth"
+        }
+
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+            btn_right.isEnabled = false
+        } else {
+            btn_right.isEnabled = true
+        }
+
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
@@ -334,6 +361,17 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        //미래로 못가게
+        var mmonth = (cal.get(Calendar.MONTH)).toString()
+        if (mmonth.toInt() < 10) {
+            mmonth = "0$mmonth"
+        }
+
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+            btn_right.isEnabled = false
+        } else {
+            btn_right.isEnabled = true
+        }
 
         if (isValid(
                 SharedPreferenceController.getUserID(ctx),
@@ -588,6 +626,19 @@ class MainFragment : Fragment() {
                 }
             }
         })
+    }
+    fun isChecked(){
+        //미래로 못가게
+        var mmonth = (cal.get(Calendar.MONTH)).toString()
+        if (mmonth.toInt() < 10) {
+            mmonth = "0$mmonth"
+        }
+
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+            btn_right.isEnabled = false
+        } else {
+            btn_right.isEnabled = true
+        }
     }
 
     fun initializeTree(){
