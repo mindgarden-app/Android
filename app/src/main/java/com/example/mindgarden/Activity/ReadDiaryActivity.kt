@@ -80,7 +80,7 @@ class ReadDiaryActivity : AppCompatActivity() {
         }
 
         //뒤로가기 -> DiaryListAcitivy로 이동
-        btn_back_toolbar.setOnClickListener{
+        btnBack.setOnClickListener{
             setResult(Activity.RESULT_OK)
             finish()
         }
