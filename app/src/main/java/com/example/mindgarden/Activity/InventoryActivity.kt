@@ -35,6 +35,7 @@ import retrofit2.Response
 
 
 class InventoryActivity : AppCompatActivity() {
+
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
     lateinit var inventoryList : List<Bitmap>
@@ -255,9 +256,7 @@ class InventoryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        val tmp: ArrayList<PlantData> = response.body()!!.data!!
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        //diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                        val ballon  = response.body()!!.data!![0].ballon
                     }
                 }
             }
