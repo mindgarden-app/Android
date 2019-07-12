@@ -81,8 +81,6 @@ class MainFragment : Fragment() {
         setTree()
         setLocation()
 
-
-
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
 
@@ -143,8 +141,29 @@ class MainFragment : Fragment() {
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
+        var mmonth = (cal.get(Calendar.MONTH)).toString()
+        if (mmonth.toInt() < 10) {
+            mmonth = "0$mmonth"
+        }
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+            btn_right.isEnabled = false
+        } else {
+            btn_right.isEnabled = true
+        }
 
         btn_left.setOnClickListener {
+            //미래로 못가게
+            var mmonth = (cal.get(Calendar.MONTH)).toString()
+            if (mmonth.toInt() < 10) {
+                mmonth = "0$mmonth"
+            }
+
+            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                btn_right.isEnabled = false
+            } else {
+                btn_right.isEnabled = true
+            }
+
             //1월로 갔을때 년도 바뀜
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString() //1->12월로 가도록
@@ -198,6 +217,18 @@ class MainFragment : Fragment() {
         }
 
         btn_right.setOnClickListener {
+            //미래로 못가게
+            var mmonth = (cal.get(Calendar.MONTH)).toString()
+            if (mmonth.toInt() < 10) {
+                mmonth = "0$mmonth"
+            }
+
+            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                btn_right.isEnabled = false
+            } else {
+                btn_right.isEnabled = true
+            }
+
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
                 year = (year.toInt() + 1).toString()
@@ -485,11 +516,14 @@ class MainFragment : Fragment() {
                                 img_balloon.visibility=View.VISIBLE
                             }
                             else btn_reward.isEnabled=false
+                            img_balloon.visibility=View.INVISIBLE
                         }
                         else {
-
+                            //btn_reward.isEnabled = false
+                            //img_balloon.visibility=View.INVISIBLE
                             if(balloon==1){
                                 btn_reward.isEnabled=true
+                                img_balloon.visibility=View.VISIBLE
                                 writeDiary = false
 
                             }else
