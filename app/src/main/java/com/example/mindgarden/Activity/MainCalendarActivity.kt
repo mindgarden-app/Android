@@ -41,9 +41,9 @@ class MainCalendarActivity : AppCompatActivity() {
         Log.e("year", year)
         Log.e("month" ,month)
 
-        btn_right =findViewById(R.id.btn_right_toolbar_main_calendar) as ImageView
-        btn_left = findViewById(R.id.btn_left_toolbar_main_calendar) as ImageView
-        txt_year = findViewById(R.id.txt_year_toolbar_main_calendar) as TextView
+        btn_right =findViewById(R.id.btn_right_main_calendar) as ImageView
+        btn_left = findViewById(R.id.btn_left_main_calendar) as ImageView
+        txt_year = findViewById(R.id.txt_year_main_calendar) as TextView
         setWindow()
 
         //년도 설정
@@ -68,8 +68,8 @@ class MainCalendarActivity : AppCompatActivity() {
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-        val width = (display.width * 0.7).toInt() //Display 사이즈의 20%
-        val height = (display.height * 0.4).toInt()  //Display 사이즈의 20%
+        val width = (display.width * 0.65).toInt() //Display 사이즈의 20%
+        val height = (display.height * 0.45).toInt()  //Display 사이즈의 20%
 
         //테두리 없애기
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

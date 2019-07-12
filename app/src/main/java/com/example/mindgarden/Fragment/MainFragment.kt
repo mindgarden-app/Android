@@ -69,6 +69,7 @@ class MainFragment : Fragment() {
     var dayOfWeek = ""      //요일
     var day = ""            //날짜
     var treeNum = 0 //트리수
+    var writeDiary = false //일기 작성 가능 여부
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
@@ -297,10 +298,12 @@ class MainFragment : Fragment() {
 
                             if(balloon==1){
                                 btn_reward.isEnabled=true
+                                writeDiary = false
 
                             }else
                             {
                                 btn_reward.isEnabled = false
+                                writeDiary = true
                             }
                         } else {
                             btn_reward.isEnabled = false

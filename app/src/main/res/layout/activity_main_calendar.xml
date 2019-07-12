@@ -9,8 +9,40 @@
         android:background="@drawable/round_layout_border"
         android:orientation="vertical"
 >
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-        <include layout="@layout/toolbar_main_calendar"/>
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/toolbar_layout_border"
+            android:paddingBottom="5dp"
+    >
+
+    <ImageView
+            android:id="@+id/btn_left_main_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_left"/>
+
+    <TextView
+            android:id="@+id/txt_year_main_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:text="0000"
+            android:textSize="17dp"
+            android:fontFamily="@font/notosanscjkr_bold"
+            android:textColor="#6B6B6B"/>
+
+    <ImageView
+            android:id="@+id/btn_right_main_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_right"/>
     </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -21,22 +53,22 @@
 
         >
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="1" android:textSize="17dp" android:layout_marginRight="20dp"
-                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:text="1" android:textSize="17dp" android:textColor="#6B6B6B"
+                      android:layout_marginRight="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
                       android:paddingBottom="5dp" android:paddingTop="5dp"
                       android:id="@+id/txt_1_main_cal"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="2" android:textSize="17dp" android:layout_marginRight="20dp"
-                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:text="2" android:textSize="17dp" android:textColor="#6B6B6B"
+                      android:layout_marginRight="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
                       android:paddingBottom="5dp" android:paddingTop="5dp"
                       android:id="@+id/txt_2_main_cal"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="3" android:textSize="17dp" android:layout_marginRight="20dp"
-                      android:paddingRight="12dp" android:paddingLeft="12dp"
+                      android:text="3" android:textSize="17dp" android:textColor="#6B6B6B"
+                      android:layout_marginRight="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
                       android:paddingBottom="5dp" android:paddingTop="5dp"
                       android:id="@+id/txt_3_main_cal"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:text="4" android:textSize="17dp"
+                      android:text="4" android:textSize="17dp" android:textColor="#6B6B6B"
                       android:paddingRight="12dp" android:paddingLeft="12dp"
                       android:paddingBottom="5dp" android:paddingTop="5dp"
                       android:id="@+id/txt_4_main_cal"/>
@@ -46,20 +78,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="5" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:text="5" android:textSize="17dp" android:textColor="#6B6B6B"
+                  android:layout_marginRight="20dp"
                   android:paddingRight="12dp" android:paddingLeft="12dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_5_main_cal"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="6" android:textSize="17dp" android:layout_marginRight="20dp"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
+                  android:text="6" android:textSize="17dp" android:textColor="#6B6B6B"
+                  android:layout_marginRight="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_6_main_cal"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="7" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:text="7" android:textColor="#6B6B6B"
+                  android:textSize="17dp" android:layout_marginRight="20dp"
                   android:paddingRight="12dp" android:paddingLeft="12dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
 
@@ -67,33 +101,34 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:paddingRight="12dp" android:paddingLeft="12dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:text="8" android:textSize="17dp"
+                  android:text="8" android:textSize="17dp" android:textColor="#6B6B6B"
                   android:id="@+id/txt_8_main_cal"/>
     </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="17dp"
-            android:layout_marginBottom="17dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="9" android:textSize="17dp" android:layout_marginRight="20dp"
+                  android:text="9" android:textSize="17dp" android:textColor="#6B6B6B"
+                  android:layout_marginRight="20dp"
                   android:paddingRight="12dp" android:paddingLeft="12dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_9_main_cal"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="10" android:textSize="17dp" android:layout_marginRight="18dp"
-                  android:paddingRight="8dp" android:paddingLeft="8dp"
+                  android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_10_main_cal"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:text="11" android:textSize="17dp" android:layout_marginRight="18dp"
-                  android:paddingRight="8dp" android:paddingLeft="8dp"
+                  android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_11_main_cal"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="12" android:textSize="17dp"
+                  android:text="12" android:textSize="17dp" android:textColor="#6B6B6B"
                   android:paddingRight="8dp" android:paddingLeft="8dp"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_12_main_cal"/>
