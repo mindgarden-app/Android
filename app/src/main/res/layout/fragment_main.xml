@@ -346,7 +346,7 @@
             app:layout_constraintEnd_toStartOf="@+id/txt_main_day_num_word"/>
 
     <TextView
-            android:text="정원이 복작복작 해졌어요.\n이번 달 마무리를 잘 해봅시다!"
+            android:text=""
             android:textSize="14dp"
             android:textColor="#2B2B2B"
             android:fontFamily="@font/notosanscjkkr_light"
