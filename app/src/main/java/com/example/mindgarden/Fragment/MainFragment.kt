@@ -280,13 +280,24 @@ class MainFragment : Fragment() {
                         initializeTree()
                         Log.e("mainfragment : ", response.body()!!.message)
 
+                        val balloon = response.body()!!.data!![0].balloon
+                        Log.e("ballon", balloon.toString())
+                        Log.e("ballon값을 받아오자", balloon.toString())
 
-                        val ballon = response.body()!!.data!![1].balloon
-                        Log.e("ballon", ballon.toString())
-                        Log.e("ballon값을 받아오자", ballon.toString())
+                        //날짜가 해당월이면
+                        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
 
-                        if(ballon==0){ btn_reward.isEnabled=false}
-                        else{ btn_reward.isEnabled=true}
+                            if(balloon==1){
+                                btn_reward.isEnabled=true
+                            }else
+                            {
+                                btn_reward.isEnabled = false
+                            }
+                        } else {
+                            btn_reward.isEnabled = false
+                        }
+
+
 
 
                         //나무 수만큼
