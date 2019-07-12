@@ -256,7 +256,7 @@ class InventoryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        val ballon  = response.body()!!.data!![0].ballon
+                       // val ballon  = response.body()!!.data!![0].ballon
                     }
                 }
             }
