@@ -116,14 +116,6 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     }
 
-    /*
-    [알람설정]
-    AlaramManager에게
-    set 정보 : 1. PendingIntent(어떤 receiver를 호출할지에 대한 intent를 가짐)
-                2. delay(얼마 delay된 후 실행시킬지)
-    Alarm set -> AlarmManager가 receiver에게 broadcast -> receiver는 service를 호출하여 기능 실행
-     */
-
     //알람 매니저 setting
     fun setAlarm(time : Long){
         setChannel()

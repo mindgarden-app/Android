@@ -38,9 +38,6 @@ class MainCalendarActivity : AppCompatActivity() {
         year = intent.getStringExtra("year")
         month = intent.getStringExtra("month")
 
-        Log.e("year", year)
-        Log.e("month" ,month)
-
         btn_right =findViewById(R.id.btn_right_main_calendar) as ImageView
         btn_left = findViewById(R.id.btn_left_main_calendar) as ImageView
         txt_year = findViewById(R.id.txt_year_main_calendar) as TextView

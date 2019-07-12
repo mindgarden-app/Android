@@ -64,6 +64,7 @@
             </intent-filter>
 
         </activity>
+    <receiver android:name=".Service.BroadcastD"/>
     </application>
 
 </manifest>

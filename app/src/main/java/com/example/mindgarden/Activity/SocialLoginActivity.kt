@@ -74,11 +74,9 @@ class SocialLoginActivity : AppCompatActivity() {
                         }
                     }
                     override fun onPageStarted(url: String?, favicon: Bitmap?) {
-                        Log.e("로그인", "웹뷰 시작한당 $url")
                     }
 
                     override fun onExternalPageRequest(url: String?) {
-                        Log.e("로그인", "웹뷰 리퀘스트 $url")
                     }
                 })
 
@@ -96,26 +94,6 @@ class SocialLoginActivity : AppCompatActivity() {
             val  response=response1.toString()
             val json = JsonParser().parse(response).asJsonObject
 
-            Log.e("get response $json \nfrom $response1","get response $json \nfrom $response1")
-            Log.e("response","$response")
-            /* val getLoginResponse = networkService.getLoginResponse("application/json", json)
-
-           getLoginResponse.enqueue(object: Callback<GetLoginResponse> {
-               override fun onFailure(call: Call<GetLoginResponse>, t: Throwable) {
-                   Log.e("login", t.toString())
-               }
-               override fun onResponse(call: Call<GetLoginResponse>, response: Response<GetLoginResponse>) {
-                   if (response.isSuccessful) {
-                       if (response.body()!!.status == 200) {
-                           val tmp: Int = response.body()!!.data!!.userIdx
-                           Log.e("json", tmp.toString())
-                           SharedPreferenceController.setUserID(this@SocialLoginActivity, tmp)
-                           Log.e("userID", SharedPreferenceController.getUserID(this@SocialLoginActivity).toString())
-                           //데베에 저장
-                       }
-                   }
-               }
-           })*/
           if (json == null || !json.has("data")) {
         setResult(Activity.RESULT_CANCELED)
     }
@@ -135,7 +113,6 @@ class SocialLoginActivity : AppCompatActivity() {
             putExtra("userId", temp2)
         })
     }
-            // finish()
         }
     }
 }

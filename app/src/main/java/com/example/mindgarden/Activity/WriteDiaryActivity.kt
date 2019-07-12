@@ -202,7 +202,6 @@ class WriteDiaryActivity : AppCompatActivity() {
 
            val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
-           Log.e("picture_rb", picture_rb.toString())
 
            val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, picture_rb)
 

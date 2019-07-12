@@ -271,7 +271,6 @@ class PasswordActivity : AppCompatActivity() {
                                     btnForgetPw.visibility= View.INVISIBLE
                                     btnForgetPw.isEnabled=false
                                 } else {// 기존 비
-                                    toast("비밀번호 틀렸어")
                                     subPassword = ""
                                     txtPassword.text = "다시 암호를 입력해주세요"
                                     btnForgetPw.visibility= View.INVISIBLE

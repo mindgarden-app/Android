@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import com.example.mindgarden.R
@@ -43,17 +44,9 @@ class PasswordSettingActivity : AppCompatActivity() {
                 passwordIntent.putExtra("from","passwordSetting")
                 startActivity(passwordIntent)
 
-                // val intent = Intent(this, PasswordActivity::class.java)
-                //로그인 해야되는데 마이페이지로 넘어가는 걸로 구현(임시)
-
-
-
-                //이 부분에 암호 설정하는 액티비티로 넘어감
 
             }
-            toast("ddksk")
 
-            //color에 있는 검정색 어떻게 쓰는지 모르겠어
         }
 
 
@@ -72,12 +65,7 @@ class PasswordSettingActivity : AppCompatActivity() {
         if(requestCode == REQUEST_CODE_PASSWORD_SETTING_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
                 val isSet= data!!.getBooleanExtra("isSet",false)
-                /*
-                // without Anko
-                Toast.makeText(this, "End time: ${e_time}", Toast.LENGTH_SHORT).show()
-                */
-                // with Anko
-                toast("End time: ${isSet}")
+                Log.e("End time", isSet.toString())
             }
         }
     }

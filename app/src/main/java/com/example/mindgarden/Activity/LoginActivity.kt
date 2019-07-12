@@ -125,25 +125,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
         }
     }
-    /*private fun setupPermissions(requestPermission: String) {
-        //스토리지 읽기 퍼미션을 permission 변수에 담는다
-        val permission = ContextCompat.checkSelfPermission(this,requestPermission)
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.e("TAG", "Permission to record denied")
-    makeRequest(requestPermission)
-}
-
-}
-
-
-private fun makeRequest(requestPermission: String) {
-    ActivityCompat.requestPermissions(this,
-        arrayOf( requestPermission),
-        RECORD_REQUEST_CODE)
-}
-
-*/
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
