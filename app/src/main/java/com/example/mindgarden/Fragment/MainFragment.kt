@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
         setTree()
         setLocation()
 
-        btn_reward.isEnabled = false
+
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
@@ -109,6 +109,7 @@ class MainFragment : Fragment() {
             btn_reward.setOnClickListener {
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
                 startActivity(intent)
+
             }
         }
 
@@ -207,6 +208,13 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
                 getMainResponse()
 
+                if (btn_reward.isEnabled) {
+                    btn_reward.setOnClickListener {
+                        var intent: Intent = Intent(context, InventoryActivity::class.java)
+                        startActivity(intent)
+
+                    }
+                }
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
 
@@ -293,15 +301,9 @@ class MainFragment : Fragment() {
 
                         //날짜가 해당월이면
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-
-                            if(balloon==1){
-                                btn_reward.isEnabled=true
-
-                            }else
-                            {
-                                btn_reward.isEnabled = false
-                            }
-                        } else {
+                            if(balloon==1) btn_reward.isEnabled = true
+                        }
+                        else {
                             btn_reward.isEnabled = false
                         }
 
