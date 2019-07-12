@@ -68,6 +68,7 @@ class MainFragment : Fragment() {
     var userIdx : Int = 0
     var dayOfWeek = ""      //요일
     var day = ""            //날짜
+    var treeNum = 0 //트리수
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
@@ -271,8 +272,8 @@ class MainFragment : Fragment() {
     }
 
     private fun getMainResponse(){
-        val getMainResponse = networkService.getMainResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+        val getMainResponse = networkService.getMainResponse( //SharedPreferenceController.getUserID(ctx)
+            "application/json", 2, txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
             Log.e("year" , txt_main_year.text.toString())
             Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
@@ -353,13 +354,31 @@ class MainFragment : Fragment() {
                                 txt_main_day_num.visibility = View.INVISIBLE
                                 txt_main_day_text.visibility = View.INVISIBLE
                             }
+
+                            //문구 설정
+                            treeNum = response.body()!!.data!![i].treeNum
+                            if(treeNum < 1){
+                                txt_main_exp1.setText(getString(R.string.treeNumText0))
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else if(treeNum < 11){
+                                val text = treeNum.toString() + getString( R.string.treeNumText10)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else if(treeNum < 21){
+                                val text = treeNum.toString() + getString(R.string.treeNumText20)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }else{
+                                val text = treeNum.toString() + getString(R.string.treeNumText21)
+                                txt_main_exp1.setText(text)
+                                txt_main_exp1.visibility = View.VISIBLE
+                            }
                         }
                     }
                 }
             }
         })
     }
-
 
     fun initializeTree(){
         val initTree = drawableToBitmap(R.drawable.tree_size)
