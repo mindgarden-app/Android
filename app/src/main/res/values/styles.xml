@@ -38,7 +38,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <style name="myTimePickerStyle" parent="@android:style/Widget.Material.Light.TimePicker">
         <item name="android:numbersTextColor">#2B2B2B</item>
         <item name="android:numbersBackgroundColor">#C6C6C6</item>
