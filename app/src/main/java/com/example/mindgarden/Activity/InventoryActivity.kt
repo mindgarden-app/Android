@@ -86,22 +86,6 @@ class InventoryActivity : AppCompatActivity() {
 
             finish()
         }
-        /*val GV=this.findViewById(R.id.gridView) as GridView
-        val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
-
-        val basicImage21 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage22 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage23 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage24 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage25 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage26 = drawableToBitmap(R.drawable.tree_size)
-
-        val basicImage27 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage28 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage29 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage30 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage31 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage32 = drawableToBitmap(R.drawable.tree_size)*/
 
         gridList.add(GridData(1, R.drawable.tree_size))
         gridList.add(GridData(3, R.drawable.tree_size))
@@ -119,15 +103,15 @@ class InventoryActivity : AppCompatActivity() {
 
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
-        gridList.add(GridData(100, R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(101,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))
 
         gridList.add(GridData(7, R.drawable.tree_size))
         gridList.add(GridData(12, R.drawable.tree_size))
-        gridList.add(GridData(102,  R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(103,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(25, R.drawable.tree_size))
         gridList.add(GridData(29, R.drawable.tree_size))
 
