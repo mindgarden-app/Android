@@ -69,7 +69,7 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     fun showDialog(){
 
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.AlarmDialogStyle)
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
 
@@ -86,10 +86,13 @@ class AlarmSettingActivity : AppCompatActivity() {
                 Log.e("time", time.toString())
 
             }
-            .setNegativeButton("취소") { dialogInterface, i ->
+            .setNeutralButton("취소") { dialogInterface, i ->
                 /* 취소일 때 아무 액션이 없으므로 빈칸 */
             }
-        builder.show()
+        var builderNew: AlertDialog = builder.show()
+        builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+        builderNew.show()
+        //builder.show()
         alarmTimePicker.setOnTimeChangedListener{
                 view,hourOfDay,minute->Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
                 time = getPickerTime(alarmTimePicker)

@@ -21,9 +21,7 @@ class BroadcastD() : BroadcastReceiver(){
         //푸시 알림 설정
         Log.e("broadcast", "broadcastOK")
 
-
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
-
 
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.img_weather11_none)
@@ -43,6 +41,4 @@ class BroadcastD() : BroadcastReceiver(){
             notify(0, builder.build())
         }
     }
-
-
 }

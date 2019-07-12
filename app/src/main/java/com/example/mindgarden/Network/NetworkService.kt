@@ -32,15 +32,6 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<DeleteDiaryListResponse>
 
-    /*
-     @GET("/diarylist/click/{userIdx}/{date}")
-    fun getDiaryListClickResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
-        @Path("date") date: String
-    ): Call<GetDiaryListClickResponse>
-     */
-
     //일기 상세보기
     @GET("/diarylist/click/{userIdx}/{date}")
     fun getDiaryResponse(
@@ -84,6 +75,7 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int
     ):Call<GetForgetPasswordResponse>
+
     //나무심기
     @POST("/garden/plant")
     fun postPlantResponse(

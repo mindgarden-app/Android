@@ -12,19 +12,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +60,6 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             holder.lay1.visibility = View.VISIBLE
 
             holder.icn_delete.setOnClickListener {
-                //var dialogView: View = View.inflate(context, R.layout.diary_list_dialog, null)
                 var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 dlg.setTitle("삭제")
                 dlg.setMessage("삭제하시겠습니까?")

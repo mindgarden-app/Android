@@ -24,25 +24,16 @@ import kotlinx.android.synthetic.main.toolbar_main.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
-import android.support.design.widget.TabLayout
-import android.widget.Adapter
 import android.widget.ImageView
-import com.bumptech.glide.request.transition.Transition
-import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
-import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
-import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
-import com.kotlinpermissions.ifNotNullOrElse
-import com.kotlinpermissions.notNull
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -95,14 +86,19 @@ class MainFragment : Fragment() {
 
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
-        //todo 요일도 받아오기
-        // txt_main_day_text.setText(cal.get(Caledar.))
+
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
         }
         txt_main_month.setText(month)
-        getMainResponse()
+        if (isValid(
+                SharedPreferenceController.getUserID(ctx),
+                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+            )
+        ) {
+            getMainResponse()
+        }
 
 
 
@@ -133,7 +129,15 @@ class MainFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        getMainResponse()
+
+        if (isValid(
+                SharedPreferenceController.getUserID(ctx),
+                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+            )
+        ) {
+            getMainResponse()
+        }
+
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
@@ -152,7 +156,13 @@ class MainFragment : Fragment() {
                 txt_main_day_num.visibility = View.INVISIBLE
                 txt_main_day_text.visibility = View.INVISIBLE
 
-                getMainResponse()
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -164,7 +174,14 @@ class MainFragment : Fragment() {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
-                getMainResponse()
+
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
                 if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
@@ -175,15 +192,7 @@ class MainFragment : Fragment() {
                 }
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
-
-                /*  if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                      btn_reward.isEnabled = true
-                  } else {
-                      btn_reward.isEnabled = false
-                  }*/
             }
-
-            //getMainResponse()
         }
 
         btn_right.setOnClickListener {
@@ -195,35 +204,35 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
-                getMainResponse()
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
-
-                /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                     btn_reward.isEnabled = true
-                 } else {
-                     btn_reward.isEnabled = false
-                 }*/
             } else {
                 month = (month.toInt() + 1).toString()
                 if (month.toInt() < 10) {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
-                getMainResponse()
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
-
-                /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                     btn_reward.isEnabled = true
-                 } else {
-                     btn_reward.isEnabled = false
-                 }*/
             }
 
             //툴바 날짜 클릭했을 때 -> 팝업 띄우기
@@ -238,7 +247,15 @@ class MainFragment : Fragment() {
     //액티비티 이동했다가 돌아오면 현재 년, 달로 바뀌어있음
     override fun onStop() {
         super.onStop()
-        getMainResponse()
+
+        if (isValid(
+                SharedPreferenceController.getUserID(ctx),
+                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+            )
+        ) {
+            getMainResponse()
+        }
+
         //현재 년 월 다시 셋팅
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
@@ -248,8 +265,14 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
-        getMainResponse()
 
+        if (isValid(
+                SharedPreferenceController.getUserID(ctx),
+                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+            )
+        ) {
+            getMainResponse()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -264,46 +287,94 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 txt_main_year.setText(year)
-                getMainResponse()
 
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        getMainResponse()
+
+        if (isValid(
+                SharedPreferenceController.getUserID(ctx),
+                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+            )
+        ) {
+            getMainResponse()
+        }
+
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
 
         btn_left.setOnClickListener {
-            //1월로 갔을때 년도 바뀜
+            //미래로 못가게
+            var mmonth = (cal.get(Calendar.MONTH)).toString()
+            if (mmonth.toInt() < 10) {
+                mmonth = "0$mmonth"
+            }
+
+            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                btn_right.isEnabled = false
+            } else {
+                btn_right.isEnabled = true
+            }
+
             if (month.toInt() == 1) {
-                month = (month.toInt() + 11).toString() //1->12월로 가도록
-                year = (year.toInt() - 1).toString()    //12월로 가면 년도 바뀜
-                if (month.toInt() < 10) {   //한자리수면 0붙여주기
+                month = (month.toInt() + 11).toString()
+                year = (year.toInt() - 1).toString()
+                if (month.toInt() < 10) {
                     month = "0$month"
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
+
                 txt_main_day_num_word.visibility = View.INVISIBLE
                 txt_main_day_num.visibility = View.INVISIBLE
                 txt_main_day_text.visibility = View.INVISIBLE
 
-                getMainResponse()
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
 
+                //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
+                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(
+                        Calendar.MONTH
+                    ) + 1).toString()
+                ) {
+                    btn_reward.isEnabled = true
+                } else {
+                    btn_reward.isEnabled = false
+                }
             } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
-                getMainResponse()
+
+                if (isValid(
+                        SharedPreferenceController.getUserID(ctx),
+                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                    )
+                ) {
+                    getMainResponse()
+                }
 
                 if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
@@ -312,67 +383,81 @@ class MainFragment : Fragment() {
 
                     }
                 }
-                //툴바 월 설정(MainCalendar로 전달)
-                toolbarMonth = txt_main_month.text.toString()
-
-              /*  if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                    btn_reward.isEnabled = true
-                } else {
-                    btn_reward.isEnabled = false
-                }*/
-            }
-
-            //getMainResponse()
-        }
-
-        btn_right.setOnClickListener {
-            if (month.toInt() == 12) {
-                month = (month.toInt() - 11).toString()
-                year = (year.toInt() + 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_main_year.setText(year)
-                txt_main_month.setText(month)
-                getMainResponse()
-
-
-                //툴바 년/월 설정(MainCalendar로 전달)
-                toolbarYear = txt_main_year.text.toString()
-                toolbarMonth = txt_main_month.text.toString()
-
-               /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                    btn_reward.isEnabled = true
-                } else {
-                    btn_reward.isEnabled = false
-                }*/
-            } else {
-                month = (month.toInt() + 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_main_month.setText(month)
-                getMainResponse()
-
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
-
-               /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                    btn_reward.isEnabled = true
-                } else {
-                    btn_reward.isEnabled = false
-                }*/
             }
 
-            //툴바 날짜 클릭했을 때 -> 팝업 띄우기
-            ll_date_toolbar_main.setOnClickListener {
-                startActivityForResult<MainCalendarActivity>(
-                    REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
-                )
+            btn_right.setOnClickListener {
+                //미래로 못가게
+                var mmonth = (cal.get(Calendar.MONTH)).toString()
+                if (mmonth.toInt() < 10) {
+                    mmonth = "0$mmonth"
+                }
+
+                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                    btn_right.isEnabled = false
+                } else {
+                    btn_right.isEnabled = true
+                }
+
+                if (month.toInt() == 12) {
+                    month = (month.toInt() - 11).toString()
+                    year = (year.toInt() + 1).toString()
+                    if (month.toInt() < 10) {
+                        month = "0$month"
+                    }
+                    txt_main_year.setText(year)
+                    txt_main_month.setText(month)
+
+                    if (isValid(
+                            SharedPreferenceController.getUserID(ctx),
+                            txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                        )
+                    ) {
+                        getMainResponse()
+                    }
+                    //툴바 년/월 설정(MainCalendar로 전달)
+                    toolbarYear = txt_main_year.text.toString()
+                    toolbarMonth = txt_main_month.text.toString()
+                } else {
+                    month = (month.toInt() + 1).toString()
+                    if (month.toInt() < 10) {
+                        month = "0$month"
+                    }
+                    txt_main_month.setText(month)
+
+                    if (isValid(
+                            SharedPreferenceController.getUserID(ctx),
+                            txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
+                        )
+                    ) {
+                        getMainResponse()
+                    }
+
+                    //툴바 월 설정(MainCalendar로 전달)
+                    toolbarMonth = txt_main_month.text.toString()
+
+                    //툴바 날짜 클릭했을 때 -> 팝업 띄우기
+                    ll_date_toolbar_main.setOnClickListener {
+                        startActivityForResult<MainCalendarActivity>(
+                            REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
+                        )
+                    }
+                }
             }
 
         }
+    }
+
+    fun isValid(userIdx: Int, date: String): Boolean {
+        if (userIdx.toString() == "")
+            toast("로그인하세요")
+        else if (date == "")
+            toast("보고 싶은 달을 선택하세요")
+        else return true
+
+        return false
     }
 
     private fun getMainResponse(){
@@ -387,16 +472,11 @@ class MainFragment : Fragment() {
 
             override fun onResponse(call: Call<GetMainResponse>, response: Response<GetMainResponse>) {
                 if (response.isSuccessful) {
-
                     if (response.body()!!.status == 200) {
                         initializeTree()
-                        Log.e("mainfragment : ", response.body()!!.message)
 
                         val balloon = response.body()!!.data!![0].balloon
-                        Log.e("ballon", balloon.toString())
-                        Log.e("ballon값을 받아오자", balloon.toString())
 
-                        //날짜가 해당월이면
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                             if(balloon==1) {
                                 btn_reward.isEnabled = true
@@ -408,18 +488,9 @@ class MainFragment : Fragment() {
                             img_balloon.visibility=View.INVISIBLE
                         }
 
-
-
-
-                        //나무 수만큼
                         for(i in 0..(response.body()!!.data!!.size-1)) {
-
-
-                            Log.e("rdate : ", response.body()!!.data!![i].date)
-
                             var treeIdx = 0
                             var location = 0
-
 
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
@@ -427,28 +498,19 @@ class MainFragment : Fragment() {
                             dayOfWeek = response.body()!!.data!![i].date.substring(8,10)
                             day = response.body()!!.data!![i].date.substring(10,14)
 
-                            Log.e("dayOfWeek", dayOfWeek)
-                            Log.e("day", day)
-
-
-                            Log.e("location ", location.toString())
-                            Log.e("treeIdx", treeIdx.toString())
-
                             //잡초만 있을 경우
                             if(response.body()!!.data!![i].treeIdx==16){
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
-                                //locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
                             }else{
                                 locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
-                                //locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
                             }
-
 
                             //요일 설정
                             if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                                 txt_main_day_num_word.visibility = View.VISIBLE
                                 txt_main_day_num.visibility = View.VISIBLE
                                 txt_main_day_text.visibility = View.VISIBLE
+
                                 txt_main_day_num.setText(dayOfWeek)
                                 txt_main_day_text.setText(day)
                             }else{
@@ -468,6 +530,7 @@ class MainFragment : Fragment() {
         val initTree = drawableToBitmap(R.drawable.tree_size)
         for(i in 0..31) locationList.get(i).setImageBitmap(initTree)
     }
+
     fun setLocation(){
         locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
                             img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,

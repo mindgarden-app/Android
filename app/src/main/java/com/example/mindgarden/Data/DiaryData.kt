@@ -1,6 +1,6 @@
 package com.example.mindgarden.Data
 
-data class DiaryData (
+data class DiaryData(
     var diaryIdx : Int,
     var date : String,
     var diary_content : String,

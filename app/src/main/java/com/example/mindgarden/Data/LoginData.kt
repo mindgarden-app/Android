@@ -1,5 +1,5 @@
 package com.example.mindgarden.Data
 
-data class LoginData (
+data class LoginData(
     var userIdx : Int
 )

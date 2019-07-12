@@ -57,7 +57,9 @@ class DiaryListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        getDiaryListResponse()
+        if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            getDiaryListResponse()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
