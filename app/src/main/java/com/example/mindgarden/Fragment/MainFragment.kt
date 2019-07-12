@@ -25,11 +25,15 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.support.design.widget.TabLayout
+import android.widget.Adapter
 import android.widget.ImageView
+import com.bumptech.glide.request.transition.Transition
+import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
+import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
 import com.kotlinpermissions.ifNotNullOrElse
 import com.kotlinpermissions.notNull
@@ -49,6 +53,7 @@ class MainFragment : Fragment() {
         ApplicationController.instance.networkService
     }
     var mainList: ArrayList<com.example.mindgarden.Data.MainData> = ArrayList()
+    lateinit var inventoryActivity: InventoryActivity
 
     val REQUEST_CODE_SET_TOOLBAR_DATE = 1005
     var toolbarYear : String = ""
@@ -100,6 +105,9 @@ class MainFragment : Fragment() {
 
         if (btn_reward.isEnabled) {
             btn_reward.setOnClickListener {
+
+                //getPlantResponse()
+
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
                 startActivity(intent)
             }
@@ -270,10 +278,10 @@ class MainFragment : Fragment() {
                         initializeTree()
                         Log.e("mainfragment : ", response.body()!!.message)
 
-                        var ballon = 0
+                        var balloon = 0
 
-                        ballon = response.body()!!.data!![0].ballon
-                        Log.e("ballon", ballon.toString())
+                        balloon = response.body()!!.data!![0].balloon
+                        Log.e("ballon", balloon.toString())
 
                         //나무 수만큼
                         for(i in 0..(response.body()!!.data!!.size-1)) {
@@ -288,12 +296,12 @@ class MainFragment : Fragment() {
                             Log.e("treeIdx", treeIdx.toString())
 
                             //잡초만 있을 경우
-                            if(response.body()!!.data!![i].treeNum == 0){
-                                locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
+                            if(response.body()!!.data!![i].treeIdx == 16){
+                                Log.e("h", location.toString())
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
                             }else{
-                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
-                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                                Log.e("h", location.toString())
+                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx))
                             }
                         }
                     }
@@ -342,4 +350,42 @@ class MainFragment : Fragment() {
         return bitmap
     }
 
+    fun getPlantResponse() {
+        val getPlantResponse = networkService.getPlantResponse(
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+        getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
+            override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {
+                Log.e("garden select fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetPlantResponse>, response: Response<GetPlantResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("Adapter: mainfragment : ", response.body()!!.message)
+
+                        //나무 수만큼
+                        for(i in 0..(response.body()!!.data!!.size-1)) {
+                            Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
+
+                            var treeIdx = 0
+                            var location = 0
+                            treeIdx = response.body()!!.data!![i].treeIdx
+                            location = response.body()!!.data!![i].location
+
+                            Log.e("Adapter:location ", location.toString())
+                            Log.e("Adapter: treeIdx", treeIdx.toString())
+
+                            if(response.body()!!.data!![i].treeIdx == 16){
+                                Log.e("h", location.toString())
+                            }else{
+                                Log.e("h", location.toString())
+                                //inventoryActivity.gridRecyclerViewAdapter
+                                //inventoryActivity.gridRecyclerViewAdapter.gridDataList[3].img = R.drawable.android_tree1
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
 }

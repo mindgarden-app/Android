@@ -8,23 +8,28 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.GridView
+import android.widget.ImageView
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.GridViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
+import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Data.PlantData
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
@@ -32,16 +37,23 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Year
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class InventoryActivity : AppCompatActivity() {
 
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
-    lateinit var inventoryList : List<Bitmap>
-    val networkService: NetworkService by lazy{
+
+    lateinit var inventoryList: List<Bitmap>
+
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
+
+    var gridList: ArrayList<GridData> = ArrayList()
 
     companion object {
         var isClickAvailable: Boolean = true
@@ -54,12 +66,51 @@ class InventoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
 
-        /*val GV=this.findViewById(R.id.gridView) as GridView
-        val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
+        /*val basic = R.drawable.tree_size
+        val lake = R.drawable.img_small_lake
 
-        GV.adapter=adapter*/
+        val basicImage1 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage2 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage3 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage4 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage5 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage6 = drawableToBitmap(R.drawable.tree_size)
 
-        var gridList: ArrayList<GridData> = ArrayList()
+        val basicImage7 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage8 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage9 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage10 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage11 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage12 = drawableToBitmap(R.drawable.tree_size)
+
+        val basicImage13 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage14 = drawableToBitmap(R.drawable.tree_size)
+        val lake1 = drawableToBitmap(R.drawable.img_small_lake)
+        val lake2 = drawableToBitmap(R.drawable.img_small_lake)
+        val basicImage15 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage16 = drawableToBitmap(R.drawable.tree_size)
+
+        val basicImage17 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage18 = drawableToBitmap(R.drawable.tree_size)
+        val lake3 = drawableToBitmap(R.drawable.img_small_lake)
+        val lake4 = drawableToBitmap(R.drawable.img_small_lake)
+        val basicImage19 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage20 = drawableToBitmap(R.drawable.tree_size)
+
+        val basicImage21 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage22 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage23 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage24 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage25 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage26 = drawableToBitmap(R.drawable.tree_size)
+
+        val basicImage27 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage28 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage29 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage30 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage31 = drawableToBitmap(R.drawable.tree_size)
+        val basicImage32 = drawableToBitmap(R.drawable.tree_size)*/
+
         gridList.add(GridData(1, R.drawable.tree_size))
         gridList.add(GridData(3, R.drawable.tree_size))
         gridList.add(GridData(6, R.drawable.tree_size))
@@ -77,14 +128,14 @@ class InventoryActivity : AppCompatActivity() {
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
         gridList.add(GridData(100, R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(101, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(101,  R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))
 
         gridList.add(GridData(7, R.drawable.tree_size))
         gridList.add(GridData(12, R.drawable.tree_size))
-        gridList.add(GridData(102, R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(103, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(102,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(103,  R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(25, R.drawable.tree_size))
         gridList.add(GridData(29, R.drawable.tree_size))
 
@@ -109,70 +160,19 @@ class InventoryActivity : AppCompatActivity() {
         configureRecyclerView()
 
         btn_choose.setOnClickListener {
-            if(isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
-                postPlantResponse(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)
+            if (isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
+                postPlantResponse(
+                    SharedPreferenceController.getUserID(this),
+                    gridList[gridIdx].product_id ,
+                    inventoryIdx
+                )
             }
             Log.e("start", gridList[gridIdx].product_id.toString())
             finish()
         }
     }
 
-    /*val data:ArrayList<CustomGridViewLayout>
-    get(){
-        val itemList :ArrayList<CustomGridViewLayout> = ArrayList<CustomGridViewLayout>()
-
-        /*
-        itemList.add(CustomGridViewLayout(R.drawable))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
-        //2
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
-        //3
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
-        //4
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
-        //4
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-
-        //5
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-        itemList.add(CustomGridViewLayout(R.drawable.tree0))
-*/
-        return itemList
-    }*/
-
-    private fun configureRecyclerView(){
+    private fun configureRecyclerView() {
         val image1 = drawableToBitmap(R.drawable.android_tree1)
         val image2 = drawableToBitmap(R.drawable.android_tree2)
         val image3 = drawableToBitmap(R.drawable.android_tree3)
@@ -191,49 +191,48 @@ class InventoryActivity : AppCompatActivity() {
         val image16 = drawableToBitmap(R.drawable.android_tree16)
 
         var inventory_dataList: ArrayList<InventoryData> = ArrayList()
-        inventory_dataList .add(InventoryData(image1, 0))
-        inventory_dataList .add(InventoryData(image2, 1))
-        inventory_dataList .add(InventoryData(image3, 2))
-        inventory_dataList .add(InventoryData(image4, 3))
-        inventory_dataList .add(InventoryData(image5, 4))
-        inventory_dataList .add(InventoryData(image6, 5))
-        inventory_dataList .add(InventoryData(image7, 6))
-        inventory_dataList .add(InventoryData(image8, 7))
-        inventory_dataList .add(InventoryData(image9, 8))
-        inventory_dataList .add(InventoryData(image10, 9))
-        inventory_dataList .add(InventoryData(image11, 10))
-        inventory_dataList .add(InventoryData(image12, 11))
-        inventory_dataList .add(InventoryData(image13, 12))
-        inventory_dataList .add(InventoryData(image14, 13))
-        inventory_dataList .add(InventoryData(image15, 14))
-        inventory_dataList .add(InventoryData(image16, 15))
+        inventory_dataList.add(InventoryData(image1, 0))
+        inventory_dataList.add(InventoryData(image2, 1))
+        inventory_dataList.add(InventoryData(image3, 2))
+        inventory_dataList.add(InventoryData(image4, 3))
+        inventory_dataList.add(InventoryData(image5, 4))
+        inventory_dataList.add(InventoryData(image6, 5))
+        inventory_dataList.add(InventoryData(image7, 6))
+        inventory_dataList.add(InventoryData(image8, 7))
+        inventory_dataList.add(InventoryData(image9, 8))
+        inventory_dataList.add(InventoryData(image10, 9))
+        inventory_dataList.add(InventoryData(image11, 10))
+        inventory_dataList.add(InventoryData(image12, 11))
+        inventory_dataList.add(InventoryData(image13, 12))
+        inventory_dataList.add(InventoryData(image14, 13))
+        inventory_dataList.add(InventoryData(image15, 14))
+        inventory_dataList.add(InventoryData(image16, 15))
 
         inventoryRecyclerViewAdapter = InventoryRecyclerViewAdapter(this, inventory_dataList)
         rv_inventory.adapter = inventoryRecyclerViewAdapter
         rv_inventory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        inventoryList = listOf<Bitmap>(image1, image2, image3, image4,
+        inventoryList = listOf<Bitmap>(
+            image1, image2, image3, image4,
             image5, image6, image7, image8,
             image9, image10, image11, image12,
-            image13, image14, image15, image16)
+            image13, image14, image15, image16
+        )
     }
 
-    private fun drawableToBitmap(icnName : Int): Bitmap {
+    private fun drawableToBitmap(icnName: Int): Bitmap {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap
     }
 
     fun isValid(userIdx: Int, location: Int, treeIdx: Int): Boolean {
-        if(userIdx.toString() == "")
+        if (userIdx.toString() == "")
             toast("로그인하세요")
-
-        else if(location.toString() == "")
+        else if (location.toString() == "")
             toast("위치를 고르세요")
-
-        else if(treeIdx.toString() == "")
+        else if (treeIdx.toString() == "")
             toast("나무를 선택하세요")
-
         else return true
 
         return false
@@ -247,8 +246,8 @@ class InventoryActivity : AppCompatActivity() {
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val postPlantResponse: Call<PostPlantResponse> =
-                networkService.postPlantResponse("application/json", gsonObject)
-        postPlantResponse.enqueue(object: Callback<PostPlantResponse>{
+            networkService.postPlantResponse("application/json", gsonObject)
+        postPlantResponse.enqueue(object : Callback<PostPlantResponse> {
             override fun onFailure(call: Call<PostPlantResponse>, t: Throwable) {
                 Log.e("fail", t.toString())
             }
@@ -256,7 +255,7 @@ class InventoryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                       // val ballon  = response.body()!!.data!![0].ballon
+                        // val ballon  = response.body()!!.data!![0].ballon
                     }
                 }
             }
