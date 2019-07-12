@@ -198,7 +198,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
         //타입 변환(String->RequestBody)
         val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)
         val date_rb = RequestBody.create(MediaType.parse("text/plain"), dateValue.substring(0,10))
-        Log.e("date", dateValue.substring(0,10))
 
         if(selectPicUri != null){
             val options = BitmapFactory.Options()
@@ -210,8 +209,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
             val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
-
-            Log.e("picture_rb", picture_rb.toString())
 
             val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, date_rb, picture_rb)
 

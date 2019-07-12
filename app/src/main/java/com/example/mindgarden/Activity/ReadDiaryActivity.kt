@@ -55,21 +55,13 @@ class ReadDiaryActivity : AppCompatActivity() {
 
 
         if(from == 100) {  // Write -> this
-            Log.e("requestCode" , "100")
             dateText = intent.getStringExtra("dateText")
-            Log.e("from ModifyDairy DateText : ", dateText)
             dateValue = intent.getStringExtra("dateValue")
-            Log.e("from ModifyDiary DateValue", dateValue)
-
 
         }
         else if(from == 300){  //diaryList -> this
-            Log.e("requestCode" , "300")
             dateText = intent.getStringExtra("dateText")
-            Log.e("from ModifyDairy DateText : ", dateText)
             dateValue = intent.getStringExtra("dateValue")
-            Log.e("from ModifyDiary DateValue", dateValue)
-
 
         }
         else{
@@ -110,7 +102,6 @@ class ReadDiaryActivity : AppCompatActivity() {
 
         if(requestCode == 1200){
             dateText = intent.getStringExtra("dateText")
-            Log.e("from ModifyDairy Date : ", dateText)
             getDiaryResponse()
 
 
@@ -139,12 +130,10 @@ class ReadDiaryActivity : AppCompatActivity() {
 
                         //내용 set
                         val content = response.body()!!.data!![0].diary_content
-                        Log.e("cotent", content)
                         txt_cotent_read_diary.setText(content)
 
                         //아이콘 set
                         val weatherIdx : Int = response.body()!!.data!![0].weatherIdx
-                        Log.e("w", weatherIdx.toString())
 
                         setIcon()
 
@@ -155,13 +144,6 @@ class ReadDiaryActivity : AppCompatActivity() {
                             }
                         }
 
-                        /*
-                        //내용 set
-                        val content = response.body()!!.data!![0].diary_content
-                        Log.e("cotent", content)
-                        txt_cotent_read_diary.setText(content)
-                         */
-
 
                         //time set
                         val time = response.body()!!.data!![0].date.substring(15,22)
@@ -170,6 +152,7 @@ class ReadDiaryActivity : AppCompatActivity() {
                         //diary_img set
                          if(response.body()!!.data!![0].diary_img != null){
                             img_gallary_read_diary.visibility = View.VISIBLE
+                            Glide.with(this@ReadDiaryActivity).load(response.body()!!.data!![0].diary_img)
                             Glide.with(this@ReadDiaryActivity).load(response.body()!!.data!![0].diary_img)
                                 .into(img_gallary_read_diary)
                         }
