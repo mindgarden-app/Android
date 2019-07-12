@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
@@ -45,8 +46,11 @@ class PasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
-        toast("넘어왔다!")
+
+
         txtPassword.text = "비밀번호를 입력해주세요."
+        btnForgetPw.visibility= View.INVISIBLE
+        btnForgetPw.isEnabled=false
 
         val intent = getIntent()
         intent.getStringExtra("whereFrom")?.let {
@@ -54,6 +58,8 @@ class PasswordActivity : AppCompatActivity() {
             Log.e("from", whereFrom)
             if (whereFrom == "login") {
                 txtPassword.text = "비밀번호를 입력해주세요."
+                btnForgetPw.visibility= View.VISIBLE
+                btnForgetPw.isEnabled=true
             }
 
         }
@@ -65,7 +71,7 @@ class PasswordActivity : AppCompatActivity() {
 
             //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-            dlg.setMessage("메일에 보낸 임시 비밀번호 4자리를 확인하세요.")
+            dlg.setMessage("메일로 발송된 번호를 입력하세요")
             fun do_p() {
                 Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
             }
@@ -107,7 +113,10 @@ class PasswordActivity : AppCompatActivity() {
         } else if (previousPassword != "") {
             //암호 변경하는 경우
             //일단 버튼 클릭
-            if (whereFrom != "login") txtPassword.text = "기존 암호를 입력하세요"
+            if (whereFrom != "login") {
+                txtPassword.text = "기존 암호를 입력하세요"
+                btnForgetPw.visibility= View.VISIBLE
+                btnForgetPw.isEnabled=true}
 
             //intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
@@ -145,9 +154,7 @@ class PasswordActivity : AppCompatActivity() {
                     }
                 }
             }
-
-        }
-        )
+        })
 
     }
     fun setNumBtnClickListener() {
@@ -210,11 +217,15 @@ class PasswordActivity : AppCompatActivity() {
                         password3.isSelected = false
                         password4.isSelected = false
                         if (previousPassword == "") {
+                            btnForgetPw.visibility= View.INVISIBLE
+                            btnForgetPw.isEnabled=false
                             if (firstPassword == "") {
                                 //첫번쨰 비밀번호를 입력한다
                                 firstPassword = subPassword
                                 subPassword = ""
                                 txtPassword.text = "다시 입력하세요"
+                                btnForgetPw.visibility= View.INVISIBLE
+                                btnForgetPw.isEnabled=false
                             } else {
                                 secondPassword = subPassword
                                 subPassword = ""
@@ -228,14 +239,16 @@ class PasswordActivity : AppCompatActivity() {
                                     toast("비밀번호가 다릅니다")
                                     firstPassword = ""
                                     txtPassword.text = "새 암호를 입력하세요"
+                                    btnForgetPw.visibility= View.INVISIBLE
+                                    btnForgetPw.isEnabled=false
                                 }
                             }
                         } else {
-                                Log.e("암홋설정","되어있다")
+
                             // 암호설정이 되어있는 경우
                             //previousPassword = "1234"
                             if (whereFrom == "login") {
-                                Log.e("암홋설정","로그인에서 넘어온다")
+
                                 Log.e("암호",subPassword)
                                 Log.e("저장된 암호",previousPassword)
                                 //txtPassword.text="비밀번호를 입력하세요."
@@ -248,18 +261,21 @@ class PasswordActivity : AppCompatActivity() {
                             }
                                 else{
                                 // TODO
-                                Log.e("암홋설정","로그인에서 온애가 아니다")
+
                                 // Load previous password to previousPassword
                                 // 암호변경 하는 경우
                                 if (previousPassword == subPassword) {
                                     subPassword = ""
                                     txtPassword.text = "새 암호를 입력하세요"
                                     previousPassword = ""
-
+                                    btnForgetPw.visibility= View.INVISIBLE
+                                    btnForgetPw.isEnabled=false
                                 } else {// 기존 비
                                     toast("비밀번호 틀렸어")
                                     subPassword = ""
                                     txtPassword.text = "다시 암호를 입력해주세요"
+                                    btnForgetPw.visibility= View.INVISIBLE
+                                    btnForgetPw.isEnabled=false
                                     //isSet = true
                                     //finish()}
                                     /* while(previousPassword != subPassword){

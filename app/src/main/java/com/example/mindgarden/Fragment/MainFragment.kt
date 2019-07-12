@@ -230,11 +230,7 @@ class MainFragment : Fragment() {
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
 
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                    btn_reward.isEnabled = true
-                } else {
-                    btn_reward.isEnabled = false
-                }
+
             } else {
                 month = (month.toInt() + 1).toString()
                 if (month.toInt() < 10) {
