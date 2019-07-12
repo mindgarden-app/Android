@@ -36,6 +36,7 @@ class PasswordActivity : AppCompatActivity() {
     var subPassword: String = ""
     var firstPassword: String = ""
     var secondPassword: String = ""
+    var forgetPassword:String=""
 
     var isSet = true
 
@@ -45,23 +46,80 @@ class PasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
         toast("넘어왔다!")
-        txtPassword.text="비밀번호를 입력해주세요."
+        txtPassword.text = "비밀번호를 입력해주세요."
 
-        val intent=getIntent()
-       intent.getStringExtra("whereFrom")?.let {
-           whereFrom = it
-           Log.e("from", whereFrom)
-           if(whereFrom=="login"){
-           txtPassword.text="비밀번호를 입력해주세요."
-       }
+        val intent = getIntent()
+        intent.getStringExtra("whereFrom")?.let {
+            whereFrom = it
+            Log.e("from", whereFrom)
+            if (whereFrom == "login") {
+                txtPassword.text = "비밀번호를 입력해주세요."
+            }
 
-       }
+        }
 
         toast(whereFrom.toString())
+        btnForgetPw.setOnClickListener {
+            val temp1= getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
+            Log.e("temp1",temp1)
+            Log.e("통신 후 받아온 비밀번호",forgetPassword)
+
+            //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
+            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+            dlg.setMessage("메일에 보낸 임시 비밀번호 4자리를 확인하세요.")
+            fun do_p() {
+                Log.e("다이얼로긔",temp1)
+                Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
+                /*val intent=getIntent()
+                val where= intent.getStringExtra("whereFrom")
+                Log.e("from", where)
+                if(where=="login"){
+                   val intent2 = Intent(this, LoginActivity::class.java)
+                    // 백 스페이스 누르면 다시 메인 페이지로
+                    startActivity(intent2)
+
+                    this.finish()
+                }
+                else{
+                    val intent2 = Intent(this, PasswordSettingActivity::class.java)
+                    // 백 스페이스 누르면 다시 메인 페이지로
+                    startActivity(intent2)
+
+                    finish()
+                    this.finish()
+                }*/
+                subPassword = ""
+                setNumBtnClickListener()
+
+            }
+
+
+            val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> do_p()
+                }
+            }
+
+            dlg.setPositiveButton("확인", null)
+
+            var dlgNew: AlertDialog = dlg.show()
+            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.CENTER
+            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+            dlgNew.show()
+
+            previousPassword=temp1
+            Log.e("메일로 4자리 받았어요!", SharedPreferenceController.getPassword(this))
+            Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
+
+
+        }
+
 
         //SharedPreferenceController.setPassword(this,"1234")
         //SharedPreferenceController.setPassword(this,"")
-        previousPassword=SharedPreferenceController.getPassword(this)
+        previousPassword = SharedPreferenceController.getPassword(this)
         // TODO
         // Get isPasswordSet to isSet from innerDB
 
@@ -77,62 +135,16 @@ class PasswordActivity : AppCompatActivity() {
         } else if (previousPassword != "") {
             //암호 변경하는 경우
             //일단 버튼 클릭
-           if(whereFrom!="login") txtPassword.text = "기존 암호를 입력하세요"
+            if (whereFrom != "login") txtPassword.text = "기존 암호를 입력하세요"
 
             //intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
         }
 
-        btnForgetPw.setOnClickListener {
-         getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
-         Log.e("메일로 4자리 받았어요!",SharedPreferenceController.getPassword(this))
-            //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
-            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-
-            dlg.setMessage("메일에 보낸 임시 비밀번호 4자리를 확인하세요.")
-
-            fun do_p() {
-                val intent=getIntent()
-                val where= intent.getStringExtra("whereFrom")
-                Log.e("from", where)
-                if(where=="login"){
-                   /* val intent2 = Intent(this, LoginActivity::class.java)
-                    // 백 스페이스 누르면 다시 메인 페이지로
-                    startActivity(intent2)
-                    */
-                    finish()
-                }
-                else{
-                   /* val intent2 = Intent(this, PasswordSettingActivity::class.java)
-                    // 백 스페이스 누르면 다시 메인 페이지로
-                    startActivity(intent2)
-                    */
-                    finish()
-                }
-                }
+    }
 
 
-            val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
-                when(which) {
-                    DialogInterface.BUTTON_POSITIVE -> do_p()
-                }
-            }
-
-            dlg.setPositiveButton("확인", null)
-
-            var dlgNew: AlertDialog = dlg.show()
-            var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
-            messageText!!.gravity = Gravity.CENTER
-            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-            dlgNew.show()
-
-            }
-
-        }
-
-
-    fun getForgetPasswordResponse(u_id:Int){
+    fun getForgetPasswordResponse(u_id:Int):String{
 
 
         val getForgetPasswordResponse: Call<GetForgetPasswordResponse> =
@@ -151,13 +163,16 @@ class PasswordActivity : AppCompatActivity() {
 
                         val tep2=response.body()!!.data
                         Log.e("비밀번호의 임시값은",tep2)
+                        forgetPassword=tep2
                         SharedPreferenceController.setPassword(this@PasswordActivity,tep2)
+                        Log.e("임시비밀번호로 데베에 저장",SharedPreferenceController.getPassword(this@PasswordActivity))
                     }
                 }
             }
 
         }
         )
+        return SharedPreferenceController.getPassword(this@PasswordActivity)
     }
     fun setNumBtnClickListener() {
         btn1.setOnClickListener {
@@ -240,10 +255,13 @@ class PasswordActivity : AppCompatActivity() {
                                 }
                             }
                         } else {
-
+                                Log.e("암홋설정","되어있다")
                             // 암호설정이 되어있는 경우
                             //previousPassword = "1234"
                             if (whereFrom == "login") {
+                                Log.e("암홋설정","로그인에서 넘어온다")
+                                Log.e("암호",subPassword)
+                                Log.e("저장된 암호",previousPassword)
                                 //txtPassword.text="비밀번호를 입력하세요."
                                 if (previousPassword == subPassword){
                                     Log.e("login","이제 메인으로 넘어갈거야")
@@ -254,6 +272,7 @@ class PasswordActivity : AppCompatActivity() {
                             }
                                 else{
                                 // TODO
+                                Log.e("암홋설정","로그인에서 온애가 아니다")
                                 // Load previous password to previousPassword
                                 // 암호변경 하는 경우
                                 if (previousPassword == subPassword) {
