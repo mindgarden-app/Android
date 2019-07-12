@@ -30,7 +30,6 @@
                     android:id="@+id/myImage"
                     android:layout_width="38dp"
                     android:layout_height="50dp"
-
                     android:layout_alignParentTop="true"
                     app:srcCompat="@drawable/tree0"
                     android:background="@drawable/gray_bottom_border"
@@ -65,6 +64,7 @@
                     android:layout_marginStart="10dp">
             </TextView>
             <TextView
+                    android:id="@+id/userMail"
                     android:text="chungee375@gmail.com"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:paddingStart="2dp"

@@ -1,50 +1,26 @@
 package com.example.mindgarden.Activity
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.TabLayout
 import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Get.GetLoginResponse
-import com.example.mindgarden.Network.NetworkService
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
-import java.util.logging.Logger
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -66,8 +42,6 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[0])
         //setupPermissions(permissionsRequired[1])
         //setupPermissions(permissionsRequired[2])
-        val myWebView = findViewById<AdvancedWebView>(R.id.webView) as AdvancedWebView
-        val settings = myWebView.settings
 
         btnLogin.setOnClickListener {
             val loginIntent= Intent(this, SocialLoginActivity::class.java)
@@ -98,31 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    /*private fun getLoginResponse(){
-        var jsonObject = JSONObject()
-        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
-        val getLoginResponse = networkService.getLoginResponse(
-            "application/json", gsonObject)
-        getLoginResponse.enqueue(object:Callback<GetLoginResponse>{
-            override fun onFailure(call: Call<GetLoginResponse>, t: Throwable) {
-                Log.e("login", t.toString())
-            }
-
-            override fun onResponse(call:  Call<GetLoginResponse>, response: Response<GetLoginResponse>)  {
-
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        val tmp: Int = response.body()!!.data!!
-                        Log.e("json",tmp.toString())
-                        SharedPreferenceController.setUserID(this@LoginActivity,tmp)
-                        Log.e("userID",SharedPreferenceController.getUserID(this@LoginActivity).toString())
-                        //데베에 저장
-                    }
-                }
-            }
-        })
-    }*/
                 private fun requestPermission() {
                     if (ActivityCompat.checkSelfPermission(
                             this,
@@ -243,8 +193,8 @@ private fun makeRequest(requestPermission: String) {
     }
     private fun configureMainTab() {
 
-        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 3)
-        vpLoginSlider.offscreenPageLimit = 2
+        vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 4)
+        vpLoginSlider.offscreenPageLimit = 3
         tlLoginIndicator.setupWithViewPager(vpLoginSlider)
 
         val navIndicatorLoginLayout: View =
@@ -256,6 +206,8 @@ private fun makeRequest(requestPermission: String) {
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin2) as ImageView
         tlLoginIndicator.getTabAt(2)!!.customView =
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin3) as ImageView
+        tlLoginIndicator.getTabAt(3)!!.customView =
+            navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin4) as ImageView
 
         tlLoginIndicator.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabReselected(p0: TabLayout.Tab?) {

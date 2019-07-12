@@ -122,10 +122,10 @@ class DiaryListFragment : Fragment() {
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
+                diaryListRecyclerViewAdapter.dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 

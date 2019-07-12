@@ -5,7 +5,8 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="@color/colorWhite"
-                                            android:orientation="vertical">
+                                             android:orientation="vertical"
+                                             android:weightSum="100">
     <include
             android:id="@+id/toolbar_mypage_main"
             layout="@layout/toolbar_mypage_main"/>
@@ -13,26 +14,29 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="30"
             android:gravity="right">
 
         <ImageView
                 android:layout_width="89.58dp"
                 android:layout_height="69.03dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
                 app:srcCompat="@drawable/img_map"
                 android:id="@+id/img_map" />
 
     </LinearLayout>
 
     <ImageView
-            android:layout_width="20.15dp"
-            android:layout_height="20.15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/img_point_n"
             android:layout_gravity="left"
             android:layout_marginLeft="10dp"/>
 
     <RelativeLayout
+            android:layout_weight="30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
@@ -44,14 +48,24 @@
                 android:layout_centerHorizontal="true"
         ></android.support.v7.widget.RecyclerView>
 
-    </RelativeLayout>
 
+    </RelativeLayout>
     <ImageView
+            android:layout_toEndOf="@id/rv_grid"
             android:layout_width="20.15dp"
             android:layout_height="20.15dp"
-            android:src="@drawable/img_point_s"
             android:layout_gravity="right"
-            android:layout_marginRight="10dp"/>
+            android:src="@drawable/img_point_s"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="55dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            android:orientation="vertical"
+            android:gravity="right">
+
 
     <ImageView
             android:id="@+id/btn_choose"
@@ -62,11 +76,13 @@
             android:layout_marginBottom="10.7dp"
             android:layout_marginRight="15dp"
             app:srcCompat="@drawable/btn_choose"/>
+    </LinearLayout>
 
     <LinearLayout
             android:id="@+id/lay_inventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="15"
             android:background="@drawable/inventory_layout_border">
 
         <android.support.v7.widget.RecyclerView
@@ -80,16 +96,6 @@
 
     </LinearLayout>
 
-    <!--<GridView
-            android:id="@+id/gridView"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:numColumns="6"
-            android:stretchMode="columnWidth"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="218dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="167dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="13.6dp" android:layout_marginStart="13.6dp"
-            app:layout_constraintStart_toStartOf="parent"/>-->
+
 
 </LinearLayout>

@@ -1,42 +1,70 @@
 package com.example.mindgarden.Activity
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.widget.GridView
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.GridViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
+import com.example.mindgarden.Data.PlantData
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.Layout.CustomGridViewLayout
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.R
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
+import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class InventoryActivity : AppCompatActivity() {
+
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
     lateinit var inventoryList : List<Bitmap>
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
+
 
     companion object {
         var isClickAvailable: Boolean = true
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
+        var gridIdx: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
+        txtSetting.text = "나무심기"
 
+        btnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            // 백 스페이스 누르면 다시 메인 페이지로
+            startActivity(intent)
+
+            finish()
+        }
         /*val GV=this.findViewById(R.id.gridView) as GridView
         val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
 
@@ -59,15 +87,15 @@ class InventoryActivity : AppCompatActivity() {
 
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
-        gridList.add(GridData(100, R.drawable.tree_size)) // 호수
-        gridList.add(GridData(101, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(100, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(101, R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))
 
         gridList.add(GridData(7, R.drawable.tree_size))
         gridList.add(GridData(12, R.drawable.tree_size))
-        gridList.add(GridData(102, R.drawable.tree_size)) // 호수
-        gridList.add(GridData(103, R.drawable.tree_size)) // 호수
+        gridList.add(GridData(102, R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(103, R.drawable.img_small_lake)) // 호수
         gridList.add(GridData(25, R.drawable.tree_size))
         gridList.add(GridData(29, R.drawable.tree_size))
 
@@ -92,6 +120,10 @@ class InventoryActivity : AppCompatActivity() {
         configureRecyclerView()
 
         btn_choose.setOnClickListener {
+            if(isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
+                postPlantResponse(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)
+            }
+            Log.e("start", gridList[gridIdx].product_id.toString())
             finish()
         }
     }
@@ -216,5 +248,29 @@ class InventoryActivity : AppCompatActivity() {
         else return true
 
         return false
+    }
+
+    fun postPlantResponse(userIdx: Int, location: Int, treeIdx: Int) {
+        var jsonObject = JSONObject()
+        jsonObject.put("userIdx", userIdx)
+        jsonObject.put("location", location)
+        jsonObject.put("treeIdx", treeIdx)
+
+        val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+        val postPlantResponse: Call<PostPlantResponse> =
+                networkService.postPlantResponse("application/json", gsonObject)
+        postPlantResponse.enqueue(object: Callback<PostPlantResponse>{
+            override fun onFailure(call: Call<PostPlantResponse>, t: Throwable) {
+                Log.e("fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                       // val ballon  = response.body()!!.data!![0].ballon
+                    }
+                }
+            }
+        })
     }
 }
