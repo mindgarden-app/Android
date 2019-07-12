@@ -15,17 +15,21 @@ import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
+import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Data.PlantData
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.Layout.CustomGridViewLayout
 import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -34,6 +38,9 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Year
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class InventoryActivity : AppCompatActivity() {
@@ -45,6 +52,7 @@ class InventoryActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
+    var gridList: ArrayList<GridData> = ArrayList()
 
     companion object {
         var isClickAvailable: Boolean = true
@@ -120,8 +128,12 @@ class InventoryActivity : AppCompatActivity() {
         configureRecyclerView()
 
         btn_choose.setOnClickListener {
-            if(isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
-                postPlantResponse(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)
+            if (isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
+                postPlantResponse(
+                    SharedPreferenceController.getUserID(this),
+                    gridList[gridIdx].product_id ,
+                    inventoryIdx
+                )
             }
             Log.e("start", gridList[gridIdx].product_id.toString())
             finish()

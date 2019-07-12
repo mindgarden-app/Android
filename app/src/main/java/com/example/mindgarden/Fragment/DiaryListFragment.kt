@@ -54,6 +54,12 @@ class DiaryListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_diary_list, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        getDiaryListResponse()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

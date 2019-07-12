@@ -25,12 +25,18 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.support.design.widget.TabLayout
+import android.widget.Adapter
 import android.widget.ImageView
+import com.bumptech.glide.request.transition.Transition
+import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
+import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
+import com.kotlinpermissions.ifNotNullOrElse
+import com.kotlinpermissions.notNull
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.support.v4.ctx
 import retrofit2.Call
@@ -42,15 +48,12 @@ import kotlin.collections.ArrayList
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class MainFragment : Fragment() {
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
     var mainList: ArrayList<com.example.mindgarden.Data.MainData> = ArrayList()
+    lateinit var inventoryActivity: InventoryActivity
 
     val REQUEST_CODE_SET_TOOLBAR_DATE = 1005
     var toolbarYear : String = ""
@@ -78,24 +81,20 @@ class MainFragment : Fragment() {
         setTree()
         setLocation()
 
-       txt_main_day_text
-
+        btn_reward.isEnabled = false
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
 
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
-        //todo 요일도 받아오기
-        // txt_main_day_text.setText(cal.get(Caledar.))
+
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
         }
         txt_main_month.setText(month)
         getMainResponse()
-
-
 
         //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
@@ -111,12 +110,10 @@ class MainFragment : Fragment() {
             }
         }
 
-
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()
             // 환경설정 페이지로 넘어감
         }
-
 
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
@@ -211,8 +208,6 @@ class MainFragment : Fragment() {
                     btn_reward.isEnabled = false
                 }
             }
-
-            //getMainResponse()
         }
 
         btn_right.setOnClickListener {
@@ -365,4 +360,42 @@ class MainFragment : Fragment() {
         return bitmap
     }
 
+    fun getPlantResponse() {
+        val getPlantResponse = networkService.getPlantResponse(
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+        getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
+            override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {
+                Log.e("garden select fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetPlantResponse>, response: Response<GetPlantResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("Adapter: mainfragment : ", response.body()!!.message)
+
+                        //나무 수만큼
+                        for(i in 0..(response.body()!!.data!!.size-1)) {
+                            Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
+
+                            var treeIdx = 0
+                            var location = 0
+                            treeIdx = response.body()!!.data!![i].treeIdx
+                            location = response.body()!!.data!![i].location
+
+                            Log.e("Adapter:location ", location.toString())
+                            Log.e("Adapter: treeIdx", treeIdx.toString())
+
+                            if(response.body()!!.data!![i].treeIdx == 16){
+                                Log.e("h", location.toString())
+                            }else{
+                                Log.e("h", location.toString())
+                                //inventoryActivity.gridRecyclerViewAdapter
+                                //inventoryActivity.gridRecyclerViewAdapter.gridDataList[3].img = R.drawable.android_tree1
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
 }
