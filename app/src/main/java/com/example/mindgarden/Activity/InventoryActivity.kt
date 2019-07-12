@@ -1,5 +1,6 @@
 package com.example.mindgarden.Activity
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
@@ -25,6 +26,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
+import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
@@ -35,12 +37,14 @@ import retrofit2.Response
 
 
 class InventoryActivity : AppCompatActivity() {
+
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
     lateinit var inventoryList : List<Bitmap>
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
+
 
     companion object {
         var isClickAvailable: Boolean = true
@@ -52,7 +56,15 @@ class InventoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
+        txtSetting.text = "나무심기"
 
+        btnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            // 백 스페이스 누르면 다시 메인 페이지로
+            startActivity(intent)
+
+            finish()
+        }
         /*val GV=this.findViewById(R.id.gridView) as GridView
         val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
 
@@ -255,9 +267,7 @@ class InventoryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        val tmp: ArrayList<PlantData> = response.body()!!.data!!
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        //diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                       // val ballon  = response.body()!!.data!![0].ballon
                     }
                 }
             }

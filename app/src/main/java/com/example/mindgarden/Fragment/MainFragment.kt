@@ -3,6 +3,9 @@ package com.example.mindgarden.Fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -22,11 +25,14 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.support.design.widget.TabLayout
+import android.widget.ImageView
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.support.v4.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,8 +41,6 @@ import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -54,6 +58,10 @@ class MainFragment : Fragment() {
     var year : String =""
     var month : String = ""
     val cal = Calendar.getInstance()
+    var userIdx : Int = 0
+    var ballon=0
+    lateinit var treeList : List<Bitmap>
+    lateinit var locationList : List<ImageView>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +75,11 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        btn_reward.isEnabled = false
+        setTree()
+        setLocation()
+
+
+
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
@@ -80,6 +92,10 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
+        getMainResponse()
+
+        if(ballon==1){ btn_reward.isEnabled=true }
+        else{ btn_reward.isEnabled = false }
 
         //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
@@ -95,10 +111,12 @@ class MainFragment : Fragment() {
             }
         }
 
+
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()
             // 환경설정 페이지로 넘어감
         }
+
 
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
@@ -107,10 +125,7 @@ class MainFragment : Fragment() {
         //툴바 날짜 클릭했을 때 -> 팝업 띄우기
         ll_date_toolbar_main.setOnClickListener {
             startActivityForResult<MainCalendarActivity>(
-                REQUEST_CODE_SET_TOOLBAR_DATE,
-                "year" to toolbarYear,
-                "month" to toolbarMonth
-            )
+                REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
         }
     }
 
@@ -127,6 +142,8 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
+        getMainResponse()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,6 +158,8 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 txt_main_year.setText(year)
+                getMainResponse()
+
             }
         }
     }
@@ -163,6 +182,8 @@ class MainFragment : Fragment() {
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
 
+                getMainResponse()
+
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
@@ -179,6 +200,7 @@ class MainFragment : Fragment() {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
+                getMainResponse()
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
@@ -202,6 +224,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
+                getMainResponse()
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -218,6 +241,7 @@ class MainFragment : Fragment() {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
+                getMainResponse()
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
@@ -232,19 +256,18 @@ class MainFragment : Fragment() {
             //툴바 날짜 클릭했을 때 -> 팝업 띄우기
             ll_date_toolbar_main.setOnClickListener {
                 startActivityForResult<MainCalendarActivity>(
-                    REQUEST_CODE_SET_TOOLBAR_DATE,
-                    "year" to toolbarYear,
-                    "month" to toolbarMonth
+                    REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
                 )
             }
 
-            //getMainResponse()
         }
     }
 
     private fun getMainResponse(){
         val getMainResponse = networkService.getMainResponse(
-            "application/json", 7, txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+            Log.e("year" , txt_main_year.text.toString())
+            Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
             override fun onFailure(call: Call<GetMainResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
@@ -252,13 +275,83 @@ class MainFragment : Fragment() {
 
             override fun onResponse(call: Call<GetMainResponse>, response: Response<GetMainResponse>) {
                 if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        val tmp: ArrayList<MainData> = response.body()!!.data!!
 
-                        mainList = tmp
+                    if (response.body()!!.status == 200) {
+                        initializeTree()
+                        Log.e("mainfragment : ", response.body()!!.message)
+
+
+
+                        ballon = response.body()!!.data!![0].ballon
+                        Log.e("ballon", ballon.toString())
+
+                        //나무 수만큼
+                        for(i in 0..(response.body()!!.data!!.size-1)) {
+
+
+                            Log.e("rdate : ", response.body()!!.data!![i].date)
+
+                            var treeIdx = 0
+                            var location = 0
+                            treeIdx = response.body()!!.data!![i].treeIdx
+                            location = response.body()!!.data!![i].location
+
+                            Log.e("location ", location.toString())
+                            Log.e("treeIdx", treeIdx.toString())
+
+                            //잡초만 있을 경우
+                            if(response.body()!!.data!![i].treeIdx==16){
+                                locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
+                                //locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
+                            }else{
+                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                                //locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                            }
+                        }
                     }
                 }
             }
         })
     }
+
+    fun initializeTree(){
+        val initTree = drawableToBitmap(R.drawable.tree_size)
+        for(i in 0..31) locationList.get(i).setImageBitmap(initTree)
+    }
+    fun setLocation(){
+        locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
+                            img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,
+                            img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32)
+
+    }
+
+    fun setTree(){
+        val tree1 = drawableToBitmap(R.drawable.android_tree1)
+        val tree2 = drawableToBitmap(R.drawable.android_tree2)
+        val tree3 = drawableToBitmap(R.drawable.android_tree3)
+        val tree4 = drawableToBitmap(R.drawable.android_tree4)
+        val tree5 = drawableToBitmap(R.drawable.android_tree5)
+        val tree6 = drawableToBitmap(R.drawable.android_tree6)
+        val tree7 = drawableToBitmap(R.drawable.android_tree7)
+        val tree8 = drawableToBitmap(R.drawable.android_tree8)
+        val tree9 = drawableToBitmap(R.drawable.android_tree9)
+        val tree10 = drawableToBitmap(R.drawable.android_tree10)
+        val tree11 = drawableToBitmap(R.drawable.android_tree11)
+        val tree12 = drawableToBitmap(R.drawable.android_tree12)
+        val tree13 = drawableToBitmap(R.drawable.android_tree13)
+        val tree14 = drawableToBitmap(R.drawable.android_tree14)
+        val tree15 = drawableToBitmap(R.drawable.android_tree15)
+        val tree16 = drawableToBitmap(R.drawable.android_tree16)
+
+
+        treeList = listOf(tree1,tree2,tree3,tree4, tree5,tree6,tree7,tree8,tree9,
+            tree10,tree11,tree12,tree13,tree14, tree15,tree16)
+    }
+
+    private fun drawableToBitmap(icnName : Int) : Bitmap {
+        val drawable = resources.getDrawable(icnName) as BitmapDrawable
+        val bitmap = drawable.bitmap
+        return bitmap
+    }
+
 }
