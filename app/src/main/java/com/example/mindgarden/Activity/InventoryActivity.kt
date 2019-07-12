@@ -1,5 +1,6 @@
 package com.example.mindgarden.Activity
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.rv_item_inventory.*
 import kotlinx.android.synthetic.main.toolbar_main.*
+import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
@@ -75,37 +77,17 @@ class InventoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
+        txtSetting.text = "나무심기"
 
-        /*val basic = R.drawable.tree_size
-        val lake = R.drawable.img_small_lake
+        btnBack.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            // 백 스페이스 누르면 다시 메인 페이지로
+            startActivity(intent)
 
-        val basicImage1 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage2 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage3 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage4 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage5 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage6 = drawableToBitmap(R.drawable.tree_size)
-
-        val basicImage7 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage8 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage9 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage10 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage11 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage12 = drawableToBitmap(R.drawable.tree_size)
-
-        val basicImage13 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage14 = drawableToBitmap(R.drawable.tree_size)
-        val lake1 = drawableToBitmap(R.drawable.img_small_lake)
-        val lake2 = drawableToBitmap(R.drawable.img_small_lake)
-        val basicImage15 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage16 = drawableToBitmap(R.drawable.tree_size)
-
-        val basicImage17 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage18 = drawableToBitmap(R.drawable.tree_size)
-        val lake3 = drawableToBitmap(R.drawable.img_small_lake)
-        val lake4 = drawableToBitmap(R.drawable.img_small_lake)
-        val basicImage19 = drawableToBitmap(R.drawable.tree_size)
-        val basicImage20 = drawableToBitmap(R.drawable.tree_size)
+            finish()
+        }
+        /*val GV=this.findViewById(R.id.gridView) as GridView
+        val adapter= GridViewAdapter(this, R.layout.gridview_inventory, data)
 
         val basicImage21 = drawableToBitmap(R.drawable.tree_size)
         val basicImage22 = drawableToBitmap(R.drawable.tree_size)
@@ -232,7 +214,7 @@ class InventoryActivity : AppCompatActivity() {
             )
     }
 
-    private fun drawableToBitmap(icnName: Int): Bitmap {
+    private fun drawableToBitmap(icnName : Int): Bitmap {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap

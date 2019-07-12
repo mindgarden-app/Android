@@ -35,7 +35,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
-   var userIdx : Int = 0
+    var userIdx : Int = 0
     var dateText : String = ""
     var dateValue : String = ""
     var from = 0
@@ -82,32 +82,36 @@ class ReadDiaryActivity : AppCompatActivity() {
         getDiaryResponse()
 
         //수정버튼 -> ModifyDiaryActivity로 넘어가기
-            btn_modify_diary_toolbar.setOnClickListener {
-                //date값 userIdx intent
-                startActivityForResult<ModifyDiaryActivity>(1200, "dateText" to dateText, "dateValue" to dateValue)
-            }
+        btn_modify_diary_toolbar.setOnClickListener {
+            //date값 userIdx intent
+            startActivityForResult<ModifyDiaryActivity>(1200, "dateText" to dateText, "dateValue" to dateValue)
+        }
 
         //뒤로가기 -> DiaryListAcitivy로 이동
         btn_back_toolbar.setOnClickListener{
-                setResult(Activity.RESULT_OK)
-                finish()
+            setResult(Activity.RESULT_OK)
+            finish()
         }
 
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getDiaryResponse()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-         if(requestCode == 1100){
-             getDiaryResponse()
+        if(requestCode == 1100){
+            getDiaryResponse()
             //setResult(Activity.RESULT_OK)
             //finish()
         }
 
         if(requestCode == 1200){
-                dateText = intent.getStringExtra("dateText")
-                Log.e("from ModifyDairy Date : ", dateText)
-                getDiaryResponse()
+            dateText = intent.getStringExtra("dateText")
+            Log.e("from ModifyDairy Date : ", dateText)
+            getDiaryResponse()
 
 
         }
@@ -163,14 +167,13 @@ class ReadDiaryActivity : AppCompatActivity() {
                         val time = response.body()!!.data!![0].date.substring(15,22)
                         txt_time_read_diary.setText(time)
 
-                        /*diary_img set
-
-                         if(response.body()!!.data!![5].diary_img != null){
+                        //diary_img set
+                         if(response.body()!!.data!![0].diary_img != null){
                             img_gallary_read_diary.visibility = View.VISIBLE
-                            Glide.with(this@ReadDiaryActivity).load(response.body()!!.data!![5].diary_img)
+                            Glide.with(this@ReadDiaryActivity).load(response.body()!!.data!![0].diary_img)
                                 .into(img_gallary_read_diary)
                         }
-                         */
+
 
 
                     }

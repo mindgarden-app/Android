@@ -48,6 +48,10 @@ import kotlin.collections.ArrayList
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
+/**
+ * A simple [Fragment] subclass.
+ *
+ */
 class MainFragment : Fragment() {
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
@@ -62,6 +66,8 @@ class MainFragment : Fragment() {
     var month : String = ""
     val cal = Calendar.getInstance()
     var userIdx : Int = 0
+    var dayOfWeek = ""      //요일
+    var day = ""            //날짜
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
@@ -88,7 +94,8 @@ class MainFragment : Fragment() {
 
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
-
+        //todo 요일도 받아오기
+        // txt_main_day_text.setText(cal.get(Caledar.))
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
@@ -96,27 +103,21 @@ class MainFragment : Fragment() {
         txt_main_month.setText(month)
         getMainResponse()
 
-        //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-            btn_reward.isEnabled = true
-        } else {
-            btn_reward.isEnabled = false
-        }
+
 
         if (btn_reward.isEnabled) {
             btn_reward.setOnClickListener {
-
-                //getPlantResponse()
-
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
                 startActivity(intent)
             }
         }
 
+
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()
             // 환경설정 페이지로 넘어감
         }
+
 
         //툴바 년/월 설정(MainCalendar로 전달)
         toolbarYear = txt_main_year.text.toString()
@@ -142,6 +143,7 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
+
 
     }
 
@@ -180,6 +182,9 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
+                txt_main_day_num_word.visibility = View.INVISIBLE
+                txt_main_day_num.visibility = View.INVISIBLE
+                txt_main_day_text.visibility = View.INVISIBLE
 
                 getMainResponse()
 
@@ -190,6 +195,7 @@ class MainFragment : Fragment() {
                 //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
+
                 } else {
                     btn_reward.isEnabled = false
                 }
@@ -210,6 +216,8 @@ class MainFragment : Fragment() {
                     btn_reward.isEnabled = false
                 }
             }
+
+            //getMainResponse()
         }
 
         btn_right.setOnClickListener {
@@ -222,6 +230,7 @@ class MainFragment : Fragment() {
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
                 getMainResponse()
+
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -239,6 +248,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 getMainResponse()
+
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
@@ -277,30 +287,71 @@ class MainFragment : Fragment() {
                         initializeTree()
                         Log.e("mainfragment : ", response.body()!!.message)
 
-                        var balloon = 0
-
-                        balloon = response.body()!!.data!![0].balloon
+                        val balloon = response.body()!!.data!![0].balloon
                         Log.e("ballon", balloon.toString())
+                        Log.e("ballon값을 받아오자", balloon.toString())
+
+                        //날짜가 해당월이면
+                        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+
+                            if(balloon==1){
+                                btn_reward.isEnabled=true
+
+                            }else
+                            {
+                                btn_reward.isEnabled = false
+                            }
+                        } else {
+                            btn_reward.isEnabled = false
+                        }
+
+
+
 
                         //나무 수만큼
                         for(i in 0..(response.body()!!.data!!.size-1)) {
+
+
                             Log.e("rdate : ", response.body()!!.data!![i].date)
 
                             var treeIdx = 0
                             var location = 0
+
+
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
+
+                            dayOfWeek = response.body()!!.data!![i].date.substring(8,10)
+                            day = response.body()!!.data!![i].date.substring(10,14)
+
+                            Log.e("dayOfWeek", dayOfWeek)
+                            Log.e("day", day)
+
 
                             Log.e("location ", location.toString())
                             Log.e("treeIdx", treeIdx.toString())
 
                             //잡초만 있을 경우
-                            if(response.body()!!.data!![i].treeIdx == 16){
-                                Log.e("h", location.toString())
+                            if(response.body()!!.data!![i].treeIdx==16){
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
+                                //locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
                             }else{
-                                Log.e("h", location.toString())
-                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx))
+                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                                //locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                            }
+
+
+                            //요일 설정
+                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                                txt_main_day_num_word.visibility = View.VISIBLE
+                                txt_main_day_num.visibility = View.VISIBLE
+                                txt_main_day_text.visibility = View.VISIBLE
+                                txt_main_day_num.setText(dayOfWeek)
+                                txt_main_day_text.setText(day)
+                            }else{
+                                txt_main_day_num_word.visibility = View.INVISIBLE
+                                txt_main_day_num.visibility = View.INVISIBLE
+                                txt_main_day_text.visibility = View.INVISIBLE
                             }
                         }
                     }
@@ -308,6 +359,7 @@ class MainFragment : Fragment() {
             }
         })
     }
+
 
     fun initializeTree(){
         val initTree = drawableToBitmap(R.drawable.tree_size)
@@ -349,42 +401,4 @@ class MainFragment : Fragment() {
         return bitmap
     }
 
-    fun getPlantResponse() {
-        val getPlantResponse = networkService.getPlantResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
-        getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
-            override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {
-                Log.e("garden select fail", t.toString())
-            }
-
-            override fun onResponse(call: Call<GetPlantResponse>, response: Response<GetPlantResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        Log.e("Adapter: mainfragment : ", response.body()!!.message)
-
-                        //나무 수만큼
-                        for(i in 0..(response.body()!!.data!!.size-1)) {
-                            Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
-
-                            var treeIdx = 0
-                            var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx
-                            location = response.body()!!.data!![i].location
-
-                            Log.e("Adapter:location ", location.toString())
-                            Log.e("Adapter: treeIdx", treeIdx.toString())
-
-                            if(response.body()!!.data!![i].treeIdx == 16){
-                                Log.e("h", location.toString())
-                            }else{
-                                Log.e("h", location.toString())
-                                //inventoryActivity.gridRecyclerViewAdapter
-                                //inventoryActivity.gridRecyclerViewAdapter.gridDataList[3].img = R.drawable.android_tree1
-                            }
-                        }
-                    }
-                }
-            }
-        })
-    }
 }

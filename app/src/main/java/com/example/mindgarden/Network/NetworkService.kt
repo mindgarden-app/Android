@@ -1,10 +1,7 @@
 package com.example.mindgarden.Network
 
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.GET.GetDiaryListResponse
-import com.example.mindgarden.Network.GET.GetDiaryResponse
-import com.example.mindgarden.Network.GET.GetMainResponse
-import com.example.mindgarden.Network.GET.GetPlantResponse
+import com.example.mindgarden.Network.GET.*
 import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
@@ -82,6 +79,11 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<GetMainResponse>
 
+    @GET("/auth/mail/{userIdx}")
+    fun getForgetPasswordResponse(
+        @Header("Content-Type") content_type: String,
+        @Path("userIdx") userIdx: Int
+    ):Call<GetForgetPasswordResponse>
     //나무심기
     @POST("/garden/plant")
     fun postPlantResponse(

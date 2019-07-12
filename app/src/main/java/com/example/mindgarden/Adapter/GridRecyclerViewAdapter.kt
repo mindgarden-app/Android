@@ -23,6 +23,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
+    val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
