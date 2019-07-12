@@ -194,12 +194,12 @@ class MainFragment : Fragment() {
                 toolbarMonth = txt_main_month.text.toString()
 
                 //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+            /*    if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
 
                 } else {
                     btn_reward.isEnabled = false
-                }
+                }*/
             } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
@@ -218,11 +218,11 @@ class MainFragment : Fragment() {
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
 
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+              /*  if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
                 } else {
                     btn_reward.isEnabled = false
-                }
+                }*/
             }
 
             //getMainResponse()
@@ -244,11 +244,11 @@ class MainFragment : Fragment() {
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
 
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+               /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
                 } else {
                     btn_reward.isEnabled = false
-                }
+                }*/
             } else {
                 month = (month.toInt() + 1).toString()
                 if (month.toInt() < 10) {
@@ -261,11 +261,11 @@ class MainFragment : Fragment() {
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
 
-                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+               /* if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
                 } else {
                     btn_reward.isEnabled = false
-                }
+                }*/
             }
 
             //툴바 날짜 클릭했을 때 -> 팝업 띄우기
@@ -301,10 +301,14 @@ class MainFragment : Fragment() {
 
                         //날짜가 해당월이면
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
-                            if(balloon==1) btn_reward.isEnabled = true
+                            if(balloon==1) {
+                                btn_reward.isEnabled = true
+                                img_balloon.visibility=View.VISIBLE
+                            }
                         }
                         else {
                             btn_reward.isEnabled = false
+                            img_balloon.visibility=View.INVISIBLE
                         }
 
 
