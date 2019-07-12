@@ -57,7 +57,7 @@
             android:layout_gravity="right"
             android:src="@drawable/img_point_s"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginBottom="55dp"/>
 
     <LinearLayout
             android:layout_width="match_parent"

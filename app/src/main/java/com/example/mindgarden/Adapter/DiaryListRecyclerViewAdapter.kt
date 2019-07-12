@@ -55,8 +55,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            var dateText = dataList[position].date.substring(2,3) + "." + dataList[position].date.substring(5,6) + "-" + dataList[position].date.substring(8,9)
-            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,14))
+            var dateText = dataList[position].date.substring(2,4) + "." + dataList[position].date.substring(5,7) + "." + dataList[position].date.substring(8,10) + ". (" + dataList[position].date.substring(11,14) + ")"
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,10))
         }
 
         if (isPressed) {

@@ -102,7 +102,7 @@ android:background="#FFFFFF"
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="내용\n내용\n내용\n내용\n내용\n"
+                            android:text="내용"
                             android:fontFamily="@font/notosanscjkr_demilight"
                             android:textColor="#2B2B2B"
                             android:textSize="13.5dp"

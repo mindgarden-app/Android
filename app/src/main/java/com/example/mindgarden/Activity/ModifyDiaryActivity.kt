@@ -81,16 +81,16 @@ class ModifyDiaryActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
             finish()
         }
-       btn_save_diary_toolbar.setOnClickListener {
-           //수정 API를 이용하여 서버에 등록
-           //일기 쓰기 액티비티 로직과 비슷하게
-           putModifyDiaryResponse()
+        btn_save_diary_toolbar.setOnClickListener {
+            //수정 API를 이용하여 서버에 등록
+            //일기 쓰기 액티비티 로직과 비슷하게
+            putModifyDiaryResponse()
 
-           val intent : Intent = Intent()
-           intent.putExtra("from" ,200)
-           setResult(Activity.RESULT_OK, intent)
-           finish()
-       }
+            val intent : Intent = Intent()
+            intent.putExtra("from" ,200)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
 
         //기분선택 팝업 띄우기
         img_mood_text_modify_diary.setOnClickListener {
@@ -255,7 +255,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
         }
 
 
-}
+    }
 
 
     //MoodChoice액티비티 팝업
@@ -294,7 +294,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
         }
     }
 
-        //이미지 삭제
+    //이미지 삭제
     private fun deleteImage(){
         icn_gallary_modify_diary.visibility = View.VISIBLE
         img_gallary_modify_diary.setImageBitmap(null)
