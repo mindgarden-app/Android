@@ -87,20 +87,46 @@ class PasswordActivity : AppCompatActivity() {
          getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
          Log.e("메일로 4자리 받았어요!",SharedPreferenceController.getPassword(this))
             //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
-            val where= intent.getStringExtra("whereFrom")
-            Log.e("from", where)
-            if(where=="login"){
-                val intent2 = Intent(this, LoginActivity::class.java)
-                // 백 스페이스 누르면 다시 메인 페이지로
-                startActivity(intent2)
-                finish()
+            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+
+            dlg.setMessage("메일에 보낸 임시 비밀번호 4자리를 확인하세요.")
+
+            fun do_p() {
+                val intent=getIntent()
+                val where= intent.getStringExtra("whereFrom")
+                Log.e("from", where)
+                if(where=="login"){
+                   /* val intent2 = Intent(this, LoginActivity::class.java)
+                    // 백 스페이스 누르면 다시 메인 페이지로
+                    startActivity(intent2)
+                    */
+                    finish()
+                }
+                else{
+                   /* val intent2 = Intent(this, PasswordSettingActivity::class.java)
+                    // 백 스페이스 누르면 다시 메인 페이지로
+                    startActivity(intent2)
+                    */
+                    finish()
+                }
+                }
+
+
+            val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
+                when(which) {
+                    DialogInterface.BUTTON_POSITIVE -> do_p()
+                }
             }
-            else{
-                val intent2 = Intent(this, PasswordSettingActivity::class.java)
-                // 백 스페이스 누르면 다시 메인 페이지로
-                startActivity(intent2)
-                finish()
-            }
+
+            dlg.setPositiveButton("확인", null)
+
+            var dlgNew: AlertDialog = dlg.show()
+            var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.CENTER
+            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+            dlgNew.show()
+
             }
 
         }

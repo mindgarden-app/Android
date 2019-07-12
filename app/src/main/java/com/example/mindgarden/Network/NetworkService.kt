@@ -5,6 +5,8 @@ import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
 import com.example.mindgarden.Network.GET.GetMainResponse
+
+import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.google.gson.JsonObject
@@ -18,12 +20,14 @@ import retrofit2.http.Header
 import retrofit2.http.*
 
 interface NetworkService {
+
     //일기 목록 조회
     @GET("/diarylist/{userIdx}/{date}")
     fun getDiaryListResponse(
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int,
         @Path("date") date: String
+        //@Body() body: JsonObject
     ): Call<GetDiaryListResponse>
 
     //일기 삭제
@@ -42,7 +46,6 @@ interface NetworkService {
         @Path("date") date: String
     ): Call<GetDiaryListClickResponse>
      */
-
     //일기 상세보기
     @GET("/diarylist/click/{userIdx}/{date}")
     fun getDiaryResponse(
@@ -73,6 +76,7 @@ interface NetworkService {
         @Part diary_img: MultipartBody.Part?
     ) : Call<PutModifyDiaryResponse>
 
+
     //메인
     @GET("/garden/{userIdx}/{date}")
     fun getMainResponse(
@@ -86,10 +90,10 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Path("userIdx") userIdx: Int
     ):Call<GetForgetPasswordResponse>
-    /*//나무심기
+    //나무심기
     @POST("/garden/plant")
     fun postPlantResponse(
         @Header("Content-Type") content_type: String,
-        @Path()
-    )*/
+        @Body() body:JsonObject
+    ): Call<PostPlantResponse>
 }

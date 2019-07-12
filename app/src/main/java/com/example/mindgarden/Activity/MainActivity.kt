@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.e("여긴 메인이야 userID", SharedPreferenceController.getUserID(this).toString())
+        Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
         configureMainTab()
 
         btn_write.setOnClickListener {

@@ -12,15 +12,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mindgarden.Activity.ReadDiaryActivity
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
-//import com.example.mindgarden.Network.GET.GetDiaryListClickResponse
 import com.example.mindgarden.R
+import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +55,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-           // getDiaryListClickResponse(dataList[position].date.substring(0, 114))
+            var dateText = dataList[position].date.substring(2,3) + "." + dataList[position].date.substring(5,6) + "-" + dataList[position].date.substring(8,9)
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,14))
         }
 
         if (isPressed) {
@@ -64,14 +69,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
-                    deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
-                    //아래는 서버 통신하고 나서 삭제
-                    /*dataList.removeAt(holder.adapterPosition)
-                    deleteDiaryListResponse(dataList[position].date.substring(0, 10),holder.adapterPosition)
-                    //밑에는 서버 통신하고 삭제
-                    dataList.removeAt(holder.adapterPosition)
-                    notifyItemRemoved(holder.adapterPosition)
-                    notifyItemRangeChanged(holder.adapterPosition, dataList.size)*/
+                    if (isValid(SharedPreferenceController.getUserID(ctx), dataList[position].date.substring(0, 10))) {
+                        deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
+                    }
                 }
 
                 val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
@@ -94,36 +94,22 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
             holder.lay1.visibility = View.GONE
         }
     }
-/*
-    private fun getDiaryListClickResponse(clickDate: String){
-        val getDiaryListClickResponse = networkService.getDiaryListClickResponse(
-            "application/json", 5, clickDate)
-        Log.e("통신","일기내용1")
-        Log.e("통신",clickDate)
-        getDiaryListClickResponse.enqueue(object: Callback<GetDiaryListClickResponse> {
-            override fun onFailure(call: Call<GetDiaryListClickResponse>, t: Throwable) {
-                Log.e("일기 조희 실패", t.toString())
-            }
 
-            override fun onResponse(call: Call<GetDiaryListClickResponse>, response: Response<GetDiaryListClickResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        Log.e("통신","일기내용2")
-                        ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 2,"date" to clickDate)
-                    }
-                }
-            }
-        })
+    fun isValid(userIdx: Int, date: String): Boolean {
+        if(userIdx.toString() == "")
+            Log.e("login fail", "login value null")
+
+        else if(date == "")
+            Log.e("date fail", "date value null")
+
+        else return true
+
+        return false
     }
-*/
-    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
-        //var jsonObject = JSONObject()
-        //jsonObject.put("date", deleteDate)
-        //userIdx 넣어야
 
-        //val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", 2, deleteDate)
+            "application/json", SharedPreferenceController.getUserID(ctx), deleteDate)
         Log.e("delete", "delete1")
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {

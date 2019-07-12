@@ -22,7 +22,15 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.support.design.widget.TabLayout
+import com.example.mindgarden.Data.MainData
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.GET.GetMainResponse
+import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +43,10 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class MainFragment : Fragment() {
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
+    var mainList: ArrayList<com.example.mindgarden.Data.MainData> = ArrayList()
 
     val REQUEST_CODE_SET_TOOLBAR_DATE = 1005
     var toolbarYear : String = ""
@@ -42,6 +54,7 @@ class MainFragment : Fragment() {
     var year : String =""
     var month : String = ""
     val cal = Calendar.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,11 +67,13 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         btn_reward.isEnabled = false
 
         year = cal.get(Calendar.YEAR).toString()
         month = (cal.get(Calendar.MONTH) + 1).toString()
+
+        //텍스트뷰 일수
+        txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
 
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
@@ -97,8 +112,6 @@ class MainFragment : Fragment() {
                 "month" to toolbarMonth
             )
         }
-
-
     }
 
     //액티비티 이동했다가 돌아오면 현재 년, 달로 바뀌어있음
@@ -120,18 +133,14 @@ class MainFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_CODE_SET_TOOLBAR_DATE){
             if(resultCode == Activity.RESULT_OK){
-
                 year = data!!.getStringExtra("year")
                 month = data!!.getStringExtra("month")
 
                 if (month.toInt() < 10) {
                     month = "0$month"
                 }
-
                 txt_main_month.setText(month)
-
                 txt_main_year.setText(year)
-
             }
         }
     }
@@ -143,7 +152,6 @@ class MainFragment : Fragment() {
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
 
-
         btn_left.setOnClickListener {
             //1월로 갔을때 년도 바뀜
             if (month.toInt() == 1) {
@@ -154,6 +162,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
+
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
@@ -161,25 +170,27 @@ class MainFragment : Fragment() {
                 //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
-
                 } else {
                     btn_reward.isEnabled = false
                 }
-            }
-            else {
+            } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
+
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
+
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
                 } else {
                     btn_reward.isEnabled = false
                 }
             }
+
+            //getMainResponse()
         }
 
         btn_right.setOnClickListener {
@@ -210,22 +221,44 @@ class MainFragment : Fragment() {
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
+
                 if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                     btn_reward.isEnabled = true
-                }
-                else {
+                } else {
                     btn_reward.isEnabled = false
                 }
             }
-        //툴바 날짜 클릭했을 때 -> 팝업 띄우기
-        ll_date_toolbar_main.setOnClickListener {
-            startActivityForResult<MainCalendarActivity>(
-                REQUEST_CODE_SET_TOOLBAR_DATE,
-                "year" to toolbarYear,
-                "month" to toolbarMonth
-            )
+
+            //툴바 날짜 클릭했을 때 -> 팝업 띄우기
+            ll_date_toolbar_main.setOnClickListener {
+                startActivityForResult<MainCalendarActivity>(
+                    REQUEST_CODE_SET_TOOLBAR_DATE,
+                    "year" to toolbarYear,
+                    "month" to toolbarMonth
+                )
+            }
+
+            //getMainResponse()
         }
     }
 
-}
+    private fun getMainResponse(){
+        val getMainResponse = networkService.getMainResponse(
+            "application/json", 7, txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+        getMainResponse.enqueue(object: Callback<GetMainResponse> {
+            override fun onFailure(call: Call<GetMainResponse>, t: Throwable) {
+                Log.e("garden select fail", t.toString())
+            }
+
+            override fun onResponse(call: Call<GetMainResponse>, response: Response<GetMainResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        val tmp: ArrayList<MainData> = response.body()!!.data!!
+
+                        mainList = tmp
+                    }
+                }
+            }
+        })
+    }
 }

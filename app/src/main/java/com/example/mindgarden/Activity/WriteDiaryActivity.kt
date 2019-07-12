@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
@@ -47,9 +48,9 @@ class WriteDiaryActivity : AppCompatActivity() {
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
     var selectPicUri : Uri? = null
-    var userIdx = 7 //유저 인덱스
+    var userIdx : Int = 0
     var weatherIdx  = 0 //날씨 인덱스
-
+    var status : Boolean = true
     lateinit var date : String  //ReadDairy에 현재 날짜 intent
 
     val networkService: NetworkService by lazy{
@@ -62,12 +63,16 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //오늘의 날짜
         //툴바에 들어갈 format
-        val dateText  = SimpleDateFormat("YY.MM.dd. (E)")
-        txt_date_toolbar_write_diary.setText(dateText.format(Date()))
+        val dateT  = SimpleDateFormat("YY.MM.dd. (E)", Locale.KOREA)
+        val dateText = dateT.format(Date()).toString()  //intent
+        txt_date_toolbar_write_diary.setText(dateT.format(Date()))  //setText
 
-        //ReadDiary에 보낼 format
-       // val dateValue = SimpleDateFormat("YYYY-MM-dd")
-        date = dateText.format(Date()).toString()
+        Log.e("dateText", dateText)
+
+        //서버에 보낼 format
+        val dateV  = SimpleDateFormat("YYYY-MM-dd")
+       val dateValue = dateV.format(Date()).toString()
+        Log.e("dateValue" ,dateValue)
 
         //뒤로가기
         btn_back_toolbar.setOnClickListener{
@@ -78,7 +83,7 @@ class WriteDiaryActivity : AppCompatActivity() {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
             postWriteDiaryResponse()
             Log.e("postWriteDiary", "ok")
-            startActivityForResult<ReadDiaryActivity>(1100, "from" to 100, "date" to date)
+            startActivityForResult<ReadDiaryActivity>(1100, "from" to 100, "dateText" to dateText, "dateValue" to dateValue)
         }
 
         //기분선택 팝업 띄우기
@@ -154,7 +159,8 @@ class WriteDiaryActivity : AppCompatActivity() {
             }
         }
         if(requestCode == 1100){
-            setResult(Activity.RESULT_OK)
+            intent.putExtra("status", false)
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
@@ -175,7 +181,6 @@ class WriteDiaryActivity : AppCompatActivity() {
 
 
     private fun postWriteDiaryResponse(){
-
 
         val content = edt_content_write_diary.text.toString()
         //타입 변환(String->RequestBody)
@@ -198,7 +203,7 @@ class WriteDiaryActivity : AppCompatActivity() {
 
            Log.e("picture_rb", picture_rb.toString())
 
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, picture_rb)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -209,17 +214,19 @@ class WriteDiaryActivity : AppCompatActivity() {
                    if(response.isSuccessful) {
                        if (response.body()!!.status == 200) {
                            Log.e("writeDiary", response.body()!!.message)
-
+                           status = false
                        }
                    }
                    else{
-                       // 400 :
+                        if(response.body()!!.status == 204){
+                            status = false
+                        }
                    }
                }
            })
        }else{
           // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, null)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,SharedPreferenceController.getUserID(this), weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -230,11 +237,14 @@ class WriteDiaryActivity : AppCompatActivity() {
                    if(response.isSuccessful) {
                        if (response.body()!!.status == 200) {
                            Log.e("writeDiary", response.body()!!.message)
+                           status = false
 
                        }
                    }
                    else{
-                       // 400 :
+                       if(response.body()!!.status == 204){
+                           status = false
+                       }
                    }
                }
            })
@@ -242,4 +252,13 @@ class WriteDiaryActivity : AppCompatActivity() {
 
     }
 
+/*
+     fun isValid(u_token: String, comment: String): Boolean{
+        if(u_token == "")
+        else if(comment == "") edt_comment_write_comment.requestFocus()
+        else return true
+        return false
+    }
+
+*/
 }
