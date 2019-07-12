@@ -144,7 +144,10 @@ class MainFragment : Fragment() {
         toolbarYear = txt_main_year.text.toString()
         toolbarMonth = txt_main_month.text.toString()
 
+
         btn_left.setOnClickListener {
+
+
             //1월로 갔을때 년도 바뀜
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString() //1->12월로 가도록
@@ -231,6 +234,8 @@ class MainFragment : Fragment() {
                 ) {
                     getMainResponse()
                 }
+
+
 
 
                 //툴바 월 설정(MainCalendar로 전달)
