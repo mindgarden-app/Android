@@ -63,7 +63,7 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //오늘의 날짜
         //툴바에 들어갈 format
-        val dateT  = SimpleDateFormat("YY.MM.dd. (E)", Locale.KOREA)
+        val dateT  = SimpleDateFormat("YY.MM.dd. (E)")
         val dateText = dateT.format(Date()).toString()  //intent
         txt_date_toolbar_write_diary.setText(dateT.format(Date()))  //setText
 
@@ -176,6 +176,7 @@ class WriteDiaryActivity : AppCompatActivity() {
     private fun deleteImage(){
         icn_gallary_write_diary.visibility = View.VISIBLE
         img_gallary_write_diary.setImageBitmap(null)
+        selectPicUri = null
     }
 
 

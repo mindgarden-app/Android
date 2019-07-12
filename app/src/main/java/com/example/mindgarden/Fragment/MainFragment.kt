@@ -26,6 +26,7 @@ import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.support.design.widget.TabLayout
 import android.widget.ImageView
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Data.MainData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
@@ -33,6 +34,7 @@ import com.example.mindgarden.Network.NetworkService
 import com.kotlinpermissions.ifNotNullOrElse
 import com.kotlinpermissions.notNull
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.support.v4.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,7 +56,7 @@ class MainFragment : Fragment() {
     var year : String =""
     var month : String = ""
     val cal = Calendar.getInstance()
-    var userIdx : Int = 2
+    var userIdx : Int = 0
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
@@ -132,8 +134,6 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
-        getMainResponse()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -253,7 +253,7 @@ class MainFragment : Fragment() {
 
     private fun getMainResponse(){
         val getMainResponse = networkService.getMainResponse(
-            "application/json", userIdx, txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
             Log.e("year" , txt_main_year.text.toString())
             Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
@@ -285,7 +285,7 @@ class MainFragment : Fragment() {
                             if(response.body()!!.data!![i].treeNum == 0){
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
-                            }else{
+                            }else{      //나무 개수에 따라 설명 보여주기
                                 locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
                                 locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
                             }
