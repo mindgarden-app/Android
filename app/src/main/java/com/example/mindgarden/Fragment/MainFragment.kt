@@ -482,6 +482,7 @@ class MainFragment : Fragment() {
                                 btn_reward.isEnabled = true
                                 img_balloon.visibility=View.VISIBLE
                             }
+                            else btn_reward.isEnabled=false
                         }
                         else {
                             btn_reward.isEnabled = false
