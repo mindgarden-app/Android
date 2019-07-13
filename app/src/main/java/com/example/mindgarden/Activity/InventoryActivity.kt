@@ -249,7 +249,7 @@ class InventoryActivity : AppCompatActivity() {
 
                             var treeIdx = 0
                             var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx
+                            treeIdx = response.body()!!.data!![i].treeIdx -1
                             location = response.body()!!.data!![i].location
 
                             Log.e("Adapter:location ", location.toString())
