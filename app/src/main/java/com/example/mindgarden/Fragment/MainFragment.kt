@@ -34,6 +34,7 @@ import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -87,6 +88,7 @@ class MainFragment : Fragment() {
         Log.e("month",month)
         //텍스트뷰 일수
         txt_main_day_num.setText(cal.get(Calendar.DAY_OF_MONTH).toString())
+        Log.e("day", cal.get(Calendar.DAY_OF_MONTH).toString())
 
         txt_main_year.setText(year)
         if (month.toInt() < 10) {
@@ -574,8 +576,8 @@ class MainFragment : Fragment() {
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
 
-                            dayOfWeek = response.body()!!.data!![i].date.substring(8,10)
-                            day = response.body()!!.data!![i].date.substring(10,14)
+                            //dayOfWeek = response.body()!!.data!![i].date.substring(8,10)
+                            //day = response.body()!!.data!![i].date.substring(10,14)
 
                             //잡초만 있을 경우
                             if(response.body()!!.data!![i].treeIdx==16){
@@ -590,8 +592,10 @@ class MainFragment : Fragment() {
                                 txt_main_day_num.visibility = View.VISIBLE
                                 txt_main_day_text.visibility = View.VISIBLE
 
-                                txt_main_day_num.setText(dayOfWeek)
-                                txt_main_day_text.setText(day)
+                                var date = SimpleDateFormat("E")
+                                var date2 = SimpleDateFormat("dd")
+                                txt_main_day_num.setText(date2.toString())
+                                txt_main_day_text.setText(date.toString())
                             }else{
                                 txt_main_day_num_word.visibility = View.INVISIBLE
                                 txt_main_day_num.visibility = View.INVISIBLE
