@@ -256,7 +256,8 @@ class InventoryActivity : AppCompatActivity() {
                             Log.e("Adapter: treeIdx", treeIdx.toString())
 
                             if(response.body()!!.data!![i].treeIdx == 16){
-                                Log.e("h", location.toString())
+                                gridRecyclerViewAdapter.gridDataList[location].img = R.drawable.android_weeds
+                                gridRecyclerViewAdapter.notifyDataSetChanged()
                             }else{
                                 Log.e("h", location.toString())
                                 //inventoryActivity.gridRecyclerViewAdapter
