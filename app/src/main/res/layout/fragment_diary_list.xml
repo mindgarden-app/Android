@@ -16,6 +16,20 @@
                 android:id="@+id/toolbar_diary_list"
                 layout="@layout/toolbar_diary_list"/>
 
+        <LinearLayout
+                android:id="@+id/ll_list_zero"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="gone">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_list_zero"/>
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_diary_list"
                 android:layout_width="match_parent"

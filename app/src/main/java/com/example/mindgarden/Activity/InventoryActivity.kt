@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -22,6 +23,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -37,6 +39,7 @@ class InventoryActivity : AppCompatActivity() {
 
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
+    lateinit var holder: GridRecyclerViewAdapter.Holder
 
     lateinit var inventoryList: List<Int>
 
