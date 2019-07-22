@@ -504,6 +504,8 @@ class MainFragment : Fragment() {
 
                     canBeFuture()
 
+                    getActivity();
+
                     //툴바 날짜 클릭했을 때 -> 팝업 띄우기
                     ll_date_toolbar_main.setOnClickListener {
                         startActivityForResult<MainCalendarActivity>(
