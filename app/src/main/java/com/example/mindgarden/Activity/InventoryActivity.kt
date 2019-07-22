@@ -36,7 +36,7 @@ import kotlin.collections.ArrayList
 class InventoryActivity : AppCompatActivity() {
     val cal = Calendar.getInstance()
     var month = (cal.get(Calendar.MONTH) + 1).toString()
-
+    val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
     lateinit var holder: GridRecyclerViewAdapter.Holder
@@ -252,21 +252,22 @@ class InventoryActivity : AppCompatActivity() {
 
                             var treeIdx = 0
                             var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx
+                            treeIdx = response.body()!!.data!![i].treeIdx -1
                             location = response.body()!!.data!![i].location
 
                             Log.e("Adapter:location ", location.toString())
                             Log.e("Adapter: treeIdx", treeIdx.toString())
 
                             if(response.body()!!.data!![i].treeIdx == 16){
-                                gridRecyclerViewAdapter.gridDataList[location].img = R.drawable.android_weeds
+                                gridList[fromServerToUs[location]].img = R.drawable.android_weeds
                                 gridRecyclerViewAdapter.notifyDataSetChanged()
                             }else{
                                 Log.e("h", location.toString())
                                 //inventoryActivity.gridRecyclerViewAdapter
-                                gridRecyclerViewAdapter.gridDataList[gridList[location].product_id].img = inventoryList.get(treeIdx)
+                                gridList[fromServerToUs[location]].img = inventoryList.get(treeIdx)
                                 gridRecyclerViewAdapter.notifyDataSetChanged()
-                                Log.e("3", "3")
+
+                                Log.e("position ",fromServerToUs[location].toString())
                             }
                         }
                     }

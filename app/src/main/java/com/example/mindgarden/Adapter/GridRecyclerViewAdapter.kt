@@ -30,6 +30,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
 
     override fun getItemCount(): Int = gridDataList.size
 
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         Glide.with(ctx)
             .load(gridDataList[position].img)

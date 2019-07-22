@@ -504,6 +504,8 @@ class MainFragment : Fragment() {
 
                     canBeFuture()
 
+                    getActivity();
+
                     //툴바 날짜 클릭했을 때 -> 팝업 띄우기
                     ll_date_toolbar_main.setOnClickListener {
                         startActivityForResult<MainCalendarActivity>(
@@ -545,17 +547,20 @@ class MainFragment : Fragment() {
 
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                             if(balloon==1) {
-                                btn_reward.isEnabled = true
                                 img_balloon.visibility=View.VISIBLE
+                                btn_reward.isEnabled = true
+
+                                Log.e("balloon",balloon.toString())
+                                Log.e("img_ballon_visibility",img_balloon.visibility.toString())
                                 writeDiary = false
                             }
                             else btn_reward.isEnabled=false
-                            img_balloon.visibility=View.INVISIBLE
+
                             writeDiary = true
                         }
                         else {
                             btn_reward.isEnabled = false
-                            img_balloon.visibility=View.INVISIBLE
+
                             /*if(balloon==1){
                                 btn_reward.isEnabled=true
                                 img_balloon.visibility=View.VISIBLE
@@ -592,10 +597,11 @@ class MainFragment : Fragment() {
                                 txt_main_day_num.visibility = View.VISIBLE
                                 txt_main_day_text.visibility = View.VISIBLE
 
-                                var date = SimpleDateFormat("E")
-                                var date2 = SimpleDateFormat("dd")
-                                txt_main_day_num.setText(date2.toString())
-                                txt_main_day_text.setText(date.toString())
+                                var date = SimpleDateFormat("dd")
+                                var date2 = SimpleDateFormat("E")
+
+                                txt_main_day_num.setText(date.format(Date()).toString())
+                                txt_main_day_text.setText(date2.format(Date()).toString())
                             }else{
                                 txt_main_day_num_word.visibility = View.INVISIBLE
                                 txt_main_day_num.visibility = View.INVISIBLE
