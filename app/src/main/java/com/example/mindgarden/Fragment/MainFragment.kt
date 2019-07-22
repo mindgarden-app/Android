@@ -504,7 +504,6 @@ class MainFragment : Fragment() {
 
                     canBeFuture()
 
-                    getActivity();
 
                     //툴바 날짜 클릭했을 때 -> 팝업 띄우기
                     ll_date_toolbar_main.setOnClickListener {
@@ -588,7 +587,7 @@ class MainFragment : Fragment() {
                             if(response.body()!!.data!![i].treeIdx==16){
                                 locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
                             }else{
-                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx-1))
+                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx))
                             }
 
                             //요일 설정
