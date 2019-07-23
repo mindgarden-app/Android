@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -21,7 +22,9 @@ import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -249,7 +252,7 @@ class InventoryActivity : AppCompatActivity() {
 
                             var treeIdx = 0
                             var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx -1
+                            treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
 
                             Log.e("Adapter:location ", location.toString())

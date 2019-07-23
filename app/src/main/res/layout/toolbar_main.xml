@@ -4,7 +4,7 @@
                                    android:layout_height="wrap_content"
                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                    app:contentInsetStart="0dp"
-                                   android:background="@drawable/toolbar_border">
+                                   android:background="@drawable/toolbar_layout_border">
 
     <RelativeLayout
             android:layout_width="match_parent"

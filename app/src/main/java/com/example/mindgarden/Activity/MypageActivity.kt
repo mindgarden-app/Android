@@ -56,10 +56,5 @@ class MypageActivity : AppCompatActivity() {
 
             finish()
         }
-        premium.setOnClickListener {
-            val level : TextView = findViewById(R.id.level)
-            level.setBackgroundResource(R.drawable.mint_border_fill)
-
-        }
     }
 }

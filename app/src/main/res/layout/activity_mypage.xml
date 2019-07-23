@@ -51,19 +51,6 @@
                     android:layout_alignParentTop="true">
             </TextView>
             <TextView
-                    android:id="@+id/level"
-                    android:text="무료회원"
-                    android:paddingVertical="3dp"
-                    android:gravity="center|center"
-                    android:layout_height="wrap_content"
-                    android:layout_width="50dp"
-                    android:layout_toEndOf="@id/userName"
-                    android:layout_alignTop="@+id/myImage"
-                    android:textSize="9dp"
-                    android:background="@drawable/gray_border_fill" android:layout_marginTop="0dp"
-                    android:layout_marginStart="10dp">
-            </TextView>
-            <TextView
                     android:id="@+id/userMail"
                     android:text="chungee375@gmail.com"
                     android:fontFamily="@font/notosanscjkr_regular"
@@ -139,18 +126,6 @@
                 android:gravity="start|center"
                 android:textSize="14dp"
                 android:background="@drawable/gray_bottom_border"
-                android:elevation="10dp"/>
-        <Button
-                android:text="프리미엄 전환 설정"
-                android:id="@+id/premium"
-                android:fontFamily="@font/notosanscjkr_regular"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:gravity="start|center"
-                android:textSize="14dp"
-                android:background="@drawable/toolbar_border"
                 android:elevation="10dp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
