@@ -2,11 +2,10 @@ package com.example.mindgarden.Fragment
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -29,14 +28,14 @@ import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.activityManager
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import com.example.mindgarden.Fragment.MainFragment.OnDataPass
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -61,11 +60,22 @@ class MainFragment : Fragment() {
     val cal = Calendar.getInstance()
     var userIdx : Int = 0
     var treeNum = 0 //트리수
-    var balloon = 0
+    var balloon = 0 //나무 심기 여부
+    var check = 0   //일기 작성 여부
+
+    var dataPasser: OnDataPass? = null
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
+    public interface OnDataPass{
+        fun checkPass(bal: Int)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        dataPasser = context as OnDataPass
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -532,6 +542,9 @@ class MainFragment : Fragment() {
                         initializeTree()
 
                         balloon = response.body()!!.data!![0].balloon
+                        //check = response.body()!!.data!![0].check
+                        //Log.e("mainFragment", check.toString())
+                       // dataPasser?.checkPass(check)
 
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
                             if(balloon==1) {
@@ -673,11 +686,6 @@ class MainFragment : Fragment() {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap
-    }
-
-    fun returnBalloon():Int{
-        //getMainResponse()
-        return balloon
     }
 
 }

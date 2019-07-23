@@ -5,8 +5,8 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              tools:context=".Fragment.MainFragment"
-                                            android:background="#ffffff"
->
+                                             android:background="#ffffff"
+                                             android:id="@+id/cl_fragment_main">
 
     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                   app:layout_constraintTop_toTopOf="parent"
@@ -218,7 +218,7 @@
             android:src="@drawable/balloon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             app:layout_constraintStart_toStartOf="@+id/img_land"
+            app:layout_constraintStart_toStartOf="@+id/img_land"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/img_land" android:layout_marginBottom="208dp"
             app:layout_constraintBottom_toBottomOf="@+id/img_land" app:layout_constraintHorizontal_bias="0.501"/>
