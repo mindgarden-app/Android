@@ -14,20 +14,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
-
-
-
+import java.util.*
 
 class MainCalendarActivity : AppCompatActivity() {
 
-    private var roundStae : Boolean = true  //round_btn 유무
-
-    private val error: TextView? = null
     private var btn_left : ImageView? = null
     private var btn_right: ImageView? = null
     private var txt_year : TextView? = null
-    private var year : String = ""
-    private var month : String = ""
+    private var year : String = ""  //툴바 년
+    private var month : String = "" //툴바 월
+    val cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +33,7 @@ class MainCalendarActivity : AppCompatActivity() {
         val intent : Intent = getIntent()
         year = intent.getStringExtra("year")
         month = intent.getStringExtra("month")
+
 
         btn_right =findViewById(R.id.btn_right_main_calendar) as ImageView
         btn_left = findViewById(R.id.btn_left_main_calendar) as ImageView
@@ -51,15 +48,31 @@ class MainCalendarActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        canBeFuture()
+
         btn_left?.setOnClickListener {
             year = (year.toInt() - 1).toString()
             txt_year?.setText(year)
+            canBeFuture()
         }
+
         btn_right?.setOnClickListener {
             year = (year.toInt() + 1).toString()
             txt_year?.setText(year)
+            canBeFuture()
+
         }
+
         clickText()
+
+
+    }
+    private fun canBeFuture(){
+        if(year == cal.get(Calendar.YEAR).toString()){
+            btn_right?.isEnabled = false
+        }else{
+            btn_right?.isEnabled = true
+        }
 
     }
     //PopUpWindow 사이즈 조절
@@ -114,7 +127,5 @@ class MainCalendarActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
-
-
 
 }
