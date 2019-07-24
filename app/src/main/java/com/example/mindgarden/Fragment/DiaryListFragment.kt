@@ -178,8 +178,18 @@ class DiaryListFragment : Fragment() {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
                         val tmp: ArrayList<DiaryListData> = response.body()!!.data!!
-                        diaryListRecyclerViewAdapter.dataList = tmp
-                        diaryListRecyclerViewAdapter.notifyDataSetChanged()
+
+                        if (tmp.isEmpty()) {
+                            ll_list_zero.visibility = View.VISIBLE
+                        }
+
+                        else {
+                            ll_list_zero.visibility = View.GONE
+                            diaryListRecyclerViewAdapter.dataList = tmp
+                            diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                        }
+                        //diaryListRecyclerViewAdapter.dataList = tmp
+                        //diaryListRecyclerViewAdapter.notifyDataSetChanged()
                     }
                 }
             }

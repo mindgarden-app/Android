@@ -2,12 +2,14 @@ package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -21,7 +23,9 @@ import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.rv_item_grid.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -51,6 +55,8 @@ class InventoryActivity : AppCompatActivity() {
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
         var gridIdx: Int = 0
+        //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+        //var locationList = arrayListOf<Int>()
     }
 
     override fun onResume() {
@@ -249,7 +255,7 @@ class InventoryActivity : AppCompatActivity() {
 
                             var treeIdx = 0
                             var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx -1
+                            treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
 
                             Log.e("Adapter:location ", location.toString())
