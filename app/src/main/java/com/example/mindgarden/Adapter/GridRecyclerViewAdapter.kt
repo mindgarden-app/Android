@@ -36,6 +36,8 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
             .load(gridDataList[position].img)
             .into(holder.grid_img)
 
+
+
         holder.container.setOnClickListener{
             if (InventoryActivity.isGridClick) {
                 holder.container.isSelected = true

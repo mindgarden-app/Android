@@ -554,12 +554,16 @@ class MainFragment : Fragment() {
                                 Log.e("img_ballon_visibility",img_balloon.visibility.toString())
                                 writeDiary = false
                             }
-                            else btn_reward.isEnabled=false
-
-                            writeDiary = true
+                            else {
+                                btn_reward.isEnabled=false
+                                img_balloon.visibility=View.INVISIBLE
+                                writeDiary = true
+                            }
                         }
                         else {
                             btn_reward.isEnabled = false
+
+                            img_balloon.visibility=View.INVISIBLE
 
                             /*if(balloon==1){
                                 btn_reward.isEnabled=true
