@@ -546,7 +546,12 @@ class MainFragment : Fragment() {
                         //Log.e("mainFragment", check.toString())
                        // dataPasser?.checkPass(check)
 
-                        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                        var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
+                        if (mmonth.toInt() < 10) {
+                            mmonth = "0$mmonth"
+                        }
+
+                        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
                             if(balloon==1) {
                                 img_balloon.visibility=View.VISIBLE
                                 btn_reward.isEnabled = true
@@ -554,10 +559,14 @@ class MainFragment : Fragment() {
                                 Log.e("balloon",balloon.toString())
                                 Log.e("img_ballon_visibility",img_balloon.visibility.toString())
                             }
-                            else btn_reward.isEnabled=false
+                            else {
+                                btn_reward.isEnabled=false
+                                img_balloon.visibility=View.INVISIBLE
+                            }
                         }
                         else {
                             btn_reward.isEnabled = false
+                            img_balloon.visibility=View.INVISIBLE
                         }
 
                         for(i in 0..(response.body()!!.data!!.size-1)) {
@@ -576,7 +585,7 @@ class MainFragment : Fragment() {
                             }
 
                             //요일 설정
-                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()) {
+                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
 
                                 txt_main_day_num_word.visibility = View.VISIBLE
                                 txt_main_day_num.visibility = View.VISIBLE
@@ -600,31 +609,38 @@ class MainFragment : Fragment() {
                             //문구 설정
                             treeNum = response.body()!!.data!![i].treeNum
 
-                            var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
-                            if (mmonth.toInt() < 10) {
-                                mmonth = "0$mmonth"
-                            }
-
                             //현재달이고, 심은 나무가 없을 경우(초기상태) -> 정원을 꾸며보아요 문구
-                            if(treeNum < 1 &&  txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth){
-                                txt_main_exp1.setText(getString(R.string.defaultText))
-                                txt_main_exp1.visibility = View.VISIBLE
-                            }
-                            else if(treeNum < 1){
-                                txt_main_exp1.setText(getString(R.string.treeNumText0))
-                                txt_main_exp1.visibility = View.VISIBLE
-                            }else if(treeNum < 11){
-                                val text = treeNum.toString() + getString( R.string.treeNumText10)
-                                txt_main_exp1.setText(text)
-                                txt_main_exp1.visibility = View.VISIBLE
-                            }else if(treeNum < 21){
-                                val text = treeNum.toString() + getString(R.string.treeNumText20)
-                                txt_main_exp1.setText(text)
-                                txt_main_exp1.visibility = View.VISIBLE
-                            }else{
-                                val text = treeNum.toString() + getString(R.string.treeNumText21)
-                                txt_main_exp1.setText(text)
-                                txt_main_exp1.visibility = View.VISIBLE
+                            if(txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                if(treeNum < 1) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent0))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if(treeNum < 11) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent10))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if(treeNum < 21) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent20))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent21))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                }
+                            } else {
+                                if (treeNum < 1) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumText0))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if(treeNum < 11) {
+                                    val text = treeNum.toString() + getString( R.string.treeNumText10)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if(treeNum < 21) {
+                                    val text = treeNum.toString() + getString(R.string.treeNumText20)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else {
+                                    val text = treeNum.toString() + getString(R.string.treeNumText21)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                }
                             }
                         }
                     }

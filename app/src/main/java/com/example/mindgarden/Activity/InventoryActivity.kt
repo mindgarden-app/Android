@@ -2,6 +2,7 @@ package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -54,6 +55,8 @@ class InventoryActivity : AppCompatActivity() {
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
         var gridIdx: Int = 0
+        //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+        //var locationList = arrayListOf<Int>()
     }
 
     override fun onResume() {

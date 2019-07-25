@@ -10,5 +10,9 @@
     <string name="treeNumText0">나무가 하나도 없어요\n정원이 휑하네요 </string>
     <string name="treeNumText10">개의 나무를 심었네요\n많이 바빴나요?</string>
     <string name="treeNumText20">개의 나무를 심었네요\n꽤 멋있는데요!</string>
-    <string name="treeNumText21">n개의 나무를 심었네요\n수고했어요 짝짝짝</string>
+    <string name="treeNumText21">개의 나무를 심었네요\n수고했어요 짝짝짝</string>
+    <string name="treeNumTextCurrent0">이번 달 정원도 잘 꾸며볼까요?\n함께 멋있는 정원을 만들어보아요</string>
+    <string name="treeNumTextCurrent10">오늘 기분은 어땠어요?\n정원이 조금씩 채워지고 있어요</string>
+    <string name="treeNumTextCurrent20">정원이 복작복작 해졌어요\n이번 달 마무리를 잘해봅시다</string>
+    <string name="treeNumTextCurrent21">축하해요!\n정원을 멋지게 완성했네요</string>
 </resources>
