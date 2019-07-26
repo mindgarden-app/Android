@@ -14,7 +14,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
+import org.w3c.dom.Text
 import java.util.*
+
+
+
 
 class MainCalendarActivity : AppCompatActivity() {
 
@@ -22,7 +26,8 @@ class MainCalendarActivity : AppCompatActivity() {
     private var btn_right: ImageView? = null
     private var txt_year : TextView? = null
     private var year : String = ""  //툴바 년
-    private var month : String = "" //툴바 월
+    private var month : String = "" //툴바 달
+    private var currentMonth : Int = 0//현재 달
     val cal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +38,9 @@ class MainCalendarActivity : AppCompatActivity() {
         val intent : Intent = getIntent()
         year = intent.getStringExtra("year")
         month = intent.getStringExtra("month")
+
+        //현재달 설정
+        currentMonth = cal.get(Calendar.MONTH) + 1
 
 
         btn_right =findViewById(R.id.btn_right_main_calendar) as ImageView
@@ -48,33 +56,60 @@ class MainCalendarActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        canBeFuture()
+        btnRightControl()
 
         btn_left?.setOnClickListener {
             year = (year.toInt() - 1).toString()
             txt_year?.setText(year)
-            canBeFuture()
+            btnRightControl()
         }
 
         btn_right?.setOnClickListener {
             year = (year.toInt() + 1).toString()
             txt_year?.setText(year)
-            canBeFuture()
-
+            btnRightControl()
         }
 
-        clickText()
-
-
     }
-    private fun canBeFuture(){
+    private fun btnRightControl(){
         if(year == cal.get(Calendar.YEAR).toString()){
             btn_right?.isEnabled = false
+            Log.e("btnRight", "ok")
+            monthClickControl(true)
         }else{
             btn_right?.isEnabled = true
+            monthClickControl(false)
         }
-
     }
+
+    private fun monthClickControl(currentYear : Boolean){
+        for(i in 1..12){
+            val tag = ll_main_calendar.findViewWithTag<TextView>("$i")
+            val calMonth = tag.text.toString().toInt()
+
+            Log.e("currentYear", currentYear.toString())
+
+            if(currentYear == true){    //현재 년도일 경우
+                if(calMonth <= currentMonth){	//현재달보다 달력에서의 달이 작아야함
+                    for(j in 1..currentMonth){
+                        val tv = ll_main_calendar.findViewWithTag<TextView>("$j")
+                        clickState(tv)
+                    }
+
+                    if(currentMonth != 12){
+                      for(m in currentMonth+1..12){
+                          val tv = ll_main_calendar.findViewWithTag<TextView>("$m")
+                          resetClick(tv)
+                      }
+                    }
+                }
+            } else{   //더 작은값일 경우
+                Log.e("i", i.toString())
+                clickState(tag)
+            }
+        }
+    }
+
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
@@ -88,22 +123,9 @@ class MainCalendarActivity : AppCompatActivity() {
         window.attributes.height = height
     }
 
-    fun clickText(){
-        clickState(txt_1_main_cal)
-        clickState(txt_2_main_cal)
-        clickState(txt_3_main_cal)
-        clickState(txt_4_main_cal)
-        clickState(txt_5_main_cal)
-        clickState(txt_6_main_cal)
-        clickState(txt_7_main_cal)
-        clickState(txt_8_main_cal)
-        clickState(txt_9_main_cal)
-        clickState(txt_10_main_cal)
-        clickState(txt_11_main_cal)
-        clickState(txt_12_main_cal)
-    }
-
+    //눌렀을때의 동작
     fun clickState(tv: TextView){
+        tv.isClickable = true
         tv.setOnClickListener(object : View.OnClickListener {
             private var state = false
             override fun onClick(v: View) {
@@ -118,6 +140,10 @@ class MainCalendarActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun resetClick(tv: TextView){
+        tv.isClickable = false
     }
 
     fun intentToMain(tv: TextView){
