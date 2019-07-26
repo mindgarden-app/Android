@@ -17,8 +17,9 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
+import org.jetbrains.anko.startActivity
 
-class SocialLoginActivity : AppCompatActivity() {
+class WebviewLoginActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
@@ -26,7 +27,7 @@ class SocialLoginActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_social_login)
+            setContentView(R.layout.activity_webview_login)
 
             val myWebView = findViewById<AdvancedWebView>(R.id.webView) as AdvancedWebView
 
@@ -34,7 +35,7 @@ class SocialLoginActivity : AppCompatActivity() {
                 WebView.setWebContentsDebuggingEnabled(true)
             }
             myWebView.apply {
-                setListener(this@SocialLoginActivity, object : AdvancedWebView.Listener {
+                setListener(this@WebviewLoginActivity, object : AdvancedWebView.Listener {
                     override fun onDownloadRequested(
                         url: String?,
                         suggestedFilename: String?,
@@ -52,26 +53,37 @@ class SocialLoginActivity : AppCompatActivity() {
 
                     override fun onPageFinished(url: String?) {
 
+
                         url?.let {
+
+                            //로그인 성공시
                             if (it.endsWith("http://13.125.190.74:3000/auth/login/success")) {
                                 myWebView.visibility = View.GONE
                                 myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
 
-                                if(SharedPreferenceController.getPassword(this@SocialLoginActivity)==""){
-                                    val loginIntent= Intent(this@SocialLoginActivity, MainActivity::class.java)
-                                    // 암호변겅을 누르면
+                                //암호설정을 안 한 경우
+                                if(SharedPreferenceController.getPassword(this@WebviewLoginActivity)==""){
+                                    val loginIntent= Intent(this@WebviewLoginActivity, MainActivity::class.java)
                                     loginIntent.putExtra("whereFrom","login")
                                     startActivity(loginIntent)
                                 }
+
+                                //암호설정을 한 경우
                                 else{
-                                    val loginIntent= Intent(this@SocialLoginActivity, PasswordActivity::class.java)
+                                    val loginIntent= Intent(this@WebviewLoginActivity, PasswordActivity::class.java)
                                     // 암호변겅을 누르면
                                     loginIntent.putExtra("whereFrom","login")
                                     startActivity(loginIntent)
                                 }
 
                             }
+                            //로그인 실패시
+                            else if(it.endsWith("http://13.125.190.74:3000/auth/login/fail")){
+                                myWebView.visibility = View.GONE
+                                startActivity<LoginActivity>()
+                            }
                         }
+
                     }
                     override fun onPageStarted(url: String?, favicon: Bitmap?) {
                     }
@@ -104,11 +116,11 @@ class SocialLoginActivity : AppCompatActivity() {
         val temp4=temp["name"].asString
 
 
-        SharedPreferenceController.setUserID(this@SocialLoginActivity,temp2)
-        SharedPreferenceController.setUserMail(this@SocialLoginActivity,temp3)
-        SharedPreferenceController.setUserName(this@SocialLoginActivity,temp4)
+        SharedPreferenceController.setUserID(this@WebviewLoginActivity,temp2)
+        SharedPreferenceController.setUserMail(this@WebviewLoginActivity,temp3)
+        SharedPreferenceController.setUserName(this@WebviewLoginActivity,temp4)
 
-        Log.e("userID",SharedPreferenceController.getUserID(this@SocialLoginActivity).toString())
+        Log.e("userID",SharedPreferenceController.getUserID(this@WebviewLoginActivity).toString())
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("userId", temp2)
         })

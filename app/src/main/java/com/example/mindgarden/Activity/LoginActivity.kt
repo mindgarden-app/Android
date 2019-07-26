@@ -19,7 +19,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
-import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -44,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[2])
 
         btnLogin.setOnClickListener {
-            val loginIntent= Intent(this, SocialLoginActivity::class.java)
+            val loginIntent= Intent(this, WebviewLoginActivity::class.java)
             // 암호변겅을 누르면
 
             startActivity(loginIntent)
