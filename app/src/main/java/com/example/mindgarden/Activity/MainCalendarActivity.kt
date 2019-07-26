@@ -87,26 +87,25 @@ class MainCalendarActivity : AppCompatActivity() {
             val tag = ll_main_calendar.findViewWithTag<TextView>("$i")
             val calMonth = tag.text.toString().toInt()
 
-            Log.e("currentYear", currentYear.toString())
-
-            if(currentYear == true){    //현재 년도일 경우
+            if(currentYear == true){   //현재 년도일 경우
                 if(calMonth <= currentMonth){	//현재달보다 달력에서의 달이 작아야함
-                    for(j in 1..currentMonth){
-                        val tv = ll_main_calendar.findViewWithTag<TextView>("$j")
+                    for(i in 1..currentMonth){
+                        val tv = ll_main_calendar.findViewWithTag<TextView>("$i")
                         clickState(tv)
                     }
 
                     if(currentMonth != 12){
-                      for(m in currentMonth+1..12){
-                          val tv = ll_main_calendar.findViewWithTag<TextView>("$m")
+                      for(i in currentMonth+1..12){
+                          val tv = ll_main_calendar.findViewWithTag<TextView>("$i")
                           resetClick(tv)
                       }
                     }
                 }
-            } else{   //더 작은값일 경우
-                Log.e("i", i.toString())
+            }
+            else{ //현재 년보다 작은값일 경우
                 clickState(tag)
             }
+
         }
     }
 
