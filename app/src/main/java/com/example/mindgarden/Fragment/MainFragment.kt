@@ -35,7 +35,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import com.example.mindgarden.Fragment.MainFragment.OnDataPass
-
+import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.rv_item_grid.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -110,13 +111,19 @@ class MainFragment : Fragment() {
             getMainResponse()
         }
 
+        btn_reward.setOnClickListener {
+            var intent: Intent = Intent(context, InventoryActivity::class.java)
+            intent.putExtra("balloon", balloon)
+            startActivity(intent)
+        }
+
         //수정필요
-        if (btn_reward.isEnabled) {
+        /*if (btn_reward.isEnabled) {
             btn_reward.setOnClickListener {
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
                 startActivity(intent)
             }
-        }
+        }*/
 
         // 환경설정 페이지로 넘어감
         btn_main_setting.setOnClickListener {
@@ -171,12 +178,17 @@ class MainFragment : Fragment() {
 
                 canBeFuture()
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
                     }
-                }
+                }*/
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -197,13 +209,18 @@ class MainFragment : Fragment() {
                     getMainResponse()
                 }
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
 
                     }
-                }
+                }*/
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
 
@@ -231,13 +248,18 @@ class MainFragment : Fragment() {
 
                 canBeFuture()
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
 
                     }
-                }
+                }*/
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -258,13 +280,18 @@ class MainFragment : Fragment() {
 
                 canBeFuture()
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
 
                     }
-                }
+                }*/
 
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
@@ -304,13 +331,18 @@ class MainFragment : Fragment() {
 
         canBeFuture()
 
-        if (btn_reward.isEnabled) {
+        btn_reward.setOnClickListener {
+            var intent: Intent = Intent(context, InventoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        /*if (btn_reward.isEnabled) {
             btn_reward.setOnClickListener {
                 var intent: Intent = Intent(context, InventoryActivity::class.java)
                 startActivity(intent)
 
             }
-        }
+        }*/
 
 
         if (isValid(
@@ -396,13 +428,18 @@ class MainFragment : Fragment() {
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
 
                     }
-                }
+                }*/
 
                 //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
                 /*if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(
@@ -428,13 +465,18 @@ class MainFragment : Fragment() {
                     getMainResponse()
                 }
 
-                if (btn_reward.isEnabled) {
+                btn_reward.setOnClickListener {
+                    var intent: Intent = Intent(context, InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+
+                /*if (btn_reward.isEnabled) {
                     btn_reward.setOnClickListener {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
 
                     }
-                }
+                }*/
 
                 canBeFuture()
                 //툴바 월 설정(MainCalendar로 전달)
@@ -463,13 +505,18 @@ class MainFragment : Fragment() {
 
                     canBeFuture()
 
-                    if (btn_reward.isEnabled) {
+                    btn_reward.setOnClickListener {
+                        var intent: Intent = Intent(context, InventoryActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    /*if (btn_reward.isEnabled) {
                         btn_reward.setOnClickListener {
                             var intent: Intent = Intent(context, InventoryActivity::class.java)
                             startActivity(intent)
 
                         }
-                    }
+                    }*/
 
                     //툴바 년/월 설정(MainCalendar로 전달)
                     toolbarYear = txt_main_year.text.toString()
@@ -492,13 +539,18 @@ class MainFragment : Fragment() {
                     //툴바 월 설정(MainCalendar로 전달)
                     toolbarMonth = txt_main_month.text.toString()
 
-                    if (btn_reward.isEnabled) {
+                    btn_reward.setOnClickListener {
+                        var intent: Intent = Intent(context, InventoryActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    /*if (btn_reward.isEnabled) {
                         btn_reward.setOnClickListener {
                             var intent: Intent = Intent(context, InventoryActivity::class.java)
                             startActivity(intent)
 
                         }
-                    }
+                    }*/
 
                     canBeFuture()
 
@@ -554,18 +606,21 @@ class MainFragment : Fragment() {
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
                             if(balloon==1) {
                                 img_balloon.visibility=View.VISIBLE
-                                btn_reward.isEnabled = true
+                                btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
+                                //btn_reward.isEnabled = true
 
                                 Log.e("balloon",balloon.toString())
                                 Log.e("img_ballon_visibility",img_balloon.visibility.toString())
                             }
                             else {
-                                btn_reward.isEnabled=false
+                                btn_reward.setImageResource(R.drawable.btn_reward)
+                                //btn_reward.isEnabled=false
                                 img_balloon.visibility=View.INVISIBLE
                             }
                         }
                         else {
-                            btn_reward.isEnabled = false
+                            btn_reward.setImageResource(R.drawable.btn_reward)
+                            //btn_reward.isEnabled = false
                             img_balloon.visibility=View.INVISIBLE
                         }
 

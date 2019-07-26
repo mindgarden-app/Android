@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -24,7 +25,9 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.rv_item_grid.*
+import kotlinx.android.synthetic.main.rv_item_inventory.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
@@ -77,6 +80,16 @@ class InventoryActivity : AppCompatActivity() {
 
             finish()
         }
+
+        //balloon 이용해서 인벤토리 리사이클러뷰 선택 못하게 해보려 노력 중
+        val intent : Intent = getIntent()
+        var bal = intent.getIntExtra("balloon", 0)
+
+        /*if (bal == 0) {
+            btn_choose.isEnabled = false
+        } else {
+            btn_choose.isEnabled = true
+        }*/
 
         gridList.add(GridData(1, R.drawable.tree_size))
         gridList.add(GridData(3, R.drawable.tree_size))
