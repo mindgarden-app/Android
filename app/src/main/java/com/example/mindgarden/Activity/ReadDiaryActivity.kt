@@ -28,6 +28,7 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -68,6 +69,7 @@ class ReadDiaryActivity : AppCompatActivity() {
             Log.e("ReadDiary Date : ", "no value")
         }
 
+        txt_date_toolbar_read_diary.setText(dateText)  //setText
 
 
         //통신
