@@ -11,15 +11,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
-import org.jetbrains.anko.toast
-import java.util.*
 import com.example.mindgarden.R
 import android.util.Log
 import android.widget.TimePicker
 import android.app.AlarmManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import com.example.mindgarden.Service.BroadcastD
+import com.example.mindgarden.BroadCastReceiver.BroadcastD
 
 
 /*
