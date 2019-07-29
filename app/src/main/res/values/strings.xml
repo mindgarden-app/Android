@@ -4,7 +4,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="channel_description">happy garden push push</string>
+    <string name="channel_description">MindGarden push notification</string>
     <string name="channel_name">mindgarden</string>
     <string name="defaultText">정원을 꾸며볼까요?</string>
     <string name="treeNumText0">나무가 하나도 없어요\n정원이 휑하네요 </string>

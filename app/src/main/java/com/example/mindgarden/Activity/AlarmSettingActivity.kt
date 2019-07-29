@@ -22,13 +22,16 @@ import android.graphics.BitmapFactory
 import com.example.mindgarden.Service.BroadcastD
 
 
+/*
+[완료]특정 시간에 알림오도록 설정 완료 _ 2019.07.29
+[미완]내부 DB를 통해 버튼 상태(click or not) 유지 구현하기
+[미완]알림 설정 토글 버튼 상태가 false일 경우 알람 해지하기 cancleAlarm() 구현하기
+[미완] 코드 다듬기
+ */
 class AlarmSettingActivity : AppCompatActivity() {
 
     @SuppressLint("ResourceAsColor")
-    val c = Calendar.getInstance()
-    var hour = c.get(Calendar.HOUR)
-    var minute = c.get(Calendar.MINUTE)
-    var time : Long  = 0
+    val cal = Calendar.getInstance()
     val CHANNEL_ID = "MINDGARDEN"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,37 +39,37 @@ class AlarmSettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alarm_setting)
         txtSetting.text = "알람 설정"
 
+        //back button
         btnBack.setOnClickListener {
             val intent = Intent(this, MypageActivity::class.java)
-            // 백 스페이스 누르면 다시 메인 페이지로
-
             startActivity(intent)
-
             finish()
         }
 
-        val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)
-        val btnSetTime: Button =findViewById(R.id.btnSetTime)
-
+        val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)    //스위치 토글 버튼
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
-            btnSetTime.setTextColor(Color.BLACK)
-            if (isChecked) {
-                // The toggle is enabled
-                btnSetTime.setOnClickListener {
-                  showDialog()
-                }
-                toast("ddksk")
-                ///팝업창
-            } else {
-                //버튼 비활성화 + 글씨 색 바꾸기
-                btnSetTime.isClickable = false
-                val color : String = "#c6c6c6"
-                btnSetTime.setTextColor(Color.parseColor(color))
-            }
+           alarmSwitch(isChecked)
+        }
+
+
+    }
+
+    fun alarmSwitch(isChecked : Boolean){
+        val btnSetTime: Button =findViewById(R.id.btnSetTime)   //시간 설정 버튼
+        btnSetTime.setTextColor(Color.BLACK)
+
+        if (isChecked) {
+            //알람 설정
+            btnSetTime.setOnClickListener {
+                showDialog() }
+        } else {
+            //버튼 비활성화 + 글씨 색 바꾸기
+            btnSetTime.isClickable = false
+            btnSetTime.setTextColor(Color.parseColor("#c6c6c6"))
         }
     }
 
-
+    //알림 시간을 설정하는 다이얼로그
     fun showDialog(){
 
         val builder = AlertDialog.Builder(this, R.style.AlarmDialogStyle)
@@ -74,17 +77,28 @@ class AlarmSettingActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
 
         val alarmTimePicker= dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
-        builder.setView(dialogView)
 
-        //val dialog = builder.create()
+        var timeA : Long = 0
+        var triggerTime : Long = 0
 
-        //dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alarmTimePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+            Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
+
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            cal.set(Calendar.MINUTE, minute)
+
+            timeA  = System.currentTimeMillis()
+            triggerTime = cal.timeInMillis
+            Log.e("triggerTime", triggerTime.toString())
+
+            //이미 지난 시간으로 설정했을 경우 다음날 알림으로 설정해주기
+            if(timeA > triggerTime) triggerTime += 24 * 60 * 60 * 1000
+        }
+
+
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
-
-                setAlarm(time)
-                Log.e("time", time.toString())
-
+                setAlarm(triggerTime)
             }
             .setNeutralButton("취소") { dialogInterface, i ->
                 /* 취소일 때 아무 액션이 없으므로 빈칸 */
@@ -92,18 +106,34 @@ class AlarmSettingActivity : AppCompatActivity() {
         var builderNew: AlertDialog = builder.show()
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
-        //builder.show()
-        alarmTimePicker.setOnTimeChangedListener{
-                view,hourOfDay,minute->Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
-                time = getPickerTime(alarmTimePicker)
-        }
+
+    }
+
+    //알람 setting
+    fun setAlarm(tgTime: Long){
+        setChannel()
+
+        Log.e("tgTime", tgTime.toString())
+        var triggerTime : Long = tgTime //예약시간
+        var intervalTime : Long = 24 * 60 * 60 * 1000  //24시간
+
+        //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
+       val intent = Intent(this, BroadcastD::class.java)
+        val sender : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        //알람 예약
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
+        am.setRepeating(AlarmManager.RTC, triggerTime, intervalTime ,sender)
 
     }
 
     /*
-    알람 해제
-     */
-
+알람 해제
+fun cancelAlarm(){
+    am.cancle()
+}
+ */
+    //notification을 위한 채널설정
     fun setChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.channel_name)
@@ -117,93 +147,6 @@ class AlarmSettingActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
 
-    }
-
-    //알람 매니저 setting
-    fun setAlarm(time : Long){
-        setChannel()
-
-        //AlarmManager에게 알림 행위 등록
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        //알람이 발생했을 경우 BroadcastD에게 방송을 해주기위해 명시시
-       val intent = Intent(this, BroadcastD::class.java)
-        val sender : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-
-        //알람 예약
-        //RTC_WAKEUP 대기 상태일 경우 단말기를 활성화 시킴
-        am.set(AlarmManager.RTC_WAKEUP, time, sender)
-
-    }
-    //Push 알림 울릴 시간 설정
-    private fun getPickerTime(timePicker: TimePicker) : Long {
-        hour = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            timePicker.hour
-        } else {
-            timePicker.currentHour
-        }
-
-       minute = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            timePicker.minute
-        }else{
-            timePicker.currentMinute
-        }
-
-
-        val hourToMs1 = HourAMPM() * 3600000
-        val minuteToMs = minute * 6000
-
-        val a = (hourToMs1 + minuteToMs).toLong()
-
-        val milliseconds : Long = a
-        return milliseconds
-    }
-
-    //시간이 AM, PM인지 판별
-    fun HourAMPM() : Int {
-        val pmHour = hour +12
-        val amHour = hour
-
-        return if(hour>11) pmHour else amHour
-    }
-
-    // AM, PM 문자 반환 (토스트에 쓰고 있음 추후 지우자)
-    private fun getAMPM(hour:Int):String{
-        return if(hour>11)"PM" else "AM"
-    }
-
-    // 추후 지워도 될듯
-    private fun getHourAMPM(hour:Int):Int{
-        // Return the hour value for AM PM time format
-        var modifiedHour = if (hour>11)hour-12 else hour
-        if (modifiedHour == 0){modifiedHour = 12}
-        return modifiedHour
-    }
-
-
-    // Custom method to set time picker time
-    private fun setPickerTime(timePicker: TimePicker){
-        // Get random time
-        val hour = randomInRange(0,23)
-        val minute = randomInRange(0,59)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            timePicker.hour = hour
-            timePicker.minute = minute
-        }else{
-            timePicker.currentHour = hour
-            timePicker.currentMinute = minute
-        }
-    }
-
-    // Custom method to get a random number from the provided range
-    private fun randomInRange(min:Int, max:Int):Int{
-        //define a new Random class
-        val r = Random()
-
-        //get the next random number within range
-        // Including both minimum and maximum number
-        return r.nextInt((max - min) + 1) + min;
     }
 
 }
