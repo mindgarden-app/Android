@@ -647,12 +647,21 @@ class MainFragment : Fragment() {
                                 txt_main_day_text.visibility = View.VISIBLE
 
                                 var date = SimpleDateFormat("dd")
-                                var date2 = SimpleDateFormat("E")
-
+                                var intDate = SimpleDateFormat("u")
+                                var date2:String=""
+                                when(intDate.format(Date()).toInt()){
+                                    1->date2="Mon"
+                                    2->date2="Tue"
+                                    3->date2="Wed"
+                                    4->date2="Thu"
+                                    5->date2="Fri"
+                                    6->date2="Sat"
+                                    7->date2="Sun"
+                                }
 
 
                                 txt_main_day_num.setText(date.format(Date()).toString())
-                                txt_main_day_text.setText(date2.format(Date()).toString())
+                                txt_main_day_text.setText(date2)
 
                             }else{
                                 txt_main_day_num_word.visibility = View.INVISIBLE
