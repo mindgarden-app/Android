@@ -10,22 +10,25 @@ object SharedPreferenceController {
     val USER_MAIL="unique_strng4"
     val ALARMSTATE ="unique_strng5"
 
+    //사용자 -> 토큰으로 대체될 예정
     fun setUserID(ctx: Context,userId:Int){
         val  preference: SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)
         val  editor:SharedPreferences.Editor=preference.edit()
         editor.putInt("u_id",userId)
         editor.commit()
     }
-    fun getUserID(ctx:Context):Int{
-        val preference:SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)
-        return preference.getInt("u_id",-9)
+    fun getUserID(ctx:Context):Int {
+        val preference: SharedPreferences = ctx.getSharedPreferences(MY_ACCOUNT, Context.MODE_PRIVATE)
+        return preference.getInt("u_id", -9)
     }
+    //리프레시 토큰이 만료될 경우 사용
     fun clearUserID(ctx:Context){
         val preference:SharedPreferences=ctx.getSharedPreferences(MY_ACCOUNT,Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor=preference.edit()
         editor.clear()
         editor.commit()
     }
+    //사용자 비밀번호
     fun setPassword(ctx: Context,pw:String){
         val  preference: SharedPreferences=ctx.getSharedPreferences(PASSWORD,Context.MODE_PRIVATE)
         val  editor:SharedPreferences.Editor=preference.edit()
@@ -36,6 +39,7 @@ object SharedPreferenceController {
         val preference:SharedPreferences=ctx.getSharedPreferences(PASSWORD,Context.MODE_PRIVATE)
         return preference.getString("PW","")
     }
+    //사용자 이름
     fun  setUserName(ctx: Context,userName:String){
         val  preference: SharedPreferences=ctx.getSharedPreferences(USER_NAME,Context.MODE_PRIVATE)
         val  editor:SharedPreferences.Editor=preference.edit()
@@ -46,6 +50,7 @@ object SharedPreferenceController {
         val preference:SharedPreferences=ctx.getSharedPreferences(USER_NAME,Context.MODE_PRIVATE)
         return preference.getString("u_name","")
     }
+    // 사용자 메일
     fun setUserMail(ctx: Context,userMail:String){
         val  preference: SharedPreferences=ctx.getSharedPreferences(USER_MAIL,Context.MODE_PRIVATE)
         val  editor:SharedPreferences.Editor=preference.edit()

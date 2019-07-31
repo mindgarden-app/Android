@@ -186,6 +186,7 @@ class DiaryListFragment : Fragment() {
                         else {
                             ll_list_zero.visibility = View.GONE
                             diaryListRecyclerViewAdapter.dataList = tmp
+                            diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                             diaryListRecyclerViewAdapter.notifyDataSetChanged()
                         }
                         //diaryListRecyclerViewAdapter.dataList = tmp

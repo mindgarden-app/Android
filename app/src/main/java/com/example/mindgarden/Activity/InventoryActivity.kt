@@ -41,7 +41,7 @@ import kotlin.collections.ArrayList
 class InventoryActivity : AppCompatActivity() {
     val cal = Calendar.getInstance()
     var month = (cal.get(Calendar.MONTH) + 1).toString()
-    val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+    //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
     lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
     lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
 
@@ -58,8 +58,8 @@ class InventoryActivity : AppCompatActivity() {
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
         var gridIdx: Int = 0
-        //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
-        //var locationList = arrayListOf<Int>()
+        val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+        var locationList = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     }
 
     override fun onResume() {
@@ -270,6 +270,8 @@ class InventoryActivity : AppCompatActivity() {
                             var location = 0
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
+                            locationList[i] = location
+                            Log.e("list", locationList[i].toString())
 
                             Log.e("Adapter:location ", location.toString())
                             Log.e("Adapter: treeIdx", treeIdx.toString())
