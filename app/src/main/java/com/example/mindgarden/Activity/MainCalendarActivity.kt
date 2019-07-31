@@ -18,12 +18,14 @@ import org.w3c.dom.Text
 import java.util.*
 
 
-
+/*
+[미완] 코드 다듬기 필요 _ for문 맘에안듬
+ */
 class MainCalendarActivity : AppCompatActivity() {
 
-    private var btn_left : ImageView? = null
-    private var btn_right: ImageView? = null
-    private var txt_year : TextView? = null
+    private lateinit var btn_left : ImageView
+    private lateinit var btn_right: ImageView
+    private lateinit var txt_year : TextView
     private var year : String = ""  //툴바 년
     private var month : String = "" //툴바 달
     private var currentMonth : Int = 0//현재 달
@@ -48,7 +50,7 @@ class MainCalendarActivity : AppCompatActivity() {
         setWindow()
 
         //년도 설정
-        txt_year?.setText(year)
+        txt_year.setText(year)
 
     }
 
@@ -57,26 +59,26 @@ class MainCalendarActivity : AppCompatActivity() {
 
         btnRightControl()
 
-        btn_left?.setOnClickListener {
+        btn_left.setOnClickListener {
             year = (year.toInt() - 1).toString()
-            txt_year?.setText(year)
+            txt_year.setText(year)
             btnRightControl()
         }
 
-        btn_right?.setOnClickListener {
+        btn_right.setOnClickListener {
             year = (year.toInt() + 1).toString()
-            txt_year?.setText(year)
+            txt_year.setText(year)
             btnRightControl()
         }
 
     }
     private fun btnRightControl(){
         if(year == cal.get(Calendar.YEAR).toString()){
-            btn_right?.isEnabled = false
+            btn_right.isEnabled = false
             Log.e("btnRight", "ok")
             monthClickControl(true)
         }else{
-            btn_right?.isEnabled = true
+            btn_right.isEnabled = true
             monthClickControl(false)
         }
     }
