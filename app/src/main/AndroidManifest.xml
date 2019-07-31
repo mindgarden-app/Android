@@ -69,7 +69,7 @@
             </intent-filter>
 
         </activity>
-        <receiver android:name=".Service.BroadcastD"/>
+        <receiver android:name=".BroadCastReceiver.BroadcastD"/>
     </application>
 
 </manifest>

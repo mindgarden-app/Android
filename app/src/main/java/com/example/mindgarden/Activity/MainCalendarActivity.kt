@@ -19,7 +19,6 @@ import java.util.*
 
 
 
-
 class MainCalendarActivity : AppCompatActivity() {
 
     private var btn_left : ImageView? = null
