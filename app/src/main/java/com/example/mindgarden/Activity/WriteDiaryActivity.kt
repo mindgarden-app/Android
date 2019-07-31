@@ -63,9 +63,22 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //오늘의 날짜
         //툴바에 들어갈 format
-        val dateT  = SimpleDateFormat("YY.MM.dd. (E)")
+        val dateT  = SimpleDateFormat("YY.MM.dd. (E) ")
         val dateText = dateT.format(Date()).toString()  //intent
-        txt_date_toolbar_write_diary.setText(dateT.format(Date()))  //setText
+
+        var intDate = SimpleDateFormat("u")
+        var date2:String=""
+        when(intDate.format(Date()).toInt()){
+            1->date2="Mon"
+            2->date2="Tue"
+            3->date2="Wed"
+            4->date2="Thu"
+            5->date2="Fri"
+            6->date2="Sat"
+            7->date2="Sun"
+        }
+
+        txt_date_toolbar_write_diary.setText(dateT.format(Date()).substring(0, 9) + " (" + date2 + ")")  //setText
 
         Log.e("dateText", dateText)
 
@@ -104,7 +117,7 @@ class WriteDiaryActivity : AppCompatActivity() {
             builder.setView(view)
 
 
-            val listview= view.findViewById(R.id.listview_dialog_choice) as ListView
+            val listview= view.findViewById (R.id.listview_dialog_choice) as ListView
             val dialog = builder.create()
 
             val myAdapter = MyListAdapter(this, choiceList)

@@ -36,6 +36,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 class ModifyDiaryActivity : AppCompatActivity() {
 
@@ -69,7 +70,28 @@ class ModifyDiaryActivity : AppCompatActivity() {
         //날짜 설정
         val intent : Intent = getIntent()
         dateText = intent.getStringExtra("dateText")
-        txt_date_toolbar_write_diary.setText(dateText)
+        var kDate = dateText.substring(11, 12)
+        var date2:String=""
+        when(kDate){
+            "월"->date2="Mon"
+            "화"->date2="Tue"
+            "수"->date2="Wed"
+            "목"->date2="Thu"
+            "금"->date2="Fri"
+            "토"->date2="Sat"
+            "일"->date2="Sun"
+        }
+        var eDate = dateText.substring(11, 14)
+        when(eDate) {
+            "Mon"->date2="Mon"
+            "Tue"->date2="Tue"
+            "Wed"->date2="Wed"
+            "Thu"->date2="Thu"
+            "Fri"->date2="Fri"
+            "Sat"->date2="Sat"
+            "Sun"->date2="Sun"
+        }
+        txt_date_toolbar_write_diary.setText(dateText.substring(0, 9) + " (" + date2 + ")")
         dateValue = intent.getStringExtra("dateValue")
 
 
