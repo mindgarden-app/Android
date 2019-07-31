@@ -1,17 +1,16 @@
-package com.example.mindgarden.Service
+package com.example.mindgarden.BroadCastReceiver
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 import com.example.mindgarden.Activity.MainActivity
 import com.example.mindgarden.R
+import java.util.*
 
 
 class BroadcastD() : BroadcastReceiver(){
@@ -32,6 +31,7 @@ class BroadcastD() : BroadcastReceiver(){
                 NotificationCompat.BigTextStyle()
                     .bigText("당신의 이야기를 들려주세요"))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setWhen(Calendar.getInstance().timeInMillis)
             // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

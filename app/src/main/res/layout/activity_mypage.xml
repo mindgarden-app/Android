@@ -104,17 +104,7 @@
                 android:gravity="start|center"
                 android:textSize="14dp"
                 android:background="@drawable/gray_bottom_border"/>
-        <Button
-                android:text="글자 크기 설정"
-                android:id="@+id/fontSetting"
-                android:fontFamily="@font/notosanscjkr_regular"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:gravity="start|center"
-                android:textSize="14dp"
-                android:background="@drawable/gray_bottom_border" android:elevation="10dp"/>
+
         <Button
                 android:text="알림 설정"
                 android:fontFamily="@font/notosanscjkr_regular"
