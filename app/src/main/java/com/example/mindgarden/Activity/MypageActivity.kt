@@ -45,9 +45,6 @@ class MypageActivity : AppCompatActivity() {
             finish()
         }
 
-        fontSetting.setOnClickListener {
-
-        }
         alarmSetting.setOnClickListener {
             val intent3 = Intent(this, AlarmSettingActivity::class.java)
             // 알람 설정하는 페이즈로 넘어감

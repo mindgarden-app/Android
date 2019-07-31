@@ -15,6 +15,7 @@ import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
+import org.jetbrains.anko.image
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -56,6 +57,9 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     }
+                    /*else if (holder.adapterPosition == InventoryActivity.fromServerToUs[1]) {
+                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                    }*/
                     else holder.grid_img.setImageResource(R.drawable.img_selcted011)
                 } else if (InventoryActivity.inventoryIdx == 1) {
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
@@ -137,6 +141,9 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                 if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                     holder.grid_img.setImageResource(R.drawable.img_small_lake)
                 }
+                /*else if (holder.adapterPosition == InventoryActivity.fromServerToUs[1]) {
+                    holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                }*/
                 else {holder.grid_img.setImageResource(R.drawable.tree_size)}
             }
 

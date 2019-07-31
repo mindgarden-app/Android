@@ -45,7 +45,7 @@ class AlarmSettingActivity : AppCompatActivity() {
             finish()
         }
 
-        val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)
+        val alarmSwitch: Switch = findViewById (R.id.alarmSwitch)
         val btnSetTime: Button =findViewById(R.id.btnSetTime)
 
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
