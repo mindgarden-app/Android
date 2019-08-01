@@ -26,7 +26,7 @@ import org.jetbrains.anko.toast
 [완료] 토글버튼 상태 유지하기 _2010.07_30
 [완료]알림 설정 토글 버튼 상태가 false일 경우 알람 해지하기 cancleAlarm() 구현하기 _2010.07_30
 [완료] 코드 다듬기 _2010.07_30
-[수정필요] 정확한 시간에 푸시알림 오게하기 = 가끔 1분차이로 옴
+[수정필요] 1분차이남
  */
 class AlarmSettingActivity : AppCompatActivity() {
 
@@ -120,7 +120,7 @@ class AlarmSettingActivity : AppCompatActivity() {
 
         //이미 지난 시간으로 설정했을 경우 다음날 알림으로 설정해주기
         if(System.currentTimeMillis() > triggerTime){
-            triggerTime += 24 * 60 * 60 * 1000
+            triggerTime += 24 * 60 * 60 * 1000 //24시간후
         }
     }
 
@@ -128,15 +128,13 @@ class AlarmSettingActivity : AppCompatActivity() {
     fun setAlarm(tgTime: Long){
         setChannel()
 
-        val intervalTime : Long = 24 * 60 * 60 * 1000  //24시간
-
         //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
        val intent = Intent(this, BroadcastD::class.java)
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         //알람 예약
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
-        alarmManager.setRepeating(AlarmManager.RTC, tgTime, intervalTime ,pendingIntent)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, tgTime, 24 * 60 * 60 * 1000 ,pendingIntent)
 
     }
 

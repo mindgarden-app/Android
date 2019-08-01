@@ -73,10 +73,5 @@ object SharedPreferenceController {
         val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
         return preference.getBoolean("alarmState", false)
     }
-    fun clearAlarmState(ctx: Context){
-        val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
-        val editor : SharedPreferences.Editor = preference.edit()
-        editor.clear()
-        editor.commit()
-    }
+
 }
