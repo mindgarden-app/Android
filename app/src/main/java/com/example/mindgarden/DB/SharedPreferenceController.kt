@@ -8,6 +8,7 @@ object SharedPreferenceController {
     val PASSWORD="unique_string2"
     val USER_NAME="unique_strng3"
     val USER_MAIL="unique_strng4"
+    val ALARMSTATE ="unique_strng5"
 
     //사용자 -> 토큰으로 대체될 예정
     fun setUserID(ctx: Context,userId:Int){
@@ -59,5 +60,23 @@ object SharedPreferenceController {
     fun getUserMail(ctx:Context):String{
         val preference:SharedPreferences=ctx.getSharedPreferences(USER_MAIL,Context.MODE_PRIVATE)
         return preference.getString("u_mail","")
+    }
+
+    fun setAlarmState(ctx: Context, state : Boolean){
+        val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = preference.edit()
+        editor.putBoolean("alarmState", state)
+        editor.commit()
+    }
+
+    fun getAlarmState(ctx: Context):Boolean{
+        val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
+        return preference.getBoolean("alarmState", false)
+    }
+    fun clearAlarmState(ctx: Context){
+        val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = preference.edit()
+        editor.clear()
+        editor.commit()
     }
 }
