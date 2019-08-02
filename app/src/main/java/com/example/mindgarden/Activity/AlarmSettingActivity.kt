@@ -15,20 +15,28 @@ import com.example.mindgarden.R
 import android.util.Log
 import android.widget.TimePicker
 import android.app.AlarmManager
+import android.content.SharedPreferences
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
+import com.example.mindgarden.DB.SharedPreferenceController
+import org.jetbrains.anko.toast
 
 
 /*
 [완료]특정 시간에 알림오도록 설정 완료 _ 2019.07.29
-[미완]내부 DB를 통해 버튼 상태(click or not) 유지 구현하기
-[미완]알림 설정 토글 버튼 상태가 false일 경우 알람 해지하기 cancleAlarm() 구현하기
-[미완] 코드 다듬기
+[완료] 토글버튼 상태 유지하기 _2010.07_30
+[완료]알림 설정 토글 버튼 상태가 false일 경우 알람 해지하기 cancleAlarm() 구현하기 _2010.07_30
+[완료] 코드 다듬기 _2010.07_30
+[수정필요] 정확한 시간에 푸시알림 오게하기 = 가끔 1분차이로 옴
  */
 class AlarmSettingActivity : AppCompatActivity() {
 
     @SuppressLint("ResourceAsColor")
     val cal = Calendar.getInstance()
     val CHANNEL_ID = "MINDGARDEN"
+    lateinit var alarmSwitch: Switch
+    lateinit var alarmManager: AlarmManager
+    var triggerTime : Long = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,22 +50,33 @@ class AlarmSettingActivity : AppCompatActivity() {
             finish()
         }
 
-        val alarmSwitch: Switch = findViewById(R.id.alarmSwitch)    //스위치 토글 버튼
+        alarmSwitch = findViewById(R.id.alarmSwitch)    //스위치 토글 버튼
+        alarmSwitch.isChecked = SharedPreferenceController.getAlarmState(this)
+        btnSetTimeState(alarmSwitch.isChecked)
+
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
-           alarmSwitch(isChecked)
+            btnSetTimeState(isChecked)
+            if(!isChecked) alarmCancle()    //알람취소
         }
-
-
     }
 
-    fun alarmSwitch(isChecked : Boolean){
-        val btnSetTime: Button =findViewById(R.id.btnSetTime)   //시간 설정 버튼
+    //switch 상태 저장
+    override fun onPause() {
+        super.onPause()
+        SharedPreferenceController.setAlarmState(this ,alarmSwitch.isChecked)
+    }
+
+    //시간설정 버튼
+    fun btnSetTimeState(isChecked : Boolean){
+        val btnSetTime: Button = findViewById(R.id.btnSetTime)   //시간 설정 버튼
         btnSetTime.setTextColor(Color.BLACK)
 
         if (isChecked) {
             //알람 설정
             btnSetTime.setOnClickListener {
-                showDialog() }
+                showDialog()
+            }
+
         } else {
             //버튼 비활성화 + 글씨 색 바꾸기
             btnSetTime.isClickable = false
@@ -69,31 +88,17 @@ class AlarmSettingActivity : AppCompatActivity() {
     fun showDialog(){
 
         val builder = AlertDialog.Builder(this, R.style.AlarmDialogStyle)
-
         val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
-
         val alarmTimePicker= dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
 
-        var timeA : Long = 0
-        var triggerTime : Long = 0
-
+        //시간설정
         alarmTimePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            Toast.makeText(this, hourOfDay.toString() + " : " + minute +" : " , Toast.LENGTH_LONG).show()
-
-            cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            cal.set(Calendar.MINUTE, minute)
-
-            timeA  = System.currentTimeMillis()
-            triggerTime = cal.timeInMillis
-            Log.e("triggerTime", triggerTime.toString())
-
-            //이미 지난 시간으로 설정했을 경우 다음날 알림으로 설정해주기
-            if(timeA > triggerTime) triggerTime += 24 * 60 * 60 * 1000
+            alarmTimePicker(hourOfDay, minute)
         }
-
 
         builder.setView(dialogView)
             .setPositiveButton("확인") { dialogInterface, i ->
+                //알람설정
                 setAlarm(triggerTime)
             }
             .setNeutralButton("취소") { dialogInterface, i ->
@@ -105,30 +110,47 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     }
 
-    //알람 setting
+    //시간설정
+    fun alarmTimePicker(hourOfDay: Int, minute : Int){
+
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        cal.set(Calendar.MINUTE, minute)
+
+        triggerTime = cal.timeInMillis
+
+        //이미 지난 시간으로 설정했을 경우 다음날 알림으로 설정해주기
+        if(System.currentTimeMillis() > triggerTime){
+            triggerTime += 24 * 60 * 60 * 1000
+        }
+    }
+
+    //알람설정
     fun setAlarm(tgTime: Long){
         setChannel()
 
-        Log.e("tgTime", tgTime.toString())
-        var triggerTime : Long = tgTime //예약시간
-        var intervalTime : Long = 24 * 60 * 60 * 1000  //24시간
+        val intervalTime : Long = 24 * 60 * 60 * 1000  //24시간
 
         //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
        val intent = Intent(this, BroadcastD::class.java)
-        val sender : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         //알람 예약
-        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
-        am.setRepeating(AlarmManager.RTC, triggerTime, intervalTime ,sender)
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
+        alarmManager.setRepeating(AlarmManager.RTC, tgTime, intervalTime ,pendingIntent)
 
     }
 
-    /*
-알람 해제
-fun cancelAlarm(){
-    am.cancle()
-}
- */
+    //알람 해제
+    fun alarmCancle(){
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
+
+        val intent = Intent(this, BroadcastD::class.java)
+        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+
+        alarmManager.cancel(pendingIntent)
+        toast("알람이 해제되었습니다.")
+    }
+
     //notification을 위한 채널설정
     fun setChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
