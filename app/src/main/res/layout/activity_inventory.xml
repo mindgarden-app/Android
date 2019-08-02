@@ -22,7 +22,7 @@
                 android:id="@+id/img_map"
                 android:layout_marginEnd="17dp"
                 tools:ignore="MissingConstraints" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="35dp"/>
+                android:layout_marginTop="20dp" app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
                 android:layout_width="wrap_content"
@@ -30,18 +30,17 @@
                 android:src="@drawable/img_point_n"
                 android:layout_gravity="left"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="14dp" app:layout_constraintTop_toBottomOf="@+id/img_map"
-                android:layout_marginTop="34dp" app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginStart="25dp" app:layout_constraintTop_toBottomOf="@+id/img_map"
+                android:layout_marginTop="20dp"
+                android:id="@+id/imageView2"/>
 
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/relativeLayout" android:layout_marginStart="13dp" android:layout_marginEnd="13dp"
-                android:layout_marginBottom="54dp" app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="167dp">
+                android:id="@+id/relativeLayout"
+                android:layout_marginTop="3dp" app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_grid"
@@ -52,38 +51,34 @@
 
         </RelativeLayout>
         <ImageView
-                android:layout_width="20.15dp"
-                android:layout_height="20.15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:src="@drawable/img_point_s"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLayout" tools:ignore="MissingConstraints"
-                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="14dp" android:id="@+id/imageView"/>
+                tools:ignore="MissingConstraints"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="25dp" android:id="@+id/imageView"
+                android:layout_marginTop="3dp" app:layout_constraintTop_toBottomOf="@+id/relativeLayout"/>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right" android:id="@+id/linearLayout2" android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toTopOf="@+id/lay_inventory" android:layout_marginTop="22dp"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-
-            <ImageView
-                    android:id="@+id/btn_choose"
-                    android:layout_width="28.04dp"
-                    android:layout_height="27.14dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_gravity="right"
-                    app:srcCompat="@drawable/btn_choose"/>
-        </LinearLayout>
+        <ImageView
+                android:id="@+id/btn_choose"
+                android:layout_width="28.04dp"
+                android:layout_height="27.14dp"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/btn_choose"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/lay_inventory"/>
 
         <LinearLayout
                 android:id="@+id/lay_inventory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:background="@drawable/inventory_layout_border"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+        >
 
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_inventory"
