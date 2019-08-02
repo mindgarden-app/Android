@@ -61,6 +61,17 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                         holder.container.setBackgroundResource(R.drawable.inventory_click_border)
                     }*/
                     else holder.grid_img.setImageResource(R.drawable.img_selcted011)
+                    /*for (i in 0..InventoryActivity.locationList.size - 1) {
+                        /*if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
+                            holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        }*/
+                        /*if (holder.adapterPosition != InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
+                            holder.grid_img.setImageResource(R.drawable.img_selcted011)
+                        }*/
+                        if (holder.adapterPosition != 0) {
+                            holder.grid_img.setImageResource(R.drawable.img_selcted011)
+                        }
+                    }*/
                 } else if (InventoryActivity.inventoryIdx == 1) {
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
@@ -145,6 +156,11 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     holder.container.setBackgroundResource(R.drawable.inventory_click_border)
                 }*/
                 else {holder.grid_img.setImageResource(R.drawable.tree_size)}
+                /*for (i in 0..InventoryActivity.locationList.size - 1) {
+                    if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
+                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                    }
+                }*/
             }
 
             holder.container.isSelected = !holder.container.isSelected
