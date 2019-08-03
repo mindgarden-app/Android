@@ -367,6 +367,7 @@
             android:layout_height="64dp"
             android:paddingVertical="20dp"
             android:id="@+id/btn_reward"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_main_exp1" android:layout_marginTop="3dp"/>
 </android.support.constraint.ConstraintLayout>

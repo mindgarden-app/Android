@@ -69,7 +69,7 @@ class MainFragment : Fragment() {
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
-    public interface OnDataPass{
+    interface OnDataPass{
         fun checkPass(bal: Int)
     }
 
@@ -104,6 +104,12 @@ class MainFragment : Fragment() {
             month = "0$month"
         }
         txt_main_month.setText(month)
+
+        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()){
+            btn_reward.visibility = View.VISIBLE
+        }else{
+            btn_reward.visibility = View.INVISIBLE
+        }
 
         canBeFuture()
 

@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -106,7 +108,11 @@ class ModifyDiaryActivity : AppCompatActivity() {
         btn_save_diary_toolbar.setOnClickListener {
             //수정 API를 이용하여 서버에 등록
             //일기 쓰기 액티비티 로직과 비슷하게
+            toast("일기 수정이 완료되었습니다.")
+
             putModifyDiaryResponse()
+            //이미지 있을경우 딜레이 시간 주기 : 1초
+            Thread.sleep(1000)
 
             val intent : Intent = Intent()
             intent.putExtra("from" ,200)
@@ -186,12 +192,14 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
                         setIcon()
 
-                        for(i  in 0..11 ){
+
+                         for(i  in 0..weatherIdx ){
                             if(weatherIdx == i){
                                 btn_mood_icon_modify_diary.setImageBitmap(iconList.get(i))
                                 txt_mood_text_modify_diary.setText(textList.get(i))
                             }
                         }
+
 
                         //내용 set
                         content = response.body()!!.data!![0].diary_content
@@ -243,7 +251,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
                     if(response.isSuccessful) {
                         if (response.body()!!.status == 200) {
                             Log.e("ModifyActivity", response.body()!!.message)
-
                         }
                     }
                     else{
@@ -333,7 +340,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
         val icn10 = drawableToBitmap(R.drawable.img_weather10_lightning)
         val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
 
-        //indexList = listOf<Int>(0,1,2,3,4,5,6,7,8,9,10)
         iconList = listOf<Bitmap>(icn1, icn2, icn3, icn4, icn5, icn6, icn7, icn8, icn9, icn10, icn11)
         textList = listOf<String>("좋아요", "신나요", "그냥 그래요", "심심해요", "재미있어요", "설레요",
             "별로에요", "우울해요", "짜증나요", "화가나요", "기분없음")

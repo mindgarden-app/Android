@@ -14,13 +14,12 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:layout_centerVertical="true"
-                android:paddingVertical="25dp"
-                android:paddingHorizontal="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingVertical="20dp"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/btn_back"
+                android:background="@color/colorWhite"
                 android:id="@+id/btn_back_toolbar"
                 />
 
