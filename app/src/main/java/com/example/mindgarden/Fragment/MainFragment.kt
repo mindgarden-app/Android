@@ -672,6 +672,7 @@ class MainFragment : Fragment() {
 
                             //문구 설정
                             treeNum = response.body()!!.data!![i].treeNum
+                            Log.e("treeNum", treeNum.toString())
 
                             //현재달이고, 심은 나무가 없을 경우(초기상태) -> 정원을 꾸며보아요 문구
                             if(txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
