@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
@@ -115,7 +116,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", SharedPreferenceController.getUserID(this), dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse("application/json", TokenController.getAccessToken(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {

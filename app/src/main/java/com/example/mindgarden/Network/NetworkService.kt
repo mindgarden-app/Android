@@ -87,7 +87,7 @@ interface NetworkService {
     @GET("/garden/{userIdx}/{date}")
     fun getPlantResponse(
         @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Path("userIdx") userIdx: String,
         @Path("date") date: String
     ): Call<GetPlantResponse>
 }

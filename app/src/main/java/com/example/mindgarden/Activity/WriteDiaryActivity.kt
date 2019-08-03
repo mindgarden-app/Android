@@ -22,6 +22,7 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
@@ -203,7 +204,8 @@ class WriteDiaryActivity : AppCompatActivity() {
            val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
 
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,
+               TokenController.getAccessToken(this), weatherIdx, picture_rb)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -226,7 +228,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            })
        }else{
           // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,SharedPreferenceController.getUserID(this), weatherIdx, null)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,TokenController.getAccessToken(this), weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {

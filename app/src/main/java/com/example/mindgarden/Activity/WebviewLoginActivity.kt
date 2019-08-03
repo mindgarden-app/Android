@@ -12,6 +12,7 @@ import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
@@ -111,18 +112,23 @@ class WebviewLoginActivity : AppCompatActivity() {
     }
     else {
         val temp =json["data"]!!.asJsonObject
-        val temp2=temp["userIdx"].asInt
+       // val temp2=temp["userIdx"].asInt
         val temp3=temp["email"].asString
         val temp4=temp["name"].asString
+        val temp5=temp["refreshToken"].asString
+        val temp6=temp["token"].asString
 
+        TokenController.setAccessToken(this@WebviewLoginActivity,temp6)
+              //TODO 엑세스토큰 받은 시간 저장하기
+              //TODO 엑세스토큰 만료기한도 받기
 
-        SharedPreferenceController.setUserID(this@WebviewLoginActivity,temp2)
+        TokenController.setRefreshToken(this@WebviewLoginActivity,temp5)
         SharedPreferenceController.setUserMail(this@WebviewLoginActivity,temp3)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,temp4)
 
-        Log.e("userID",SharedPreferenceController.getUserID(this@WebviewLoginActivity).toString())
+        Log.e("accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))
         setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra("userId", temp2)
+            putExtra("userId", temp6)
         })
     }
         }

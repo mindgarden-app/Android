@@ -2,4 +2,16 @@
 <resources>
     <item type="dimen" name="dialog_min_width_major">80%</item>
     <item type="dimen" name="dialog_min_width_minor">80%</item>
+
+    <item type="dimen" name="between_top_and_minimap"></item>
+    <item type="dimen" name="between_minimap_and_N"></item>
+    <item type="dimen" name="margin_NorS"></item>
+    <item type="dimen" name="between_N_and_girdview"></item>
+    <item type="dimen" name="between_gridview_and_S"></item>
+    <item type="dimen" name="between_S_and_check"></item>
+
+    <item type="dimen" name="gridview_scale"></item>
+    <item type="dimen" name="treeview_scale"></item>
+
+
 </resources>

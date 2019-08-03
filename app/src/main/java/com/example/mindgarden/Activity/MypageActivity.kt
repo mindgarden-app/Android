@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
@@ -26,7 +27,9 @@ class MypageActivity : AppCompatActivity() {
 
         //RelativeLayout
         btnLogout.setOnClickListener {
-            SharedPreferenceController.clearUserID(this)
+            TokenController.clearRefreshToken(this)
+            //TODO 로그아웃 코드 추가해야함
+
             val intent = Intent(this, LoginActivity::class.java)
             //로그아웃 누르면 다시 일단 로그인 페이지로
 
