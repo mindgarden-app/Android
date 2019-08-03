@@ -2,18 +2,16 @@ package com.example.mindgarden.Activity
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.GridData
 import com.example.mindgarden.Data.InventoryData
 import com.example.mindgarden.Network.ApplicationController
@@ -24,11 +22,7 @@ import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.rv_item_grid.*
-import kotlinx.android.synthetic.main.rv_item_inventory.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
-import kotlinx.android.synthetic.main.toolbar_write_diary.*
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -139,12 +133,13 @@ class InventoryActivity : AppCompatActivity() {
 
         configureRecyclerView()
 
+
         getPlantResponse()
 
         btn_choose.setOnClickListener {
-            if (isValid(SharedPreferenceController.getUserID(this), gridList[gridIdx].product_id, inventoryIdx)) {
+            if (isValid(TokenController.getAccessToken(this), gridList[gridIdx].product_id, inventoryIdx)) {
                 postPlantResponse(
-                    SharedPreferenceController.getUserID(this),
+                    TokenController.getAccessToken(this),
                     gridList[gridIdx].product_id ,
                     inventoryIdx
                 )
@@ -208,8 +203,8 @@ class InventoryActivity : AppCompatActivity() {
         return bitmap
     }
 
-    fun isValid(userIdx: Int, location: Int, treeIdx: Int): Boolean {
-        if (userIdx.toString() == "")
+    fun isValid(accessToken: String, location: Int, treeIdx: Int): Boolean {
+        if (accessToken.toString() == "")
             toast("로그인하세요")
         else if (location.toString() == "")
             toast("위치를 고르세요")
@@ -220,9 +215,10 @@ class InventoryActivity : AppCompatActivity() {
         return false
     }
 
-    fun postPlantResponse(userIdx: Int, location: Int, treeIdx: Int) {
+    fun postPlantResponse(accessToken: String, location: Int, treeIdx: Int) {
         var jsonObject = JSONObject()
-        jsonObject.put("userIdx", userIdx)
+       //TODO 수정 필요 함수파라메터 useIdx에서 accessToken으로 바꿈
+        //TODO  수정 필요 jsonObject.put("userIdx", userIdx)
         jsonObject.put("location", location)
         jsonObject.put("treeIdx", treeIdx)
 
@@ -250,7 +246,7 @@ class InventoryActivity : AppCompatActivity() {
         }
 
         val getPlantResponse = networkService.getPlantResponse(
-            "application/json", SharedPreferenceController.getUserID(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
+            "application/json", TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
         Log.e("why", cal.get(Calendar.YEAR).toString() + "-" + month.toString())
         getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
             override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {

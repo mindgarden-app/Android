@@ -7,15 +7,15 @@
 
     <LinearLayout
             android:id="@+id/ll_rv_item_inventory_container"
-            android:layout_width="59.46dp"
-            android:layout_height="53.37dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:background="@drawable/inventory_border">
 
         <ImageView
                 android:id="@+id/img_rv_item_inventory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/android_tree1"/>
 
     </LinearLayout>

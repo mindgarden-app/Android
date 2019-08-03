@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
@@ -65,7 +66,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
-                    if (isValid(SharedPreferenceController.getUserID(ctx), dataList[position].date.substring(0, 10))) {
+                    if (isValid(TokenController.getAccessToken(this), dataList[position].date.substring(0, 10))) {
                         deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
                     }
                 }
@@ -105,7 +106,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), deleteDate)
+            "application/json", TokenController.getAccessToken(this), deleteDate)
         Log.e("delete", "delete1")
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {

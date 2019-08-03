@@ -25,6 +25,7 @@ import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.widget.ImageView
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
@@ -113,7 +114,7 @@ class MainFragment : Fragment() {
 
         canBeFuture()
 
-        if (isValid( SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid( TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -150,7 +151,7 @@ class MainFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        if (isValid(SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -178,7 +179,7 @@ class MainFragment : Fragment() {
                 txt_main_day_text.visibility = View.INVISIBLE
 
                 //이거 왜 두번 반복해줘야 하는지?
-                if (isValid(SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -208,7 +209,7 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -245,7 +246,7 @@ class MainFragment : Fragment() {
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -277,7 +278,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -318,7 +319,7 @@ class MainFragment : Fragment() {
         super.onStop()
 
         if (isValid(
-                SharedPreferenceController.getUserID(ctx),
+                TokenController.getAccessToken(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
             )
         ) {
@@ -352,7 +353,7 @@ class MainFragment : Fragment() {
 
 
         if (isValid(
-                SharedPreferenceController.getUserID(ctx),
+                TokenController.getAccessToken(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
             )
         ) {
@@ -375,7 +376,7 @@ class MainFragment : Fragment() {
                 canBeFuture()
 
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -392,7 +393,7 @@ class MainFragment : Fragment() {
 
 
         if (isValid(
-                SharedPreferenceController.getUserID(ctx),
+                TokenController.getAccessToken(ctx),
                 txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
             )
         ) {
@@ -421,7 +422,7 @@ class MainFragment : Fragment() {
                 txt_main_day_text.visibility = View.INVISIBLE
 
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -464,7 +465,7 @@ class MainFragment : Fragment() {
                 txt_main_month.setText(month)
 
                 if (isValid(
-                        SharedPreferenceController.getUserID(ctx),
+                        TokenController.getAccessToken(ctx),
                         txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                     )
                 ) {
@@ -502,7 +503,7 @@ class MainFragment : Fragment() {
                     txt_main_month.setText(month)
 
                     if (isValid(
-                            SharedPreferenceController.getUserID(ctx),
+                            TokenController.getAccessToken(ctx),
                             txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                         )
                     ) {
@@ -535,7 +536,7 @@ class MainFragment : Fragment() {
                     txt_main_month.setText(month)
 
                     if (isValid(
-                            SharedPreferenceController.getUserID(ctx),
+                            TokenController.getAccessToken(ctx),
                             txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
                         )
                     ) {
@@ -574,8 +575,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun isValid(userIdx: Int, date: String): Boolean {
-        if (userIdx.toString() == "")
+    fun isValid(accessToken:String, date: String): Boolean {
+        if (accessToken.toString() == "")
             toast("로그인하세요")
         else if (date == "")
             toast("보고 싶은 달을 선택하세요")
@@ -586,7 +587,7 @@ class MainFragment : Fragment() {
 
     private fun getMainResponse(){
         val getMainResponse = networkService.getMainResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+            "application/json", TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
         Log.e("year" , txt_main_year.text.toString())
         Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
