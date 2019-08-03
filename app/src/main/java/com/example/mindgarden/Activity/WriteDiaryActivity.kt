@@ -217,8 +217,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
 
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,
-               TokenController.getAccessToken(this), weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( TokenController.getAccessToken(this),content_rb, weatherIdx, picture_rb)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -241,7 +240,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            })
        }else{
           // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,TokenController.getAccessToken(this), weatherIdx, null)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse(TokenController.getAccessToken(this), content_rb, weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {

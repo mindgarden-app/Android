@@ -66,7 +66,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlg.setMessage("삭제하시겠습니까?")
 
                 fun do_p() {
-                    if (isValid(TokenController.getAccessToken(this), dataList[position].date.substring(0, 10))) {
+                    if (isValid(TokenController.getAccessToken(ctx), dataList[position].date.substring(0, 10))) {
                         deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
                     }
                 }
@@ -92,8 +92,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
     }
 
-    fun isValid(userIdx: Int, date: String): Boolean {
-        if(userIdx.toString() == "")
+    fun isValid(token: String, date: String): Boolean {
+        if(token == "")
             Log.e("login fail", "login value null")
 
         else if(date == "")
@@ -106,7 +106,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            "application/json", TokenController.getAccessToken(this), deleteDate)
+             TokenController.getAccessToken(ctx), deleteDate)
         Log.e("delete", "delete1")
         deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {

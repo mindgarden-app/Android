@@ -246,7 +246,7 @@ class InventoryActivity : AppCompatActivity() {
         }
 
         val getPlantResponse = networkService.getPlantResponse(
-            "application/json", TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
+            TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
         Log.e("why", cal.get(Calendar.YEAR).toString() + "-" + month.toString())
         getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
             override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {

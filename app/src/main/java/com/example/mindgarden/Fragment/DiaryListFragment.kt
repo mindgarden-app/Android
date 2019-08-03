@@ -169,7 +169,7 @@ class DiaryListFragment : Fragment() {
 
     private fun getDiaryListResponse(){
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", TokenController.getAccessToken(this), txt_year.text.toString() + "-" + txt_month.text.toString())
+            TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())

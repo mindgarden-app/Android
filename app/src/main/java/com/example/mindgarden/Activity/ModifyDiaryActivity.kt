@@ -172,7 +172,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", TokenController.getAccessToken(this), dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
@@ -241,7 +241,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
             val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, TokenController.getAccessToken(this), weatherIdx, date_rb, picture_rb)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
@@ -261,7 +261,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
             })
         }else{
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, TokenController.getAccessToken(this), weatherIdx, date_rb, null)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb, weatherIdx, date_rb, null)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
