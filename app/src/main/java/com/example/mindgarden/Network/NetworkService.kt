@@ -69,7 +69,7 @@ interface NetworkService {
     @GET("/auth/mail/{userIdx}")
     fun getForgetPasswordResponse(
         @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int
+        @Path("accessToken") accessToken: String
     ):Call<GetForgetPasswordResponse>
 
     //나무심기

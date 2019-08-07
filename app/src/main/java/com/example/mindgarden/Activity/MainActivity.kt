@@ -31,7 +31,11 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         setContentView(R.layout.activity_main)
         //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
+        Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
+
         configureMainTab()
+
+        Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
 
         btn_write.setOnClickListener {
           // Log.e("mainActivity", check.toString())

@@ -113,22 +113,31 @@ class WebviewLoginActivity : AppCompatActivity() {
     else {
         val temp =json["data"]!!.asJsonObject
        // val temp2=temp["userIdx"].asInt
-        val temp3=temp["email"].asString
-        val temp4=temp["name"].asString
-        val temp5=temp["refreshToken"].asString
-        val temp6=temp["token"].asString
+        val exp=temp["expires_in"].asLong
+        val email=temp["email"].asString
+        val name=temp["name"].asString
+        val refreshToken=temp["refreshToken"].asString
+        val accessToken=temp["token"].asString
 
-        TokenController.setAccessToken(this@WebviewLoginActivity,temp6)
-              //TODO 엑세스토큰 받은 시간 저장하기
-              //TODO 엑세스토큰 만료기한도 받기
+        TokenController.setAccessToken(this@WebviewLoginActivity,accessToken)
 
-        TokenController.setRefreshToken(this@WebviewLoginActivity,temp5)
-        SharedPreferenceController.setUserMail(this@WebviewLoginActivity,temp3)
-        SharedPreferenceController.setUserName(this@WebviewLoginActivity,temp4)
+        //TODO 엑세스토큰 받은 시간 저장하기
+        TokenController.setStartTimeAccessToken(this@WebviewLoginActivity,System.currentTimeMillis())
+        Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this@WebviewLoginActivity).toString())
+
+        //TODO 엑세스토큰 만료기한도 받기
+        TokenController.setExpAccessToken(this@WebviewLoginActivity,exp)
+        Log.e("accessToken_exp",TokenController.getExpAccessToken(this@WebviewLoginActivity).toString())
+
+
+        //리프레시 토큰 저장하기
+        TokenController.setRefreshToken(this@WebviewLoginActivity,refreshToken)
+        SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
+        SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 
         Log.e("accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))
         setResult(Activity.RESULT_OK, Intent().apply {
-            putExtra("userId", temp6)
+            putExtra("userId", accessToken)
         })
     }
         }

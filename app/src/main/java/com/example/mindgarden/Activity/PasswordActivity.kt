@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
 import com.example.mindgarden.Network.NetworkService
@@ -66,7 +67,7 @@ class PasswordActivity : AppCompatActivity() {
 
         toast(whereFrom.toString())
         btnForgetPw.setOnClickListener {
-            getForgetPasswordResponse(SharedPreferenceController.getUserID(this))
+            getForgetPasswordResponse(TokenController.getAccessToken(this))
             Log.e("통신 후 받아온 비밀번호",forgetPassword)
 
             //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
@@ -125,11 +126,11 @@ class PasswordActivity : AppCompatActivity() {
     }
 
 
-    fun getForgetPasswordResponse(u_id:Int){
+    fun getForgetPasswordResponse(accessToken:String){
 
 
         val getForgetPasswordResponse: Call<GetForgetPasswordResponse> =
-            networkService.getForgetPasswordResponse("application/json",u_id)
+            networkService.getForgetPasswordResponse("application/json",accessToken)
         getForgetPasswordResponse.enqueue(object:Callback<GetForgetPasswordResponse>{
             override fun onFailure(call: Call<GetForgetPasswordResponse>, t: Throwable) {
                 Log.e("Fail: send email",t.toString())
