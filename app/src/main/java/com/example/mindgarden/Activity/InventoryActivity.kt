@@ -219,12 +219,13 @@ class InventoryActivity : AppCompatActivity() {
         var jsonObject = JSONObject()
        //TODO 수정 필요 함수파라메터 useIdx에서 accessToken으로 바꿈
         //TODO  수정 필요 jsonObject.put("userIdx", userIdx)
+
         jsonObject.put("location", location)
         jsonObject.put("treeIdx", treeIdx)
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
         val postPlantResponse: Call<PostPlantResponse> =
-            networkService.postPlantResponse("application/json", gsonObject)
+            networkService.postPlantResponse(TokenController.getAccessToken(this), gsonObject)
         postPlantResponse.enqueue(object : Callback<PostPlantResponse> {
             override fun onFailure(call: Call<PostPlantResponse>, t: Throwable) {
                 Log.e("fail", t.toString())
