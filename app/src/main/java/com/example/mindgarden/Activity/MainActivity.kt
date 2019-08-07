@@ -38,12 +38,11 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
 
         btn_write.setOnClickListener {
-          // Log.e("mainActivity", check.toString())
-           // if(check == 2) {
+           Log.e("mainActivity", check.toString())
+            if(check == 2) {
             startActivityForResult<WriteDiaryActivity>(1100)
-            //}else if({
-            //  toast("일기를 이미 썼다")
-           //}
+            }else toast("오늘의 일기를 이미 작성하셨습니다.")
+
         }
     }
 
