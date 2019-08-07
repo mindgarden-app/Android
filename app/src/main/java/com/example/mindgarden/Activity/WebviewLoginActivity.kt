@@ -111,13 +111,14 @@ class WebviewLoginActivity : AppCompatActivity() {
         setResult(Activity.RESULT_CANCELED)
     }
     else {
-        val temp =json["data"]!!.asJsonObject
+        val temp =json["data"]!!.asJsonArray
+        val temp2 =temp[0].asJsonObject
        // val temp2=temp["userIdx"].asInt
-        val exp=temp["expires_in"].asLong
-        val email=temp["email"].asString
-        val name=temp["name"].asString
-        val refreshToken=temp["refreshToken"].asString
-        val accessToken=temp["token"].asString
+        val exp=temp2["expires_in"].asLong
+        val email=temp2["email"].asString
+        val name=temp2["name"].asString
+        val refreshToken=temp2["refreshToken"].asString
+        val accessToken=temp2["token"].asString
 
         TokenController.setAccessToken(this@WebviewLoginActivity,accessToken)
 
