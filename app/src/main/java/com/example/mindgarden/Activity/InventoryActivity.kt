@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.Toast
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -33,18 +34,15 @@ import kotlin.collections.ArrayList
 
 
 class InventoryActivity : AppCompatActivity() {
-    val cal = Calendar.getInstance()
-    var month = (cal.get(Calendar.MONTH) + 1).toString()
-    //val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
-    lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
-    lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
-
-    lateinit var inventoryList: List<Int>
-
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
 
+    val cal = Calendar.getInstance()
+    var month = (cal.get(Calendar.MONTH) + 1).toString()
+    lateinit var inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter
+    lateinit var gridRecyclerViewAdapter: GridRecyclerViewAdapter
+    lateinit var inventoryList: List<Int>
     var gridList: ArrayList<GridData> = ArrayList()
 
     companion object {
@@ -52,8 +50,10 @@ class InventoryActivity : AppCompatActivity() {
         var isGridClick: Boolean = true
         var inventoryIdx: Int = 0
         var gridIdx: Int = 0
-        val fromServerToUs =arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
+        val fromServerToUs = arrayOf(100,0,6,1,12,7,2,18,13,8,3,24,19,9,4,30,25,10,5,31,26,16,11,32,27,22,17,33,28,23,34,29,35)
         var locationList = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        var rBal: Int = 0
+        var rCheck: Int = 0
     }
 
     override fun onResume() {
@@ -65,25 +65,16 @@ class InventoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
-        txtSetting.text = "나무심기"
+
+        txtSetting.text = "나무 심기"
 
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            // 백 스페이스 누르면 다시 메인 페이지로
+            //백 스페이스 누르면 다시 메인 페이지로
             startActivity(intent)
 
             finish()
         }
-
-        //balloon 이용해서 인벤토리 리사이클러뷰 선택 못하게 해보려 노력 중
-        val intent : Intent = getIntent()
-        var bal = intent.getIntExtra("balloon", 0)
-
-        /*if (bal == 0) {
-            btn_choose.isEnabled = false
-        } else {
-            btn_choose.isEnabled = true
-        }*/
 
         gridList.add(GridData(1, R.drawable.tree_size))
         gridList.add(GridData(3, R.drawable.tree_size))
@@ -101,15 +92,15 @@ class InventoryActivity : AppCompatActivity() {
 
         gridList.add(GridData(4, R.drawable.tree_size))
         gridList.add(GridData(8, R.drawable.tree_size))
-        gridList.add(GridData(33, R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33, R.drawable.img_small_lake)) //호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) //호수
         gridList.add(GridData(21, R.drawable.tree_size))
         gridList.add(GridData(26, R.drawable.tree_size))
 
         gridList.add(GridData(7, R.drawable.tree_size))
         gridList.add(GridData(12, R.drawable.tree_size))
-        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
-        gridList.add(GridData(33,  R.drawable.img_small_lake)) // 호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) //호수
+        gridList.add(GridData(33,  R.drawable.img_small_lake)) //호수
         gridList.add(GridData(25, R.drawable.tree_size))
         gridList.add(GridData(29, R.drawable.tree_size))
 
@@ -133,19 +124,28 @@ class InventoryActivity : AppCompatActivity() {
 
         configureRecyclerView()
 
-
         getPlantResponse()
 
         btn_choose.setOnClickListener {
             if (isValid(TokenController.getAccessToken(this), gridList[gridIdx].product_id, inventoryIdx)) {
-                postPlantResponse(
-                    TokenController.getAccessToken(this),
-                    gridList[gridIdx].product_id ,
-                    inventoryIdx
-                )
+                if (rBal == 1 && rCheck == 0) {
+                    postPlantResponse(
+                        TokenController.getAccessToken(this),
+                        gridList[gridIdx].product_id ,
+                        inventoryIdx
+                    )
+
+                    finish()
+                } else if (rBal == 0 && rCheck == 2) {
+                    toast("일기를 써야 심을 수 있어요!")
+                } else if (rBal == 0 && rCheck == 1) {
+                    toast("이미 심으셨습니다!")
+                }
             }
+
             Log.e("start", gridList[gridIdx].product_id.toString())
-            finish()
+
+            //finish()
         }
     }
 
@@ -189,15 +189,15 @@ class InventoryActivity : AppCompatActivity() {
         rv_inventory.adapter = inventoryRecyclerViewAdapter
         rv_inventory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        inventoryList = listOf<Int>(
+        inventoryList = listOf<Int> (
             R.drawable.android_tree1, R.drawable.android_tree2, R.drawable.android_tree3, R.drawable.android_tree4,
             R.drawable.android_tree5, R.drawable.android_tree6, R.drawable.android_tree7, R.drawable.android_tree8,
             R.drawable.android_tree9, R.drawable.android_tree10, R.drawable.android_tree11, R.drawable.android_tree12,
             R.drawable.android_tree13, R.drawable.android_tree14, R.drawable.android_tree15, R.drawable.android_tree16
-            )
+        )
     }
 
-    private fun drawableToBitmap(icnName : Int): Bitmap {
+    private fun drawableToBitmap(icnName: Int): Bitmap {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap
@@ -218,15 +218,16 @@ class InventoryActivity : AppCompatActivity() {
     fun postPlantResponse(accessToken: String, location: Int, treeIdx: Int) {
         var jsonObject = JSONObject()
        //TODO 수정 필요 함수파라메터 useIdx에서 accessToken으로 바꿈
-        //TODO  수정 필요 jsonObject.put("userIdx", userIdx)
+        //TODO 수정 필요 jsonObject.put("userIdx", userIdx)
 
         jsonObject.put("location", location)
         jsonObject.put("treeIdx", treeIdx)
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
+
         val postPlantResponse: Call<PostPlantResponse> =
             networkService.postPlantResponse(TokenController.getAccessToken(this), gsonObject)
-        postPlantResponse.enqueue(object : Callback<PostPlantResponse> {
+        postPlantResponse.enqueue(object: Callback<PostPlantResponse> {
             override fun onFailure(call: Call<PostPlantResponse>, t: Throwable) {
                 Log.e("fail", t.toString())
             }
@@ -234,7 +235,6 @@ class InventoryActivity : AppCompatActivity() {
             override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
-                        // val ballon  = response.body()!!.data!![0].ballon
                     }
                 }
             }
@@ -259,26 +259,28 @@ class InventoryActivity : AppCompatActivity() {
                     if (response.body()!!.status == 200) {
                         Log.e("Adapter: mainfragment : ", response.body()!!.message)
 
+                        rBal = response.body()!!.data!![0].balloon
+                        rCheck = response.body()!!.data!![0].check
+
                         //나무 수만큼
-                        for(i in 0..(response.body()!!.data!!.size-1)) {
+                        for(i in 0..(response.body()!!.data!!.size - 1)) {
                             Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
 
                             var treeIdx = 0
                             var location = 0
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
-                            locationList[i] = location
-                            Log.e("list", locationList[i].toString())
-
                             Log.e("Adapter:location ", location.toString())
                             Log.e("Adapter: treeIdx", treeIdx.toString())
 
-                            if(response.body()!!.data!![i].treeIdx == 16){
+                            locationList[i] = location
+
+                            if(response.body()!!.data!![i].treeIdx == 16) {
                                 gridList[fromServerToUs[location]].img = R.drawable.android_weeds
                                 gridRecyclerViewAdapter.notifyDataSetChanged()
-                            }else{
+                            } else {
                                 Log.e("h", location.toString())
-                                //inventoryActivity.gridRecyclerViewAdapter
+
                                 gridList[fromServerToUs[location]].img = inventoryList.get(treeIdx)
                                 gridRecyclerViewAdapter.notifyDataSetChanged()
 

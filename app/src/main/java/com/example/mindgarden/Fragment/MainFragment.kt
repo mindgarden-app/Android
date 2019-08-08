@@ -121,6 +121,7 @@ class MainFragment : Fragment() {
         btn_reward.setOnClickListener {
             var intent: Intent = Intent(context, InventoryActivity::class.java)
             intent.putExtra("balloon", balloon)
+            intent.putExtra("check", check)
             startActivity(intent)
         }
 
@@ -601,8 +602,9 @@ class MainFragment : Fragment() {
                         initializeTree()
 
                         balloon = response.body()!!.data!![0].balloon
-                        //check = response.body()!!.data!![0].check
-                        // Log.e("mainFragment", check.toString())
+                        Log.e("balloon", "" + balloon);
+                        check = response.body()!!.data!![0].check
+                        Log.e("check", "" + check)
                         // dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
