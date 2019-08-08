@@ -85,4 +85,11 @@ interface NetworkService {
         @Header("token") token: String,
         @Path("date") date: String
     ): Call<GetPlantResponse>
+
+    //토큰 재발금
+    @GET("/user/refresh")
+    fun getRenewAccessToken(
+        @Header("token") token:String,
+        @Body()body:JsonObject
+    ): Call<GetAccessTokenResponse>
 }
