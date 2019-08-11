@@ -32,12 +32,12 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         configureMainTab()
 
         btn_write.setOnClickListener {
-          // Log.e("mainActivity", check.toString())
-           // if(check == 2) {
-            startActivityForResult<WriteDiaryActivity>(1100)
-            //}else if({
-            //  toast("일기를 이미 썼다")
-           //}
+            Log.e("mainActivity", check.toString())
+            if (check == 2) {
+                startActivityForResult<WriteDiaryActivity>(1100)
+            } else{
+                toast("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
+            }
         }
     }
 

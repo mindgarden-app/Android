@@ -594,9 +594,9 @@ class MainFragment : Fragment() {
                         initializeTree()
 
                         balloon = response.body()!!.data!![0].balloon
-                        //check = response.body()!!.data!![0].check
-                        //Log.e("mainFragment", check.toString())
-                       // dataPasser?.checkPass(check)
+                        check = response.body()!!.data!![0].check
+                        Log.e("mainFragment", check.toString())
+                        dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                         if (mmonth.toInt() < 10) {
