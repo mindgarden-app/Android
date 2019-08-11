@@ -95,7 +95,6 @@ android:background="#FFFFFF"
                                android:layout_marginTop="18dp"
                                android:layout_marginBottom="50dp"
                                android:visibility="gone"
-                               android:background="@drawable/img_shadow"
                                android:id="@+id/img_gallary_read_diary"
                     />
 

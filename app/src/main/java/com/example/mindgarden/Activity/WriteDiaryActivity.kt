@@ -22,6 +22,7 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
@@ -63,9 +64,22 @@ class WriteDiaryActivity : AppCompatActivity() {
 
         //오늘의 날짜
         //툴바에 들어갈 format
-        val dateT  = SimpleDateFormat("YY.MM.dd. (E)")
+        val dateT  = SimpleDateFormat("YY.MM.dd. (E) ")
         val dateText = dateT.format(Date()).toString()  //intent
-        txt_date_toolbar_write_diary.setText(dateT.format(Date()))  //setText
+
+        var intDate = SimpleDateFormat("u")
+        var date2:String=""
+        when(intDate.format(Date()).toInt()){
+            1->date2="Mon"
+            2->date2="Tue"
+            3->date2="Wed"
+            4->date2="Thu"
+            5->date2="Fri"
+            6->date2="Sat"
+            7->date2="Sun"
+        }
+
+        txt_date_toolbar_write_diary.setText(dateT.format(Date()).substring(0, 9) + " (" + date2 + ")")  //setText
 
         Log.e("dateText", dateText)
 
@@ -82,6 +96,8 @@ class WriteDiaryActivity : AppCompatActivity() {
         btn_save_diary_toolbar.setOnClickListener {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
             postWriteDiaryResponse()
+            //이미지 있을경우 딜레이 시간 주기 : 1초
+            Thread.sleep(1000)
             Log.e("postWriteDiary", "ok")
             startActivityForResult<ReadDiaryActivity>(1100, "from" to 100, "dateText" to dateText, "dateValue" to dateValue)
         }
@@ -104,7 +120,7 @@ class WriteDiaryActivity : AppCompatActivity() {
             builder.setView(view)
 
 
-            val listview= view.findViewById(R.id.listview_dialog_choice) as ListView
+            val listview= view.findViewById (R.id.listview_dialog_choice) as ListView
             val dialog = builder.create()
 
             val myAdapter = MyListAdapter(this, choiceList)
@@ -203,7 +219,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
 
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, picture_rb)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( TokenController.getAccessToken(this),content_rb, weatherIdx, picture_rb)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {
@@ -226,7 +242,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            })
        }else{
           // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
-           val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb,SharedPreferenceController.getUserID(this), weatherIdx, null)
+           val postWriteDiaryResponse = networkService.postWriteDiaryResponse(TokenController.getAccessToken(this), content_rb, weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{
                override fun onFailure(call: Call<PostWriteDiaryResponse>, t: Throwable) {

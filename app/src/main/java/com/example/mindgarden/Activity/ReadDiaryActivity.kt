@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import com.bumptech.glide.Glide
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
@@ -28,6 +29,7 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -69,7 +71,29 @@ class ReadDiaryActivity : AppCompatActivity() {
             Log.e("ReadDiary Date : ", "no value")
         }
 
-        txt_date_toolbar_read_diary.setText(dateText)  //setText
+        var kDate = dateText.substring(11, 12)
+        var date2:String=""
+        when(kDate){
+            "월"->date2="Mon"
+            "화"->date2="Tue"
+            "수"->date2="Wed"
+            "목"->date2="Thu"
+            "금"->date2="Fri"
+            "토"->date2="Sat"
+            "일"->date2="Sun"
+        }
+        var eDate = dateText.substring(11, 14)
+        when(eDate) {
+            "Mon"->date2="Mon"
+            "Tue"->date2="Tue"
+            "Wed"->date2="Wed"
+            "Thu"->date2="Thu"
+            "Fri"->date2="Fri"
+            "Sat"->date2="Sat"
+            "Sun"->date2="Sun"
+        }
+
+        txt_date_toolbar_read_diary.setText(dateText.substring(0, 9) + " (" + date2 + ")")  //setText
 
 
         //통신
@@ -115,7 +139,7 @@ class ReadDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", SharedPreferenceController.getUserID(this), dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {

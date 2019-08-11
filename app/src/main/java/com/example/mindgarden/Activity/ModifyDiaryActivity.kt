@@ -19,6 +19,7 @@ import android.widget.ListView
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
@@ -30,12 +31,15 @@ import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 class ModifyDiaryActivity : AppCompatActivity() {
 
@@ -69,7 +73,28 @@ class ModifyDiaryActivity : AppCompatActivity() {
         //날짜 설정
         val intent : Intent = getIntent()
         dateText = intent.getStringExtra("dateText")
-        txt_date_toolbar_write_diary.setText(dateText)
+        var kDate = dateText.substring(11, 12)
+        var date2:String=""
+        when(kDate){
+            "월"->date2="Mon"
+            "화"->date2="Tue"
+            "수"->date2="Wed"
+            "목"->date2="Thu"
+            "금"->date2="Fri"
+            "토"->date2="Sat"
+            "일"->date2="Sun"
+        }
+        var eDate = dateText.substring(11, 14)
+        when(eDate) {
+            "Mon"->date2="Mon"
+            "Tue"->date2="Tue"
+            "Wed"->date2="Wed"
+            "Thu"->date2="Thu"
+            "Fri"->date2="Fri"
+            "Sat"->date2="Sat"
+            "Sun"->date2="Sun"
+        }
+        txt_date_toolbar_write_diary.setText(dateText.substring(0, 9) + " (" + date2 + ")")
         dateValue = intent.getStringExtra("dateValue")
 
 
@@ -85,6 +110,8 @@ class ModifyDiaryActivity : AppCompatActivity() {
             //수정 API를 이용하여 서버에 등록
             //일기 쓰기 액티비티 로직과 비슷하게
             putModifyDiaryResponse()
+            //이미지 있을경우 딜레이 시간 주기 : 1초
+            Thread.sleep(1000)
 
             val intent : Intent = Intent()
             intent.putExtra("from" ,200)
@@ -143,7 +170,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse("application/json", SharedPreferenceController.getUserID(this), dateValue)
+        val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
 
         getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
             override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
@@ -164,12 +191,14 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
                         setIcon()
 
-                        for(i  in 0..11 ){
+
+                         for(i  in 0..weatherIdx ){
                             if(weatherIdx == i){
                                 btn_mood_icon_modify_diary.setImageBitmap(iconList.get(i))
                                 txt_mood_text_modify_diary.setText(textList.get(i))
                             }
                         }
+
 
                         //내용 set
                         content = response.body()!!.data!![0].diary_content
@@ -210,7 +239,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
             val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
 
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, date_rb, picture_rb)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
@@ -221,7 +250,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
                     if(response.isSuccessful) {
                         if (response.body()!!.status == 200) {
                             Log.e("ModifyActivity", response.body()!!.message)
-
                         }
                     }
                     else{
@@ -231,7 +259,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
             })
         }else{
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( content_rb, SharedPreferenceController.getUserID(this), weatherIdx, date_rb, null)
+            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb, weatherIdx, date_rb, null)
 
             putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
                 override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
@@ -311,7 +339,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
         val icn10 = drawableToBitmap(R.drawable.img_weather10_lightning)
         val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
 
-        //indexList = listOf<Int>(0,1,2,3,4,5,6,7,8,9,10)
         iconList = listOf<Bitmap>(icn1, icn2, icn3, icn4, icn5, icn6, icn7, icn8, icn9, icn10, icn11)
         textList = listOf<String>("좋아요", "신나요", "그냥 그래요", "심심해요", "재미있어요", "설레요",
             "별로에요", "우울해요", "짜증나요", "화가나요", "기분없음")

@@ -17,26 +17,23 @@ import retrofit2.http.*
 
 interface NetworkService {
     //일기 목록 조회
-    @GET("/diarylist/{userIdx}/{date}")
+    @GET("/diarylist/{date}")
     fun getDiaryListResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Header("token") token: String,
         @Path("date") date: String
     ): Call<GetDiaryListResponse>
 
     //일기 삭제
-    @DELETE("/diarylist/delete/{userIdx}/{date}")
+    @DELETE("/diarylist/delete/{date}")
     fun deleteDiaryListResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Header("token") token: String,
         @Path("date") date: String
     ): Call<DeleteDiaryListResponse>
 
     //일기 상세보기
-    @GET("/diarylist/click/{userIdx}/{date}")
+    @GET("/diarylist/click/{date}")
     fun getDiaryResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Header("token") token: String,
         @Path("date") date: String
     ): Call<GetDiaryResponse>
 
@@ -44,8 +41,8 @@ interface NetworkService {
     @Multipart
     @POST("/diary/save")
     fun postWriteDiaryResponse(
+        @Header("token") token: String,
         @Part("diary_content") diary_content : RequestBody,
-        @Part("userIdx") userIdx : Int,
         @Part("weatherIdx") weatherIdx : Int,
         @Part diary_img : MultipartBody.Part?
 
@@ -55,39 +52,37 @@ interface NetworkService {
     @Multipart
     @PUT("/diary/complete")
     fun putModifyDiaryResponse(
+        @Header("token") token: String,
         @Part("diary_content") diary_content : RequestBody,
-        @Part("userIdx") userIdx: Int,
         @Part("weatherIdx") weatherIdx: Int,
         @Part("date") date : RequestBody,
         @Part diary_img: MultipartBody.Part?
     ) : Call<PutModifyDiaryResponse>
 
     //메인
-    @GET("/garden/{userIdx}/{date}")
+    @GET("/garden/{date}")
     fun getMainResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Header("token") token: String,
         @Path("date") date: String
     ): Call<GetMainResponse>
 
     @GET("/auth/mail/{userIdx}")
     fun getForgetPasswordResponse(
         @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int
+        @Path("accessToken") accessToken: String
     ):Call<GetForgetPasswordResponse>
 
     //나무심기
     @POST("/garden/plant")
     fun postPlantResponse(
-        @Header("Content-Type") content_type: String,
+        @Header("token") token: String,
         @Body() body:JsonObject
     ): Call<PostPlantResponse>
 
     //나무심기 창 가든
-    @GET("/garden/{userIdx}/{date}")
+    @GET("/garden/{date}")
     fun getPlantResponse(
-        @Header("Content-Type") content_type: String,
-        @Path("userIdx") userIdx: Int,
+        @Header("token") token: String,
         @Path("date") date: String
     ): Call<GetPlantResponse>
 }

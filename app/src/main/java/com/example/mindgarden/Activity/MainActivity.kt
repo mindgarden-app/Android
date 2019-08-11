@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.example.mindgarden.Adapter.MainPagerAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,8 +29,13 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
+        //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
+        Log.e("Main: accessToken",TokenController.getAccessToken(this))
+        Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
+
         configureMainTab()
+
+        Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
 
         btn_write.setOnClickListener {
             Log.e("mainActivity", check.toString())

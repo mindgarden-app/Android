@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
@@ -40,7 +40,7 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class DiaryListFragment : Fragment() {
-    val networkService: NetworkService by lazy{
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
     lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
@@ -57,7 +57,7 @@ class DiaryListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
             getDiaryListResponse()
         }
     }
@@ -92,7 +92,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
                 getDiaryListResponse()
             }
         }
@@ -114,7 +114,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
                 getDiaryListResponse()
             }
         }
@@ -125,7 +125,7 @@ class DiaryListFragment : Fragment() {
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
 
-        dataList.sortBy { data ->
+        dataList.sortByDescending { data ->
             data.date.substring(8, 10).toInt() }
 
         btn_updown.setOnClickListener {
@@ -149,13 +149,13 @@ class DiaryListFragment : Fragment() {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
 
-        if (isValid(SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
             getDiaryListResponse()
         }
     }
 
-    fun isValid(userIdx: Int, date: String): Boolean {
-        if(userIdx.toString() == "")
+    fun isValid(accessToken: String, date: String): Boolean {
+        if(accessToken.toString() == "")
             toast("로그인하세요")
 
         else if(date == "")
@@ -166,9 +166,9 @@ class DiaryListFragment : Fragment() {
         return false
     }
 
-    private fun getDiaryListResponse(){
+    private fun getDiaryListResponse() {
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            "application/json", SharedPreferenceController.getUserID(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
+            TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
@@ -189,8 +189,6 @@ class DiaryListFragment : Fragment() {
                             diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                             diaryListRecyclerViewAdapter.notifyDataSetChanged()
                         }
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        //diaryListRecyclerViewAdapter.notifyDataSetChanged()
                     }
                 }
             }
