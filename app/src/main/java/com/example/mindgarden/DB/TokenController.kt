@@ -71,10 +71,7 @@ object TokenController {
 
         //TODO 만료기간이 지났나 안지났나 확인하기
 
-       if(getExpAccessToken(ctx) >currentTime- getTimeAccessToken(
-               ctx
-           )
-       ){
+       if(getExpAccessToken(ctx) >currentTime- getTimeAccessToken(ctx)){
            return true
        }
        else{

@@ -1,8 +1,8 @@
-package com.example.mindgarden.Network.GET
+package com.example.mindgarden.Network.POST
 
 import com.example.mindgarden.Data.TokenData
 
-data class GetAccessTokenResponse(
+data class PostAccessTokenResponse(
     val status: Int,
     val success: Boolean,
     val message: String,
