@@ -9,7 +9,7 @@
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="240dp"
             android:id="@+id/linearLayout"
             tools:ignore="MissingConstraints"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="0dp"
@@ -84,6 +84,21 @@
                 android:background="@drawable/gray_bottom_border">
         </Button>
 
+        <Button
+                android:id="@+id/btnDelete"
+                android:text="계정삭제"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="start|center"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:elevation="10dp"
+                android:textSize="14dp"
+                android:textColor="#2B2B2B"
+                android:background="@drawable/gray_bottom_border">
+        </Button>
+
     </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
@@ -92,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.478" tools:ignore="MissingConstraints"
-            android:layout_marginTop="80dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            android:layout_marginTop="19.3dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
         <Button

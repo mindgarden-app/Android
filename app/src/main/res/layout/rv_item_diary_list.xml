@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
-                android:background="#ffffff">
+                android:background="@drawable/diary_list_border">
 
     <LinearLayout
             android:id="@+id/ll_rv_item_diary_list_container"
@@ -37,7 +37,7 @@
                     android:layout_marginLeft="3dp"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="Day"
-                    android:textSize="12.5dp"
+                    android:textSize="11dp"
                     android:textColor="#888888"/>
 
         </RelativeLayout>
