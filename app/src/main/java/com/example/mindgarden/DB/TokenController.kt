@@ -63,7 +63,7 @@ object TokenController {
 
     fun getExpAccessToken(ctx:Context): Long {
         val preference:SharedPreferences=ctx.getSharedPreferences(ACCESS_TOKEN_EXP,Context.MODE_PRIVATE)
-        return preference.getLong("access_token",0)
+        return preference.getLong("access_token_exp",0)
     }
 
     fun isValidToken(ctx:Context):Boolean{

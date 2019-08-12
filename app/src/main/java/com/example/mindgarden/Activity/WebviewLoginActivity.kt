@@ -36,6 +36,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                 WebView.setWebContentsDebuggingEnabled(true)
             }
             myWebView.apply {
+
                 setListener(this@WebviewLoginActivity, object : AdvancedWebView.Listener {
                     override fun onDownloadRequested(
                         url: String?,
@@ -59,9 +60,10 @@ class WebviewLoginActivity : AppCompatActivity() {
 
                             //로그인 성공시
                             if (it.endsWith("http://13.125.190.74:3000/auth/login/success")) {
-                                myWebView.visibility = View.GONE
-                                myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
+                                Log.e("webview","성공페이지 화면 뜸")
 
+                                myWebView.loadUrl("javascript:window.Android.getResponse(document.getElementsByTagName('pre')[0].innerHTML);")
+                                myWebView.visibility = View.GONE
                                 //암호설정을 안 한 경우
                                 if(SharedPreferenceController.getPassword(this@WebviewLoginActivity)==""){
                                     val loginIntent= Intent(this@WebviewLoginActivity, MainActivity::class.java)
@@ -93,8 +95,8 @@ class WebviewLoginActivity : AppCompatActivity() {
                     }
                 })
 
-                settings.javaScriptEnabled = true
-                addJavascriptInterface(MyJavaScriptInterface(), "Android")
+             settings.javaScriptEnabled = true
+             addJavascriptInterface(MyJavaScriptInterface(), "Android")
 
             }
             myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
@@ -104,17 +106,17 @@ class WebviewLoginActivity : AppCompatActivity() {
         @Suppress()
         @JavascriptInterface
         fun getResponse(response1: String) {
-            val  response=response1.toString()
+            val  response=response1
             val json = JsonParser().parse(response).asJsonObject
 
-          if (json == null || !json.has("data")) {
+    if (json == null || !json.has("data")) {
         setResult(Activity.RESULT_CANCELED)
     }
     else {
         val temp =json["data"]!!.asJsonArray
         val temp2 =temp[0].asJsonObject
        // val temp2=temp["userIdx"].asInt
-        val exp=temp2["expires_in"].asLong
+        val exp=temp2["expires_in"].asInt
         val email=temp2["email"].asString
         val name=temp2["name"].asString
         val refreshToken=temp2["refreshToken"].asString
@@ -124,11 +126,13 @@ class WebviewLoginActivity : AppCompatActivity() {
 
         //TODO 엑세스토큰 받은 시간 저장하기
         TokenController.setStartTimeAccessToken(this@WebviewLoginActivity,System.currentTimeMillis())
-        Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this@WebviewLoginActivity).toString())
+        Log.e("Webview_accessToken_startTime",TokenController.getTimeAccessToken(this@WebviewLoginActivity).toString())
 
         //TODO 엑세스토큰 만료기한도 받기
-        TokenController.setExpAccessToken(this@WebviewLoginActivity,exp)
-        Log.e("accessToken_exp",TokenController.getExpAccessToken(this@WebviewLoginActivity).toString())
+        TokenController.setExpAccessToken(this@WebviewLoginActivity,exp.toLong())
+        Log.e("Webview_accessToken_exp",exp.toString())
+
+        Log.e("Webview_accessToken_exp_in_DB",TokenController.getExpAccessToken(this@WebviewLoginActivity).toString())
 
 
         //리프레시 토큰 저장하기
@@ -136,7 +140,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 
-        Log.e("accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))
+        Log.e("Webview_accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))
         setResult(Activity.RESULT_OK, Intent().apply {
             putExtra("userId", accessToken)
         })

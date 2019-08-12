@@ -24,7 +24,6 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.widget.ImageView
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
@@ -70,7 +69,7 @@ class MainFragment : Fragment() {
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
-    interface OnDataPass{
+    interface OnDataPass {
         fun checkPass(bal: Int)
     }
 
@@ -78,15 +77,14 @@ class MainFragment : Fragment() {
         super.onAttach(context)
         dataPasser = context as OnDataPass
     }
-    override fun onCreateView(
+
+    override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -106,15 +104,9 @@ class MainFragment : Fragment() {
         }
         txt_main_month.setText(month)
 
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()){
-            btn_reward.visibility = View.VISIBLE
-        }else{
-            btn_reward.visibility = View.INVISIBLE
-        }
-
         canBeFuture()
 
-        if (isValid( TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -601,9 +593,9 @@ class MainFragment : Fragment() {
                         initializeTree()
 
                         balloon = response.body()!!.data!![0].balloon
-                        check = response.body()!!.data!![0].check
-                         Log.e("mainFragment", check.toString())
-                         dataPasser?.checkPass(check)
+                        //check = response.body()!!.data!![0].check
+                        // Log.e("mainFragment", check.toString())
+                        // dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                         if (mmonth.toInt() < 10) {

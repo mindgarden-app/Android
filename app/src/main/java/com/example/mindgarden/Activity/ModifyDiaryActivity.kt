@@ -36,9 +36,12 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
+import java.net.URI
+import java.net.URL
 import java.util.*
 
 class ModifyDiaryActivity : AppCompatActivity() {
@@ -56,10 +59,12 @@ class ModifyDiaryActivity : AppCompatActivity() {
     val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
     var selectPicUri : Uri? = null
+    var URL : URL? = null
     var userIdx : Int = 0
 
     var weatherIdx : Int = 0
     var content : String = ""
+    var imgState = 0
 
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
 
@@ -109,8 +114,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
         btn_save_diary_toolbar.setOnClickListener {
             //수정 API를 이용하여 서버에 등록
             //일기 쓰기 액티비티 로직과 비슷하게
-            toast("일기 수정이 완료되었습니다.")
-
             putModifyDiaryResponse()
             //이미지 있을경우 딜레이 시간 주기 : 1초
             Thread.sleep(1000)
@@ -212,6 +215,12 @@ class ModifyDiaryActivity : AppCompatActivity() {
                             icn_gallary_modify_diary.visibility = View.INVISIBLE
                             Glide.with(this@ModifyDiaryActivity).load(response.body()!!.data!![0].diary_img)
                                 .into(img_gallary_modify_diary)
+
+                            //이미지 상태 : 이미지가 이미 있는 경우
+                            imgState = 1
+                            //서버가 주는 url String을 URL로 변형
+                            URL = URL(response.body()!!.data!![0].diary_img)
+                            Log.e("URL", URL.toString())
                         }
 
                     }
@@ -230,57 +239,90 @@ class ModifyDiaryActivity : AppCompatActivity() {
         val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)
         val date_rb = RequestBody.create(MediaType.parse("text/plain"), dateValue.substring(0,10))
 
-        if(selectPicUri != null){
-            val options = BitmapFactory.Options()
-            val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-            val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
-            val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+        when(imgState){
+            0->{    //이미지 삭제할 경우
+                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb, weatherIdx, date_rb, null)
 
-            val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
+                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
+                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
+                        Log.e("ModifyDiary failed", t.toString())
+                    }
 
-
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
-
-            putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                    Log.e("수정 실패", t.toString())
-                }
-
-                override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                    if(response.isSuccessful) {
-                        if (response.body()!!.status == 200) {
-                            Log.e("ModifyActivity", response.body()!!.message)
+                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
+                        if(response.isSuccessful) {
+                            if (response.body()!!.status == 200) {
+                                Log.e("ModifyDiary", response.body()!!.message)
+                            }
+                        }
+                        else{
+                            Log.e("Modify fail", response.body()!!.message)
                         }
                     }
-                    else{
-                        // 400 :
+                })
+            }
+            1->{    //이미지 원래 있을 경우
+
+                //URL을 파일로 바꿈
+                val file = File(URL!!.file)
+
+                Log.e("file", file.toString())
+
+                val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
+
+                val picture_rb = MultipartBody.Part.createFormData("diary_img", file.name, photoBody)
+
+
+                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
+
+                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
+                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
+                        Log.e("수정 실패", t.toString())
                     }
-                }
-            })
-        }else{
 
-            val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb, weatherIdx, date_rb, null)
-
-            putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                    Log.e("ModifyDiary failed", t.toString())
-                }
-
-                override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                    if(response.isSuccessful) {
-                        if (response.body()!!.status == 200) {
-                            Log.e("ModifyDiary", response.body()!!.message)
+                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
+                        if(response.isSuccessful) {
+                            if (response.body()!!.status == 200) {
+                                Log.e("ModifyActivity", response.body()!!.message)
+                            }
+                        }
+                        else{
+                            // 400 :
                         }
                     }
-                    else{
-                        Log.e("Modify fail", response.body()!!.message)
+                })
+
+            }
+            2->{    //이미지 새로 첨부할 경우우
+               val options = BitmapFactory.Options()
+                val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+                val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+
+                val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
+
+
+                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
+
+                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
+                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
+                        Log.e("수정 실패", t.toString())
                     }
-                }
-            })
+
+                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
+                        if(response.isSuccessful) {
+                            if (response.body()!!.status == 200) {
+                                Log.e("ModifyActivity", response.body()!!.message)
+                            }
+                        }
+                        else{
+                            // 400 :
+                        }
+                    }
+                })
+            }
         }
-
 
     }
 
@@ -304,6 +346,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
                     Glide.with(this).load(selectPicUri)
                         .into(img_gallary_modify_diary)
                     icn_gallary_modify_diary.visibility = View.INVISIBLE
+                    imgState = 2
                 }
             }
         }
@@ -325,6 +368,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
     private fun deleteImage(){
         icn_gallary_modify_diary.visibility = View.VISIBLE
         img_gallary_modify_diary.setImageBitmap(null)
+        imgState = 0
     }
 
     //setIcon

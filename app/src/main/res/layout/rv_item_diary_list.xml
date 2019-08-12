@@ -42,17 +42,24 @@
 
         </RelativeLayout>
 
-        <TextView
-                android:id="@+id/txt_rv_item_diary_list_content"
+        <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:gravity="center"
-                android:text="Content"
-                android:textSize="13.5dp"
-                android:fontFamily="@font/notosanscjkr_demilight"
-                android:textColor="#2B2B2B"
-                android:singleLine="true"/>
+                android:gravity="center">
+
+            <TextView
+                    android:id="@+id/txt_rv_item_diary_list_content"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:fontFamily="@font/notosanscjkr_demilight"
+                    android:text="Content"
+                    android:textSize="13.5dp"
+                    android:textColor="#2B2B2B"
+                    android:singleLine="true"/>
+
+        </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/lay1"
@@ -62,7 +69,7 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="#78DEB0"
-                android:visibility="gone">
+                android:visibility="invisible">
 
             <ImageView
                     android:id="@+id/icn_delete"
