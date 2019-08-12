@@ -41,7 +41,7 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
             Log.e("mainActivity", check.toString())
             if (check == 2) {
                 startActivityForResult<WriteDiaryActivity>(1100)
-            } else{
+            } else {
                 toast("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
             }
         }

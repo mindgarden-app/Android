@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
     var userIdx : Int = 0
     var treeNum = 0 //트리수
     var balloon = 0 //나무 심기 여부
-    //var check = 0   //일기 작성 여부
+    var check = 0   //일기 작성 여부
     var dataPasser : OnDataPass? = null
 
     lateinit var treeList : List<Bitmap>
@@ -452,9 +452,9 @@ class MainFragment : Fragment() {
 
                         balloon = response.body()!!.data!![0].balloon
                         Log.e("balloon", "" + balloon);
-                        //check = response.body()!!.data!![0].check
-                        //Log.e("check", "" + check)
-                        //dataPasser?.checkPass(check)
+                        check = response.body()!!.data!![0].check
+                        Log.e("check", "" + check)
+                        dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                         if (mmonth.toInt() < 10) {

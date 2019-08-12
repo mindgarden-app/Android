@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -37,11 +39,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Url
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.InputStream
+import java.io.*
+import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URL
+import java.net.URLConnection
+import java.nio.file.Paths
 import java.util.*
 
 class ModifyDiaryActivity : AppCompatActivity() {

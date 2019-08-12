@@ -137,9 +137,9 @@ class InventoryActivity : AppCompatActivity() {
 
                     finish()
                 } else if (rBal == 0 && rCheck == 2) {
-                    toast("일기를 써야 심을 수 있어요!")
+                    toast("일기를 써야 나무를 심을 수 있어요")
                 } else if (rBal == 0 && rCheck == 1) {
-                    toast("이미 심으셨습니다!")
+                    toast("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
                 }
             }
 
