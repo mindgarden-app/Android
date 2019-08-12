@@ -30,6 +30,25 @@ class WebviewLoginActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_webview_login)
 
+            if(TokenController.getRefreshToken(this)!=""){
+                Log.e("Webview","having refreshToken")
+
+                if(SharedPreferenceController.getPassword(this)!=""){
+                    Log.e("Webview","to PassActivity")
+                    val loginIntent= Intent(this@WebviewLoginActivity, PasswordActivity::class.java)
+
+                    loginIntent.putExtra("whereFrom","login")
+                    startActivity(loginIntent)
+                }
+                else{
+                    Log.e("Webview","to MainActivity")
+                    val loginIntent= Intent(this@WebviewLoginActivity, MainActivity::class.java)
+                    loginIntent.putExtra("whereFrom","login")
+                    startActivity(loginIntent)
+                }
+            }
+        Log.e("Webview","웹뷰")
+
             val myWebView = findViewById<AdvancedWebView>(R.id.webView) as AdvancedWebView
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -74,7 +93,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                                 //암호설정을 한 경우
                                 else{
                                     val loginIntent= Intent(this@WebviewLoginActivity, PasswordActivity::class.java)
-                                    // 암호변겅을 누르면
+
                                     loginIntent.putExtra("whereFrom","login")
                                     startActivity(loginIntent)
                                 }

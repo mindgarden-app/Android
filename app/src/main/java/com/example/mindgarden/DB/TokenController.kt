@@ -2,6 +2,7 @@ package com.example.mindgarden.DB
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 object TokenController {
 
@@ -68,13 +69,16 @@ object TokenController {
 
     fun isValidToken(ctx:Context):Boolean{
         val currentTime=System.currentTimeMillis()
-
+        Log.e("Token Controller",currentTime.toString())
+        Log.e("Token Controller", getTimeAccessToken(ctx).toString())
         //TODO 만료기간이 지났나 안지났나 확인하기
-
+        Log.e("Token Controller",(currentTime-getTimeAccessToken(ctx)).toString())
        if(getExpAccessToken(ctx) >currentTime- getTimeAccessToken(ctx)){
+           Log.e("Token Controller","is vaildate")
            return true
        }
        else{
+           Log.e("Token Controller","is not vaildate")
            return false
        }
 

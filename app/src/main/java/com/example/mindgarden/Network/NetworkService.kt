@@ -2,7 +2,7 @@ package com.example.mindgarden.Network
 
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.GET.*
-import com.example.mindgarden.Network.POST.PostAccessTokenResponse
+import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse
 import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
@@ -89,7 +89,7 @@ interface NetworkService {
 
     //토큰 재발금
     @POST("/user/refresh")
-    fun postRenewAccessToken(
+    fun postRenewAccessTokenResponse(
         @Header("token") token:String
-    ): Call<PostAccessTokenResponse>
+    ): Call<PostRenewAccessTokenResponse>
 }

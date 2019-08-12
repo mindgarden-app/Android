@@ -16,9 +16,11 @@ import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
+import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.toast
 
 
@@ -30,12 +32,22 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
+
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
+        Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
 
         configureMainTab()
 
+        if(!TokenController.isValidToken(this)){
+            Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
+            RenewAcessTokenController.postRenewAccessToken(this)
+        }
+
+        Log.e("Main: accessToken",TokenController.getAccessToken(this))
+        Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
         Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
+
 
         btn_write.setOnClickListener {
             Log.e("mainActivity", check.toString())

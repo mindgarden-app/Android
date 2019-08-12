@@ -28,15 +28,13 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.RenewAcessTokenController
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import com.example.mindgarden.Fragment.MainFragment.OnDataPass
-import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.rv_item_grid.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -436,6 +434,10 @@ class MainFragment : Fragment() {
     }
 
     private fun getMainResponse() {
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
+
         val getMainResponse = networkService.getMainResponse(
             TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
         Log.e("year" , txt_main_year.text.toString())
