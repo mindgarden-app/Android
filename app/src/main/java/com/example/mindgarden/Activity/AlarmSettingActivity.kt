@@ -41,7 +41,7 @@ class AlarmSettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_setting)
-        txtSetting.text = "알람 설정"
+        txtSetting.text = "알림 설정"
 
         //back button
         btnBack.setOnClickListener {
@@ -50,7 +50,7 @@ class AlarmSettingActivity : AppCompatActivity() {
             finish()
         }
 
-        alarmSwitch = findViewById(R.id.alarmSwitch)    //스위치 토글 버튼
+        alarmSwitch = findViewById (R.id.alarmSwitch)    //스위치 토글 버튼
         alarmSwitch.isChecked = SharedPreferenceController.getAlarmState(this)
         btnSetTimeState(alarmSwitch.isChecked)
 

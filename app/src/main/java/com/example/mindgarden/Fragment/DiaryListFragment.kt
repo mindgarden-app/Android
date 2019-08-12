@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 
@@ -41,7 +40,7 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class DiaryListFragment : Fragment() {
-    val networkService: NetworkService by lazy{
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
     lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
@@ -126,7 +125,7 @@ class DiaryListFragment : Fragment() {
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
 
-        dataList.sortBy { data ->
+        dataList.sortByDescending { data ->
             data.date.substring(8, 10).toInt() }
 
         btn_updown.setOnClickListener {
@@ -167,7 +166,7 @@ class DiaryListFragment : Fragment() {
         return false
     }
 
-    private fun getDiaryListResponse(){
+    private fun getDiaryListResponse() {
         val getDiaryListResponse = networkService.getDiaryListResponse(
             TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
@@ -190,8 +189,6 @@ class DiaryListFragment : Fragment() {
                             diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                             diaryListRecyclerViewAdapter.notifyDataSetChanged()
                         }
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        //diaryListRecyclerViewAdapter.notifyDataSetChanged()
                     }
                 }
             }

@@ -24,7 +24,6 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.widget.ImageView
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
@@ -48,11 +47,9 @@ import kotlinx.android.synthetic.main.rv_item_grid.*
  *
  */
 class MainFragment : Fragment() {
-    val networkService: NetworkService by lazy{
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
-    var mainList: ArrayList<com.example.mindgarden.Data.MainData> = ArrayList()
-    lateinit var inventoryActivity: InventoryActivity
 
     val REQUEST_CODE_SET_TOOLBAR_DATE = 1005
     var toolbarYear : String = ""
@@ -63,14 +60,13 @@ class MainFragment : Fragment() {
     var userIdx : Int = 0
     var treeNum = 0 //트리수
     var balloon = 0 //나무 심기 여부
-    var check = 0   //일기 작성 여부
-
-    var dataPasser: OnDataPass? = null
+    //var check = 0   //일기 작성 여부
+    var dataPasser : OnDataPass? = null
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
-    interface OnDataPass{
+    interface OnDataPass {
         fun checkPass(bal: Int)
     }
 
@@ -78,15 +74,14 @@ class MainFragment : Fragment() {
         super.onAttach(context)
         dataPasser = context as OnDataPass
     }
-    override fun onCreateView(
+
+    override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -106,33 +101,20 @@ class MainFragment : Fragment() {
         }
         txt_main_month.setText(month)
 
-        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(Calendar.MONTH) + 1).toString()){
-            btn_reward.visibility = View.VISIBLE
-        }else{
-            btn_reward.visibility = View.INVISIBLE
-        }
-
         canBeFuture()
 
-        if (isValid( TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
         btn_reward.setOnClickListener {
             var intent: Intent = Intent(context, InventoryActivity::class.java)
-            intent.putExtra("balloon", balloon)
+            //intent.putExtra("balloon", balloon)
+            //intent.putExtra("check", check)
             startActivity(intent)
         }
 
-        //수정필요
-        /*if (btn_reward.isEnabled) {
-            btn_reward.setOnClickListener {
-                var intent: Intent = Intent(context, InventoryActivity::class.java)
-                startActivity(intent)
-            }
-        }*/
-
-        // 환경설정 페이지로 넘어감
+        //환경설정 페이지로 넘어감
         btn_main_setting.setOnClickListener {
             startActivity<MypageActivity>()
         }
@@ -160,6 +142,7 @@ class MainFragment : Fragment() {
         toolbarMonth = txt_main_month.text.toString()
 
         canBeFuture()
+
         btn_left.setOnClickListener {
             canBeFuture()
 
@@ -190,13 +173,6 @@ class MainFragment : Fragment() {
                     startActivity(intent)
                 }
 
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-                    }
-                }*/
-
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
                 toolbarMonth = txt_main_month.text.toString()
@@ -208,11 +184,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
 
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -221,13 +193,6 @@ class MainFragment : Fragment() {
                     startActivity(intent)
                 }
 
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-
-                    }
-                }*/
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
 
@@ -237,6 +202,7 @@ class MainFragment : Fragment() {
 
         btn_right.setOnClickListener {
             canBeFuture()
+
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
                 year = (year.toInt() + 1).toString()
@@ -245,11 +211,8 @@ class MainFragment : Fragment() {
                 }
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -259,14 +222,6 @@ class MainFragment : Fragment() {
                     var intent: Intent = Intent(context, InventoryActivity::class.java)
                     startActivity(intent)
                 }
-
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-
-                    }
-                }*/
 
                 //툴바 년/월 설정(MainCalendar로 전달)
                 toolbarYear = txt_main_year.text.toString()
@@ -277,11 +232,8 @@ class MainFragment : Fragment() {
                     month = "0$month"
                 }
                 txt_main_month.setText(month)
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -292,39 +244,20 @@ class MainFragment : Fragment() {
                     startActivity(intent)
                 }
 
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-
-                    }
-                }*/
-
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
             }
 
             //툴바 날짜 클릭했을 때 -> 팝업 띄우기
             ll_date_toolbar_main.setOnClickListener {
-                startActivityForResult<MainCalendarActivity>(
-                    REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
-                )
+                startActivityForResult<MainCalendarActivity>(REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
             }
-
         }
     }
 
     //액티비티 이동했다가 돌아오면 현재 년, 달로 바뀌어있음
     override fun onStop() {
         super.onStop()
-
-        if (isValid(
-                TokenController.getAccessToken(ctx),
-                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-            )
-        ) {
-            getMainResponse()
-        }
 
         //현재 년 월 다시 셋팅
         year = cal.get(Calendar.YEAR).toString()
@@ -338,33 +271,21 @@ class MainFragment : Fragment() {
 
         canBeFuture()
 
+        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+            getMainResponse()
+        }
+
         btn_reward.setOnClickListener {
             var intent: Intent = Intent(context, InventoryActivity::class.java)
             startActivity(intent)
-        }
-
-        /*if (btn_reward.isEnabled) {
-            btn_reward.setOnClickListener {
-                var intent: Intent = Intent(context, InventoryActivity::class.java)
-                startActivity(intent)
-
-            }
-        }*/
-
-
-        if (isValid(
-                TokenController.getAccessToken(ctx),
-                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-            )
-        ) {
-            getMainResponse()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_CODE_SET_TOOLBAR_DATE){
-            if(resultCode == Activity.RESULT_OK){
+
+        if(requestCode == REQUEST_CODE_SET_TOOLBAR_DATE) {
+            if(resultCode == Activity.RESULT_OK) {
                 year = data!!.getStringExtra("year")
                 month = data!!.getStringExtra("month")
 
@@ -373,13 +294,10 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
                 txt_main_year.setText(year)
+
                 canBeFuture()
 
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
             }
@@ -389,14 +307,7 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        canBeFuture()
-
-
-        if (isValid(
-                TokenController.getAccessToken(ctx),
-                txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-            )
-        ) {
+        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -405,6 +316,7 @@ class MainFragment : Fragment() {
         toolbarMonth = txt_main_month.text.toString()
 
         canBeFuture()
+
         btn_left.setOnClickListener {
             canBeFuture()
 
@@ -421,11 +333,7 @@ class MainFragment : Fragment() {
                 txt_main_day_num.visibility = View.INVISIBLE
                 txt_main_day_text.visibility = View.INVISIBLE
 
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -439,24 +347,6 @@ class MainFragment : Fragment() {
                     var intent: Intent = Intent(context, InventoryActivity::class.java)
                     startActivity(intent)
                 }
-
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-
-                    }
-                }*/
-
-                //현재 년,월 (숫자만) , 년도가 현재인지 월이 현재 달인지
-                /*if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == "0" + (cal.get(
-                        Calendar.MONTH
-                    ) + 1).toString()
-                ) {
-                    btn_reward.isEnabled = true
-                } else {
-                    btn_reward.isEnabled = false
-                }*/
             } else {
                 month = (month.toInt() - 1).toString()
                 if (month.toInt() < 10) {
@@ -464,11 +354,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
 
-                if (isValid(
-                        TokenController.getAccessToken(ctx),
-                        txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                    )
-                ) {
+                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -477,17 +363,10 @@ class MainFragment : Fragment() {
                     startActivity(intent)
                 }
 
-                /*if (btn_reward.isEnabled) {
-                    btn_reward.setOnClickListener {
-                        var intent: Intent = Intent(context, InventoryActivity::class.java)
-                        startActivity(intent)
-
-                    }
-                }*/
-
-                canBeFuture()
                 //툴바 월 설정(MainCalendar로 전달)
                 toolbarMonth = txt_main_month.text.toString()
+
+                canBeFuture()
             }
 
             btn_right.setOnClickListener {
@@ -502,11 +381,7 @@ class MainFragment : Fragment() {
                     txt_main_year.setText(year)
                     txt_main_month.setText(month)
 
-                    if (isValid(
-                            TokenController.getAccessToken(ctx),
-                            txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                        )
-                    ) {
+                    if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                         getMainResponse()
                     }
 
@@ -516,14 +391,6 @@ class MainFragment : Fragment() {
                         var intent: Intent = Intent(context, InventoryActivity::class.java)
                         startActivity(intent)
                     }
-
-                    /*if (btn_reward.isEnabled) {
-                        btn_reward.setOnClickListener {
-                            var intent: Intent = Intent(context, InventoryActivity::class.java)
-                            startActivity(intent)
-
-                        }
-                    }*/
 
                     //툴바 년/월 설정(MainCalendar로 전달)
                     toolbarYear = txt_main_year.text.toString()
@@ -535,11 +402,7 @@ class MainFragment : Fragment() {
                     }
                     txt_main_month.setText(month)
 
-                    if (isValid(
-                            TokenController.getAccessToken(ctx),
-                            txt_main_year.text.toString() + "-" + txt_main_month.text.toString()
-                        )
-                    ) {
+                    if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                         getMainResponse()
                     }
 
@@ -551,31 +414,18 @@ class MainFragment : Fragment() {
                         startActivity(intent)
                     }
 
-                    /*if (btn_reward.isEnabled) {
-                        btn_reward.setOnClickListener {
-                            var intent: Intent = Intent(context, InventoryActivity::class.java)
-                            startActivity(intent)
-
-                        }
-                    }*/
-
                     canBeFuture()
-
-                    getActivity();
 
                     //툴바 날짜 클릭했을 때 -> 팝업 띄우기
                     ll_date_toolbar_main.setOnClickListener {
-                        startActivityForResult<MainCalendarActivity>(
-                            REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth
-                        )
+                        startActivityForResult<MainCalendarActivity>(REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
                     }
                 }
             }
-
         }
     }
 
-    fun isValid(accessToken:String, date: String): Boolean {
+    fun isValid(accessToken: String, date: String): Boolean {
         if (accessToken.toString() == "")
             toast("로그인하세요")
         else if (date == "")
@@ -585,7 +435,7 @@ class MainFragment : Fragment() {
         return false
     }
 
-    private fun getMainResponse(){
+    private fun getMainResponse() {
         val getMainResponse = networkService.getMainResponse(
             TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
         Log.e("year" , txt_main_year.text.toString())
@@ -601,9 +451,10 @@ class MainFragment : Fragment() {
                         initializeTree()
 
                         balloon = response.body()!!.data!![0].balloon
+                        Log.e("balloon", "" + balloon);
                         //check = response.body()!!.data!![0].check
-                        // Log.e("mainFragment", check.toString())
-                        // dataPasser?.checkPass(check)
+                        //Log.e("check", "" + check)
+                        //dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                         if (mmonth.toInt() < 10) {
@@ -611,52 +462,46 @@ class MainFragment : Fragment() {
                         }
 
                         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                            if(balloon==1) {
-                                img_balloon.visibility=View.VISIBLE
+                            btn_reward.visibility = View.VISIBLE
+
+                            if (balloon == 1) {
+                                img_balloon.visibility = View.VISIBLE
                                 btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
-                                //btn_reward.isEnabled = true
-
-                                Log.e("balloon",balloon.toString())
-                                Log.e("img_ballon_visibility",img_balloon.visibility.toString())
-                            }
-                            else {
+                                Log.e("balloon", balloon.toString())
+                                Log.e("img_ballon_visibility", img_balloon.visibility.toString())
+                            } else {
+                                img_balloon.visibility = View.INVISIBLE
                                 btn_reward.setImageResource(R.drawable.btn_reward)
-                                //btn_reward.isEnabled=false
-                                img_balloon.visibility=View.INVISIBLE
                             }
-                        }
-                        else {
-                            btn_reward.setImageResource(R.drawable.btn_reward)
-                            //btn_reward.isEnabled = false
+                        } else {
                             img_balloon.visibility=View.INVISIBLE
+                            btn_reward.visibility = View.INVISIBLE
                         }
 
-                        for(i in 0..(response.body()!!.data!!.size-1)) {
+                        for(i in 0..(response.body()!!.data!!.size - 1)) {
                             var treeIdx = 0
                             var location = 0
 
                             treeIdx = response.body()!!.data!![i].treeIdx
                             location = response.body()!!.data!![i].location
 
-
                             //잡초만 있을 경우
-                            if(response.body()!!.data!![i].treeIdx==16){
-                                locationList.get(location-1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
-                            }else{
-                                locationList.get(location-1).setImageBitmap(treeList.get(treeIdx))
+                            if (response.body()!!.data!![i].treeIdx == 16) {
+                                locationList.get(location - 1).setImageBitmap(drawableToBitmap(R.drawable.android_weeds))
+                            } else {
+                                locationList.get(location - 1).setImageBitmap(treeList.get(treeIdx))
                             }
 
                             //요일 설정
                             if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-
                                 txt_main_day_num_word.visibility = View.VISIBLE
                                 txt_main_day_num.visibility = View.VISIBLE
                                 txt_main_day_text.visibility = View.VISIBLE
 
                                 var date = SimpleDateFormat("dd")
                                 var intDate = SimpleDateFormat("u")
-                                var date2:String=""
-                                when(intDate.format(Date()).toInt()){
+                                var date2: String = ""
+                                when (intDate.format(Date()).toInt()) {
                                     1->date2="Mon"
                                     2->date2="Tue"
                                     3->date2="Wed"
@@ -666,30 +511,27 @@ class MainFragment : Fragment() {
                                     7->date2="Sun"
                                 }
 
-
                                 txt_main_day_num.setText(date.format(Date()).toString())
                                 txt_main_day_text.setText(date2)
-
-                            }else{
+                            } else {
                                 txt_main_day_num_word.visibility = View.INVISIBLE
                                 txt_main_day_num.visibility = View.INVISIBLE
                                 txt_main_day_text.visibility = View.INVISIBLE
                             }
-
 
                             //문구 설정
                             treeNum = response.body()!!.data!![i].treeNum
                             Log.e("treeNum", treeNum.toString())
 
                             //현재달이고, 심은 나무가 없을 경우(초기상태) -> 정원을 꾸며보아요 문구
-                            if(txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
-                                if(treeNum < 1) {
+                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                if (treeNum < 1) {
                                     txt_main_exp1.setText(getString(R.string.treeNumTextCurrent0))
                                     txt_main_exp1.visibility = View.VISIBLE
-                                } else if(treeNum < 11) {
+                                } else if (treeNum < 11) {
                                     txt_main_exp1.setText(getString(R.string.treeNumTextCurrent10))
                                     txt_main_exp1.visibility = View.VISIBLE
-                                } else if(treeNum < 21) {
+                                } else if (treeNum < 21) {
                                     txt_main_exp1.setText(getString(R.string.treeNumTextCurrent20))
                                     txt_main_exp1.visibility = View.VISIBLE
                                 } else {
@@ -700,11 +542,11 @@ class MainFragment : Fragment() {
                                 if (treeNum < 1) {
                                     txt_main_exp1.setText(getString(R.string.treeNumText0))
                                     txt_main_exp1.visibility = View.VISIBLE
-                                } else if(treeNum < 11) {
+                                } else if (treeNum < 11) {
                                     val text = treeNum.toString() + getString( R.string.treeNumText10)
                                     txt_main_exp1.setText(text)
                                     txt_main_exp1.visibility = View.VISIBLE
-                                } else if(treeNum < 21) {
+                                } else if (treeNum < 21) {
                                     val text = treeNum.toString() + getString(R.string.treeNumText20)
                                     txt_main_exp1.setText(text)
                                     txt_main_exp1.visibility = View.VISIBLE
@@ -720,13 +562,13 @@ class MainFragment : Fragment() {
             }
         })
     }
-    fun canBeFuture(){
+
+    fun canBeFuture() {
         //미래로 못가게
         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
         if (mmonth.toInt() < 10) {
             mmonth = "0$mmonth"
         }
-
 
         if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
             btn_right.isEnabled = false
@@ -735,19 +577,19 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun initializeTree(){
+    fun initializeTree() {
         val initTree = drawableToBitmap(R.drawable.tree_size)
         for(i in 0..31) locationList.get(i).setImageBitmap(initTree)
     }
 
-    fun setLocation(){
+    fun setLocation() {
         locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
             img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,
             img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32)
 
     }
 
-    fun setTree(){
+    fun setTree() {
         val tree1 = drawableToBitmap(R.drawable.android_tree1)
         val tree2 = drawableToBitmap(R.drawable.android_tree2)
         val tree3 = drawableToBitmap(R.drawable.android_tree3)
@@ -765,15 +607,13 @@ class MainFragment : Fragment() {
         val tree15 = drawableToBitmap(R.drawable.android_tree15)
         val tree16 = drawableToBitmap(R.drawable.android_tree16)
 
-
         treeList = listOf(tree1,tree2,tree3,tree4, tree5,tree6,tree7,tree8,tree9,
             tree10,tree11,tree12,tree13,tree14, tree15,tree16)
     }
 
-    private fun drawableToBitmap(icnName : Int) : Bitmap {
+    private fun drawableToBitmap(icnName: Int): Bitmap {
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap
     }
-
 }

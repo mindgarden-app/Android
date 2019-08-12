@@ -30,7 +30,7 @@ class PasswordSettingActivity : AppCompatActivity() {
 
             finish()
         }
-        val passwordSwitch: Switch =findViewById(R.id.passwordSwitch)
+        val passwordSwitch: Switch =findViewById (R.id.passwordSwitch)
         val changePassword: Button =findViewById(R.id.changePassword)
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
 

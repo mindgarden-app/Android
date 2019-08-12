@@ -13,23 +13,20 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mindgarden.Activity.ReadDiaryActivity
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
-import kotlinx.android.synthetic.main.activity_read_diary.*
-import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
+class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
     var context : Context = ctx
-    val networkService: NetworkService by lazy{
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
 
@@ -53,8 +50,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         }
 
         holder.content.setOnClickListener {
-            var dateText = dataList[position].date.substring(2,4) + "." + dataList[position].date.substring(5,7) + "." + dataList[position].date.substring(8,10) + ". (" + dataList[position].date.substring(11,14) + ")"
-            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0,10))
+            var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0, 10))
         }
 
         if (isPressed) {
@@ -88,7 +85,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
                 dlgNew.show()
             }
         } else {
-            holder.lay1.visibility = View.GONE
+            holder.lay1.visibility = View.INVISIBLE
         }
     }
 
@@ -104,7 +101,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList:ArrayList<Diar
         return false
     }
 
-    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int){
+    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
              TokenController.getAccessToken(ctx), deleteDate)
         Log.e("delete", "delete1")

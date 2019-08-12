@@ -43,25 +43,26 @@
                     android:fontFamily="@font/notosanscjkr_medium"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textSize="14dp"
-                    android:layout_toEndOf="@id/myImage"
+                    android:layout_alignParentTop="true"
                     android:layout_alignTop="@+id/myImage"
-                    android:gravity="center|center"
-                    android:layout_marginStart="10dp"
-                    android:layout_alignParentTop="true">
+                    android:layout_toEndOf="@id/myImage"
+                    android:layout_marginStart="13dp"
+                    android:textSize="14dp"
+                    android:textColor="#2B2B2B">
             </TextView>
             <TextView
                     android:id="@+id/userMail"
                     android:text="chungee375@gmail.com"
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"
-                    android:gravity="start|center"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
                     android:layout_height="20dp"
                     android:layout_width="150dp"
                     android:layout_alignBottom="@id/myImage"
                     android:layout_toEndOf="@id/myImage"
+                    android:layout_marginStart="13dp"
                     android:textSize="10dp"
+                    android:textColor="#B2B2B2"
             >
             </TextView>
 
@@ -79,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:elevation="10dp"
                 android:textSize="14dp"
+                android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border">
         </Button>
 
@@ -103,6 +105,7 @@
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
                 android:textSize="14dp"
+                android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"/>
 
         <Button
@@ -115,6 +118,7 @@
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
                 android:textSize="14dp"
+                android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 android:elevation="10dp"/>
     </LinearLayout>

@@ -96,6 +96,8 @@ class WriteDiaryActivity : AppCompatActivity() {
         btn_save_diary_toolbar.setOnClickListener {
             //서버에 POST : 아이콘 index, 일기 내용, 이미지
             postWriteDiaryResponse()
+            //이미지 있을경우 딜레이 시간 주기 : 1초
+            Thread.sleep(1000)
             Log.e("postWriteDiary", "ok")
             startActivityForResult<ReadDiaryActivity>(1100, "from" to 100, "dateText" to dateText, "dateValue" to dateValue)
         }
