@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentInsetStart="0dp"
+        android:background="@drawable/toolbar_layout_border">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:paddingVertical="20dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/btn_back"
+                android:background="@color/colorWhite"
+                android:id="@+id/btn_back_toolbar"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="나무 심기"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:textColor="#2B2B2B"
+                android:textSize="14dp"/>
+
+        <ImageButton
+                android:layout_width="44dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/green_border_fill"
+                android:id="@+id/btn_save_inventory"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:text="완료"
+                android:textSize="13dp"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:textColor="#ffffff"
+                android:id="@+id/txt_save_inventory"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

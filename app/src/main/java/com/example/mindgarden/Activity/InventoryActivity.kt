@@ -8,6 +8,11 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.Adapter.GridRecyclerViewAdapter
 import com.example.mindgarden.Adapter.InventoryRecyclerViewAdapter
@@ -23,7 +28,9 @@ import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
+import kotlinx.android.synthetic.main.toolbar_inventory.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -66,9 +73,9 @@ class InventoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
 
-        txtSetting.text = "나무 심기"
+        //txtSetting.text = "나무 심기"
 
-        btnBack.setOnClickListener {
+        btn_back_toolbar.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             //백 스페이스 누르면 다시 메인 페이지로
             startActivity(intent)
@@ -126,7 +133,12 @@ class InventoryActivity : AppCompatActivity() {
 
         getPlantResponse()
 
-        btn_choose.setOnClickListener {
+        btn_save_inventory.setOnClickListener {
+            val toast: Toast = Toast(ctx)
+            val inflater: LayoutInflater = LayoutInflater.from(ctx)
+            val toastView: View = inflater.inflate(R.layout.toast, null)
+            val toastText: TextView = toastView.findViewById(R.id.toastText)
+
             if (isValid(TokenController.getAccessToken(this), gridList[gridIdx].product_id, inventoryIdx)) {
                 if (rBal == 1 && rCheck == 0) {
                     postPlantResponse(
@@ -137,9 +149,19 @@ class InventoryActivity : AppCompatActivity() {
 
                     finish()
                 } else if (rBal == 0 && rCheck == 2) {
-                    toast("일기를 써야 심을 수 있어요!")
+                    toastText.setText("일기를 써야 나무를 심을 수 있어요")
+                    toastText.width = 248
+                    toastText.gravity = Gravity.CENTER
+                    toast.view = toastView
+                    toast.show()
+                    //toast("일기를 써야 나무를 심을 수 있어요")
                 } else if (rBal == 0 && rCheck == 1) {
-                    toast("이미 심으셨습니다!")
+                    toastText.setText("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
+                    toastText.width = 248
+                    toastText.gravity = Gravity.CENTER
+                    toast.view = toastView
+                    toast.show()
+                    //toast("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
                 }
             }
 
