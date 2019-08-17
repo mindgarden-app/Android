@@ -3,14 +3,28 @@ package com.example.mindgarden.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
+import com.example.mindgarden.Network.ApplicationController
+import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.Delete.DeleteUserResponse
+import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
+import org.jetbrains.anko.ctx
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MypageActivity : AppCompatActivity() {
+
+    val networkService: NetworkService by lazy{
+        ApplicationController.instance.networkService
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +51,10 @@ class MypageActivity : AppCompatActivity() {
 
             finish()
         }
+        btnDelete.setOnClickListener{
+            deleteUserResponse()
+            TokenController.clearRefreshToken(this)
+        }
 
         //LinerLayout 버튼들
         btnPasswordSetting.setOnClickListener {
@@ -56,5 +74,31 @@ class MypageActivity : AppCompatActivity() {
 
             finish()
         }
+    }
+    private fun deleteUserResponse() {
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
+
+        val deleteDiaryListResponse = networkService.deleteUserResponse(
+            TokenController.getAccessToken(ctx))
+        Log.e("delete", "delete")
+
+        deleteDiaryListResponse.enqueue(object: Callback<DeleteUserResponse> {
+            override fun onFailure(call: Call<DeleteUserResponse>, t: Throwable) {
+
+            }
+            override fun onResponse(call: Call<DeleteUserResponse>, response: Response<DeleteUserResponse>) {
+
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                       Log.e("Delete User",response.body()!!.message)
+
+                    }
+                }
+            }
+
+
+        })
     }
 }
