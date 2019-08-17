@@ -22,6 +22,8 @@ import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.RenewAcessTokenController
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
@@ -167,6 +169,9 @@ class DiaryListFragment : Fragment() {
     }
 
     private fun getDiaryListResponse() {
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
         val getDiaryListResponse = networkService.getDiaryListResponse(
             TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {

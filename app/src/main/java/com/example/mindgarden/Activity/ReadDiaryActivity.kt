@@ -18,10 +18,12 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.RenewAcessTokenController
 import com.kotlinpermissions.ifNotNullOrElse
 import com.kotlinpermissions.notNull
 import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
@@ -138,6 +140,9 @@ class ReadDiaryActivity : AppCompatActivity() {
 
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
         //userIdx , date 값
         val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
 

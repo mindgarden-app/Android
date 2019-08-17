@@ -1,6 +1,7 @@
 package com.example.mindgarden.Network
 
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.GET.*
 import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse
 import com.example.mindgarden.Network.POST.PostPlantResponse
@@ -90,6 +91,12 @@ interface NetworkService {
     //토큰 재발금
     @POST("/user/refresh")
     fun postRenewAccessTokenResponse(
-        @Header("token") token:String
+        @Header("refreshtoken") token:String,
+        @Body() body:JsonObject
     ): Call<PostRenewAccessTokenResponse>
+
+    @DELETE("/user/delete")
+    fun deleteUser(
+        @Header("token") token:String
+    ):Call<DeleteUserResponse>
 }

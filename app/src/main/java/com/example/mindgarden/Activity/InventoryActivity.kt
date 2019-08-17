@@ -25,12 +25,14 @@ import com.example.mindgarden.Network.GET.GetPlantResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostPlantResponse
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.ctx
+import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.toast
 import org.json.JSONObject
 import retrofit2.Call
@@ -264,6 +266,11 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     fun getPlantResponse() {
+
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
+
         if (month.toInt() < 10) {
             month = "0$month"
         }

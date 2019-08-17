@@ -26,10 +26,12 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
+import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivityForResult
 import retrofit2.Call
 import retrofit2.Callback
@@ -199,6 +201,9 @@ class WriteDiaryActivity : AppCompatActivity() {
 
     private fun postWriteDiaryResponse(){
 
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
         val content = edt_content_write_diary.text.toString()
         //타입 변환(String->RequestBody)
         val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)

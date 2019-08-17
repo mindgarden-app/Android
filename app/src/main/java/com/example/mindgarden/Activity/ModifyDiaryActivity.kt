@@ -28,11 +28,13 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_modify_diary.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -177,6 +179,10 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
+
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
         //userIdx , date 값
         val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
 
@@ -237,6 +243,9 @@ class ModifyDiaryActivity : AppCompatActivity() {
     //통신 2. 수정 API를 이용하여 서버에 등록
     private fun putModifyDiaryResponse(){
 
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
         content = edt_content_modify_diary.text.toString()
         //타입 변환(String->RequestBody)
         val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)

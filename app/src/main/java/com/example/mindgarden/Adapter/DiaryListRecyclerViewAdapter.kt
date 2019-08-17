@@ -19,6 +19,8 @@ import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -102,6 +104,10 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     }
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
+        if(!TokenController.isValidToken(ctx)){
+            RenewAcessTokenController.postRenewAccessToken(ctx)
+        }
+
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
              TokenController.getAccessToken(ctx), deleteDate)
         Log.e("delete", "delete1")
