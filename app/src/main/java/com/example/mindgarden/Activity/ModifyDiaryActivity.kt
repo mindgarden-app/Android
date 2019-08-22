@@ -8,24 +8,21 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.mindgarden.Adapter.MyListAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_modify_diary.*
@@ -33,19 +30,10 @@ import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Url
 import java.io.*
-import java.net.HttpURLConnection
-import java.net.URI
-import java.net.URL
-import java.net.URLConnection
-import java.nio.file.Paths
-import java.util.*
 
 class ModifyDiaryActivity : AppCompatActivity() {
 
@@ -62,15 +50,15 @@ class ModifyDiaryActivity : AppCompatActivity() {
     val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
     var selectPicUri : Uri? = null
-    var URL : URL? = null
     var userIdx : Int = 0
+    var us : String? = null
+    var b : Bitmap? = null
 
     var weatherIdx : Int = 0
     var content : String = ""
     var imgState = 0
 
     val choiceList = arrayOf<String>("이미지 선택", "삭제")
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,7 +162,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
     }
 
 
-
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
         //userIdx , date 값
@@ -191,14 +178,10 @@ class ModifyDiaryActivity : AppCompatActivity() {
                         //데이터 넣어주기
                         //date, 기분 텍스트, 아이콘, 내용, 사진(있을경우)
                         //set icon and text
-                        Log.e("readdiary", response.body()!!.message)
 
                         //아이콘 set
                         weatherIdx  = response.body()!!.data!![0].weatherIdx
-                        Log.e("w", weatherIdx.toString())
-
                         setIcon()
-
 
                          for(i  in 0..weatherIdx ){
                             if(weatherIdx == i){
@@ -213,17 +196,28 @@ class ModifyDiaryActivity : AppCompatActivity() {
                         Log.e("cotent", content)
                         edt_content_modify_diary.setText(content)
 
-
                         if(response.body()!!.data!![0].diary_img != null){
                             icn_gallary_modify_diary.visibility = View.INVISIBLE
-                            Glide.with(this@ModifyDiaryActivity).load(response.body()!!.data!![0].diary_img)
-                                .into(img_gallary_modify_diary)
+
+                            val target = object : SimpleTarget<Bitmap>() {
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    img_gallary_modify_diary.setImageBitmap(resource)
+                                    b = resource
+                                }
+                            }
+
+                            Glide.with(this@ModifyDiaryActivity)
+                                .asBitmap()
+                                .load(response.body()!!.data!![0].diary_img)
+                                .fitCenter()
+                                .into<SimpleTarget<Bitmap>>(target)
 
                             //이미지 상태 : 이미지가 이미 있는 경우
                             imgState = 1
-                            //서버가 주는 url String을 URL로 변형
-                            URL = URL(response.body()!!.data!![0].diary_img)
-                            Log.e("URL", URL.toString())
+
+                            //서버가 주는 url String
+                            us = response.body()!!.data!![0].diary_img
+
                         }
 
                     }
@@ -232,6 +226,22 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    fun bitmapToFile(b : Bitmap, fileName : String) : String{
+
+        //임시파일 저장 경로
+        val storage : File = this.cacheDir
+        val name = fileName
+
+        val tempFile = File(storage, name)
+
+        tempFile.createNewFile()
+        val fos  = FileOutputStream(tempFile)
+        b.compress(Bitmap.CompressFormat.JPEG, 90, fos)
+        fos.close()
+
+        return tempFile.absolutePath
     }
 
     //통신 2. 수정 API를 이용하여 서버에 등록
@@ -266,41 +276,40 @@ class ModifyDiaryActivity : AppCompatActivity() {
             1->{    //이미지 원래 있을 경우
 
                 //URL을 파일로 바꿈
-                val file = File(URL!!.file)
+                val fn = File(us).name
+                Log.e("us", us)
 
-                Log.e("file", file.toString())
+                val file = File(bitmapToFile(b!!,fn))
 
-                val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
+                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
+                    val picture_rb = MultipartBody.Part.createFormData("diary_img", fn, photoBody)
+                    val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
 
-                val picture_rb = MultipartBody.Part.createFormData("diary_img", file.name, photoBody)
+                    putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
+                        override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
+                            Log.e("수정 실패", t.toString())
+                        }
 
-
-                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
-
-                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                        Log.e("수정 실패", t.toString())
-                    }
-
-                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                        if(response.isSuccessful) {
-                            if (response.body()!!.status == 200) {
-                                Log.e("ModifyActivity", response.body()!!.message)
+                        override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
+                            if(response.isSuccessful) {
+                                if (response.body()!!.status == 200) {
+                                    Log.e("ModifyActivity", response.body()!!.message)
+                                }
+                            }
+                            else{
+                                // 400 :
                             }
                         }
-                        else{
-                            // 400 :
-                        }
-                    }
-                })
+                    })
 
-            }
+                }
             2->{    //이미지 새로 첨부할 경우우
                val options = BitmapFactory.Options()
                 val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
                 val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
                 val byteArrayOutputStream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
+
                 val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
 
                 val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
