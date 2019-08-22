@@ -155,14 +155,14 @@ class InventoryActivity : AppCompatActivity() {
 
                     finish()
                 } else if (rBal == 0 && rCheck == 2) {
-                    toastText.setText("일기를 써야 나무를 심을 수 있어요")
+                    toastText.setText("일기를 써야 나무를 심을 수 있어요.")
                     //toastText.width = 248
                     toastText.gravity = Gravity.CENTER
                     toast.view = toastView
                     toast.show()
                     //toast("일기를 써야 나무를 심을 수 있어요")
                 } else if (rBal == 0 && rCheck == 1) {
-                    toastText.setText("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
+                    toastText.setText("나무는 하루에 하나만 심을 수 있어요!ㅠㅠ")
                     //toastText.width = 248
                     toastText.gravity = Gravity.CENTER
                     toast.view = toastView
