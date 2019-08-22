@@ -1,6 +1,6 @@
 package com.example.mindgarden.Network.Delete
 
-data class DeleteDiaryListResponse(
+data class DeleteUserResponse(
     val status: Int,
     val success: Boolean,
     val message: String

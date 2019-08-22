@@ -9,6 +9,7 @@ object SharedPreferenceController {
     val USER_NAME="unique_strng3"
     val USER_MAIL="unique_strng4"
     val ALARMSTATE ="unique_strng5"
+    val PASSWORDSWITCHSTATE = "unique_strng5"
 
 
     //사용자 비밀번호
@@ -55,6 +56,18 @@ object SharedPreferenceController {
     fun getAlarmState(ctx: Context):Boolean{
         val preference : SharedPreferences = ctx.getSharedPreferences(ALARMSTATE, Context.MODE_PRIVATE)
         return preference.getBoolean("alarmState", false)
+    }
+
+    fun setPasswordSwitchState(ctx: Context, state : Boolean){
+        val preference : SharedPreferences = ctx.getSharedPreferences(PASSWORDSWITCHSTATE, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = preference.edit()
+        editor.putBoolean("passwordSwitchState", state)
+        editor.commit()
+    }
+
+    fun getPasswordSwitchState(ctx: Context):Boolean{
+        val preference : SharedPreferences = ctx.getSharedPreferences(PASSWORDSWITCHSTATE, Context.MODE_PRIVATE)
+        return preference.getBoolean("passwordSwitchState", false)
     }
 
 }

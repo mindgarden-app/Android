@@ -395,7 +395,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
                 btn_mood_icon_modify_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
                 //선택한 기분 텍스트 넣어주기
-                txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2B2B2B"))
                 txt_mood_text_modify_diary.text = data!!.getStringExtra("moodTxt")
             }
         }

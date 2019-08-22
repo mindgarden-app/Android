@@ -16,11 +16,10 @@ import com.example.mindgarden.Activity.ReadDiaryActivity
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -111,12 +110,12 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
              TokenController.getAccessToken(ctx), deleteDate)
         Log.e("delete", "delete1")
-        deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
-            override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
+        deleteDiaryListResponse.enqueue(object: Callback<DeleteUserResponse> {
+            override fun onFailure(call: Call<DeleteUserResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
             }
 
-            override fun onResponse(call: Call<DeleteDiaryListResponse>, response: Response<DeleteDiaryListResponse>) {
+            override fun onResponse(call: Call<DeleteUserResponse>, response: Response<DeleteUserResponse>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.status == 200) {
                         dataList.removeAt(deleteIndex)

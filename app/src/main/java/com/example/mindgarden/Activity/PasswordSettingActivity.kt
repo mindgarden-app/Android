@@ -9,13 +9,14 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.Switch
+import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.toast
 
 class PasswordSettingActivity : AppCompatActivity() {
     val REQUEST_CODE_PASSWORD_SETTING_ACTIVITY=1000
-
+    lateinit var  passwordSwitch: Switch
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,26 +26,30 @@ class PasswordSettingActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             val intent = Intent(this, MypageActivity::class.java)
             // 백 스페이스 누르면 다시 메인 페이지로
-
             startActivity(intent)
-
             finish()
         }
-        val passwordSwitch: Switch =findViewById (R.id.passwordSwitch)
-        val changePassword: Button =findViewById(R.id.changePassword)
-        passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
 
+        passwordSwitch =findViewById (R.id.passwordSwitch)
+        passwordSwitch.isChecked = SharedPreferenceController.getPasswordSwitchState(this)
+
+        val changePassword: Button =findViewById(R.id.changePassword)
+
+        passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
+            changePassword.setTextColor(Color.BLACK)
 
             if (isChecked) {
                 // The toggle is enabled
-                changePassword.setTextColor(Color.BLACK)
+                changePassword.isClickable = true
 
                 val passwordIntent = Intent(this, PasswordActivity::class.java)
                 // 암호 처음 설정합니다!
                 passwordIntent.putExtra("from","passwordSetting")
                 startActivity(passwordIntent)
 
-
+            }else{
+                changePassword.isClickable = false
+                changePassword.setTextColor(Color.parseColor("#c6c6c6"))
             }
 
         }
@@ -58,6 +63,12 @@ class PasswordSettingActivity : AppCompatActivity() {
             finish()
 
         }
+    }
+
+    //switch 상태 저장
+    override fun onPause() {
+        super.onPause()
+        SharedPreferenceController.setPasswordSwitchState(this ,passwordSwitch.isChecked)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

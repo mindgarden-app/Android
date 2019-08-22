@@ -52,6 +52,7 @@ class AlarmSettingActivity : AppCompatActivity() {
 
         alarmSwitch = findViewById (R.id.alarmSwitch)    //스위치 토글 버튼
         alarmSwitch.isChecked = SharedPreferenceController.getAlarmState(this)
+
         btnSetTimeState(alarmSwitch.isChecked)
 
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
