@@ -11,8 +11,8 @@
             android:id="@+id/ll_rv_item_mood_choice_container">
 
         <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:id="@+id/img_icon_rv_item_mood_choice"
                 android:src="@drawable/img_weather11_none"
         />
@@ -23,7 +23,7 @@
                 android:gravity="center"
                 android:text="text"
                 android:fontFamily="@font/notosanscjkr_regular"
-                android:textSize="13.5dp"
+                android:textSize="15dp"
                 android:textColor="#2B2B2B"
                 android:id="@+id/txt_rv_item_mood_choice"/>
     </LinearLayout>

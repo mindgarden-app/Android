@@ -1,5 +1,6 @@
 package com.example.mindgarden.Activity
 
+import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -19,6 +20,7 @@ import android.widget.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.example.mindgarden.Adapter.MyListAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -28,6 +30,7 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
 import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_modify_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -146,7 +149,15 @@ class WriteDiaryActivity : AppCompatActivity() {
             dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             dialog.show()
-        }
+
+           //크기조절
+           val lp = WindowManager.LayoutParams()
+           lp.copyFrom(dialog.window.attributes)
+           lp.width = 700
+           lp.height = 400
+           val window = dialog.window
+           window.attributes = lp
+       }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,6 +184,7 @@ class WriteDiaryActivity : AppCompatActivity() {
                 btn_mood_icon_write_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
                 //선택한 기분 텍스트 넣어주기
+                txt_mood_text_write_diary.setTextColor(Color.parseColor("#2B2B2B"))
                 txt_mood_text_write_diary.text = data!!.getStringExtra("moodTxt")
             }
         }

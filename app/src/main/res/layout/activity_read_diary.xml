@@ -17,7 +17,8 @@ android:background="#FFFFFF"
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="2">
+            android:layout_weight="1.5">
+
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -25,8 +26,10 @@ android:background="#FFFFFF"
         >
 
             <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="360dp"
                     android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_centerVertical="true"
                     android:id="@+id/img_mood_text_read_diary"
                     android:src="@drawable/btn_moodchoice"
                     android:layout_centerInParent="true"/>
@@ -38,7 +41,7 @@ android:background="#FFFFFF"
                     android:id="@+id/txt_mood_text_read_diary"
                     android:text="기분을 선택하세요."
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:textColor="#969696"
+                    android:textColor="#2B2B2B"
                     android:textSize="15dp"
 
             />
@@ -79,7 +82,7 @@ android:background="#FFFFFF"
                             android:layout_height="wrap_content"
                             android:text="저장시간"
                             android:fontFamily="@font/notosanscjkr_bold"
-                            android:textSize="12dp"
+                            android:textSize="15dp"
                             android:textColor="#2B2B2B"
                             android:textStyle="bold"
                             android:background="@null"
@@ -92,8 +95,8 @@ android:background="#FFFFFF"
                                android:layout_height="220dp"
                                android:layout_marginRight="30dp"
                                android:layout_marginLeft="30dp"
-                               android:layout_marginTop="18dp"
-                               android:layout_marginBottom="50dp"
+                               android:layout_marginTop="10dp"
+                               android:layout_marginBottom="49dp"
                                android:visibility="gone"
                                android:id="@+id/img_gallary_read_diary"
                     />
@@ -104,7 +107,7 @@ android:background="#FFFFFF"
                             android:text="내용"
                             android:fontFamily="@font/notosanscjkr_demilight"
                             android:textColor="#2B2B2B"
-                            android:textSize="13.5dp"
+                            android:textSize="15dp"
                             android:background="@null"
                             android:layout_marginLeft="23dp"
                             android:layout_marginRight="23dp" android:id="@+id/txt_cotent_read_diary"/>
