@@ -45,14 +45,13 @@
         <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
-                android:gravity="center">
+                android:layout_weight="8">
 
             <TextView
                     android:id="@+id/txt_rv_item_diary_list_content"
                     android:layout_width="250dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="left|center_vertical"
                     android:fontFamily="@font/notosanscjkr_demilight"
                     android:text="Content"
                     android:textSize="13.5dp"
@@ -63,9 +62,8 @@
 
         <LinearLayout
                 android:id="@+id/lay1"
-                android:layout_width="0dp"
+                android:layout_width="42dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="#78DEB0"
@@ -73,8 +71,8 @@
 
             <ImageView
                     android:id="@+id/icn_delete"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="19dp"
+                    android:layout_height="20dp"
                     android:gravity="center"
                     android:src="@drawable/icn_delete_new"/>
 
