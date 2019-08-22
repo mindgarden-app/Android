@@ -37,12 +37,12 @@ class MoodChoiceActivity : AppCompatActivity() {
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-        val width = (display.width * 0.6).toInt() //Display 사이즈의 60%
-        val height = (display.height * 0.57).toInt()  //Display 사이즈의 85%
+        val width = (display.width * 0.7).toInt() //Display 사이즈의 60%
+        val height = (display.height * 0.68).toInt()  //Display 사이즈의 85%
+
 
         //테두리 없애기
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         window.attributes.width = width
         window.attributes.height = height
     }

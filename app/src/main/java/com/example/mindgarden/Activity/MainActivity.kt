@@ -29,6 +29,7 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())

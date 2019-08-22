@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ListView
 import com.bumptech.glide.Glide
@@ -65,6 +66,10 @@ class ModifyDiaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_diary)
 
+
+        window.decorView.apply {
+            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        }
 
         //날짜 설정
         val intent : Intent = getIntent()
@@ -157,6 +162,14 @@ class ModifyDiaryActivity : AppCompatActivity() {
             dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             dialog.show()
+
+            //크기 조절
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(dialog.window.attributes)
+            lp.width = 700
+            lp.height = 400
+            val window = dialog.window
+            window.attributes = lp
         }
 
     }
@@ -371,6 +384,7 @@ class ModifyDiaryActivity : AppCompatActivity() {
                 btn_mood_icon_modify_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
                 //선택한 기분 텍스트 넣어주기
+                txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2B2B2B"))
                 txt_mood_text_modify_diary.text = data!!.getStringExtra("moodTxt")
             }
         }

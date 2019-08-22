@@ -16,7 +16,7 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
     >
 
         <RelativeLayout
@@ -24,8 +24,10 @@
                 android:layout_height="match_parent">
 
             <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="360dp"
                     android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/btn_moodchoice"
                     android:id="@+id/img_mood_text_write_diary"
                     android:layout_centerInParent="true"/>
@@ -33,11 +35,11 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:text="기분을 선택하세요."
+                    android:textColor="#C6C6C6"
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:textColor="#2B2B2B"
-                    android:textSize="14dp"
+                    android:textSize="15dp"
+                    android:layout_centerInParent="true"
                     android:id="@+id/txt_mood_text_write_diary"
             />
 
@@ -76,10 +78,9 @@
                 >
 
                     <ImageView android:layout_width="match_parent"
-                               android:layout_height="210dp"
+                               android:layout_height="220dp"
                                android:layout_marginRight="40dp"
                                android:layout_marginLeft="40dp"
-                               android:layout_centerInParent="true"
                                android:background="@drawable/img_shadow"
                                android:id="@+id/img_gallary_write_diary"/>
 
@@ -96,7 +97,8 @@
                         android:layout_height="wrap_content"
                         android:hint="내용"
                         android:fontFamily="@font/notosanscjkr_regular"
-                        android:textSize="13.5dp"
+                        android:textColorHint="#C6C6C6"
+                        android:textSize="15dp"
                         android:textColor="#2B2B2B"
                         android:background="@null"
                         android:layout_marginLeft="23dp"
