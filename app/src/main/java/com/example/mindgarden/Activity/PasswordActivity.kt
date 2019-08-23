@@ -146,7 +146,6 @@ class PasswordActivity : AppCompatActivity() {
 
             }
             R.id.btn_cancel_password_forget->{
-                toast("cancel")
                 builderNew.dismiss()
             }
         }
