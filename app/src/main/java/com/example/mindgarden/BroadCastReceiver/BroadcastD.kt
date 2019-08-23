@@ -25,11 +25,8 @@ class BroadcastD() : BroadcastReceiver(){
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.img_weather11_none)
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.img_weather11_none))
-            .setContentTitle("마인드 가든")
-            .setContentText("오늘의 정원을 가꿀 시간이에요.")
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .bigText("당신의 이야기를 들려주세요"))
+            .setContentTitle("MindGarden")
+            .setContentText("마음의 정원을 돌볼 시간입니다.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setWhen(Calendar.getInstance().timeInMillis)
             // Set the intent that will fire when the user taps the notification
