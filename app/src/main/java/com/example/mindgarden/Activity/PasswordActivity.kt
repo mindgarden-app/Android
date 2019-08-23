@@ -76,10 +76,6 @@ class PasswordActivity : AppCompatActivity() {
 
         }
 
-        toastText.setText(whereFrom.toString())
-        toastText.gravity = Gravity.CENTER
-        toast.view = toastView
-        toast.show()
 
         btnForgetPw.setOnClickListener {
 
@@ -114,15 +110,14 @@ class PasswordActivity : AppCompatActivity() {
 
         if (previousPassword == "") {
             //처음 암호를 설정하는 경우
-            //새 암호를 입력하세요라는 문구로 바뀐 후
             txtPassword.text = "비밀번호를 입력해주세요."
         } else if (previousPassword != "") {
             //암호 변경하는 경우
             //일단 버튼 클릭
             if (whereFrom != "login") {
-                txtPassword.text = "기존 비밀번호를 입력해주세요."
-                btnForgetPw.visibility= View.INVISIBLE
-                btnForgetPw.isEnabled=false}
+                txtPassword.text = "비밀번호를 입력해주세요."
+                btnForgetPw.visibility= View.VISIBLE
+                btnForgetPw.isEnabled=true}
 
             //intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
@@ -284,7 +279,7 @@ fun showDialog(){
                                 //첫번쨰 비밀번호를 입력한다
                                 firstPassword = subPassword
                                 subPassword = ""
-                                txtPassword.text = "다시 입력하세요"
+                                txtPassword.text = "다시 입력해주세요."
                                 btnForgetPw.visibility= View.INVISIBLE
                                 btnForgetPw.isEnabled=false
                             } else {
@@ -297,12 +292,14 @@ fun showDialog(){
                                     Log.e("바뀐 비밀번호",firstPassword)
                                     finish()
                                 } else {
-                                    toastText.setText("비밀번호가 다릅니다")
+                                    toastText.setText("비밀번호가 다릅니다.")
                                     toastText.gravity = Gravity.CENTER
                                     toast.view = toastView
                                     toast.show()
                                     firstPassword = ""
-                                    txtPassword.text = "새 암호를 입력하세요"
+
+                                    //새 암호 입력
+                                    txtPassword.text = "새 비밀번호를 입력해주세요."
                                     btnForgetPw.visibility= View.INVISIBLE
                                     btnForgetPw.isEnabled=false
                                 }
@@ -330,13 +327,15 @@ fun showDialog(){
                                 // 암호변경 하는 경우
                                 if (previousPassword == subPassword) {
                                     subPassword = ""
-                                    txtPassword.text = "새 암호를 입력하세요"
+
+                                    //새 암호 입력
+                                    txtPassword.text = "새 비밀번호를 입력해주세요."
                                     previousPassword = ""
                                     btnForgetPw.visibility= View.INVISIBLE
                                     btnForgetPw.isEnabled=false
                                 } else {// 기존 비
                                     subPassword = ""
-                                    txtPassword.text = "다시 암호를 입력해주세요"
+                                    txtPassword.text = "한 번 더 입력해주세요."
                                     btnForgetPw.visibility= View.INVISIBLE
                                     btnForgetPw.isEnabled=false
                                     //isSet = true
