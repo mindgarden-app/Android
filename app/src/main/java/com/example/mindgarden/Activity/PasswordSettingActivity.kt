@@ -17,12 +17,13 @@ import org.jetbrains.anko.toast
 class PasswordSettingActivity : AppCompatActivity() {
     val REQUEST_CODE_PASSWORD_SETTING_ACTIVITY=1000
     lateinit var  passwordSwitch: Switch
-    lateinit var changePassword: Button
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password_setting)
         txtSetting.text = "암호 설정"
+
+
 
 
         btnBack.setOnClickListener {
@@ -32,28 +33,19 @@ class PasswordSettingActivity : AppCompatActivity() {
             finish()
         }
 
-        changePassword =findViewById(R.id.changePassword)
-
         passwordSwitch =findViewById (R.id.passwordSwitch)
         passwordSwitch.isChecked = SharedPreferenceController.getPasswordSwitchState(this)
 
         pwSwitchState(passwordSwitch.isChecked)
 
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
-                pwSwitchState(isChecked)
+            pwSwitchState(isChecked)
         }
 
-        changePassword.setOnClickListener {
-            val passwordIntent2 = Intent(this, PasswordActivity::class.java)
-            // 암호변겅을 누르면
-            passwordIntent2.putExtra("isSet",false)
-            startActivityForResult(passwordIntent2,REQUEST_CODE_PASSWORD_SETTING_ACTIVITY)
-            finish()
-
-        }
     }
 
     fun pwSwitchState(isChecked:Boolean){
+        val changePassword : Button =findViewById(R.id.changePassword)
         changePassword.setTextColor(Color.BLACK)
 
         if (isChecked) {
@@ -64,10 +56,17 @@ class PasswordSettingActivity : AppCompatActivity() {
                 passwordIntent.putExtra("from","passwordSetting")
                 startActivity(passwordIntent)
             }
-            changePassword.isClickable = true
+
+            changePassword.setOnClickListener {
+                val passwordIntent2 = Intent(this, PasswordActivity::class.java)
+                // 암호변겅을 누르면
+                passwordIntent2.putExtra("isSet",false)
+                startActivityForResult(passwordIntent2,REQUEST_CODE_PASSWORD_SETTING_ACTIVITY)
+                finish()
+
+            }
         }else{
             changePassword.isClickable = false
-            SharedPreferenceController.setPassword(this,"")
             changePassword.setTextColor(Color.parseColor("#c6c6c6"))
         }
 
