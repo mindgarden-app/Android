@@ -1,7 +1,6 @@
 package com.example.mindgarden.Network
 
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.GET.*
 import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse
 import com.example.mindgarden.Network.POST.PostPlantResponse
