@@ -125,13 +125,11 @@ class AlarmSettingActivity : AppCompatActivity() {
     fun mClick(v : View){
         when (v.id){
             R.id.btn_ok_alarm_setting -> {
-                toast("ok")
                 setAlarm(triggerTime)
                 builderNew.dismiss()
 
             }
-            R.id.btn_cancle_alarm_setting->{
-                toast("cancle")
+            R.id.btn_cancel_alarm_setting->{
                 builderNew.dismiss()
             }
         }
