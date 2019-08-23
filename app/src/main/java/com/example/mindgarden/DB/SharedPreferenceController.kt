@@ -58,16 +58,22 @@ object SharedPreferenceController {
         return preference.getBoolean("alarmState", false)
     }
 
-    fun setPasswordSwitchState(ctx: Context, state : Boolean){
+    fun setPasswordSwitchState(ctx: Context, state : Boolean, initValue : Int){
         val preference : SharedPreferences = ctx.getSharedPreferences(PASSWORDSWITCHSTATE, Context.MODE_PRIVATE)
         val editor : SharedPreferences.Editor = preference.edit()
         editor.putBoolean("passwordSwitchState", state)
+        editor.putInt("initValue", initValue)
         editor.commit()
     }
 
     fun getPasswordSwitchState(ctx: Context):Boolean{
         val preference : SharedPreferences = ctx.getSharedPreferences(PASSWORDSWITCHSTATE, Context.MODE_PRIVATE)
         return preference.getBoolean("passwordSwitchState", false)
+    }
+
+    fun getPasswordIsSet(ctx: Context):Int{
+        val preference : SharedPreferences = ctx.getSharedPreferences(PASSWORDSWITCHSTATE, Context.MODE_PRIVATE)
+        return preference.getInt("initValue", 0)
     }
 
 }
