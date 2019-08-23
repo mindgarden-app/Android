@@ -146,28 +146,6 @@ class PasswordActivity : AppCompatActivity() {
         }
 
     }
-/*
-fun showDialog(){
-        val builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
-
-        builder.setView(dialogView)
-
-        builderNew= builder.show()
-        builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-        builderNew.show()
-
-
-        //크기조절
-        val lp = WindowManager.LayoutParams()
-        lp.copyFrom(builderNew.window.attributes)
-        lp.width = 1100
-        val window = builderNew.window
-        window.attributes = lp
-
-    }
- */
-
 
 
     fun getForgetPasswordResponse(accessToken:String){
