@@ -32,7 +32,6 @@
                     android:layout_height="37.59dp"
                     android:layout_alignParentTop="true"
                     app:srcCompat="@drawable/img_profile_duck"
-                    android:background="@drawable/gray_bottom_border"
                     android:layout_marginTop="10dp" android:layout_alignParentBottom="true"
                     android:layout_marginBottom="10dp"/>
 
@@ -56,7 +55,8 @@
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:paddingStart="0dp"
                     android:paddingEnd="0dp"
-                    android:layout_height="20dp"
+                    android:paddingTop="4dp"
+                    android:layout_height="30dp"
                     android:layout_width="150dp"
                     android:layout_alignBottom="@id/myImage"
                     android:layout_toEndOf="@id/myImage"
@@ -78,7 +78,6 @@
                 android:gravity="start|center"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
-                android:elevation="10dp"
                 android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border">

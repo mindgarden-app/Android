@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.DB.SharedPreferenceController
@@ -21,6 +22,7 @@ import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_password.*
 import org.jetbrains.anko.toast
 import com.example.mindgarden.R
+import com.example.mindgarden.RenewAcessTokenController
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import org.jetbrains.anko.ctx
@@ -44,6 +46,8 @@ class PasswordActivity : AppCompatActivity() {
     var forgetPassword:String=""
 
     var isSet = true
+
+    lateinit var builderNew: android.app.AlertDialog
 
     var previousPassword:String=""
     var whereFrom:String =""
@@ -74,33 +78,23 @@ class PasswordActivity : AppCompatActivity() {
 
 
         btnForgetPw.setOnClickListener {
-            getForgetPasswordResponse(TokenController.getAccessToken(this))
-            Log.e("통신 후 받아온 비밀번호",forgetPassword)
 
-            //TODO  다이얼로그 띄워서 확인버튼 누르면 인텐트로 보냄
-            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-            dlg.setMessage("메일로 발송된 번호를 입력하세요")
-            fun do_p() {
-                Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
-            }
+            val builder = android.app.AlertDialog.Builder(this, R.style.AlarmDialogStyle)
+            val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
 
-            val dlg_listener = DialogInterface.OnClickListener { dialog, which ->
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> do_p()
-                }
-            }
+            builder.setView(dialogView)
 
-            dlg.setPositiveButton("확인", null)
+            builderNew= builder.show()
+            builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+            builderNew.show()
 
-            var dlgNew: AlertDialog = dlg.show()
-            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
-            messageText!!.gravity = Gravity.CENTER
-            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
-            dlgNew.show()
-
-            Log.e("메일로 4자리 받았어요!", SharedPreferenceController.getPassword(this))
-            Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
+            //크기조절
+            val lp = WindowManager.LayoutParams()
+            lp.copyFrom(builderNew.window.attributes)
+            lp.width = 800
+            val window = builderNew.window
+            window.attributes = lp
 
         }
 
@@ -131,12 +125,61 @@ class PasswordActivity : AppCompatActivity() {
 
     }
 
+    fun mClick(v : View){
+        when (v.id){
+            R.id.btn_ok_password_forget -> {
+                //메일보내기 눌렀을때
+                getForgetPasswordResponse(TokenController.getAccessToken(this))
+                Log.e("통신 후 받아온 비밀번호",forgetPassword)
+                fun do_p() {
+                    Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
+
+                    Log.e("메일로 4자리 받았어요!", SharedPreferenceController.getPassword(this))
+                    Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
+                }
+                builderNew.dismiss()
+
+            }
+            R.id.btn_cancel_password_forget->{
+                builderNew.dismiss()
+            }
+        }
+
+    }
+/*
+fun showDialog(){
+        val builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
+
+        builder.setView(dialogView)
+
+        builderNew= builder.show()
+        builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+        builderNew.show()
+
+
+        //크기조절
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(builderNew.window.attributes)
+        lp.width = 1100
+        val window = builderNew.window
+        window.attributes = lp
+
+    }
+ */
+
+
 
     fun getForgetPasswordResponse(accessToken:String){
 
+        if(!TokenController.isValidToken(this)){
+            Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
+            RenewAcessTokenController.postRenewAccessToken(this)
+        }
 
         val getForgetPasswordResponse: Call<GetForgetPasswordResponse> =
-            networkService.getForgetPasswordResponse("application/json",accessToken)
+            networkService.getForgetPasswordResponse(TokenController.getAccessToken(this))
+
         getForgetPasswordResponse.enqueue(object:Callback<GetForgetPasswordResponse>{
             override fun onFailure(call: Call<GetForgetPasswordResponse>, t: Throwable) {
                 Log.e("Fail: send email",t.toString())
