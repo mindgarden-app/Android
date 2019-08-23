@@ -39,7 +39,7 @@ class PasswordSettingActivity : AppCompatActivity() {
         pwSwitchState(passwordSwitch.isChecked)
 
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
-            pwSwitchState(isChecked)
+                pwSwitchState(isChecked)
         }
 
     }
@@ -67,6 +67,7 @@ class PasswordSettingActivity : AppCompatActivity() {
             }
         }else{
             changePassword.isClickable = false
+            SharedPreferenceController.setPassword(this,"")
             changePassword.setTextColor(Color.parseColor("#c6c6c6"))
         }
 
