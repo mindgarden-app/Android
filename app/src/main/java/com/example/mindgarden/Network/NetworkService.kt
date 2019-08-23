@@ -95,7 +95,7 @@ interface NetworkService {
     ): Call<PostRenewAccessTokenResponse>
 
     @DELETE("/user/delete")
-    fun deleteUser(
+    fun deleteUserResponse(
         @Header("token") token:String
     ):Call<DeleteUserResponse>
 }

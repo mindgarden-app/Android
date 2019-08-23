@@ -232,12 +232,32 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     fun isValid(accessToken: String, location: Int, treeIdx: Int): Boolean {
-        if (accessToken.toString() == "")
-            toast("로그인하세요")
-        else if (location.toString() == "")
-            toast("위치를 고르세요")
-        else if (treeIdx.toString() == "")
-            toast("나무를 선택하세요")
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
+        if (accessToken.toString() == "") {
+            toastText.setText("로그인하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if (location.toString() == "") {
+            toastText.setText("위치를 고르세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if (treeIdx.toString() == "") {
+            toastText.setText("나무를 선택하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
         else return true
 
         return false

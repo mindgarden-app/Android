@@ -25,6 +25,7 @@ class PasswordSettingActivity : AppCompatActivity() {
 
 
 
+
         btnBack.setOnClickListener {
             val intent = Intent(this, MypageActivity::class.java)
             // 백 스페이스 누르면 다시 메인 페이지로

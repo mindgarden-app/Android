@@ -47,8 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
             val loginIntent= Intent(this, WebviewLoginActivity::class.java)
-            // 암호변겅을 누르면
-
+            loginIntent.putExtra("whyOpen","login")
             startActivity(loginIntent)
 
             //settings.domStorageEnabled = true
