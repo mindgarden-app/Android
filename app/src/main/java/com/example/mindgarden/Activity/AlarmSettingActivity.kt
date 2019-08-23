@@ -116,7 +116,7 @@ class AlarmSettingActivity : AppCompatActivity() {
         //크기조절
         val lp = WindowManager.LayoutParams()
         lp.copyFrom(builderNew.window.attributes)
-        lp.width = 1100
+        lp.width = 800
         val window = builderNew.window
         window.attributes = lp
 
