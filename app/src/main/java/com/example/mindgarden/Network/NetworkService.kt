@@ -1,5 +1,6 @@
 package com.example.mindgarden.Network
 
+import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.GET.*
 import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse
@@ -29,7 +30,7 @@ interface NetworkService {
     fun deleteDiaryListResponse(
         @Header("token") token: String,
         @Path("date") date: String
-    ): Call<DeleteUserResponse>
+    ): Call<DeleteDiaryListResponse>
 
     //일기 상세보기
     @GET("/diarylist/click/{date}")

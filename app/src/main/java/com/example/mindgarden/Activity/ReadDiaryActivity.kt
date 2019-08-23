@@ -11,7 +11,11 @@ import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
@@ -197,11 +201,24 @@ class ReadDiaryActivity : AppCompatActivity() {
     }
 
     fun isValid(userIdx: Int, date: String): Boolean {
-        if(userIdx.toString() == "")
-            toast("로그인하세요")
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        else if(date == "")
-            toast("보고 싶은 달을 선택하세요")
+        if(userIdx.toString() == "") {
+            toastText.setText("로그인하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if(date == "") {
+            toastText.setText("보고 싶은 달을 선택하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
 
         else return true
 

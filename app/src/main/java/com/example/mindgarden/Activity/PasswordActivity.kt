@@ -9,8 +9,10 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
@@ -21,6 +23,7 @@ import org.jetbrains.anko.toast
 import com.example.mindgarden.R
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import org.jetbrains.anko.ctx
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +51,10 @@ class PasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
 
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
 
         txtPassword.text = "비밀번호를 입력해주세요."
         btnForgetPw.visibility= View.INVISIBLE
@@ -65,7 +72,10 @@ class PasswordActivity : AppCompatActivity() {
 
         }
 
-        toast(whereFrom.toString())
+        toastText.setText(whereFrom.toString())
+        toastText.gravity = Gravity.CENTER
+        toast.view = toastView
+        toast.show()
         btnForgetPw.setOnClickListener {
             getForgetPasswordResponse(TokenController.getAccessToken(this))
             Log.e("통신 후 받아온 비밀번호",forgetPassword)
@@ -196,6 +206,11 @@ class PasswordActivity : AppCompatActivity() {
 
 
     fun clickBtn(num: Int) {
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
         if (num != -1) {
             val length: Int = subPassword.length
             if (length < 4) {
@@ -237,7 +252,10 @@ class PasswordActivity : AppCompatActivity() {
                                     Log.e("바뀐 비밀번호",firstPassword)
                                     finish()
                                 } else {
-                                    toast("비밀번호가 다릅니다")
+                                    toastText.setText("비밀번호가 다릅니다")
+                                    toastText.gravity = Gravity.CENTER
+                                    toast.view = toastView
+                                    toast.show()
                                     firstPassword = ""
                                     txtPassword.text = "새 암호를 입력하세요"
                                     btnForgetPw.visibility= View.INVISIBLE

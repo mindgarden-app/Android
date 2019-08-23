@@ -14,10 +14,9 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:layout_width="8.7dp"
-                android:layout_height="13.9dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="17.7dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="12dp"
                 android:src="@drawable/btn_back"
                 android:background="@color/colorWhite"
                 android:id="@+id/btn_back_toolbar"

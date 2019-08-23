@@ -45,13 +45,9 @@
         </activity>
         <activity android:name=".Activity.InventoryActivity">
         </activity>
-        <activity android:name=".Activity.FontSettingActivity">
-        </activity>
         <activity android:name=".Activity.PasswordActivity">
         </activity>
         <activity android:name=".Activity.PasswordSettingActivity">
-        </activity>
-        <activity android:name=".Activity.PremiumActivity">
         </activity>
         <activity android:name=".Activity.AlarmSettingActivity">
         </activity>

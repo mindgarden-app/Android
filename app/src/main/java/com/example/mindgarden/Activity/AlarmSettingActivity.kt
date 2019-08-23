@@ -17,6 +17,7 @@ import android.widget.TimePicker
 import android.app.AlarmManager
 import android.content.SharedPreferences
 import android.view.View
+import android.view.WindowManager
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
 import kotlinx.android.synthetic.main.dialog_alarm_setting.*
@@ -108,6 +109,13 @@ class AlarmSettingActivity : AppCompatActivity() {
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
 
+
+        //크기조절
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(builderNew.window.attributes)
+        lp.width = 1100
+        val window = builderNew.window
+        window.attributes = lp
 
     }
 

@@ -61,7 +61,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {
                         holder.grid_img.setImageResource(R.drawable.img_selcted011)
@@ -75,7 +75,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted012)}
                 } else if (InventoryActivity.inventoryIdx == 2) {
@@ -87,7 +87,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted015)}
                 } else if (InventoryActivity.inventoryIdx == 3) {
@@ -99,7 +99,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted016)}
                 } else if (InventoryActivity.inventoryIdx == 4) {
@@ -111,7 +111,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted007)}
                 } else if (InventoryActivity.inventoryIdx == 5) {
@@ -123,7 +123,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted013)}
                 } else if (InventoryActivity.inventoryIdx == 6) {
@@ -135,7 +135,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted014)}
                 } else if (InventoryActivity.inventoryIdx == 7) {
@@ -147,7 +147,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted008)}
                 } else if (InventoryActivity.inventoryIdx == 8) {
@@ -159,7 +159,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted010)}
                 } else if (InventoryActivity.inventoryIdx == 9) {
@@ -171,7 +171,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted004)}
                 } else if (InventoryActivity.inventoryIdx == 10) {
@@ -183,7 +183,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted005)}
                 } else if (InventoryActivity.inventoryIdx == 11) {
@@ -195,7 +195,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted003)}
                 } else if (InventoryActivity.inventoryIdx == 12) {
@@ -207,7 +207,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted009)}
                 } else if (InventoryActivity.inventoryIdx == 13) {
@@ -219,7 +219,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted002)}
                 } else if (InventoryActivity.inventoryIdx == 14) {
@@ -231,7 +231,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted006)}
                 } else if (InventoryActivity.inventoryIdx == 15) {
@@ -243,7 +243,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                     if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                         holder.grid_img.setImageResource(R.drawable.img_small_lake)
                     } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                        holder.container.setBackgroundResource(R.drawable.grid_border)
                     }
                     else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted001)}
                 }
@@ -256,7 +256,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
                 if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
                     holder.grid_img.setImageResource(R.drawable.img_small_lake)
                 } else if (num > 0) {
-                    holder.container.setBackgroundResource(R.drawable.inventory_click_border)
+                    holder.container.setBackgroundResource(R.drawable.grid_border)
                 }
                 else if (num == 0) {holder.grid_img.setImageResource(R.drawable.tree_size)}
             }
