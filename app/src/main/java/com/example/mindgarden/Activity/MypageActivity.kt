@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.widget.Button
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
@@ -22,6 +23,9 @@ import org.jetbrains.anko.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+
+
 
 class MypageActivity : AppCompatActivity() {
 
@@ -57,12 +61,15 @@ class MypageActivity : AppCompatActivity() {
             dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n"+"mindgarden2019@gmail.com")
 
 
-            dlg.setNeutralButton("확인 ", null)
+            dlg.setNeutralButton("                                    확인         ", null)
+
+
 
 
             var dlgNew: AlertDialog = dlg.show()
             var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
-            messageText!!.gravity = Gravity.CENTER
+            messageText!!.gravity= Gravity.CENTER
+
 
 
             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
