@@ -207,6 +207,7 @@ class WebviewLoginActivity : AppCompatActivity() {
 
         //리프레시 토큰 저장하기
         TokenController.setRefreshToken(this@WebviewLoginActivity,refreshToken)
+
         SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 

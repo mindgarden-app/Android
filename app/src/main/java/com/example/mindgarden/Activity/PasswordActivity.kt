@@ -1,5 +1,6 @@
 package com.example.mindgarden.Activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
@@ -25,6 +26,8 @@ import com.example.mindgarden.R
 import com.example.mindgarden.RenewAcessTokenController
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.dialog_password_forget.*
+import kotlinx.android.synthetic.main.dialog_password_forget.view.*
 import org.jetbrains.anko.ctx
 import org.json.JSONObject
 import retrofit2.Call
@@ -51,6 +54,7 @@ class PasswordActivity : AppCompatActivity() {
 
     var previousPassword:String=""
     var whereFrom:String =""
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
@@ -81,8 +85,10 @@ class PasswordActivity : AppCompatActivity() {
 
             val builder = android.app.AlertDialog.Builder(this, R.style.AlarmDialogStyle)
             val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
-
             builder.setView(dialogView)
+            var mail:String =SharedPreferenceController.getUserMail(this)
+
+            dialogView.txt_user_mail.text= (if (mail != null) mail+"으로\n새로운 비밀번호를 보내겠습니까?" else throw NullPointerException("Expression 'mail' must not be null"))
 
             builderNew= builder.show()
             builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
