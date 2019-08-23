@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.view.ViewPager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.example.mindgarden.Adapter.MainPagerAdapter
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
@@ -18,6 +21,7 @@ import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
 import com.example.mindgarden.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.support.v4.ctx
@@ -31,6 +35,12 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
         //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
@@ -54,7 +64,10 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
             if (check == 2) {
                 startActivityForResult<WriteDiaryActivity>(1100)
             } else {
-                toast("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
+                toastText.setText("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
+                toastText.gravity = Gravity.CENTER
+                toast.view = toastView
+                toast.show()
             }
         }
     }

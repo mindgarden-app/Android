@@ -13,13 +13,16 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.R
 import com.example.mindgarden.Adapter.SliderLoginPagerAdapter
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.ctx
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -72,6 +75,11 @@ class LoginActivity : AppCompatActivity() {
 
 
                 private fun requestPermission() {
+                    val toast: Toast = Toast(ctx)
+                    val inflater: LayoutInflater = LayoutInflater.from(ctx)
+                    val toastView: View = inflater.inflate(R.layout.toast, null)
+                    val toastText: TextView = toastView.findViewById(R.id.toastText)
+
                     if (ActivityCompat.checkSelfPermission(
                             this,
                             permissionsRequired[0]
@@ -101,8 +109,10 @@ class LoginActivity : AppCompatActivity() {
                                 val uri = Uri.fromParts("package", packageName, null)
                                 intent.data = uri
                                 startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
-                                Toast.makeText(applicationContext, "Go to Permissions to Grant ", Toast.LENGTH_LONG)
-                                    .show()
+                                toastText.setText("Go to Permissions to Grant")
+                                toastText.gravity = Gravity.CENTER
+                                toast.view = toastView
+                                toast.show()
                             }
                             builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
                             builder.show()
@@ -120,12 +130,21 @@ class LoginActivity : AppCompatActivity() {
 
         } else {
             //You already have the permission, just go ahead.
-            Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+                        toastText.setText("Allowed All Permissions")
+                        toastText.gravity = Gravity.CENTER
+                        toast.view = toastView
+                        toast.show()
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
         if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
             //check if all permissions are granted
             var allgranted = false
@@ -139,14 +158,20 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (allgranted) {
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+                toastText.setText("Allowed All Permissions")
+                toastText.gravity = Gravity.CENTER
+                toast.view = toastView
+                toast.show()
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
                 || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
             ) {
 
                 getAlertDialog()
             } else {
-                Toast.makeText(applicationContext, "Unable to get Permission", Toast.LENGTH_LONG).show()
+                toastText.setText("Unable to Get Permission")
+                toastText.gravity = Gravity.CENTER
+                toast.view = toastView
+                toast.show()
             }
         }
     }
@@ -164,10 +189,19 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
+
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
         if (sentToSettings) {
             if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
                 //Got Permission
-                Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+                toastText.setText("Allowed All Permissions")
+                toastText.gravity = Gravity.CENTER
+                toast.view = toastView
+                toast.show()
             }
         }
     }

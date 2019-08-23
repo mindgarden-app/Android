@@ -113,7 +113,7 @@ class MainCalendarActivity : AppCompatActivity() {
     //PopUpWindow 사이즈 조절
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-        val width = (display.width * 0.65).toInt() //Display 사이즈의 20%
+        val width = (display.width * 0.69).toInt() //Display 사이즈의 20%
         val height = (display.height * 0.45).toInt()  //Display 사이즈의 20%
 
         //테두리 없애기

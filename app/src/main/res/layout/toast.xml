@@ -10,6 +10,7 @@
             android:id="@+id/toastText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
             android:fontFamily="@font/notosanscjkr_regular"
             android:text="Text"
             android:textSize="12dp"

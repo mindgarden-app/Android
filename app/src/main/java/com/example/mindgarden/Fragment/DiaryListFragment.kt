@@ -6,9 +6,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import com.example.mindgarden.Activity.MypageActivity
 import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
 import com.example.mindgarden.DB.TokenController
@@ -157,11 +160,24 @@ class DiaryListFragment : Fragment() {
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
-        if(accessToken.toString() == "")
-            toast("로그인하세요")
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        else if(date == "")
-            toast("보고 싶은 달을 선택하세요")
+        if(accessToken.toString() == "") {
+            toastText.setText("로그인하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if(date == "") {
+            toastText.setText("보고 싶은 달을 선택하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
 
         else return true
 

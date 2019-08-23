@@ -13,6 +13,8 @@
                 android:id="@+id/listview_dialog_choice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="13dp"
+                android:paddingBottom="10dp"
                 android:dividerHeight="0px"
                 android:divider="#ffffff"
         />

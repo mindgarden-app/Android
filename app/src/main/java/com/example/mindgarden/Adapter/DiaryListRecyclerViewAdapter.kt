@@ -17,10 +17,10 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,8 +76,8 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
                     }
                 }
 
-                dlg.setNeutralButton("네", dlg_listener)
-                dlg.setPositiveButton("아니오", null)
+                dlg.setNeutralButton("         네", dlg_listener)
+                dlg.setPositiveButton("아니오     ", null)
 
                 var dlgNew: AlertDialog = dlg.show()
                 var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
@@ -104,14 +104,15 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     }
 
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
-        if(!TokenController.isValidToken(ctx)){
+        if (!TokenController.isValidToken(ctx)) {
             RenewAcessTokenController.postRenewAccessToken(ctx)
         }
 
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-             TokenController.getAccessToken(ctx), deleteDate)
+            TokenController.getAccessToken(ctx), deleteDate
+        )
         Log.e("delete", "delete1")
-        deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
+        deleteDiaryListResponse.enqueue(object : Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
             }
