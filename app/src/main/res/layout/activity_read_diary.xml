@@ -16,18 +16,19 @@ android:background="#FFFFFF"
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1.5">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+    >
 
-        <RelativeLayout
+    <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
         >
 
             <ImageView
-                    android:layout_width="360dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="325dp"
+                    android:layout_height="55dp"
                     android:scaleType="fitXY"
                     android:layout_centerVertical="true"
                     android:id="@+id/img_mood_text_read_diary"
@@ -49,12 +50,12 @@ android:background="#FFFFFF"
             <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_centerVertical="true" android:layout_alignLeft="@id/img_mood_text_read_diary">
                 <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
                         android:src="@drawable/btn_mood_show"/>
                 <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/img_weather11_none"
                         android:id="@+id/img_mood_icon_read_diary"
@@ -67,36 +68,40 @@ android:background="#FFFFFF"
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="7"
+            android:layout_height="match_parent"
             android:orientation="vertical"
     >
 
-            <ScrollView
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="저장시간"
+                android:fontFamily="@font/notosanscjkr_bold"
+                android:textSize="13dp"
+                android:textColor="#2B2B2B"
+                android:textStyle="bold"
+                android:background="@null"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/img_mood_text_read_diary"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginBottom="18dp"
+                android:id="@+id/txt_time_read_diary"/>
+
+        <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="저장시간"
-                            android:fontFamily="@font/notosanscjkr_bold"
-                            android:textSize="15dp"
-                            android:textColor="#2B2B2B"
-                            android:textStyle="bold"
-                            android:background="@null"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginRight="23dp"
-                            android:layout_marginBottom="7dp"
-                            android:id="@+id/txt_time_read_diary"/>
 
-                    <ImageView android:layout_width="match_parent"
-                               android:layout_height="220dp"
-                               android:layout_marginRight="30dp"
-                               android:layout_marginLeft="30dp"
-                               android:layout_marginTop="10dp"
-                               android:layout_marginBottom="49dp"
+
+                    <ImageView android:layout_width="300dp"
+                               android:layout_height="202dp"
+                               android:layout_marginRight="40dp"
+                               android:layout_marginLeft="40dp"
+                               android:layout_marginBottom="48dp"
+                               android:layout_gravity="center"
                                android:visibility="gone"
                                android:id="@+id/img_gallary_read_diary"
                     />

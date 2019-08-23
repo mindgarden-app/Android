@@ -38,7 +38,7 @@ class MoodChoiceActivity : AppCompatActivity() {
     private fun setWindow(){
         val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
         val width = (display.width * 0.7).toInt() //Display 사이즈의 60%
-        val height = (display.height * 0.68).toInt()  //Display 사이즈의 85%
+        val height = (display.height * 0.88).toInt()  //Display 사이즈의 85%
 
 
         //테두리 없애기

@@ -167,11 +167,10 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
             dialog.show()
 
-            //크기 조절
+            //크기조절
             val lp = WindowManager.LayoutParams()
             lp.copyFrom(dialog.window.attributes)
-            lp.width = 700
-            lp.height = 400
+            lp.width = 950
             val window = dialog.window
             window.attributes = lp
         }
@@ -395,7 +394,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
                 btn_mood_icon_modify_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
 
                 //선택한 기분 텍스트 넣어주기
-                txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2B2B2B"))
                 txt_mood_text_modify_diary.text = data!!.getStringExtra("moodTxt")
             }
         }

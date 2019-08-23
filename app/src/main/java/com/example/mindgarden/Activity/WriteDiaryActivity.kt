@@ -153,8 +153,7 @@ class WriteDiaryActivity : AppCompatActivity() {
            //크기조절
            val lp = WindowManager.LayoutParams()
            lp.copyFrom(dialog.window.attributes)
-           lp.width = 700
-           lp.height = 400
+           lp.width = 950
            val window = dialog.window
            window.attributes = lp
        }
