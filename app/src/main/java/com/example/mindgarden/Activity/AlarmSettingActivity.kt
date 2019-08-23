@@ -22,6 +22,7 @@ import android.view.View
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
 import org.jetbrains.anko.ctx
+import kotlinx.android.synthetic.main.dialog_alarm_setting.*
 import org.jetbrains.anko.toast
 
 
@@ -39,6 +40,7 @@ class AlarmSettingActivity : AppCompatActivity() {
     val CHANNEL_ID = "MINDGARDEN"
     lateinit var alarmSwitch: Switch
     lateinit var alarmManager: AlarmManager
+    lateinit var builderNew: AlertDialog
     var triggerTime : Long = 0
 
 
@@ -101,17 +103,30 @@ class AlarmSettingActivity : AppCompatActivity() {
             alarmTimePicker(hourOfDay, minute)
         }
 
+
         builder.setView(dialogView)
-            .setPositiveButton("확인") { dialogInterface, i ->
-                //알람설정
-                setAlarm(triggerTime)
-            }
-            .setNeutralButton("취소") { dialogInterface, i ->
-                /* 취소일 때 아무 액션이 없으므로 빈칸 */
-            }
-        var builderNew: AlertDialog = builder.show()
+
+
+        builderNew= builder.show()
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
+
+
+    }
+
+    fun mClick(v : View){
+        when (v.id){
+            R.id.btn_ok_alarm_setting -> {
+                toast("ok")
+                setAlarm(triggerTime)
+                builderNew.dismiss()
+
+            }
+            R.id.btn_cancle_alarm_setting->{
+                toast("cancle")
+                builderNew.dismiss()
+            }
+        }
 
     }
 
