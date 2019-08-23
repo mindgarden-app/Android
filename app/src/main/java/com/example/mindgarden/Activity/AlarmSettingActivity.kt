@@ -22,6 +22,7 @@ import android.view.View
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
 import org.jetbrains.anko.ctx
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.dialog_alarm_setting.*
 
 import org.jetbrains.anko.toast
@@ -113,18 +114,23 @@ class AlarmSettingActivity : AppCompatActivity() {
         builderNew.show()
 
 
+        //크기조절
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(builderNew.window.attributes)
+        lp.width = 800
+        val window = builderNew.window
+        window.attributes = lp
+
     }
 
     fun mClick(v : View){
         when (v.id){
             R.id.btn_ok_alarm_setting -> {
-                toast("ok")
                 setAlarm(triggerTime)
                 builderNew.dismiss()
 
             }
-            R.id.btn_cancle_alarm_setting->{
-                toast("cancle")
+            R.id.btn_cancel_alarm_setting->{
                 builderNew.dismiss()
             }
         }

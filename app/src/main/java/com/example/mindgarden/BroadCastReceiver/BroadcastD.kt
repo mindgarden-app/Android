@@ -23,8 +23,8 @@ class BroadcastD() : BroadcastReceiver(){
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
-            .setSmallIcon(R.drawable.img_weather11_none)
-            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.img_weather11_none))
+            .setSmallIcon(R.drawable.icn_pup_topbar)
+            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.icn_puptree))
             .setContentTitle("MindGarden")
             .setContentText("마음의 정원을 돌볼 시간입니다.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
