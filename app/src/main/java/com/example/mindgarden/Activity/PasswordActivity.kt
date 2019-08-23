@@ -120,14 +120,14 @@ class PasswordActivity : AppCompatActivity() {
         if (previousPassword == "") {
             //처음 암호를 설정하는 경우
             //새 암호를 입력하세요라는 문구로 바뀐 후
-            txtPassword.text = "새 암호를 입력하세요"
+            txtPassword.text = "비밀번호를 입력해주세요."
         } else if (previousPassword != "") {
             //암호 변경하는 경우
             //일단 버튼 클릭
             if (whereFrom != "login") {
-                txtPassword.text = "기존 암호를 입력하세요"
-                btnForgetPw.visibility= View.VISIBLE
-                btnForgetPw.isEnabled=true}
+                txtPassword.text = "기존 비밀번호를 입력해주세요."
+                btnForgetPw.visibility= View.INVISIBLE
+                btnForgetPw.isEnabled=false}
 
             //intent.putExtra("isSet", isSet)
             setResult(Activity.RESULT_OK, intent)
