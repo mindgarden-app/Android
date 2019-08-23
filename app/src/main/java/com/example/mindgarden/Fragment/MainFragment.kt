@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,8 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
@@ -424,10 +427,25 @@ class MainFragment : Fragment() {
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
-        if (accessToken.toString() == "")
-            toast("로그인하세요")
-        else if (date == "")
-            toast("보고 싶은 달을 선택하세요")
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
+        if(accessToken.toString() == "") {
+            toastText.setText("로그인하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if(date == "") {
+            toastText.setText("보고 싶은 달을 선택하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
         else return true
 
         return false

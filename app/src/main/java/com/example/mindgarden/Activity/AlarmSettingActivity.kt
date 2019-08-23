@@ -16,8 +16,12 @@ import android.util.Log
 import android.widget.TimePicker
 import android.app.AlarmManager
 import android.content.SharedPreferences
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
+import org.jetbrains.anko.ctx
 import org.jetbrains.anko.toast
 
 
@@ -147,7 +151,16 @@ class AlarmSettingActivity : AppCompatActivity() {
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         alarmManager.cancel(pendingIntent)
-        toast("알람이 해제되었습니다.")
+
+        val toast: Toast = Toast(ctx)
+        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
+        toastText.setText("알람이 해제되었습니다.")
+        toastText.gravity = Gravity.CENTER
+        toast.view = toastView
+        toast.show()
     }
 
     //notification을 위한 채널설정
