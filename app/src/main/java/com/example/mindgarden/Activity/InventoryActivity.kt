@@ -75,10 +75,6 @@ class InventoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
 
-        window.decorView.apply {
-            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        }
-
         //txtSetting.text = "나무 심기"
 
         btn_back_toolbar.setOnClickListener {
