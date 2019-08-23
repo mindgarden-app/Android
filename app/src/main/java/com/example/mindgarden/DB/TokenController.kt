@@ -41,7 +41,7 @@ object TokenController {
         val preference:SharedPreferences=ctx.getSharedPreferences(ACCESS_TOKEN,Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor=preference.edit()
         editor.clear()
-        editor.commit()
+        editor.apply()
     }
 
     fun setStartTimeAccessToken(ctx: Context, tiemToStart:Long){
