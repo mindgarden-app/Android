@@ -102,6 +102,7 @@ class PasswordActivity : AppCompatActivity() {
             val window = builderNew.window
             window.attributes = lp
 
+
         }
 
 
