@@ -61,7 +61,7 @@ class MypageActivity : AppCompatActivity() {
             dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n"+"mindgarden2019@gmail.com")
 
 
-            dlg.setNeutralButton("                                    확인         ", null)
+            dlg.setNeutralButton("                             확인         ", null)
 
 
 
