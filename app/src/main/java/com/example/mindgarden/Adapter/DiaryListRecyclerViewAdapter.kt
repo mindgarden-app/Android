@@ -17,7 +17,6 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.RenewAcessTokenController
@@ -27,10 +26,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
-    var context : Context = ctx
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
+    var context: Context = ctx
+    var isPressed = false
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -39,7 +39,6 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
 
     override fun getItemCount(): Int = dataList.size
 
-    var isPressed = false
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.day_num.text = dataList[position].date.substring(8, 10)
         holder.day_text.text = dataList[position].date.substring(11, 14)
@@ -53,12 +52,14 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
 
         holder.content.setOnClickListener {
             var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
-            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0, 10))
+            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to dateText, "dateValue" to dataList[position].date.substring(0, 10))
         }
 
+        //일기 삭제 레이아웃 표시
         if (isPressed) {
             holder.lay1.visibility = View.VISIBLE
 
+            //수정 예정 - 커스텀 토스트뷰로 바꿔보기
             holder.icn_delete.setOnClickListener {
                 var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 dlg.setTitle("삭제")
@@ -92,17 +93,25 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     }
 
     fun isValid(token: String, date: String): Boolean {
-        if(token == "")
+        if (token == "")
             Log.e("login fail", "login value null")
 
-        else if(date == "")
+        else if (date == "")
             Log.e("date fail", "date value null")
+
+        //수정중
+        /*if (token.equals(""))
+            Log.e("login fail", "login value null")
+
+        else if (date.equals(""))
+            Log.e("date fail", "date value null")*/
 
         else return true
 
         return false
     }
 
+    //일기 삭제
     private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
         if (!TokenController.isValidToken(ctx)) {
             RenewAcessTokenController.postRenewAccessToken(ctx)
@@ -112,7 +121,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
             TokenController.getAccessToken(ctx), deleteDate
         )
         Log.e("delete", "delete1")
-        deleteDiaryListResponse.enqueue(object : Callback<DeleteDiaryListResponse> {
+        deleteDiaryListResponse.enqueue(object: Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
             }
@@ -123,7 +132,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
                         dataList.removeAt(deleteIndex)
                         notifyItemRemoved(deleteIndex)
                         notifyItemRangeChanged(deleteIndex, dataList.size)
-                        Log.e("delete", "delete2")
+                        Log.e("일기 삭제 성공", "일기 삭제 성공")
                     }
                 }
             }

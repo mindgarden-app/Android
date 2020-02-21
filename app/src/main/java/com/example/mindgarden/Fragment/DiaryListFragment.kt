@@ -26,9 +26,7 @@ import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.ctx
 import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -80,6 +78,7 @@ class DiaryListFragment : Fragment() {
         }
         txt_month.setText(month)
 
+        //이전 달 이동
         btn_left.setOnClickListener {
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString()
@@ -102,6 +101,7 @@ class DiaryListFragment : Fragment() {
             }
         }
 
+        //이후 달 이동
         btn_right.setOnClickListener {
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
@@ -165,29 +165,46 @@ class DiaryListFragment : Fragment() {
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        if(accessToken.toString() == "") {
+        if (accessToken.toString() == "") {
             toastText.setText("로그인하세요")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
             toast.show()
         }
 
-        else if(date == "") {
+        else if (date == "") {
             toastText.setText("보고 싶은 달을 선택하세요")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
             toast.show()
         }
 
+        //수정중
+        /*if (accessToken.equals("")) {
+            toastText.setText("로그인하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }
+
+        else if (date.equals("")) {
+            toastText.setText("보고 싶은 달을 선택하세요")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
+        }*/
+
         else return true
 
         return false
     }
 
+    //일기 목록 조회
     private fun getDiaryListResponse() {
-        if(!TokenController.isValidToken(ctx)){
+        if (!TokenController.isValidToken(ctx)) {
             RenewAcessTokenController.postRenewAccessToken(ctx)
         }
+
         val getDiaryListResponse = networkService.getDiaryListResponse(
             TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
@@ -202,9 +219,7 @@ class DiaryListFragment : Fragment() {
 
                         if (tmp.isEmpty()) {
                             ll_list_zero.visibility = View.VISIBLE
-                        }
-
-                        else {
+                        } else {
                             ll_list_zero.visibility = View.GONE
                             diaryListRecyclerViewAdapter.dataList = tmp
                             diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }

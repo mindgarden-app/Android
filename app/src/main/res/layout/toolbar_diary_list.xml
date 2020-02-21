@@ -39,10 +39,10 @@
                     android:paddingHorizontal="40dp"
                     android:src="@drawable/btn_left"/>
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-
-                          android:id="@+id/ll_date_toolbar_diary_list">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_date_toolbar_diary_list">
 
                 <TextView
                         android:id="@+id/txt_year"
@@ -80,7 +80,6 @@
                         android:textColor="#2B2B2B"/>
 
             </LinearLayout>
-
 
             <ImageView
                     android:id="@+id/btn_right"
