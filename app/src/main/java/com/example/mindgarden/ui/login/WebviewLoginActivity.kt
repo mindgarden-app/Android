@@ -5,7 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,8 +20,6 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
-
-import org.jetbrains.anko.startActivity
 
 import android.webkit.ValueCallback as AndroidWebkitValueCallback
 
@@ -151,7 +149,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                             //로그인 실패시
                             else if(it.endsWith("http://13.125.190.74:3000/auth/login/fail")){
                                 myWebView.visibility = View.INVISIBLE
-                                startActivity<LoginActivity>()
+                                startActivity(Intent(context, LoginActivity::class.java))
                             }
                         }
 

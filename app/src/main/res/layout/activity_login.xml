@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent"
@@ -32,14 +32,14 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="187dp"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin">
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpLoginSlider"
                 android:layout_width="wrap_content"
                 android:layout_height="208dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="-1dp" android:layout_marginTop="-2dp" android:layout_alignParentTop="true">
-        </android.support.v4.view.ViewPager>
-        <android.support.design.widget.TabLayout
+        </androidx.viewpager.widget.ViewPager>
+        <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tlLoginIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="31dp"
                 app:tabIndicatorHeight="0dp">
-        </android.support.design.widget.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
     </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

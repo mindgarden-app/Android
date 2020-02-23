@@ -1,12 +1,12 @@
 package com.example.mindgarden.ui.diary
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_mood_choice.*
 import android.graphics.Bitmap
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindgarden.R
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
@@ -73,13 +73,18 @@ class MoodChoiceActivity : AppCompatActivity() {
 
 
         rv_mood_mood_choice_list.adapter = MoodChoiceRecyclerViewAdapter(this, dataList)
-        rv_mood_mood_choice_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_mood_mood_choice_list.layoutManager =
+            LinearLayoutManager(
+                this,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
 
         moodChoiceRecyclerViewAdapter = MoodChoiceRecyclerViewAdapter(this, dataList)
 
     }
 
-    public fun drawableToBitmap(icnName : Int) : Bitmap{
+    private fun drawableToBitmap(icnName : Int) : Bitmap{
         val drawable = resources.getDrawable(icnName) as BitmapDrawable
         val bitmap = drawable.bitmap
         return bitmap

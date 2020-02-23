@@ -1,7 +1,7 @@
 package com.example.mindgarden.ui.inventory
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +15,7 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import kotlin.collections.ArrayList
 
-class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
+class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): androidx.recyclerview.widget.RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
     val networkService: NetworkService by lazy{
         ApplicationController.instance.networkService
     }
@@ -261,7 +261,7 @@ class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridD
         }
     }
 
-    inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var container = itemView.findViewById(R.id.ll_rv_item_grid_container) as LinearLayout
         var grid_img = itemView.findViewById(R.id.img_rv_item_grid) as ImageView
     }

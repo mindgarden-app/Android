@@ -9,13 +9,13 @@
         android:background="@drawable/round_layout_border"
 >
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="24dp" android:layout_marginTop="14dp" android:layout_marginBottom="14dp"
             android:id="@+id/rv_mood_mood_choice_list">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>

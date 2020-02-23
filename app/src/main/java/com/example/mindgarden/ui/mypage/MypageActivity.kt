@@ -2,8 +2,8 @@ package com.example.mindgarden.ui.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.widget.TextView
@@ -19,7 +19,6 @@ import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.password.PasswordSettingActivity
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
-import org.jetbrains.anko.ctx
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -111,12 +110,12 @@ finish()
 }
 }
 private fun deleteUserResponse() {
-if(!TokenController.isValidToken(ctx)){
-RenewAcessTokenController.postRenewAccessToken(ctx)
+if(!TokenController.isValidToken(this)){
+RenewAcessTokenController.postRenewAccessToken(this)
 }
 
 val deleteDiaryListResponse = networkService.deleteUserResponse(
-TokenController.getAccessToken(ctx))
+TokenController.getAccessToken(this))
 Log.e("delete", "delete")
 
 deleteDiaryListResponse.enqueue(object: Callback<DeleteUserResponse> {
