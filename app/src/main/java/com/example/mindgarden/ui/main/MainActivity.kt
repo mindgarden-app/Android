@@ -1,11 +1,9 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.Gravity
@@ -14,18 +12,13 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.Adapter.MainPagerAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.ctx
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.toast
 
 
 class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {

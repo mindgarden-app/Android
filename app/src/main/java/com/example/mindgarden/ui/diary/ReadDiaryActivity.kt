@@ -1,42 +1,31 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.diary
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
-import org.jetbrains.anko.startActivity
 import com.example.mindgarden.R
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
-import com.kotlinpermissions.ifNotNullOrElse
-import com.kotlinpermissions.notNull
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_read_diary.*
-import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ReadDiaryActivity : AppCompatActivity() {

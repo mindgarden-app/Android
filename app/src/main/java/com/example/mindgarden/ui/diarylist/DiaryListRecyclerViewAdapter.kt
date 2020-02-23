@@ -1,4 +1,4 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.diarylist
 
 import android.content.Context
 import android.content.DialogInterface
@@ -12,15 +12,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.mindgarden.Activity.ReadDiaryActivity
+import com.example.mindgarden.ui.diary.ReadDiaryActivity
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback

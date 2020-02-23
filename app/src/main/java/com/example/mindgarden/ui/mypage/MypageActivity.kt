@@ -1,22 +1,22 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.mypage
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
 import android.widget.TextView
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.ui.alarm.AlarmSettingActivity
+import com.example.mindgarden.ui.login.LoginActivity
+import com.example.mindgarden.ui.password.PasswordSettingActivity
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import org.jetbrains.anko.ctx

@@ -1,4 +1,4 @@
-package com.example.mindgarden.Fragment
+package com.example.mindgarden.ui.diarylist
 
 
 import android.os.Bundle
@@ -12,8 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.Activity.MypageActivity
-import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
+import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 
@@ -25,10 +24,8 @@ import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.ctx
+import com.example.mindgarden.DB.RenewAcessTokenController
 import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -149,7 +146,8 @@ class DiaryListFragment : Fragment() {
             startActivity<MypageActivity>()
         }
 
-        diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
+        diaryListRecyclerViewAdapter =
+            DiaryListRecyclerViewAdapter(context!!, dataList)
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)

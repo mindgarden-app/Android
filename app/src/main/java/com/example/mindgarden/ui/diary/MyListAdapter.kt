@@ -1,4 +1,4 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.view.View

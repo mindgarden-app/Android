@@ -1,12 +1,10 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.main
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 
-import com.example.mindgarden.Fragment.DiaryListFragment
-import com.example.mindgarden.Fragment.MainFragment
-import com.example.mindgarden.R
+import com.example.mindgarden.ui.diarylist.DiaryListFragment
 
 class MainPagerAdapter(fm: FragmentManager, private val num_fragment: Int): FragmentStatePagerAdapter(fm) {
     override fun getItem(p0: Int): Fragment? {

@@ -1,4 +1,4 @@
-package com.example.mindgarden.Fragment
+package com.example.mindgarden.ui.main
 
 
 import android.app.Activity
@@ -13,9 +13,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mindgarden.Activity.InventoryActivity
-import com.example.mindgarden.Activity.MainCalendarActivity
-import com.example.mindgarden.Activity.MypageActivity
+import com.example.mindgarden.ui.inventory.InventoryActivity
+import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.btn_left
@@ -31,9 +30,8 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
 import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
