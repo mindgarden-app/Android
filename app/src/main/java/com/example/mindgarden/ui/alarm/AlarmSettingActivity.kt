@@ -8,7 +8,7 @@ import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import com.example.mindgarden.R
@@ -19,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.View
 import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
-import org.jetbrains.anko.ctx
 import android.view.WindowManager
 import com.example.mindgarden.ui.mypage.MypageActivity
 
@@ -170,8 +169,8 @@ class AlarmSettingActivity : AppCompatActivity() {
 
         alarmManager.cancel(pendingIntent)
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 

@@ -8,10 +8,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.TabLayout
-import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -21,7 +21,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.ctx
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
@@ -74,8 +73,8 @@ class LoginActivity : AppCompatActivity() {
 
 
                 private fun requestPermission() {
-                    val toast: Toast = Toast(ctx)
-                    val inflater: LayoutInflater = LayoutInflater.from(ctx)
+                    val toast: Toast = Toast(this)
+                    val inflater: LayoutInflater = LayoutInflater.from(this)
                     val toastView: View = inflater.inflate(R.layout.toast, null)
                     val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -139,8 +138,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -189,8 +188,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onPostResume() {
         super.onPostResume()
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 

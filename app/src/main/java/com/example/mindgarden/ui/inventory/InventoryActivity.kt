@@ -3,10 +3,10 @@ package com.example.mindgarden.ui.inventory
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -27,7 +27,6 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
-import org.jetbrains.anko.ctx
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -123,15 +122,16 @@ class InventoryActivity : AppCompatActivity() {
 
         gridRecyclerViewAdapter = GridRecyclerViewAdapter(this, gridList)
         rv_grid.adapter = gridRecyclerViewAdapter
-        rv_grid.layoutManager = GridLayoutManager(this, 6)
+        rv_grid.layoutManager =
+            androidx.recyclerview.widget.GridLayoutManager(this, 6)
 
         configureRecyclerView()
 
         getPlantResponse()
 
         btn_save_inventory.setOnClickListener {
-            val toast: Toast = Toast(ctx)
-            val inflater: LayoutInflater = LayoutInflater.from(ctx)
+            val toast: Toast = Toast(this)
+            val inflater: LayoutInflater = LayoutInflater.from(this)
             val toastView: View = inflater.inflate(R.layout.toast, null)
             val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -208,7 +208,12 @@ class InventoryActivity : AppCompatActivity() {
         inventoryRecyclerViewAdapter =
             InventoryRecyclerViewAdapter(this, inventory_dataList)
         rv_inventory.adapter = inventoryRecyclerViewAdapter
-        rv_inventory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_inventory.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(
+                this,
+                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+                false
+            )
 
         inventoryList = listOf<Int> (
             R.drawable.android_tree1, R.drawable.android_tree2, R.drawable.android_tree3, R.drawable.android_tree4,
@@ -225,8 +230,8 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     fun isValid(accessToken: String, location: Int, treeIdx: Int): Boolean {
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -284,8 +289,8 @@ class InventoryActivity : AppCompatActivity() {
 
     fun getPlantResponse() {
 
-        if(!TokenController.isValidToken(ctx)){
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this)
         }
 
         if (month.toInt() < 10) {

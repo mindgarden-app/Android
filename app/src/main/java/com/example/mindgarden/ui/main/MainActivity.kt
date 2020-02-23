@@ -2,9 +2,9 @@ package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -17,8 +17,6 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.startActivityForResult
 
 
 class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
@@ -29,8 +27,8 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -55,7 +53,7 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         btn_write.setOnClickListener {
             Log.e("mainActivity", check.toString())
             if (check == 2) {
-                startActivityForResult<WriteDiaryActivity>(1100)
+                startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
             } else {
                 toastText.setText("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
                 toastText.gravity = Gravity.CENTER

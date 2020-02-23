@@ -2,8 +2,9 @@ package com.example.mindgarden.ui.diarylist
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.RecyclerView
+import android.content.Intent
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,7 +21,6 @@ import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
-import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,7 +52,13 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
 
         holder.content.setOnClickListener {
             var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
-            ctx.startActivity<ReadDiaryActivity>("from" to 300, "userIdx" to 7, "dateText" to  dateText,"dateValue" to dataList[position].date.substring(0, 10))
+            Intent(ctx, ReadDiaryActivity::class.java).apply {
+                putExtra("from",300)
+                putExtra("userIdx" ,7)
+                putExtra("dateText",  dateText)
+                putExtra("dateValue", dataList[position].date.substring(0, 10))
+                ctx.startActivity(this)
+            }
         }
 
         if (isPressed) {
