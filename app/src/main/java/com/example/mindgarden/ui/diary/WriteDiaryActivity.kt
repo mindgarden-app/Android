@@ -1,6 +1,5 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.diary
 
-import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,13 +7,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import kotlinx.android.synthetic.main.activity_write_diary.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
-import org.jetbrains.anko.startActivity
 import com.example.mindgarden.R
 import android.net.Uri
-import android.provider.MediaStore.Images
 import android.view.View
 import android.widget.*
 import android.graphics.Bitmap
@@ -22,15 +18,11 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.WindowManager
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Adapter.MyListAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
-import com.example.mindgarden.RenewAcessTokenController
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_modify_diary.*
+import com.example.mindgarden.DB.RenewAcessTokenController
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

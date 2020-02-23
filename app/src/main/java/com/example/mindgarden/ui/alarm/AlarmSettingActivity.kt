@@ -1,4 +1,4 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.alarm
 
 import android.annotation.SuppressLint
 import android.app.*
@@ -12,10 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import com.example.mindgarden.R
-import android.util.Log
 import android.widget.TimePicker
 import android.app.AlarmManager
-import android.content.SharedPreferences
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +21,7 @@ import com.example.mindgarden.BroadCastReceiver.BroadcastD
 import com.example.mindgarden.DB.SharedPreferenceController
 import org.jetbrains.anko.ctx
 import android.view.WindowManager
-import kotlinx.android.synthetic.main.dialog_alarm_setting.*
-
-import org.jetbrains.anko.toast
+import com.example.mindgarden.ui.mypage.MypageActivity
 
 
 /*

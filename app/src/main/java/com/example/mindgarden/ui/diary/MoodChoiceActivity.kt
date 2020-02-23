@@ -1,21 +1,16 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.diary
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Display
-import android.view.Window
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_mood_choice.*
-import android.content.Context.WINDOW_SERVICE
 import android.graphics.Bitmap
 import android.support.v7.widget.LinearLayoutManager
 import com.example.mindgarden.R
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import com.example.mindgarden.Adapter.MoodChoiceRecyclerViewAdapter
 import com.example.mindgarden.Data.MoodChoiceData
 
 

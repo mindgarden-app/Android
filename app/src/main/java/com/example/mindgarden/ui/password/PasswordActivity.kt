@@ -1,12 +1,9 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.password
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
@@ -15,21 +12,17 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
 import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_password.*
-import org.jetbrains.anko.toast
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.dialog_password_forget.*
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.dialog_password_forget.view.*
 import org.jetbrains.anko.ctx
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

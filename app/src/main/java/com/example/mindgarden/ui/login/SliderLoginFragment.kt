@@ -1,4 +1,4 @@
-package com.example.mindgarden.Fragment
+package com.example.mindgarden.ui.login
 
 
 import android.os.Bundle

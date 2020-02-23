@@ -1,18 +1,18 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.login
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.media.session.MediaSession
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import com.example.mindgarden.ui.main.MainActivity
+import com.example.mindgarden.ui.password.PasswordActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
