@@ -30,6 +30,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
+    lateinit var dlgNew : AlertDialog
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -65,6 +66,15 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
             holder.lay1.visibility = View.VISIBLE
 
             holder.icn_delete.setOnClickListener {
+                //수정중
+                /*val builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                val dlgView = LayoutInflater.from(context).inflate(R.layout.dialog_diary_list_delete, null)
+                builder.setView(dlgView)
+
+                dlgNew = builder.show()
+                dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+                dlgNew.show()*/
+
                 var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 dlg.setTitle("삭제")
                 dlg.setMessage("삭제하시겠습니까?")
