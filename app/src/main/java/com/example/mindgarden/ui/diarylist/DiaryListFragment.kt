@@ -1,10 +1,11 @@
-package com.example.mindgarden.Fragment
+package com.example.mindgarden.ui.diarylist
 
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,21 +13,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.Activity.MypageActivity
-import com.example.mindgarden.Adapter.DiaryListRecyclerViewAdapter
+import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
 
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
-import org.jetbrains.anko.support.v4.startActivity
 import java.util.*
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.support.v4.ctx
+import com.example.mindgarden.DB.RenewAcessTokenController
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,7 +40,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class DiaryListFragment : Fragment() {
+class DiaryListFragment : androidx.fragment.app.Fragment() {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
@@ -60,7 +58,7 @@ class DiaryListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
             getDiaryListResponse()
         }
     }
@@ -78,7 +76,6 @@ class DiaryListFragment : Fragment() {
         }
         txt_month.setText(month)
 
-        //이전 달 이동
         btn_left.setOnClickListener {
             if (month.toInt() == 1) {
                 month = (month.toInt() + 11).toString()
@@ -96,12 +93,11 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
                 getDiaryListResponse()
             }
         }
 
-        //이후 달 이동
         btn_right.setOnClickListener {
             if (month.toInt() == 12) {
                 month = (month.toInt() - 11).toString()
@@ -119,7 +115,7 @@ class DiaryListFragment : Fragment() {
                 txt_month.setText(month)
             }
 
-            if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
                 getDiaryListResponse()
             }
         }
@@ -146,67 +142,61 @@ class DiaryListFragment : Fragment() {
         }
 
         btn_setting.setOnClickListener {
-            startActivity<MypageActivity>()
+            startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
         }
 
-        diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
+        diaryListRecyclerViewAdapter =
+            DiaryListRecyclerViewAdapter(context!!, dataList)
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
-        rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
-        rv_diary_list.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        rv_diary_list.addItemDecoration(
+            DividerItemDecoration(
+                context!!,
+                1
+            )
+        )
+        rv_diary_list.layoutManager =
+            LinearLayoutManager(
+                context!!,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
             getDiaryListResponse()
         }
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(activity!!.applicationContext)
+        val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        if (accessToken.toString() == "") {
+        if(accessToken.toString() == "") {
             toastText.setText("로그인하세요")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
             toast.show()
         }
 
-        else if (date == "") {
+        else if(date == "") {
             toastText.setText("보고 싶은 달을 선택하세요")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
             toast.show()
         }
-
-        //수정중
-        /*if (accessToken.equals("")) {
-            toastText.setText("로그인하세요")
-            toastText.gravity = Gravity.CENTER
-            toast.view = toastView
-            toast.show()
-        }
-
-        else if (date.equals("")) {
-            toastText.setText("보고 싶은 달을 선택하세요")
-            toastText.gravity = Gravity.CENTER
-            toast.view = toastView
-            toast.show()
-        }*/
 
         else return true
 
         return false
     }
 
-    //일기 목록 조회
     private fun getDiaryListResponse() {
-        if (!TokenController.isValidToken(ctx)) {
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(activity!!.applicationContext)){
+            RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext)
         }
-
         val getDiaryListResponse = networkService.getDiaryListResponse(
-            TokenController.getAccessToken(ctx), txt_year.text.toString() + "-" + txt_month.text.toString())
+            TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())
         getDiaryListResponse.enqueue(object: Callback<GetDiaryListResponse> {
             override fun onFailure(call: Call<GetDiaryListResponse>, t: Throwable) {
                 Log.e("garden select fail", t.toString())
@@ -219,7 +209,9 @@ class DiaryListFragment : Fragment() {
 
                         if (tmp.isEmpty()) {
                             ll_list_zero.visibility = View.VISIBLE
-                        } else {
+                        }
+
+                        else {
                             ll_list_zero.visibility = View.GONE
                             diaryListRecyclerViewAdapter.dataList = tmp
                             diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }

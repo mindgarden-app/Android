@@ -1,12 +1,10 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,30 +12,21 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.Adapter.MainPagerAdapter
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Fragment.MainFragment
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.toast
 
 
-class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
-
-    var check : Int = 0
+class MainActivity  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -58,22 +47,9 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
         Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())
 
-
         btn_write.setOnClickListener {
-            Log.e("mainActivity", check.toString())
-            if (check == 2) {
-                startActivityForResult<WriteDiaryActivity>(1100)
-            } else {
-                toastText.setText("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
-                toastText.gravity = Gravity.CENTER
-                toast.view = toastView
-                toast.show()
-            }
+            startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
         }
-    }
-
-    override fun checkPass(c: Int) {
-        check = c
     }
 
     private fun configureMainTab() {

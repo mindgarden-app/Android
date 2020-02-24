@@ -1,11 +1,11 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.activity_main_calendar.*
-import org.w3c.dom.Text
 import java.util.*
 
 

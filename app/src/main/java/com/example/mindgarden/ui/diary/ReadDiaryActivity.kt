@@ -1,42 +1,29 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.diary
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
-import org.jetbrains.anko.startActivity
 import com.example.mindgarden.R
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
-import com.kotlinpermissions.ifNotNullOrElse
-import com.kotlinpermissions.notNull
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_read_diary.*
-import kotlinx.android.synthetic.main.toolbar_diary_list.*
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ReadDiaryActivity : AppCompatActivity() {
@@ -108,7 +95,11 @@ class ReadDiaryActivity : AppCompatActivity() {
         //수정버튼 -> ModifyDiaryActivity로 넘어가기
         btn_modify_diary_toolbar.setOnClickListener {
             //date값 userIdx intent
-            startActivityForResult<ModifyDiaryActivity>(1200, "dateText" to dateText, "dateValue" to dateValue)
+            Intent(this, ModifyDiaryActivity::class.java).apply {
+                putExtra("dateText", dateText)
+                putExtra("dateValue", dateValue)
+                startActivityForResult(this, 1200)
+            }
         }
 
         //뒤로가기 -> DiaryListAcitivy로 이동
@@ -136,7 +127,6 @@ class ReadDiaryActivity : AppCompatActivity() {
             dateText = intent.getStringExtra("dateText")
             getDiaryResponse()
 
-
         }
 
 
@@ -144,8 +134,8 @@ class ReadDiaryActivity : AppCompatActivity() {
 
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
-        if(!TokenController.isValidToken(ctx)){
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this)
         }
         //userIdx , date 값
         val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
@@ -201,8 +191,8 @@ class ReadDiaryActivity : AppCompatActivity() {
     }
 
     fun isValid(userIdx: Int, date: String): Boolean {
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 

@@ -1,14 +1,14 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.login
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import com.example.mindgarden.Fragment.SliderLoginFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
-class SliderLoginPagerAdapter (fm: FragmentManager?,val num_fragment:Int): FragmentPagerAdapter(fm) {
-    override fun getItem(p0: Int): Fragment? {
-        var fragment: SliderLoginFragment = SliderLoginFragment()
+class SliderLoginPagerAdapter (fm: FragmentManager, val num_fragment:Int): FragmentPagerAdapter(fm) {
+    override fun getItem(p0: Int): Fragment {
+        var fragment: SliderLoginFragment =
+            SliderLoginFragment()
         var bundle: Bundle = Bundle(1)
 
        when(p0){
@@ -17,6 +17,7 @@ class SliderLoginPagerAdapter (fm: FragmentManager?,val num_fragment:Int): Fragm
            2-> bundle.putString("background_url", "https://3.bp.blogspot.com/-0HMIu1_bHPo/XSWWVxoExkI/AAAAAAAAAPE/ePCerwoW5nUblTsjYfzl0k_foefOAr_fACK4BGAYYCw/s1600/Img_log_in_3.png")
            3-> bundle.putString("background_url", "https://3.bp.blogspot.com/-JMJe5rVQdo8/XSWWV2fo3fI/AAAAAAAAAPA/H2OAjgrQdvMi55uKIeHSSJ2gAv9UVrgOACK4BGAYYCw/s1600/img_log_in_4.png")
        }
+
         fragment.arguments=bundle
         return fragment
     }

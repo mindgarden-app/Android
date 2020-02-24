@@ -1,12 +1,10 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.password
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,19 +12,16 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetForgetPasswordResponse
 import com.example.mindgarden.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_password.*
-import org.jetbrains.anko.toast
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import org.jetbrains.anko.ctx
-import org.json.JSONObject
+import com.example.mindgarden.DB.RenewAcessTokenController
+import kotlinx.android.synthetic.main.dialog_password_forget.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,12 +46,13 @@ class PasswordActivity : AppCompatActivity() {
 
     var previousPassword:String=""
     var whereFrom:String =""
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
 
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -81,8 +77,10 @@ class PasswordActivity : AppCompatActivity() {
 
             val builder = android.app.AlertDialog.Builder(this, R.style.AlarmDialogStyle)
             val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
-
             builder.setView(dialogView)
+            var mail:String =SharedPreferenceController.getUserMail(this)
+
+            dialogView.txt_user_mail.text= (if (mail != null) mail+"으로\n새로운 비밀번호를 보내겠습니까?" else throw NullPointerException("Expression 'mail' must not be null"))
 
             builderNew= builder.show()
             builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
@@ -95,6 +93,7 @@ class PasswordActivity : AppCompatActivity() {
             lp.width = 800
             val window = builderNew.window
             window.attributes = lp
+
 
         }
 
@@ -223,8 +222,8 @@ class PasswordActivity : AppCompatActivity() {
 
 
     fun clickBtn(num: Int) {
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 

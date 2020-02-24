@@ -1,18 +1,18 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.login
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.media.session.MediaSession
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.webkit.CookieManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mindgarden.ui.main.MainActivity
+import com.example.mindgarden.ui.password.PasswordActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
@@ -20,8 +20,6 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
-
-import org.jetbrains.anko.startActivity
 
 import android.webkit.ValueCallback as AndroidWebkitValueCallback
 
@@ -59,8 +57,9 @@ class WebviewLoginActivity : AppCompatActivity() {
                 Log.e("WebView Whyopen","delete Cookies")
             }
         }
-
+        Log.e("Webview","having refreshToken??"+TokenController.getRefreshToken(this))
             if(TokenController.getRefreshToken(this)!=""){
+                //여기로 안들어옴
                 Log.e("Webview","having refreshToken")
 
                 if(SharedPreferenceController.getPassword(this)!=""){
@@ -72,9 +71,9 @@ class WebviewLoginActivity : AppCompatActivity() {
                 }
                 else{
                     Log.e("Webview","to MainActivity")
-                    val loginIntent= Intent(this@WebviewLoginActivity, MainActivity::class.java)
-                    loginIntent.putExtra("whereFrom","login")
-                    startActivity(loginIntent)
+                    //val loginIntent= Intent(this@WebviewLoginActivity, MainActivity::class.java)
+                    //loginIntent.putExtra("whereFrom","login")
+                    //startActivity(loginIntent)
                 }
             }
         Log.e("Webview","웹뷰")
@@ -132,10 +131,15 @@ class WebviewLoginActivity : AppCompatActivity() {
                                         myWebView.visibility = View.INVISIBLE
                                         //암호설정을 안 한 경우
                                         if (SharedPreferenceController.getPassword(this@WebviewLoginActivity) == "") {
+                                            Log.e("webView main으로 넘어가기전",TokenController.getAccessToken(this@WebviewLoginActivity))
+                                            Log.e("webView main으로 넘어가기전",TokenController.getRefreshToken(this@WebviewLoginActivity))
+                                            Log.e("webView main으로 넘어가기전",SharedPreferenceController.getUserName(this@WebviewLoginActivity))
+                                            Log.e("webView main으로 넘어가기전",SharedPreferenceController.getUserMail(this@WebviewLoginActivity))
                                             val loginIntent =
                                                 Intent(this@WebviewLoginActivity, MainActivity::class.java)
                                             loginIntent.putExtra("whereFrom", "login")
                                             startActivity(loginIntent)
+
                                         }
 
                                         //암호설정을 한 경우
@@ -151,7 +155,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                             //로그인 실패시
                             else if(it.endsWith("http://13.125.190.74:3000/auth/login/fail")){
                                 myWebView.visibility = View.INVISIBLE
-                                startActivity<LoginActivity>()
+                                startActivity(Intent(context, LoginActivity::class.java))
                             }
                         }
 
@@ -184,13 +188,13 @@ class WebviewLoginActivity : AppCompatActivity() {
         val temp =json["data"]!!.asJsonArray
         val temp2 =temp[0].asJsonObject
        // val temp2=temp["userIdx"].asInt
-        val exp=temp2["expires_in"].asInt
+        val exp=temp2["expires_in"].asInt //이것도 얘기해봐야함
         val email=temp2["email"].asString
         val name=temp2["name"].asString
         val refreshToken=temp2["refreshToken"].asString
         val accessToken=temp2["token"].asString
-        val userIdx=temp2["userIdx"].asString
-        Log.e("userIdx",userIdx)
+       // val userIdx=temp2["userIdx"].asString
+      //  Log.e("userIdx",userIdx)
 
         TokenController.setAccessToken(this@WebviewLoginActivity,accessToken)
 
@@ -207,6 +211,8 @@ class WebviewLoginActivity : AppCompatActivity() {
 
         //리프레시 토큰 저장하기
         TokenController.setRefreshToken(this@WebviewLoginActivity,refreshToken)
+        TokenController.getRefreshToken(this@WebviewLoginActivity)
+
         SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 

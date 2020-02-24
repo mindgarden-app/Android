@@ -1,18 +1,18 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.password
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.Switch
+import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
-import org.jetbrains.anko.toast
 
 class PasswordSettingActivity : AppCompatActivity() {
     val REQUEST_CODE_PASSWORD_SETTING_ACTIVITY=1000

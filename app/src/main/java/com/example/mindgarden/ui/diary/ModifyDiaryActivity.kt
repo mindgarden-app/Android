@@ -1,4 +1,4 @@
-package com.example.mindgarden.Activity
+package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,7 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,22 +19,18 @@ import android.widget.ListView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.mindgarden.Adapter.MyListAdapter
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetDiaryResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.example.mindgarden.R
-import com.example.mindgarden.RenewAcessTokenController
+import com.example.mindgarden.DB.RenewAcessTokenController
 import kotlinx.android.synthetic.main.activity_modify_diary.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.jetbrains.anko.ctx
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -181,8 +177,8 @@ class ModifyDiaryActivity : AppCompatActivity() {
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun getDiaryResponse() {
 
-        if(!TokenController.isValidToken(ctx)){
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this)
         }
         //userIdx , date 값
         val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
@@ -267,8 +263,8 @@ class ModifyDiaryActivity : AppCompatActivity() {
     //통신 2. 수정 API를 이용하여 서버에 등록
     private fun putModifyDiaryResponse(){
 
-        if(!TokenController.isValidToken(ctx)){
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this)
         }
         content = edt_content_modify_diary.text.toString()
         //타입 변환(String->RequestBody)

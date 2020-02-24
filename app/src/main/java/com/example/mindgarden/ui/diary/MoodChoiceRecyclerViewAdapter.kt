@@ -1,10 +1,9 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.diary
 
 import android.app.Activity
-import android.app.RemoteInput
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,8 @@ import com.example.mindgarden.Data.MoodChoiceData
 
 import com.example.mindgarden.R
 
-class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<MoodChoiceData>) : RecyclerView.Adapter<MoodChoiceRecyclerViewAdapter.Holder>(){
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MoodChoiceRecyclerViewAdapter.Holder {
+class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<MoodChoiceData>) : androidx.recyclerview.widget.RecyclerView.Adapter<MoodChoiceRecyclerViewAdapter.Holder>(){
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_mood_choice, viewGroup , false)
         return Holder(view)
     }

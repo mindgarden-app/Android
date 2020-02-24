@@ -1,12 +1,11 @@
-package com.example.mindgarden
+package com.example.mindgarden.DB
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
 import android.util.Log
-import com.example.mindgarden.Activity.LoginActivity
-import com.example.mindgarden.DB.TokenController
+import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse

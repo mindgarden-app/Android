@@ -1,4 +1,4 @@
-package com.example.mindgarden.Fragment
+package com.example.mindgarden.ui.main
 
 
 import android.app.Activity
@@ -7,22 +7,19 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.mindgarden.Activity.InventoryActivity
-import com.example.mindgarden.Activity.MainCalendarActivity
-import com.example.mindgarden.Activity.MypageActivity
+import com.example.mindgarden.ui.inventory.InventoryActivity
+import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.btn_left
 import kotlinx.android.synthetic.main.toolbar_diary_list.btn_right
 import kotlinx.android.synthetic.main.toolbar_main.*
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.startActivityForResult
 import java.util.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,9 +28,7 @@ import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
 import com.example.mindgarden.Network.GET.GetMainResponse
 import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.RenewAcessTokenController
-import org.jetbrains.anko.support.v4.ctx
-import org.jetbrains.anko.support.v4.toast
+import com.example.mindgarden.DB.RenewAcessTokenController
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,7 +42,7 @@ import java.text.SimpleDateFormat
  * A simple [Fragment] subclass.
  *
  */
-class MainFragment : Fragment() {
+class MainFragment : androidx.fragment.app.Fragment() {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
@@ -61,20 +56,14 @@ class MainFragment : Fragment() {
     var userIdx : Int = 0
     var treeNum = 0 //트리수
     var balloon = 0 //나무 심기 여부
-    var check = 0   //일기 작성 여부
-    var dataPasser : OnDataPass? = null
 
     lateinit var treeList : List<Bitmap>
     lateinit var locationList : List<ImageView>
 
-    interface OnDataPass {
-        fun checkPass(bal: Int)
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        dataPasser = context as OnDataPass
-    }
+//    override fun onAttach(context: Context?) {
+//        super.onAttach(context)
+//        dataPasser = context as OnDataPass
+//    }
 
     override fun onCreateView (
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,20 +93,19 @@ class MainFragment : Fragment() {
 
         canBeFuture()
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
         btn_reward.setOnClickListener {
             var intent: Intent = Intent(context, InventoryActivity::class.java)
             //intent.putExtra("balloon", balloon)
-            //intent.putExtra("check", check)
             startActivity(intent)
         }
 
         //환경설정 페이지로 넘어감
         btn_main_setting.setOnClickListener {
-            startActivity<MypageActivity>()
+            startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
         }
 
         //툴바 년/월 설정(MainCalendar로 전달)
@@ -126,15 +114,18 @@ class MainFragment : Fragment() {
 
         //툴바 날짜 클릭했을 때 -> 팝업 띄우기
         ll_date_toolbar_main.setOnClickListener {
-            startActivityForResult<MainCalendarActivity>(
-                REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
+            Intent(activity!!.applicationContext, MainCalendarActivity::class.java).apply {
+                putExtra("year", toolbarYear)
+                putExtra("month" , toolbarMonth)
+                startActivityForResult(this,REQUEST_CODE_SET_TOOLBAR_DATE)
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -163,7 +154,7 @@ class MainFragment : Fragment() {
                 txt_main_day_text.visibility = View.INVISIBLE
 
                 //이거 왜 두번 반복해줘야 하는지?
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -185,7 +176,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -213,7 +204,7 @@ class MainFragment : Fragment() {
                 txt_main_year.setText(year)
                 txt_main_month.setText(month)
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -234,7 +225,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -251,7 +242,11 @@ class MainFragment : Fragment() {
 
             //툴바 날짜 클릭했을 때 -> 팝업 띄우기
             ll_date_toolbar_main.setOnClickListener {
-                startActivityForResult<MainCalendarActivity>(REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
+                Intent(activity!!.applicationContext,MainCalendarActivity::class.java).apply {
+                    putExtra("year", toolbarYear)
+                    putExtra("month", toolbarMonth)
+                    startActivityForResult(this,REQUEST_CODE_SET_TOOLBAR_DATE)
+                }
             }
         }
     }
@@ -272,7 +267,7 @@ class MainFragment : Fragment() {
 
         canBeFuture()
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -298,7 +293,7 @@ class MainFragment : Fragment() {
 
                 canBeFuture()
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
             }
@@ -308,7 +303,7 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
             getMainResponse()
         }
 
@@ -334,7 +329,7 @@ class MainFragment : Fragment() {
                 txt_main_day_num.visibility = View.INVISIBLE
                 txt_main_day_text.visibility = View.INVISIBLE
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -355,7 +350,7 @@ class MainFragment : Fragment() {
                 }
                 txt_main_month.setText(month)
 
-                if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                     getMainResponse()
                 }
 
@@ -382,7 +377,7 @@ class MainFragment : Fragment() {
                     txt_main_year.setText(year)
                     txt_main_month.setText(month)
 
-                    if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                    if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                         getMainResponse()
                     }
 
@@ -403,7 +398,7 @@ class MainFragment : Fragment() {
                     }
                     txt_main_month.setText(month)
 
-                    if (isValid(TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
+                    if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())) {
                         getMainResponse()
                     }
 
@@ -419,7 +414,11 @@ class MainFragment : Fragment() {
 
                     //툴바 날짜 클릭했을 때 -> 팝업 띄우기
                     ll_date_toolbar_main.setOnClickListener {
-                        startActivityForResult<MainCalendarActivity>(REQUEST_CODE_SET_TOOLBAR_DATE, "year" to toolbarYear, "month" to toolbarMonth)
+                        Intent(activity!!.applicationContext,MainCalendarActivity::class.java).apply {
+                            putExtra("year", toolbarYear)
+                            putExtra("month" , toolbarMonth)
+                            startActivityForResult(this,REQUEST_CODE_SET_TOOLBAR_DATE )
+                        }
                     }
                 }
             }
@@ -427,8 +426,8 @@ class MainFragment : Fragment() {
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
-        val toast: Toast = Toast(ctx)
-        val inflater: LayoutInflater = LayoutInflater.from(ctx)
+        val toast: Toast = Toast(activity!!.applicationContext)
+        val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
@@ -452,12 +451,12 @@ class MainFragment : Fragment() {
     }
 
     private fun getMainResponse() {
-        if(!TokenController.isValidToken(ctx)){
-            RenewAcessTokenController.postRenewAccessToken(ctx)
+        if(!TokenController.isValidToken(activity!!.applicationContext)){
+            RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext)
         }
 
         val getMainResponse = networkService.getMainResponse(
-            TokenController.getAccessToken(ctx), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
+            TokenController.getAccessToken(activity!!.applicationContext), txt_main_year.text.toString() + "-" + txt_main_month.text.toString())
         Log.e("year" , txt_main_year.text.toString())
         Log.e("month", txt_main_month.text.toString())
         getMainResponse.enqueue(object: Callback<GetMainResponse> {
@@ -472,9 +471,6 @@ class MainFragment : Fragment() {
 
                         balloon = response.body()!!.data!![0].balloon
                         Log.e("balloon", "" + balloon);
-                        check = response.body()!!.data!![0].check
-                        Log.e("check", "" + check)
-                        dataPasser?.checkPass(check)
 
                         var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                         if (mmonth.toInt() < 10) {

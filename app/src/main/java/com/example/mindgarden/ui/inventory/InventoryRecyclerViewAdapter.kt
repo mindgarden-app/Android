@@ -1,7 +1,7 @@
-package com.example.mindgarden.Adapter
+package com.example.mindgarden.ui.inventory
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Activity.InventoryActivity
 import com.example.mindgarden.Data.InventoryData
 import com.example.mindgarden.R
 
