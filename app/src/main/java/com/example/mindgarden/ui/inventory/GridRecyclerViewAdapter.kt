@@ -1,7 +1,6 @@
 package com.example.mindgarden.ui.inventory
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Data.GridData
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.data.GridData
+import com.example.mindgarden.network.ApplicationController
+import com.example.mindgarden.network.NetworkService
 import com.example.mindgarden.R
 import kotlin.collections.ArrayList
 

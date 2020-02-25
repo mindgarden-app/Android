@@ -14,13 +14,14 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Data.DiaryListData
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.data.DiaryListData
+import com.example.mindgarden.network.ApplicationController
+import com.example.mindgarden.network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.network.NetworkService
 import com.example.mindgarden.R
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,13 +52,11 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         }
 
         holder.content.setOnClickListener {
-            var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
             Intent(ctx, ReadDiaryActivity::class.java).apply {
-                putExtra("from",300)
-                putExtra("userIdx" ,7)
-                putExtra("dateText",  dateText)
-                putExtra("dateValue", dataList[position].date.substring(0, 10))
-                ctx.startActivity(this)
+               Log.e("diaryIdx", dataList[position].diaryIdx.toString())
+                Log.e("date", dataList[position].date)
+               putExtra(DIARY_IDX, dataList[position].diaryIdx )
+               ctx.startActivity(this)
             }
         }
 

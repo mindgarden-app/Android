@@ -18,11 +18,11 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.WindowManager
 import com.bumptech.glide.Glide
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.network.ApplicationController
+import com.example.mindgarden.network.NetworkService
+import com.example.mindgarden.network.POST.PostWriteDiaryResponse
+import com.example.mindgarden.db.RenewAcessTokenController
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -192,7 +192,7 @@ class WriteDiaryActivity : AppCompatActivity() {
 
     //MoodChoice액티비티 팝업
     fun moodChoice(){
-        val intent : Intent = Intent(this, MoodChoiceActivity::class.java)
+        val intent : Intent = Intent(this, MoodActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE_WRITE_ACTIVITY)
     }
 
@@ -252,7 +252,6 @@ class WriteDiaryActivity : AppCompatActivity() {
                }
            })
        }else{
-          // val postWriteDiaryResponse = networkService.postWriteDiaryResponse( content_rb, userIdx, weatherIdx, picture_rb)
            val postWriteDiaryResponse = networkService.postWriteDiaryResponse(TokenController.getAccessToken(this), content_rb, weatherIdx, null)
 
            postWriteDiaryResponse.enqueue(object : Callback<PostWriteDiaryResponse>{

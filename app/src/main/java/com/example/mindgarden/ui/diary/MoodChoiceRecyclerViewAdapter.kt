@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Data.MoodChoiceData
+import com.example.mindgarden.data.MoodChoiceData
 
 import com.example.mindgarden.R
 
-class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<MoodChoiceData>) : androidx.recyclerview.widget.RecyclerView.Adapter<MoodChoiceRecyclerViewAdapter.Holder>(){
+class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<MoodChoiceData>) : RecyclerView.Adapter<MoodChoiceRecyclerViewAdapter.Holder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_mood_choice, viewGroup , false)
         return Holder(view)
@@ -33,12 +33,11 @@ class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<
         holder.moodTxt.text = dataList[position].moodTxt
 
         holder.container.setOnClickListener{
-            var intent: Intent = Intent()
-            intent.putExtra("weatherIdx", dataList[position].weatherIdx)
-            intent.putExtra("moodTxt", dataList[position].moodTxt)
-            intent.putExtra("moodIcn", btm)
-            (ctx as Activity).setResult(Activity.RESULT_OK, intent)
-            (ctx as Activity).finish()
+            Intent(ctx, ModifyDiaryActivity::class.java).apply {
+                putExtra("weatherIdx", dataList[position].weatherIdx)
+                (ctx as Activity).setResult(Activity.RESULT_OK, this)
+                (ctx as Activity).finish()
+            }
         }
     }
 

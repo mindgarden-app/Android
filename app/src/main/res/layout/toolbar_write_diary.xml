@@ -41,16 +41,16 @@
                 android:background="@drawable/green_border_fill"
                 android:id="@+id/btn_save_diary_toolbar"/>
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_alignParentRight="true"
-                  android:text="등록"
-                  android:textSize="13dp"
-                  android:layout_marginRight="25dp"
-                  android:fontFamily="@font/notosanscjkr_regular"
-                  android:textColor="#ffffff"
-                  android:id="@+id/txt_save_toolbar"
-        />
+        <TextView
+                android:id="@+id/txt_save_toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:textColor="#ffffff"
+                android:textSize="13dp" />
     </RelativeLayout>
 
 

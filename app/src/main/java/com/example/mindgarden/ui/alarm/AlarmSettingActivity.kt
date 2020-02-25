@@ -17,8 +17,8 @@ import android.app.AlarmManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import com.example.mindgarden.BroadCastReceiver.BroadcastD
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.broadcastReceiver.BroadcastD
+import com.example.mindgarden.db.SharedPreferenceController
 import android.view.WindowManager
 import com.example.mindgarden.ui.mypage.MypageActivity
 

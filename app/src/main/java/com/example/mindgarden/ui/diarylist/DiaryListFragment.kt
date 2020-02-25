@@ -14,17 +14,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.ui.mypage.MypageActivity
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Data.DiaryListData
+import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.data.DiaryListData
 
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.fragment_diary_list.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import java.util.*
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.GET.GetDiaryListResponse
-import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.network.ApplicationController
+import com.example.mindgarden.network.GET.GetDiaryListResponse
+import com.example.mindgarden.network.NetworkService
+import com.example.mindgarden.db.RenewAcessTokenController
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

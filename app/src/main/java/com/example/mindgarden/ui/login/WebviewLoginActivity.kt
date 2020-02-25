@@ -13,15 +13,13 @@ import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.ui.password.PasswordActivity
-import com.example.mindgarden.DB.SharedPreferenceController
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.db.SharedPreferenceController
+import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.network.ApplicationController
+import com.example.mindgarden.network.NetworkService
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
-
-import android.webkit.ValueCallback as AndroidWebkitValueCallback
 
 
 class WebviewLoginActivity : AppCompatActivity() {
