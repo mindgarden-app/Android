@@ -19,23 +19,28 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.R
+import com.example.mindgarden.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 101
-    private var permissionsRequired = arrayOf(Manifest.permission.WAKE_LOCK, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private var permissionsRequired = arrayOf(
+        Manifest.permission.WAKE_LOCK,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
     private var permissionStatus: SharedPreferences? = null
     private var sentToSettings = false
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         configureMainTab()
+
 
         permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
         requestPermission()
@@ -44,8 +49,8 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[2])
 
         btnLogin.setOnClickListener {
-            val loginIntent= Intent(this, WebviewLoginActivity::class.java)
-            loginIntent.putExtra("whyOpen","login")
+            val loginIntent = Intent(this, WebviewLoginActivity::class.java)
+            loginIntent.putExtra("whyOpen", "login")
             startActivity(loginIntent)
 
             //settings.domStorageEnabled = true
@@ -70,72 +75,88 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        //토큰있으면 메인으로 돌려줘
+        if(TokenController.getAccessToken(this)!=""){
+            val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+            startActivity(alreadyLoginIntent)
+        }
+    }
 
-                private fun requestPermission() {
-                    val toast: Toast = Toast(this)
-                    val inflater: LayoutInflater = LayoutInflater.from(this)
-                    val toastView: View = inflater.inflate(R.layout.toast, null)
-                    val toastText: TextView = toastView.findViewById(R.id.toastText)
+    private fun requestPermission() {
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-                    if (ActivityCompat.checkSelfPermission(
-                            this,
-                            permissionsRequired[0]
-                        ) != PackageManager.PERMISSION_GRANTED
-                        || ActivityCompat.checkSelfPermission(
-                            this,
-                            permissionsRequired[1]
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
-                            || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
-                        ) {
-                            //Show Information about why you need the permission
-                            getAlertDialog()
-                            Log.e("per1", permissionsRequired[0])
-                        } else if (permissionStatus!!.getBoolean(permissionsRequired[0], false)) {
-                            Log.e("per2", permissionsRequired[1])
-                            //Previously Permission Request was cancelled with 'Dont Ask Again',
-                            // Redirect to Settings after showing Information about why you need the permission
-                            val builder = AlertDialog.Builder(this)
-                            builder.setTitle("Need Multiple Permissions")
-                            builder.setMessage("This app needs permissions.")
-                            builder.setPositiveButton("Grant") { dialog, which ->
-                                dialog.cancel()
-                                sentToSettings = true
-                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                                val uri = Uri.fromParts("package", packageName, null)
-                                intent.data = uri
-                                startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
-                                toastText.setText("Go to Permissions to Grant")
-                                toastText.gravity = Gravity.CENTER
-                                toast.view = toastView
-                                toast.show()
-                            }
-                            builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
-                            builder.show()
-                        } else {
-                            Log.e("per3", permissionsRequired[2])
-                            //just request the permission
-                            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
-                        }
-                        val editor = permissionStatus!!.edit()
-                        editor.putBoolean(permissionsRequired[0], true)
-                        editor.commit()
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[0]
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[1]
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
+            ) {
+                //Show Information about why you need the permission
+                getAlertDialog()
+                Log.e("per1", permissionsRequired[0])
+            } else if (permissionStatus!!.getBoolean(permissionsRequired[0], false)) {
+                Log.e("per2", permissionsRequired[1])
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Need Multiple Permissions")
+                builder.setMessage("This app needs permissions.")
+                builder.setPositiveButton("Grant") { dialog, which ->
+                    dialog.cancel()
+                    sentToSettings = true
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
+                    toastText.setText("Go to Permissions to Grant")
+                    toastText.gravity = Gravity.CENTER
+                    toast.view = toastView
+                    toast.show()
+                }
+                builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+                builder.show()
+            } else {
+                Log.e("per3", permissionsRequired[2])
+                //just request the permission
+                ActivityCompat.requestPermissions(
+                    this,
+                    permissionsRequired,
+                    PERMISSION_CALLBACK_CONSTANT
+                )
+            }
+            val editor = permissionStatus!!.edit()
+            editor.putBoolean(permissionsRequired[0], true)
+            editor.commit()
 
-                        //   txtPermissions.setText("Permissions Required")
+            //   txtPermissions.setText("Permissions Required")
 
 
         } else {
             //You already have the permission, just go ahead.
-                        toastText.setText("Allowed All Permissions")
-                        toastText.gravity = Gravity.CENTER
-                        toast.view = toastView
-                        toast.show()
+            toastText.setText("Allowed All Permissions")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val toast: Toast = Toast(this)
@@ -160,7 +181,10 @@ class LoginActivity : AppCompatActivity() {
                 toastText.gravity = Gravity.CENTER
                 toast.view = toastView
                 toast.show()
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    permissionsRequired[0]
+                )
                 || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
             ) {
 
@@ -173,13 +197,18 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-        private fun getAlertDialog() {
+
+    private fun getAlertDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Need Multiple Permissions")
         builder.setMessage("This app needs permissions.")
-        builder.setPositiveButton("Grant") { dialog, i->
+        builder.setPositiveButton("Grant") { dialog, i ->
             dialog.cancel()
-            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsRequired,
+                PERMISSION_CALLBACK_CONSTANT
+            )
         }
         builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
         builder.show()
@@ -194,7 +223,11 @@ class LoginActivity : AppCompatActivity() {
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
         if (sentToSettings) {
-            if (ActivityCompat.checkSelfPermission(this, permissionsRequired[0]) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    permissionsRequired[0]
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 //Got Permission
                 toastText.setText("Allowed All Permissions")
                 toastText.gravity = Gravity.CENTER
@@ -203,6 +236,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun configureMainTab() {
 
         vpLoginSlider.adapter = SliderLoginPagerAdapter(supportFragmentManager, 4)
@@ -221,16 +255,16 @@ class LoginActivity : AppCompatActivity() {
         tlLoginIndicator.getTabAt(3)!!.customView =
             navIndicatorLoginLayout.findViewById(R.id.imgNavIndicatorLogin4) as ImageView
 
-        tlLoginIndicator.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+        tlLoginIndicator.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab?) {
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
-                p0!!.customView!!.isSelected=false
+                p0!!.customView!!.isSelected = false
             }
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                p0!!.customView!!.isSelected=true
+                p0!!.customView!!.isSelected = true
             }
         })
     }

@@ -21,8 +21,6 @@ import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
 
-import android.webkit.ValueCallback as AndroidWebkitValueCallback
-
 
 class WebviewLoginActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy {
@@ -59,7 +57,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         }
         Log.e("Webview","having refreshToken??"+TokenController.getRefreshToken(this))
             if(TokenController.getRefreshToken(this)!=""){
-                //여기로 안들어옴
+
                 Log.e("Webview","having refreshToken")
 
                 if(SharedPreferenceController.getPassword(this)!=""){
