@@ -30,7 +30,10 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
-    lateinit var dlgNew : AlertDialog
+    var isPressed = false
+
+    //수정중
+    //lateinit var dlgNew : AlertDialog
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -39,7 +42,6 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
 
     override fun getItemCount(): Int = dataList.size
 
-    var isPressed = false
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.day_num.text = dataList[position].date.substring(8, 10)
         holder.day_text.text = dataList[position].date.substring(11, 14)
@@ -107,10 +109,10 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     }
 
     fun isValid(token: String, date: String): Boolean {
-        if(token == "")
+        if (token == "")
             Log.e("login fail", "login value null")
 
-        else if(date == "")
+        else if (date == "")
             Log.e("date fail", "date value null")
 
         else return true
@@ -126,19 +128,22 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
             TokenController.getAccessToken(ctx), deleteDate
         )
-        Log.e("delete", "delete1")
+        Log.e("diaryList_delete", "delete1")
         deleteDiaryListResponse.enqueue(object : Callback<DeleteDiaryListResponse> {
             override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                 Log.e("일기 삭제 실패", t.toString())
             }
 
             override fun onResponse(call: Call<DeleteDiaryListResponse>, response: Response<DeleteDiaryListResponse>) {
+                Log.e("diaryList_delete", "delete2")
                 if (response.isSuccessful) {
+                    Log.e("diaryList_delete", "delete3")
                     if (response.body()!!.status == 200) {
+                        Log.e("diaryList", "일기 삭제 성공")
+
                         dataList.removeAt(deleteIndex)
                         notifyItemRemoved(deleteIndex)
                         notifyItemRangeChanged(deleteIndex, dataList.size)
-                        Log.e("delete", "delete2")
                     }
                 }
             }
