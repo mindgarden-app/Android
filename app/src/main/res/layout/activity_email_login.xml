@@ -43,6 +43,8 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:background="@color/colorBlockGray"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +76,8 @@
             android:background="@color/colorBlockGray"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password" />
