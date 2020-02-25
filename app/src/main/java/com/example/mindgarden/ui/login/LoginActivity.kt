@@ -48,13 +48,17 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[1])
         //setupPermissions(permissionsRequired[2])
 
-        btnLogin.setOnClickListener {
+        btnWebLogin.setOnClickListener {
             val loginIntent = Intent(this, WebviewLoginActivity::class.java)
             loginIntent.putExtra("whyOpen", "login")
             startActivity(loginIntent)
 
             //settings.domStorageEnabled = true
 
+        }
+        btnEmailLogin.setOnClickListener {
+            val emailLoginIntent=Intent(this,EmailLoginActivity::class.java)
+            startActivity(emailLoginIntent)
         }
 
         //getLoginResponse()

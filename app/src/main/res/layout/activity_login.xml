@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/colorWhite">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
     <ImageButton
+            android:id="@+id/btnWebLogin"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/btn_log_in_kakao"
-            android:id="@+id/btnLogin"
-            android:background="@color/colorWhite"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:contentDescription="TODO"
+            android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="25dp"
-            app:layout_constraintStart_toStartOf="parent" tools:ignore="MissingConstraints"
-            android:layout_marginBottom="41dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="41dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorWhite"
+            android:contentDescription="TODO"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/btn_log_in_kakao"
+            tools:ignore="MissingConstraints" />
+
+    <TextView
+            android:id="@+id/btnEmailLogin"
+            android:text="이메일로 시작하기"
+            android:layout_width="328dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="23dp"
+            android:background="@drawable/green_border_fill"
+            android:contentDescription="TODO"
+            android:fontFamily="@font/notosanscjkr_medium"
+            android:includeFontPadding="true"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/btnWebLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
 
     <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="301dp"
             android:layout_height="246dp"
-            tools:ignore="MissingConstraints"
-            android:id="@+id/relativeLayout2"
+            android:layout_marginStart="37dp"
             android:layout_marginTop="180dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="37dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="37dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="187dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogin">
+            android:layout_marginEnd="37dp"
+            android:layout_marginBottom="187dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnWebLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
 
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vpLoginSlider"
                 android:layout_width="wrap_content"
                 android:layout_height="208dp"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="-1dp" android:layout_marginTop="-2dp" android:layout_alignParentTop="true">
-        </androidx.viewpager.widget.ViewPager>
+                android:layout_marginTop="-2dp"
+                android:layout_marginEnd="-1dp"></androidx.viewpager.widget.ViewPager>
+
         <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tlLoginIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="31dp"
-                app:tabIndicatorHeight="0dp">
-        </com.google.android.material.tabs.TabLayout>
+                app:tabIndicatorHeight="0dp"></com.google.android.material.tabs.TabLayout>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
