@@ -187,7 +187,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         val temp2 =temp[0].asJsonObject
        // val temp2=temp["userIdx"].asInt
         val exp=temp2["expires_in"].asInt //이것도 얘기해봐야함
-        val email=temp2["email"].asString
+        //val email=temp2["email"].asString
         val name=temp2["name"].asString
         val refreshToken=temp2["refreshToken"].asString
         val accessToken=temp2["token"].asString
@@ -211,7 +211,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         TokenController.setRefreshToken(this@WebviewLoginActivity,refreshToken)
         TokenController.getRefreshToken(this@WebviewLoginActivity)
 
-        SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
+        //SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 
         Log.e("Webview_accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))

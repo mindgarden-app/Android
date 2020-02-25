@@ -33,6 +33,7 @@ object RenewAcessTokenController {
         val postRenewAccessTokenResponse=
             networkService.postRenewAccessTokenResponse(TokenController.getRefreshToken(ctx),gsonObject)
         Log.e("Renew token","in Renew access token2")
+        Log.e("Renew token exp",TokenController.getTimeAccessToken(ctx).toString())
 
         postRenewAccessTokenResponse.enqueue(object: Callback<PostRenewAccessTokenResponse>{
 
