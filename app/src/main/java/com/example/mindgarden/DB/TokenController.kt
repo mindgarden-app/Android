@@ -50,7 +50,7 @@ object TokenController {
         editor.putLong("access_token_start_time",tiemToStart)
         editor.commit()
     }
-    fun getTimeAccessToken(ctx:Context): Long {
+    fun getTimeAccessToken(ctx: Context): Long {
         val preference:SharedPreferences=ctx.getSharedPreferences(ACCESS_TOKEN_START_TIME,Context.MODE_PRIVATE)
         return preference.getLong("access_token_start_time",0)
     }
@@ -69,12 +69,12 @@ object TokenController {
 
     fun isValidToken(ctx:Context):Boolean{
         val currentTime=System.currentTimeMillis()
-        Log.e("Token Controller",currentTime.toString())
-        Log.e("Token Controller", getTimeAccessToken(ctx).toString())
-        //TODO 만료기간이 지났나 안지났나 확인하기
-        Log.e("Token Controller",(currentTime-getTimeAccessToken(ctx)).toString())
-       if(getExpAccessToken(ctx) >currentTime- getTimeAccessToken(ctx)){
-           Log.e("Token Controller","is vaildate")
+        Log.e("Token Controller isValid",currentTime.toString())
+        Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
+
+        Log.e("Token Controller isValid",(currentTime-getTimeAccessToken(ctx)).toString())
+       if(getExpAccessToken(ctx)*1000 >currentTime- getTimeAccessToken(ctx)){
+           Log.e("Token Controller isValid","is vaildate")
            return true
        }
        else{

@@ -21,8 +21,6 @@ import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
 
-import android.webkit.ValueCallback as AndroidWebkitValueCallback
-
 
 class WebviewLoginActivity : AppCompatActivity() {
     val networkService: NetworkService by lazy {
@@ -59,7 +57,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         }
         Log.e("Webview","having refreshToken??"+TokenController.getRefreshToken(this))
             if(TokenController.getRefreshToken(this)!=""){
-                //여기로 안들어옴
+
                 Log.e("Webview","having refreshToken")
 
                 if(SharedPreferenceController.getPassword(this)!=""){
@@ -189,7 +187,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         val temp2 =temp[0].asJsonObject
        // val temp2=temp["userIdx"].asInt
         val exp=temp2["expires_in"].asInt //이것도 얘기해봐야함
-        val email=temp2["email"].asString
+        //val email=temp2["email"].asString
         val name=temp2["name"].asString
         val refreshToken=temp2["refreshToken"].asString
         val accessToken=temp2["token"].asString
@@ -213,7 +211,7 @@ class WebviewLoginActivity : AppCompatActivity() {
         TokenController.setRefreshToken(this@WebviewLoginActivity,refreshToken)
         TokenController.getRefreshToken(this@WebviewLoginActivity)
 
-        SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
+        //SharedPreferenceController.setUserMail(this@WebviewLoginActivity,email)
         SharedPreferenceController.setUserName(this@WebviewLoginActivity,name)
 
         Log.e("Webview_accessToken",TokenController.getAccessToken(this@WebviewLoginActivity))

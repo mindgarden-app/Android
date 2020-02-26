@@ -47,8 +47,8 @@ class MypageActivity : AppCompatActivity() {
 
         //RelativeLayout
         btnLogout.setOnClickListener {
-            //TODO TokenController.clearRefreshToken(this)
-            //TODO 로그아웃 코드 추가해야함 웹쿠키
+            TokenController.clearRefreshToken(this)
+
             val intent = Intent(this, LoginActivity::class.java)
             //로그아웃 누르면 다시 일단 로그인 페이지로
             startActivity(intent)
