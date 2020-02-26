@@ -49,7 +49,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                 this.deleteDatabase("webViewCache.db")
 
                 myWebView.visibility=View.VISIBLE
-                myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
+                myWebView.loadUrl("http://15.165.86.150:3000/auth/login/kakao")
 
 
                 Log.e("WebView Whyopen","delete Cookies")
@@ -105,7 +105,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                         url?.let {
 
                             //로그인 성공시
-                            if (it.endsWith("http://13.125.190.74:3000/auth/login/success")) {
+                            if (it.endsWith("http://15.165.86.150:3000/auth/login/success")) {
 
                                 whyOpen=intent.getStringExtra("whyOpen")
 
@@ -151,7 +151,7 @@ class WebviewLoginActivity : AppCompatActivity() {
                                     }
                             }
                             //로그인 실패시
-                            else if(it.endsWith("http://13.125.190.74:3000/auth/login/fail")){
+                            else if(it.endsWith("http://15.165.86.150:3000/auth/login/fail")){
                                 myWebView.visibility = View.INVISIBLE
                                 startActivity(Intent(context, LoginActivity::class.java))
                             }
@@ -169,7 +169,7 @@ class WebviewLoginActivity : AppCompatActivity() {
              addJavascriptInterface(MyJavaScriptInterface(), "Android")
 
             }
-            myWebView.loadUrl("http://13.125.190.74:3000/auth/login/kakao")
+            myWebView.loadUrl("http://15.165.86.150:3000/auth/login/kakao")
 
         }
     inner class MyJavaScriptInterface{

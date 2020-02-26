@@ -21,9 +21,15 @@ import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.ui.diary.DiaryDate
+import com.kotlinpermissions.notNull
+import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
     var context : Context = ctx
@@ -33,7 +39,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     var isPressed = false
 
     //수정중
-    //lateinit var dlgNew : AlertDialog
+    lateinit var dlgNew : AlertDialog
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -69,15 +75,26 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
 
             holder.icn_delete.setOnClickListener {
                 //수정중
-                /*val builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                val builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 val dlgView = LayoutInflater.from(context).inflate(R.layout.dialog_diary_list_delete, null)
                 builder.setView(dlgView)
 
                 dlgNew = builder.show()
                 dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-                dlgNew.show()*/
+                dlgNew.show()
 
-                var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                dlgView.txt_diary_list_yes.setOnClickListener {
+                    if (isValid(TokenController.getAccessToken(ctx), dataList[position].date.substring(0, 10))) {
+                        deleteDiaryListResponse(dataList[position].date.substring(0, 10), holder.adapterPosition)
+                        dlgNew.dismiss()
+                    }
+                }
+
+                dlgView.txt_diary_list_no.setOnClickListener {
+                   dlgNew.dismiss()
+                }
+
+                /*var dlg = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 dlg.setTitle("삭제")
                 dlg.setMessage("삭제하시겠습니까?")
 
@@ -101,7 +118,7 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
                 messageText!!.gravity = Gravity.CENTER
                 dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
-                dlgNew.show()
+                dlgNew.show()*/
             }
         } else {
             holder.lay1.visibility = View.INVISIBLE
