@@ -87,20 +87,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
         btn_left.setOnClickListener {
             if (month.toInt() == 1) {
                 leftYearChange()
-                /*month = (month.toInt() + 11).toString()
-                year = (year.toInt() - 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_year.setText(year)
-                txt_month.setText(month)*/
             } else {
                 leftMonthChange()
-                /*month = (month.toInt() - 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_month.setText(month)*/
             }
 
             if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
@@ -112,20 +100,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
         btn_right.setOnClickListener {
             if (month.toInt() == 12) {
                 rightYearChange()
-                /*month = (month.toInt() - 11).toString()
-                year = (year.toInt() + 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_year.setText(year)
-                txt_month.setText(month)*/
             } else {
                 rightMonthChange()
-                /*month = (month.toInt() + 1).toString()
-                if (month.toInt() < 10) {
-                    month = "0$month"
-                }
-                txt_month.setText(month)*/
             }
 
             if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {

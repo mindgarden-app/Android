@@ -7,12 +7,10 @@ import kotlin.collections.ArrayList
 interface DiaryDate {
     companion object {
         var timeZone : TimeZone = TimeZone.getTimeZone("Asia/Seoul")
-        var simpleDateFormat : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.US)
+        //var simpleDateFormat : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.ENGLISH)
     }
 
-    //private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss").parse(str)
-
-    private fun stringToDate(str : String) = simpleDateFormat.parse(str)
+    private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.ENGLISH).parse(str)
 
     private fun getFormat(d: String, f : SimpleDateFormat) = f.format(stringToDate(d))
 

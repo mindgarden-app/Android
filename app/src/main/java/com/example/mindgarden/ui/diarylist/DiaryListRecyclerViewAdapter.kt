@@ -45,11 +45,11 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         //holder.day_num.text = dataList[position].date.substring(8, 10)
         //holder.day_text.text = dataList[position].date.substring(11, 14)
         //인터페이스
-        Log.e("야야", dataList[position].date)
+        Log.e("인터페이스1", dataList[position].date)
+        Log.e("인터페이스2", getDay(dataList[position].date))
+        Log.e("인터페이스3", getDayOfWeek(dataList[position].date))
         holder.day_num.text = getDay(dataList[position].date)
-        Log.e("야야", getDay(dataList[position].date))
         holder.day_text.text = getDayOfWeek(dataList[position].date)
-        Log.e("야야", getDayOfWeek(dataList[position].date))
         holder.content.text = dataList[position].diary_content
 
         holder.container.setOnLongClickListener {
