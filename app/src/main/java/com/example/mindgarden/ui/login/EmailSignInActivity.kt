@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_email_login.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.view.*
 
 
-class EmailLoginActivity : AppCompatActivity() {
+class EmailSignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

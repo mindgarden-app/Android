@@ -3,10 +3,7 @@ package com.example.mindgarden.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import com.example.mindgarden.R
-import kotlinx.android.synthetic.main.activity_email_login.*
 import kotlinx.android.synthetic.main.activity_email_sign_up.*
 import kotlinx.android.synthetic.main.activity_email_sign_up.edt_email
 import kotlinx.android.synthetic.main.toolbar_write_diary.view.*
@@ -29,7 +26,7 @@ class EmailSignUpActivity : AppCompatActivity() {
 
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener{
             if(canEnroll()) {
-                val enrolledIntent = Intent(this, EmailLoginActivity::class.java)
+                val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
                 startActivity(enrolledIntent)
             }
 
