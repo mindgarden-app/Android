@@ -2,9 +2,17 @@ package com.example.mindgarden.ui.diary
 
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 interface DiaryDate {
-    private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss").parse(str)
+    companion object {
+        var timeZone : TimeZone = TimeZone.getTimeZone("Asia/Seoul")
+        var simpleDateFormat : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.US)
+    }
+
+    //private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss").parse(str)
+
+    private fun stringToDate(str : String) = simpleDateFormat.parse(str)
 
     private fun getFormat(d: String, f : SimpleDateFormat) = f.format(stringToDate(d))
 

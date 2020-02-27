@@ -8,13 +8,15 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="삭제"
-                android:textSize="30dp"
+                android:fontFamily="@font/notosanscjkr_medium"
+                android:textSize="18dp"
                 android:textColor="#2B2B2B"/>
 
     </LinearLayout>
@@ -22,19 +24,20 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           android:layout_margin="20dp"
+           android:layout_marginTop="5dp"
             android:gravity="center">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="삭제하시겠습니까?"
-                android:textSize="20dp"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:textSize="14dp"
                 android:textColor="#2B2B2B"/>
 
     </LinearLayout>
 
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="35dp" android:background="#E8E8E8"/>
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="20dp" android:background="#E8E8E8"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +52,8 @@
                 android:layout_marginVertical="5dp"
                 android:gravity="center"
                 android:text="네"
-                android:textSize="20dp"
+                android:fontFamily="@font/notosanscjkr_medium"
+                android:textSize="14dp"
                 android:textColor="#78DEB0"/>
 
         <View android:layout_width="1dp" android:layout_height="wrap_content"  android:background="#E8E8E8"/>
@@ -62,7 +66,8 @@
                 android:layout_marginVertical="5dp"
                 android:gravity="center"
                 android:text="아니오"
-                android:textSize="20dp"
+                android:fontFamily="@font/notosanscjkr_medium"
+                android:textSize="14dp"
                 android:textColor="#78DEB0"/>
 
     </LinearLayout>

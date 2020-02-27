@@ -1,15 +1,11 @@
 package com.example.mindgarden.ui.diarylist
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,16 +18,13 @@ import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
 import com.example.mindgarden.ui.diary.DiaryDate
-import com.kotlinpermissions.notNull
 import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
-class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>() {
+class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
     var context : Context = ctx
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -49,8 +42,14 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
     override fun getItemCount(): Int = dataList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.day_num.text = dataList[position].date.substring(8, 10)
-        holder.day_text.text = dataList[position].date.substring(11, 14)
+        //holder.day_num.text = dataList[position].date.substring(8, 10)
+        //holder.day_text.text = dataList[position].date.substring(11, 14)
+        //인터페이스
+        Log.e("야야", dataList[position].date)
+        holder.day_num.text = getDay(dataList[position].date)
+        Log.e("야야", getDay(dataList[position].date))
+        holder.day_text.text = getDayOfWeek(dataList[position].date)
+        Log.e("야야", getDayOfWeek(dataList[position].date))
         holder.content.text = dataList[position].diary_content
 
         holder.container.setOnLongClickListener {
@@ -60,7 +59,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         }
 
         holder.content.setOnClickListener {
-            var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            //var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            //인터페이스
+            var dateText = getDiaryDate(dataList[position].date)
             Intent(ctx, ReadDiaryActivity::class.java).apply {
                 putExtra("from",300)
                 putExtra("userIdx" ,7)
@@ -82,6 +83,14 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
                 dlgNew = builder.show()
                 dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
                 dlgNew.show()
+
+                val display = WindowManager.LayoutParams()
+                display.copyFrom(dlgNew.window.attributes)
+                display.width = 1000
+                display.height = 750
+
+                val window = dlgNew.window
+                window.attributes = display
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
                     if (isValid(TokenController.getAccessToken(ctx), dataList[position].date.substring(0, 10))) {
