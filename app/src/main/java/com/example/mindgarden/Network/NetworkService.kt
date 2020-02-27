@@ -3,9 +3,7 @@ package com.example.mindgarden.Network
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
 import com.example.mindgarden.Network.Delete.DeleteUserResponse
 import com.example.mindgarden.Network.GET.*
-import com.example.mindgarden.Network.POST.PostRenewAccessTokenResponse
-import com.example.mindgarden.Network.POST.PostPlantResponse
-import com.example.mindgarden.Network.POST.PostWriteDiaryResponse
+import com.example.mindgarden.Network.POST.*
 import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
@@ -98,4 +96,22 @@ interface NetworkService {
     fun deleteUserResponse(
         @Header("token") token:String
     ):Call<DeleteUserResponse>
+
+    //이메일 회원가입
+    @POST("user/signup")
+    fun postEmailSignUp(
+        @Body() body: JsonObject
+    ):Call<PostEmailSignUpResponse>
+
+    //이메일 로그인
+    @POST("user/signin")
+    fun postEmailSignIn(
+        @Body() body: JsonObject
+    ):Call<PostEmailSignInResponse>
+
+
+
+
+
+
 }
