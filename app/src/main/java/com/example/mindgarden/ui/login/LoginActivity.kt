@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
         btnEmailLogin.setOnClickListener {
-            val emailLoginIntent=Intent(this,EmailLoginActivity::class.java)
+            val emailLoginIntent=Intent(this,EmailSignInActivity::class.java)
             startActivity(emailLoginIntent)
         }
 
