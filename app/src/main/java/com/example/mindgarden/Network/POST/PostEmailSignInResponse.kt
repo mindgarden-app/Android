@@ -11,5 +11,5 @@ data class EmailSignInData(
     val refreshToken:String,
     val email:String,
     val name:String,
-    val expires_in:Int
+    val expires_in:Long
 )
