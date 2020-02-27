@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:id="@+id/dl1"
               android:background="@drawable/round_layout_border">
 
     <LinearLayout
@@ -40,6 +41,7 @@
     <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="20dp" android:background="#E8E8E8"/>
 
     <LinearLayout
+            android:id="@+id/dl2"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:orientation="horizontal">

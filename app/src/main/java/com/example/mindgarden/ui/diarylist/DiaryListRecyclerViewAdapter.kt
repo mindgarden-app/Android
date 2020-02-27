@@ -19,29 +19,110 @@ import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
 import com.example.mindgarden.ui.diary.DiaryDate
 import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
+import kotlinx.android.synthetic.main.rv_item_diary_list.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
 
-class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
-    var context : Context = ctx
+class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
+    //class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate
+    //context도 바꿈
+    //근데 초기화 문제가...
+    lateinit var context : Context
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
+    //Adapter
+    var dataList = ArrayList<DiaryListData>()
     var isPressed = false
 
     //수정중
     lateinit var dlgNew : AlertDialog
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(clickEvent, viewGroup)
+    /*override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
         return Holder(view)
-    }
+    }*/
 
     override fun getItemCount(): Int = dataList.size
 
+    //Adapter
+    fun getDataAt(position: Int) = dataList[position]
+
+    //Adapter
+    fun setData(newData: ArrayList<DiaryListData>) {
+        newData?.let {
+            dataList.clear()
+            dataList.addAll(newData)
+            notifyDataSetChanged()
+        }
+    }
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        //binding
+        Log.e("인터페이스1", dataList[position].date)
+        Log.e("인터페이스2", getDay(dataList[position].date))
+        Log.e("인터페이스3", getDayOfWeek(dataList[position].date))
+        holder.itemView.txt_rv_item_diary_list_day_num.text = getDay(dataList[position].date)
+        holder.itemView.txt_rv_item_diary_list_day_text.text = getDayOfWeek(dataList[position].date)
+        holder.itemView.txt_rv_item_diary_list_content.text = dataList[position].diary_content
+
+        holder.itemView.ll_rv_item_diary_list_container.setOnLongClickListener {
+            isPressed = !isPressed
+            notifyDataSetChanged()
+            false
+        }
+
+        holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
+            //var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            //인터페이스
+            var dateText = getDiaryDate(dataList[position].date)
+            Intent(context, ReadDiaryActivity::class.java).apply {
+                putExtra("from",300)
+                putExtra("userIdx" ,7)
+                putExtra("dateText",  dateText)
+                putExtra("dateValue", dataList[position].date.substring(0, 10))
+                context.startActivity(this)
+            }
+        }
+
+        if (isPressed) {
+            holder.itemView.lay1.visibility = View.VISIBLE
+
+            holder.itemView.icn_delete.setOnClickListener {
+                //수정중
+                val builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                val dlgView = LayoutInflater.from(context).inflate(R.layout.dialog_diary_list_delete, null)
+                builder.setView(dlgView)
+
+                dlgNew = builder.show()
+                dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+                dlgNew.show()
+
+                val display = WindowManager.LayoutParams()
+                display.copyFrom(dlgNew.window.attributes)
+                display.width = 1000
+                display.height = 750
+
+                val window = dlgNew.window
+                window.attributes = display
+
+                dlgView.txt_diary_list_yes.setOnClickListener {
+                    clickEvent
+                    dlgNew.dismiss()
+                }
+
+                dlgView.txt_diary_list_no.setOnClickListener {
+                    dlgNew.dismiss()
+                }
+            }
+        } else {
+            holder.itemView.lay1.visibility = View.INVISIBLE
+        }
+    }
+    /*override fun onBindViewHolder(holder: Holder, position: Int) {
         //holder.day_num.text = dataList[position].date.substring(8, 10)
         //holder.day_text.text = dataList[position].date.substring(11, 14)
         //인터페이스
@@ -132,9 +213,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         } else {
             holder.lay1.visibility = View.INVISIBLE
         }
-    }
+    }*/
 
-    fun isValid(token: String, date: String): Boolean {
+    /*fun isValid(token: String, date: String): Boolean {
         if (token == "")
             Log.e("login fail", "login value null")
 
@@ -144,9 +225,9 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
         else return true
 
         return false
-    }
+    }*/
 
-    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
+    /*private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
         if (!TokenController.isValidToken(ctx)) {
             RenewAcessTokenController.postRenewAccessToken(ctx)
         }
@@ -174,14 +255,32 @@ class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<Dia
                 }
             }
         })
+    }*/
+
+    class Holder(private val clickEvent: (position: Int) -> Unit, parent: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.rv_item_diary_list, parent, false)) {
+        init {
+            //binding
+            var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
+            var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
+            var container = itemView.findViewById(R.id.ll_rv_item_diary_list_container) as LinearLayout
+            var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
+            var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
+            var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
+            var dl1 = itemView.findViewById(R.id.dl1) as LinearLayout?
+            var dl2 = itemView.findViewById(R.id.dl2) as LinearLayout?
+            var delete = itemView.findViewById(R.id.txt_diary_list_yes) as TextView?
+
+            //click
+            delete?.setOnClickListener { clickEvent(adapterPosition) }
+        }
     }
 
-    inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    /*inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
         var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
         var container = itemView.findViewById(R.id.ll_rv_item_diary_list_container) as LinearLayout
         var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
         var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
         var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-    }
+    }*/
 }
