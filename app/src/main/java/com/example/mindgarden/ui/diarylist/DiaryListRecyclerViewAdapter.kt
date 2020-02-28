@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Data.DiaryListData
@@ -24,12 +25,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
+import kotlin.coroutines.coroutineContext
 
 class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
     //class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate
     //context도 바꿈
     //근데 초기화 문제가...
-    lateinit var context : Context
+    //lateinit var context : Context
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
@@ -76,15 +78,19 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         }
 
         holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
-            //var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
             //인터페이스
-            var dateText = getDiaryDate(dataList[position].date)
-            Intent(context, ReadDiaryActivity::class.java).apply {
+            //var dateText = getDiaryDate(dataList[position].date)
+            //Adapter
+            //context ->
+            Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
                 putExtra("from",300)
                 putExtra("userIdx" ,7)
                 putExtra("dateText",  dateText)
                 putExtra("dateValue", dataList[position].date.substring(0, 10))
-                context.startActivity(this)
+                //Adapter
+                //context.startActivity(this)
+                holder.itemView.context.startActivity(this)
             }
         }
 
@@ -93,8 +99,10 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
             holder.itemView.icn_delete.setOnClickListener {
                 //수정중
-                val builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
-                val dlgView = LayoutInflater.from(context).inflate(R.layout.dialog_diary_list_delete, null)
+                //Adapter
+                //context ->
+                val builder = AlertDialog.Builder(holder.itemView.context, R.style.MyAlertDialogStyle)
+                val dlgView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.dialog_diary_list_delete, null)
                 builder.setView(dlgView)
 
                 dlgNew = builder.show()
@@ -110,7 +118,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 window.attributes = display
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
-                    clickEvent
+                    clickEvent(holder.adapterPosition)
                     dlgNew.dismiss()
                 }
 
@@ -266,12 +274,15 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
             var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
             var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-            var dl1 = itemView.findViewById(R.id.dl1) as LinearLayout?
-            var dl2 = itemView.findViewById(R.id.dl2) as LinearLayout?
-            var delete = itemView.findViewById(R.id.txt_diary_list_yes) as TextView?
+
+            //var dl1 = itemView.findViewById(R.id.dl1) as LinearLayout
+            //var dl2 = itemView.findViewById(R.id.dl2) as LinearLayout
+            //var delete = itemView.findViewById(R.id.txt_diary_list_yes) as TextView?
 
             //click
-            delete?.setOnClickListener { clickEvent(adapterPosition) }
+            /*delete?.setOnClickListener {
+                clickEvent(adapterPosition)
+            }*/
         }
     }
 

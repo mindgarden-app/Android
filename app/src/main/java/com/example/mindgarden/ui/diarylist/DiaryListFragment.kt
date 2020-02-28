@@ -47,12 +47,11 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
         ApplicationController.instance.networkService
     }
     //lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
-    private var ascending = true
-
     //Adapter
     val diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter by lazy {
         DiaryListRecyclerViewAdapter { clickEventCallback(it) }
     }
+    private var ascending = true
 
     //수정중
     val cal = Calendar.getInstance()
