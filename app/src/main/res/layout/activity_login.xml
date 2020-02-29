@@ -8,40 +8,37 @@
 
     <ImageButton
             android:id="@+id/btnWebLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="328dp"
             android:layout_height="40dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="41dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="71dp"
             android:adjustViewBounds="true"
             android:background="@color/colorWhite"
             android:contentDescription="TODO"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/btn_log_in_kakao"
-            tools:ignore="MissingConstraints" />
+            app:srcCompat="@drawable/btn_log_in_kakao" />
 
     <TextView
             android:id="@+id/btnEmailLogin"
-            android:text="이메일로 시작하기"
             android:layout_width="328dp"
             android:layout_height="40dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="23dp"
-            android:background="@drawable/green_border_fill"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/green_border_square"
             android:contentDescription="TODO"
             android:fontFamily="@font/notosanscjkr_medium"
-            android:includeFontPadding="true"
             android:gravity="center"
+            android:includeFontPadding="true"
             android:scaleType="fitCenter"
+            android:text="이메일로 시작하기"
             app:layout_constraintBottom_toTopOf="@+id/btnWebLogin"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 
     <RelativeLayout
