@@ -40,7 +40,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/gray_square_border"
+            android:background="@drawable/gray_empty_square_border"
             android:ems="10"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="12dp"
@@ -73,7 +73,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/gray_square_border"
+            android:background="@drawable/gray_empty_square_border"
             android:ems="10"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="12dp"
@@ -164,13 +164,13 @@
             android:id="@+id/btn_email_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:fontFamily="@font/notosanscjkr_medium"
             android:text="회원 가입"
             android:textColor="@color/colorPrimaryMint"
             android:textSize="13.5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

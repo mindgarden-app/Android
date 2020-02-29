@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/grid_border"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
 
@@ -59,7 +59,11 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:text="유효하지 않은 email 입니다"
-            android:textColor="@android:color/holo_red_dark"
+            android:fontFamily="@font/notosanscjkr_medium"
+            android:textColor="@color/colorRed"
+            android:includeFontPadding="false"
+            android:textSize="10sp"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
@@ -86,7 +90,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/grid_border"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +121,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/grid_border"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +151,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/grid_border"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
@@ -156,13 +160,14 @@
 
     <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="40dp"
-            android:text="가입 시 마인드가든의 개인 정보 처리 방침 및 이용 약관에 동의한 것으로 간주합니다. "
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="180dp"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_check_password_again" />
 
@@ -172,8 +177,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="6dp"
+            android:fontFamily="@font/notosanscjkr_medium"
+            android:textColor="@color/colorRed"
+            android:includeFontPadding="false"
+            android:textSize="10sp"
             android:text="유효하지 않은 비밀번호입니다."
-            android:textColor="@android:color/holo_red_dark"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
@@ -183,8 +192,76 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
+            android:fontFamily="@font/notosanscjkr_medium"
+            android:includeFontPadding="false"
             android:text="비밀번호가 일치하지 않습니다."
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@color/colorRed"
+            android:textSize="10sp"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password_check" />
+
+    <TextView
+            android:id="@+id/btn_privacy_statement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            android:text=" 이용 약관"
+            android:textColor="@color/colorPrimaryMint"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+
+    <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            android:text="  및  "
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_privacy_statement"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+
+    <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            android:text="개인 정보 처리 방침 "
+            android:textColor="@color/colorPrimaryMint"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/checkBox"
+            tools:fontFamily="@font/notosanscjkr_regular" />
+
+    <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            android:text="가입 시 마인드가든의  "
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+
+    <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanscjkr_regular"
+            android:includeFontPadding="false"
+            android:text="에 동의한 것으로 간주합니다."
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
