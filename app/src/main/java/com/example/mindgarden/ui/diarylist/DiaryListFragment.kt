@@ -47,7 +47,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
-    //lateinit var diaryListRecyclerViewAdapter : DiaryListRecyclerViewAdapter
+    //lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
     //Adapter
     val diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter by lazy {
         DiaryListRecyclerViewAdapter { clickEventCallback(it) }
@@ -254,13 +254,13 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         })
     }
 
-    fun clickEventCallback(position: Int) {
+    private fun clickEventCallback(position: Int) {
         if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
-            deleteDiaryListResponse(position)
+            deleteDiaryListResponse(diaryListRecyclerViewAdapter.dataList[position].diaryIdx)
         }
     }
 
-    fun deleteDiaryListResponse(diaryIdx: Int) {
+    private fun deleteDiaryListResponse(diaryIdx: Int) {
         if (!TokenController.isValidToken(activity!!.applicationContext)) {
             RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext)
         }
@@ -279,10 +279,14 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 if (response.isSuccessful) {
                     Log.e("diaryList_delete", "delete3")
                     if (response.body()!!.status == 200) {
+                        val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
 
-                        diaryListRecyclerViewAdapter.dataList.removeAt(diaryIdx)
-                        diaryListRecyclerViewAdapter.notifyItemRemoved(diaryIdx)
-                        diaryListRecyclerViewAdapter.notifyItemRangeChanged(diaryIdx, diaryListRecyclerViewAdapter.dataList.size)
+                        while (iterator.hasNext()) {
+                            if (iterator.next().diaryIdx == diaryIdx) {
+                                iterator.remove()
+                                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                            }
+                        }
 
                         Log.e("diaryList", "일기 삭제 성공")
                     }

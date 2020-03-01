@@ -119,9 +119,12 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 window.attributes = display
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
-                    //clickEvent(holder.adapterPosition)
-                    dlgNew.dismiss()
+                    Log.e("index:", dataList[holder.adapterPosition].diaryIdx.toString())
+                    Log.e("adapter:", holder.adapterPosition.toString())
+
                     clickEvent(holder.adapterPosition)
+                    notifyDataSetChanged()
+                    dlgNew.dismiss()
                 }
 
                 dlgView.txt_diary_list_no.setOnClickListener {
