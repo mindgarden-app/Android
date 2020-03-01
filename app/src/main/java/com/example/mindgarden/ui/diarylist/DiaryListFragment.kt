@@ -27,6 +27,7 @@ import com.example.mindgarden.Network.GET.GetDiaryListResponse
 import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.DB.RenewAcessTokenController
 import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
+import com.example.mindgarden.ui.diary.DiaryDate
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,11 +43,11 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class DiaryListFragment : androidx.fragment.app.Fragment() {
+class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
-    //lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
+    //lateinit var diaryListRecyclerViewAdapter : DiaryListRecyclerViewAdapter
     //Adapter
     val diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter by lazy {
         DiaryListRecyclerViewAdapter { clickEventCallback(it) }
@@ -157,12 +158,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
         txt_month.setText(month)
     }
 
-    private fun clickEventCallback(position: Int) {
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), diaryListRecyclerViewAdapter.getDataAt(position).date.substring(0, 10))) {
-            deleteDiaryListResponse(diaryListRecyclerViewAdapter.getDataAt(position).date.substring(0, 10), position)
-        }
-    }
-
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
 
@@ -185,7 +180,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
             startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
         }
 
-        //diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter {  }
+        //diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
         //Adapter
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
@@ -248,6 +243,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
                             ll_list_zero.visibility = View.VISIBLE
                         } else {
                             ll_list_zero.visibility = View.GONE
+
                             diaryListRecyclerViewAdapter.dataList = tmp
                             diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
                             diaryListRecyclerViewAdapter.notifyDataSetChanged()
@@ -258,13 +254,19 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
         })
     }
 
-    private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
+    fun clickEventCallback(position: Int) {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            deleteDiaryListResponse(position)
+        }
+    }
+
+    fun deleteDiaryListResponse(diaryIdx: Int) {
         if (!TokenController.isValidToken(activity!!.applicationContext)) {
             RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext)
         }
 
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            TokenController.getAccessToken(activity!!.applicationContext), deleteDate
+            TokenController.getAccessToken(activity!!.applicationContext), diaryIdx
         )
         Log.e("diaryList_delete", "delete1")
         deleteDiaryListResponse.enqueue(object : Callback<DeleteDiaryListResponse> {
@@ -277,11 +279,12 @@ class DiaryListFragment : androidx.fragment.app.Fragment() {
                 if (response.isSuccessful) {
                     Log.e("diaryList_delete", "delete3")
                     if (response.body()!!.status == 200) {
-                        Log.e("diaryList", "일기 삭제 성공")
 
-                        diaryListRecyclerViewAdapter.dataList.removeAt(deleteIndex)
-                        diaryListRecyclerViewAdapter.notifyItemRemoved(deleteIndex)
-                        diaryListRecyclerViewAdapter.notifyItemRangeChanged(deleteIndex, diaryListRecyclerViewAdapter.dataList.size)
+                        diaryListRecyclerViewAdapter.dataList.removeAt(diaryIdx)
+                        diaryListRecyclerViewAdapter.notifyItemRemoved(diaryIdx)
+                        diaryListRecyclerViewAdapter.notifyItemRangeChanged(diaryIdx, diaryListRecyclerViewAdapter.dataList.size)
+
+                        Log.e("diaryList", "일기 삭제 성공")
                     }
                 }
             }

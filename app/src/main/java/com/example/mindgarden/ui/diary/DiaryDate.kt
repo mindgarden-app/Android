@@ -5,11 +5,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 interface DiaryDate {
-    companion object {
-        var timeZone : TimeZone = TimeZone.getTimeZone("Asia/Seoul")
-        //var simpleDateFormat : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.ENGLISH)
-    }
-
     private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.ENGLISH).parse(str)
 
     private fun getFormat(d: String, f : SimpleDateFormat) = f.format(stringToDate(d))
@@ -20,9 +15,9 @@ interface DiaryDate {
 
     fun getDay(d: String) = getFormat(d, SimpleDateFormat("dd", Locale.getDefault()))
 
-    fun getDayOfWeek(d : String) = getFormat(d, SimpleDateFormat("EEE", Locale.getDefault()))
+    fun getDayOfWeek(d : String) = getFormat(d, SimpleDateFormat("EEE", Locale.ENGLISH))
 
-    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd.(EEE)", Locale.getDefault()))
+    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH))
 
     fun getTime(d: String) = getFormat(d, SimpleDateFormat("HH:mm:ss", Locale.getDefault()))
 }

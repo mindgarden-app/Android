@@ -1,6 +1,7 @@
 package com.example.mindgarden.ui.diarylist
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
@@ -28,10 +29,9 @@ import kotlin.collections.ArrayList
 import kotlin.coroutines.coroutineContext
 
 class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
+    //Adapter
     //class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate
-    //context도 바꿈
-    //근데 초기화 문제가...
-    //lateinit var context : Context
+    //context도 없앰
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
@@ -42,6 +42,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
     //수정중
     lateinit var dlgNew : AlertDialog
 
+    //Adapter
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(clickEvent, viewGroup)
     /*override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_diary_list, viewGroup, false)
@@ -67,6 +68,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         Log.e("인터페이스1", dataList[position].date)
         Log.e("인터페이스2", getDay(dataList[position].date))
         Log.e("인터페이스3", getDayOfWeek(dataList[position].date))
+
         holder.itemView.txt_rv_item_diary_list_day_num.text = getDay(dataList[position].date)
         holder.itemView.txt_rv_item_diary_list_day_text.text = getDayOfWeek(dataList[position].date)
         holder.itemView.txt_rv_item_diary_list_content.text = dataList[position].diary_content
@@ -77,10 +79,9 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             false
         }
 
+        //인터페이스 작업 필요
         holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
             var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
-            //인터페이스
-            //var dateText = getDiaryDate(dataList[position].date)
             //Adapter
             //context ->
             Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
@@ -89,7 +90,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 putExtra("dateText",  dateText)
                 putExtra("dateValue", dataList[position].date.substring(0, 10))
                 //Adapter
-                //context.startActivity(this)
+                //context.startActivity(this) ->
                 holder.itemView.context.startActivity(this)
             }
         }
@@ -118,13 +119,16 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 window.attributes = display
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
-                    clickEvent(holder.adapterPosition)
+                    //clickEvent(holder.adapterPosition)
                     dlgNew.dismiss()
+                    clickEvent(holder.adapterPosition)
                 }
 
                 dlgView.txt_diary_list_no.setOnClickListener {
                     dlgNew.dismiss()
                 }
+
+                notifyDataSetChanged()
             }
         } else {
             holder.itemView.lay1.visibility = View.INVISIBLE
@@ -235,13 +239,13 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         return false
     }*/
 
-    /*private fun deleteDiaryListResponse(deleteDate: String, deleteIndex: Int) {
+    /*private fun deleteDiaryListResponse(deleteIndex: Int) {
         if (!TokenController.isValidToken(ctx)) {
             RenewAcessTokenController.postRenewAccessToken(ctx)
         }
 
         val deleteDiaryListResponse = networkService.deleteDiaryListResponse(
-            TokenController.getAccessToken(ctx), deleteDate
+            TokenController.getAccessToken(ctx), deleteIndex
         )
         Log.e("diaryList_delete", "delete1")
         deleteDiaryListResponse.enqueue(object : Callback<DeleteDiaryListResponse> {

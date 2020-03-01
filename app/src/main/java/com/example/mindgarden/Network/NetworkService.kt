@@ -26,10 +26,10 @@ interface NetworkService {
     ): Call<GetDiaryListResponse>
 
     //일기 삭제
-    @DELETE("/diarylist/delete/{date}")
+    @DELETE("/diarylist/delete/{diaryIdx}")
     fun deleteDiaryListResponse(
         @Header("token") token: String,
-        @Path("date") date: String
+        @Path("diaryIdx") diaryIdx: Int
     ): Call<DeleteDiaryListResponse>
 
     //일기 상세보기
