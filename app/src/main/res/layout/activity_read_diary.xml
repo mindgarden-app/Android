@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:text="@string/defaultMoodChoice"
+                    android:text="@string/defaultMoodText"
                     android:textColor="#2B2B2B"
                     android:textSize="15sp"
 

@@ -2,6 +2,7 @@ package com.example.mindgarden.ui.password
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,27 +13,26 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.db.TokenController
-import com.example.mindgarden.network.ApplicationController
-import com.example.mindgarden.network.GET.GetForgetPasswordResponse
-import com.example.mindgarden.network.NetworkService
 import kotlinx.android.synthetic.main.activity_password.*
 import com.example.mindgarden.R
+import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.login.LoginActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.dialog_password_forget.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.json.JSONObject
+import org.koin.android.ext.android.inject
 
 
 @Suppress("NAME_SHADOWING")
 class PasswordActivity : AppCompatActivity() {
 
-    val networkService: NetworkService by lazy{
-        ApplicationController.instance.networkService
-    }
+    private val repository : MindgardenRepository by inject()
 
     val REQUEST_CODE_PASSWORD_ACTIVITY = 1000
     var subPassword: String = ""
@@ -128,7 +128,7 @@ class PasswordActivity : AppCompatActivity() {
         when (v.id){
             R.id.btn_ok_password_forget -> {
                 //메일보내기 눌렀을때
-                getForgetPasswordResponse(TokenController.getAccessToken(this))
+                getForgetPassword(TokenController.getAccessToken(this))
                 Log.e("통신 후 받아온 비밀번호",forgetPassword)
                 fun do_p() {
                     Log.e("다이얼로그",SharedPreferenceController.getPassword(this@PasswordActivity))
@@ -146,44 +146,33 @@ class PasswordActivity : AppCompatActivity() {
 
     }
 
-
-    fun getForgetPasswordResponse(accessToken:String){
-
+    private fun getForgetPassword(accessToken:String){
         if(!TokenController.isValidToken(this)){
             Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
-            RenewAcessTokenController.postRenewAccessToken(this)
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
 
-        val getForgetPasswordResponse: Call<GetForgetPasswordResponse> =
-            networkService.getForgetPasswordResponse(TokenController.getAccessToken(this))
+        repository
+            .getForgetPassword(TokenController.getAccessToken(this),
+                {
+                    //Log.e("응답 받아오는 데이터","$response")
 
-        getForgetPasswordResponse.enqueue(object:Callback<GetForgetPasswordResponse>{
-            override fun onFailure(call: Call<GetForgetPasswordResponse>, t: Throwable) {
-                Log.e("Fail: send email",t.toString())
-            }
-
-            override fun onResponse(call: Call<GetForgetPasswordResponse>, response: Response<GetForgetPasswordResponse>
-            ) {
-                if(response.isSuccessful){
-                    if(response.body()!!.status==200){
-                        Log.e("응답 받아오는 데이터","$response")
-
-                        val tep2=response.body()!!.data
-                        Log.e("비밀번호의 임시값은",tep2)
-                        forgetPassword=tep2
-                        SharedPreferenceController.setPassword(this@PasswordActivity,tep2)
-                        Log.e("임시비밀번호로 데베에 저장",SharedPreferenceController.getPassword(this@PasswordActivity))
-                        previousPassword=SharedPreferenceController.getPassword(this@PasswordActivity)
-                        subPassword=""
-                        setNumBtnClickListener()
-
-
-                    }
-                }
-            }
-        })
+                    val tep2= it.data
+                    Log.e("비밀번호의 임시값은",tep2)
+                    forgetPassword=tep2
+                    SharedPreferenceController.setPassword(this@PasswordActivity,tep2)
+                    Log.e("임시비밀번호로 데베에 저장",SharedPreferenceController.getPassword(this@PasswordActivity))
+                    previousPassword=SharedPreferenceController.getPassword(this@PasswordActivity)
+                    subPassword=""
+                    setNumBtnClickListener()
+                },
+                {
+                    //에러처리
+                })
 
     }
+
+
     fun setNumBtnClickListener() {
         btn1.setOnClickListener {
             clickBtn(1)

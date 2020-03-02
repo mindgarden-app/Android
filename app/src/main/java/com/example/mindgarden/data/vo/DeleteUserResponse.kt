@@ -1,4 +1,4 @@
-package com.example.mindgarden.network.Delete
+package com.example.mindgarden.data.vo
 
 class DeleteUserResponse(
     val status: Int,

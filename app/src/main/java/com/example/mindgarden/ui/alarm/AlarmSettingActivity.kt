@@ -17,7 +17,6 @@ import android.app.AlarmManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import com.example.mindgarden.broadcastReceiver.BroadcastD
 import com.example.mindgarden.db.SharedPreferenceController
 import android.view.WindowManager
 import com.example.mindgarden.ui.mypage.MypageActivity
@@ -151,7 +150,6 @@ class AlarmSettingActivity : AppCompatActivity() {
         setChannel()
 
         //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
-       val intent = Intent(this, BroadcastD::class.java)
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         //알람 예약
@@ -164,7 +162,6 @@ class AlarmSettingActivity : AppCompatActivity() {
     fun alarmCancle(){
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
 
-        val intent = Intent(this, BroadcastD::class.java)
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         alarmManager.cancel(pendingIntent)
