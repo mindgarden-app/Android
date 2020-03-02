@@ -1,6 +1,7 @@
 package com.example.mindgarden.ui.main
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,15 +12,23 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
+import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.ui.diary.ModifyDiaryActivity
-import com.example.mindgarden.ui.diary.WriteDiaryActivity
+import com.example.mindgarden.ui.login.LoginActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import org.koin.android.ext.android.inject
 
 
 class MainActivity  : AppCompatActivity() {
+
+    private val repository : MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +49,7 @@ class MainActivity  : AppCompatActivity() {
 
         if(!TokenController.isValidToken(this)){
             Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
-            RenewAcessTokenController.postRenewAccessToken(this)
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
@@ -49,7 +58,7 @@ class MainActivity  : AppCompatActivity() {
 
 
         btn_write.setOnClickListener {
-                startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
+                startActivityForResult(Intent(this, ModifyDiaryActivity::class.java),1100)
         }
     }
 

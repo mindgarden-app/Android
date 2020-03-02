@@ -33,14 +33,13 @@
                     android:layout_centerInParent="true"/>
 
             <TextView
+                    android:id="@+id/txt_mood_text_modify_diary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="기분을 선택하세요."
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:textColor="#C6C6C6"
-                    android:textSize="15dp"
-                    android:id="@+id/txt_mood_text_modify_diary"/>
+                    android:textColor="#2b2b2b "
+                    android:textSize="15dp" />
 
             <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_centerVertical="true"

@@ -26,10 +26,6 @@ class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<
             .load(dataList[position].moodIcn)
             .into(holder.moodIcn)
 
-        val btm = dataList[position].moodIcn
-
-        val weatherIdx = dataList[position].weatherIdx
-
         holder.moodTxt.text = dataList[position].moodTxt
 
         holder.container.setOnClickListener{

@@ -24,5 +24,6 @@
     <string name="btnComplete">완료</string>
 
     <!--ReadDiary-->
-    <string name="defaultMoodChoice">기분을 선택하세요</string>
+    <string name="defaultMoodText">기분을 선택하세요</string>
+
 </resources>

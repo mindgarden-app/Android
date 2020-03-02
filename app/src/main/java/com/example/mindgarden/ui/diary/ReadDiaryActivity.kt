@@ -1,39 +1,37 @@
 package com.example.mindgarden.ui.diary
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import com.example.mindgarden.R
 import android.app.Activity
+import android.content.Context
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.TokenController
-import com.example.mindgarden.network.ApplicationController
-import com.example.mindgarden.network.GET.GetDiaryResponse
-import com.example.mindgarden.network.NetworkService
-import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.data.DiaryData
 import com.example.mindgarden.data.MoodChoiceData
+import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.login.LoginActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_read_diary.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
+import org.json.JSONObject
+import org.koin.android.ext.android.inject
 
 class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
-
-    val networkService: NetworkService by lazy{
-        ApplicationController.instance.networkService
-    }
 
     private val MoodItemList : ArrayList<MoodChoiceData> by lazy{
         ArrayList<MoodChoiceData>()
     }
 
-    private var diaryItemList : DiaryData? = null
+    private val repository : MindgardenRepository by inject()
+
     private var diaryIdx: Int = -1
+
 
     companion object{
         const val DIARY_IDX = "DIARY_IDX"
@@ -45,7 +43,12 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
         setContentView(R.layout.activity_read_diary)
         init()
-        getDiaryResponse()
+        if(diaryIdx != -1){
+           loadData()
+        }else{
+            Log.e("diaryIdx", "not intent")
+        }
+
     }
 
     private fun init(){
@@ -53,6 +56,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         readDiaryConfig()
     }
 
+    //if getDiaryIdx가 없을시에 view 로딩이나 없음 뷰
     private fun getDiaryIdx(){
         diaryIdx =  intent.getIntExtra(DIARY_IDX, -1)
     }
@@ -93,6 +97,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         img_gallary_read_diary.visibility = View.VISIBLE
         Glide.with(this@ReadDiaryActivity)
             .load(img)
+            .fitCenter()
             .into(img_gallary_read_diary)
     }
 
@@ -107,45 +112,31 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         if(requestCode == READ_DIARY_REQUEST){
             if(resultCode == Activity.RESULT_OK){
                 getDiaryIdx()
-                getDiaryResponse()
+                loadData()
             }
         }
     }
 
+
     // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
-    private fun getDiaryResponse() {
-
+    private fun loadData(){
         if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this)
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
-        //userIdx , date 값
-        Log.e("diaryIdx", diaryIdx.toString())
-        val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), diaryIdx)
 
-        getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
-            override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
-                Log.e("일기 조희 실패", t.toString())
-            }
-
-            override fun onResponse(call: Call<GetDiaryResponse>, response: Response<GetDiaryResponse>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        diaryItemList = it.data?.get(0)
-
-                        diaryItemList?.let { item ->
-                            setContents(item.diary_content)
-                            setMoodIcn(item.weatherIdx)
-                            setDateText(item.date)
-
-                            item.diary_img?.let { img ->
-                                setImage(img)
-                            }
-                        }
+        repository
+            .getDiary(
+                TokenController.getAccessToken(this), diaryIdx,
+                {
+                    setContents(it.diaryResponse[0].diary_content)
+                    setMoodIcn(it.diaryResponse[0].weatherIdx)
+                    setDateText(it.diaryResponse[0].date)
+                    it.diaryResponse[0].diary_img?.let { img->
+                        setImage(img)
                     }
-                }
-
-            }
-        })
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+            )
     }
 
 }
