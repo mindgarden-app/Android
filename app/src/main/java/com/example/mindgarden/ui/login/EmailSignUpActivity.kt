@@ -90,6 +90,11 @@ class EmailSignUpActivity : AppCompatActivity() {
             }
         })
 
+        btn_privacy_statement.setOnClickListener {
+            val privacyIntent=Intent(this, PrivacyStatementActivity::class.java)
+            startActivity(privacyIntent)
+        }
+
 
 
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
@@ -104,6 +109,7 @@ class EmailSignUpActivity : AppCompatActivity() {
         toolbar_email_sign_up.btn_back_toolbar.setOnClickListener {
             finish()
         }
+
 
 
     }
