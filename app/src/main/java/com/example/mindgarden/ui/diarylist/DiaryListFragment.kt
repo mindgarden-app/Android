@@ -161,20 +161,40 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
 
-        dataList.sortByDescending { data ->
-            data.date.substring(8, 10).toInt() }
+        //정렬
+        /*dataList.sortByDescending { data ->
+            data.date.substring(8, 10).toInt() }*/
+        //dataList.sortedWith(compareByDescending<DiaryListData> { getDay(it.date) }.thenByDescending { getTime(it.date) })
+        dataList.sortByDescending { data -> data.date }
 
         btn_updown.setOnClickListener {
             if (ascending) {
-                diaryListRecyclerViewAdapter.dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
+                //diaryListRecyclerViewAdapter.dataList.sortBy { data ->  data.date.substring(8, 10).toInt() }
+                //diaryListRecyclerViewAdapter.dataList.sortBy { getDay(it.date) }
+                diaryListRecyclerViewAdapter.dataList.sortBy { data -> data.date }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                //정렬
+                //diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                //diaryListRecyclerViewAdapter.dataList.sortedWith(compareByDescending<DiaryListData> { getDay(it.date) }.thenByDescending { getTime(it.date) })
+                diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
             }
 
             ascending = !ascending
         }
+
+        /*btn_updown.setOnClickListener {
+            if (ascending) {
+                diaryListRecyclerViewAdapter.dataList.sortedWith(compareBy { Integer.parseInt(getTime(it.date)) })
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                diaryListRecyclerViewAdapter.dataList.sortedWith(compareByDescending { Integer.parseInt(getTime(it.date)) })
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            }
+
+            ascending = !ascending
+        }*/
 
         btn_setting.setOnClickListener {
             startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
@@ -245,7 +265,10 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                             ll_list_zero.visibility = View.GONE
 
                             diaryListRecyclerViewAdapter.dataList = tmp
-                            diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                            //정렬
+                            //diaryListRecyclerViewAdapter.dataList.sortByDescending { data ->  data.date.substring(8, 10).toInt() }
+                            //diaryListRecyclerViewAdapter.dataList.sortedWith(compareByDescending<DiaryListData> { getDay(it.date) }.thenByDescending { getTime(it.date) })
+                            diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
                             diaryListRecyclerViewAdapter.notifyDataSetChanged()
                         }
                     }

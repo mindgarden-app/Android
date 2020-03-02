@@ -20,4 +20,6 @@ interface DiaryDate {
     fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH))
 
     fun getTime(d: String) = getFormat(d, SimpleDateFormat("HH:mm:ss", Locale.getDefault()))
+
+    fun getReadDate(d: String) = getFormat(d, SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
 }

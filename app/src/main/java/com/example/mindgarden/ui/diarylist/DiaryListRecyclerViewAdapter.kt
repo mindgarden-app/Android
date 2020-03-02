@@ -3,6 +3,8 @@ package com.example.mindgarden.ui.diarylist
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
@@ -73,6 +75,21 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         holder.itemView.txt_rv_item_diary_list_day_text.text = getDayOfWeek(dataList[position].date)
         holder.itemView.txt_rv_item_diary_list_content.text = dataList[position].diary_content
 
+        var weatherIdx: Int = dataList[position].weatherIdx
+        when (weatherIdx) {
+            0 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_01)
+            1 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_02)
+            2 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_03)
+            3 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_04)
+            4 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_05)
+            5 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_06)
+            6 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_07)
+            7 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_08)
+            8 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_09)
+            9 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_10)
+            10 -> holder.itemView.diary_list_weather_img.setImageResource(R.drawable.icn_weather_list_ver_11)
+        }
+
         holder.itemView.ll_rv_item_diary_list_container.setOnLongClickListener {
             isPressed = !isPressed
             notifyDataSetChanged()
@@ -81,14 +98,17 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
         //인터페이스 작업 필요
         holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
-            var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            //var dateText = dataList[position].date.substring(2, 4) + "." + dataList[position].date.substring(5, 7) + "." + dataList[position].date.substring(8, 10) + ". (" + dataList[position].date.substring(11, 14) + ")"
+            //interface
+            var dateText = getDiaryDate(dataList[position].date)
             //Adapter
             //context ->
             Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
                 putExtra("from",300)
                 putExtra("userIdx" ,7)
                 putExtra("dateText",  dateText)
-                putExtra("dateValue", dataList[position].date.substring(0, 10))
+                //putExtra("dateValue", dataList[position].date.substring(0, 10))
+                putExtra("dateValue", getReadDate(dataList[position].date))
                 //Adapter
                 //context.startActivity(this) ->
                 holder.itemView.context.startActivity(this)
@@ -134,7 +154,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 notifyDataSetChanged()
             }
         } else {
-            holder.itemView.lay1.visibility = View.INVISIBLE
+            holder.itemView.lay1.visibility = View.GONE
         }
     }
     /*override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -281,6 +301,8 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
             var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
             var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
+            var weather_container = itemView.findViewById(R.id.ll_diary_list_weather) as LinearLayout
+            var weather_image = itemView.findViewById(R.id.diary_list_weather_img) as ImageView
 
             //var dl1 = itemView.findViewById(R.id.dl1) as LinearLayout
             //var dl2 = itemView.findViewById(R.id.dl2) as LinearLayout
