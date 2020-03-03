@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
@@ -34,7 +35,9 @@ class EmailSignInActivity : AppCompatActivity() {
         //툴바 재활용을 위해 text 교체
         toolbar_email_login.txtSetting.text = "이메일 회원가입"
         toolbar_email_login.btnBack.setOnClickListener {
+
             finish()
+
         }
         btn_email_sign_up.setOnClickListener {
             val signUpIntent = Intent(this, EmailSignUpActivity::class.java)
@@ -45,6 +48,21 @@ class EmailSignInActivity : AppCompatActivity() {
             postEmailSignInResponse()
             val mainIntent=Intent(this,MainActivity::class.java)
             startActivity(mainIntent)
+        }
+        //누를시에 그린 border로 변화
+        edt_email_sign_in.setOnFocusChangeListener { view, b ->
+            hasFocus(view, b)
+        }
+        edt_password_sign_in.setOnFocusChangeListener { view, b ->
+            hasFocus(view,b)
+        }
+    }
+
+    fun hasFocus(view: View, b: Boolean) {
+        if (b) {
+            view.setBackgroundResource(R.drawable.grid_border)
+        } else {
+            view.setBackgroundResource(R.drawable.gray_border_square)
         }
     }
 

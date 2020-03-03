@@ -90,10 +90,13 @@ class EmailSignUpActivity : AppCompatActivity() {
             }
         })
 
+        //개인정보처리방침으로 이동
         btn_privacy_statement.setOnClickListener {
             val privacyIntent=Intent(this, PrivacyStatementActivity::class.java)
             startActivity(privacyIntent)
         }
+
+        //이용약관으로 이동
         btn_terms_of_use.setOnClickListener {
             val termsOfUseIntent=Intent(this,TermsOfUseActivity::class.java)
             startActivity(termsOfUseIntent)
