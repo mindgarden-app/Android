@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -64,6 +66,10 @@ dependencies {
     implementation 'com.ibm.mobile.foundation:ibmmobilefirstplatformfoundation:8.0.+'
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
+    //firebase
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
 
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

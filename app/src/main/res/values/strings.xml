@@ -6,6 +6,10 @@
     <!--Channel-->
     <string name="channel_description">MindGarden push notification</string>
     <string name="channel_name">mindgarden</string>
+    <string name="channel_id">MINDGARDEN</string>
+
+    <!--Firebase-->
+    <string name="msg_token_fmt"></string>
 
     <!--main-->
     <string name="defaultText">정원을 꾸며볼까요?</string>
@@ -25,5 +29,6 @@
 
     <!--ReadDiary-->
     <string name="defaultMoodText">기분을 선택하세요</string>
+
 
 </resources>

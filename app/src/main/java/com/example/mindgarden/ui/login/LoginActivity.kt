@@ -22,6 +22,8 @@ import android.widget.Toast
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.ui.main.MainActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -41,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         configureMainTab()
 
+        fcmToken()
 
         permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
         requestPermission()
@@ -77,6 +80,24 @@ class LoginActivity : AppCompatActivity() {
             //  startActivity<PasswordActivity>("from" to  "login")
             */
 
+    }
+
+    //현재 토큰 검색
+    private fun fcmToken(){
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("FCM Log", "InstanceId", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                Log.d("FCM Log", "FCM token : $token")
+                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            })
     }
 
     override fun onResume() {
