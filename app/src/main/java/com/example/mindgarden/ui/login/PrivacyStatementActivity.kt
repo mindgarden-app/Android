@@ -16,6 +16,7 @@ class PrivacyStatementActivity : AppCompatActivity() {
         toolbar_privacy_statement.btnBack.setOnClickListener {
             finish()
         }
+        toolbar_privacy_statement.txtSetting.text="개인정보처리방침"
     }
 
 }
