@@ -47,14 +47,11 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
-    //lateinit var diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter
-    //Adapter
     val diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter by lazy {
         DiaryListRecyclerViewAdapter { clickEventCallback(it) }
     }
     private var ascending = true
 
-    //수정중
     val cal = Calendar.getInstance()
     var year = cal.get(Calendar.YEAR).toString()
     var month = (cal.get(Calendar.MONTH) + 1).toString()
@@ -78,18 +75,12 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //수정중
-        /*val cal = Calendar.getInstance()
-        var year = cal.get(Calendar.YEAR).toString()
-        var month = (cal.get(Calendar.MONTH) + 1).toString()*/
-
         txt_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
         }
         txt_month.setText(month)
 
-        //수정중
         btn_left.setOnClickListener {
             if (month.toInt() == 1) {
                 leftYearChange()
@@ -102,7 +93,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
             }
         }
 
-        //수정중
         btn_right.setOnClickListener {
             if (month.toInt() == 12) {
                 rightYearChange()
@@ -118,7 +108,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         configureRecyclerView()
     }
 
-    //수정중
     private fun leftYearChange() {
         month = (month.toInt() + 11).toString()
         year = (year.toInt() - 1).toString()
@@ -129,7 +118,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         txt_month.setText(month)
     }
 
-    //수정중
     private fun leftMonthChange() {
         month = (month.toInt() - 1).toString()
         if (month.toInt() < 10) {
@@ -138,7 +126,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         txt_month.setText(month)
     }
 
-    //수정중
     private fun rightYearChange() {
         month = (month.toInt() - 11).toString()
         year = (year.toInt() + 1).toString()
@@ -149,7 +136,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         txt_month.setText(month)
     }
 
-    //수정중
     private fun rightMonthChange() {
         month = (month.toInt() + 1).toString()
         if (month.toInt() < 10) {
@@ -184,28 +170,12 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
             ascending = !ascending
         }
 
-        /*btn_updown.setOnClickListener {
-            if (ascending) {
-                diaryListRecyclerViewAdapter.dataList.sortedWith(compareBy { Integer.parseInt(getTime(it.date)) })
-                diaryListRecyclerViewAdapter.notifyDataSetChanged()
-            } else {
-                diaryListRecyclerViewAdapter.dataList.sortedWith(compareByDescending { Integer.parseInt(getTime(it.date)) })
-                diaryListRecyclerViewAdapter.notifyDataSetChanged()
-            }
-
-            ascending = !ascending
-        }*/
-
         btn_setting.setOnClickListener {
             startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
         }
 
-        //diaryListRecyclerViewAdapter = DiaryListRecyclerViewAdapter(context!!, dataList)
-        //Adapter
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
-        //수정중
-        //LinearLayoutManager.VERTICAL ->
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
 
         if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
@@ -218,9 +188,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
-
-        //수정
-        //.toString() 삭제
+        
         if (accessToken == "") {
             toastText.setText("로그인하세요")
             toastText.gravity = Gravity.CENTER
