@@ -8,7 +8,7 @@
         >
 
     <include
-            android:id="@+id/toolbar_privacy_statement"
+            android:id="@+id/toolbar_terms_of_use"
             layout="@layout/toolbar_mypage_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_privacy_statement">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_terms_of_use">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -30,32 +30,32 @@
                 android:layout_marginRight="26dp">
 
             <TextView
-                    android:id="@+id/txt_title_privacy_statement"
+                    android:id="@+id/txt_title_terms_of_use"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:fontFamily="@font/notosanscjkr_bold"
                     android:includeFontPadding="false"
-                    android:text="Mindgarden 개인정보처리방침"
+                    android:text="Mindgarden 서비스 이용약관"
                     android:textColor="@color/colorBlack"
                     android:textSize="17sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                    android:id="@+id/txt_privacy_statement"
+                    android:id="@+id/txt_terms_of_use"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="24dp"
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:text="@string/privacy_statement"
+                    android:text="@string/terms_of_use"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title_privacy_statement"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_terms_of_use"
                     app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

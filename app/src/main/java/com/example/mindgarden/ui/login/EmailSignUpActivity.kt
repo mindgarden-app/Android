@@ -94,6 +94,10 @@ class EmailSignUpActivity : AppCompatActivity() {
             val privacyIntent=Intent(this, PrivacyStatementActivity::class.java)
             startActivity(privacyIntent)
         }
+        btn_terms_of_use.setOnClickListener {
+            val termsOfUseIntent=Intent(this,TermsOfUseActivity::class.java)
+            startActivity(termsOfUseIntent)
+        }
 
 
 
