@@ -1,4 +1,4 @@
-package com.example.mindgarden.BroadCastReceiver
+package com.example.mindgarden.broadcastReceiver
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver

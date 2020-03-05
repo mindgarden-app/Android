@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Data.InventoryData
+import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 
 class InventoryRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<InventoryData>): RecyclerView.Adapter<InventoryRecyclerViewAdapter.Holder>() {

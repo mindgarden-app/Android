@@ -1,27 +1,34 @@
 package com.example.mindgarden.ui.main
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.ui.diary.WriteDiaryActivity
-import com.example.mindgarden.DB.TokenController
+import androidx.core.content.ContextCompat
+import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.diary.ModifyDiaryActivity
+import com.example.mindgarden.ui.login.LoginActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import org.koin.android.ext.android.inject
 
 
-class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
+class MainActivity  : AppCompatActivity() {
 
-    var check : Int = 0
+    private val repository : MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +49,7 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
 
         if(!TokenController.isValidToken(this)){
             Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
-            RenewAcessTokenController.postRenewAccessToken(this)
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
@@ -51,20 +58,8 @@ class MainActivity  : AppCompatActivity(), MainFragment.OnDataPass  {
 
 
         btn_write.setOnClickListener {
-            Log.e("mainActivity", check.toString())
-            if (check == 2) {
-                startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
-            } else {
-                toastText.setText("일기는 하루에 하나만 쓸 수 있어요!ㅠㅠ")
-                toastText.gravity = Gravity.CENTER
-                toast.view = toastView
-                toast.show()
-            }
+                startActivityForResult(Intent(this, ModifyDiaryActivity::class.java),1100)
         }
-    }
-
-    override fun checkPass(c: Int) {
-        check = c
     }
 
     private fun configureMainTab() {

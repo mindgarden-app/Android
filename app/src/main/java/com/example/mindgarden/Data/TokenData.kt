@@ -1,4 +1,4 @@
-package com.example.mindgarden.Data
+package com.example.mindgarden.data
 
 class TokenData(
     var token: String

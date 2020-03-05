@@ -2,11 +2,11 @@ package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -16,45 +16,53 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.GET.GetDiaryResponse
-import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.Network.PUT.PutModifyDiaryResponse
+import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.data.MoodChoiceData
+import com.example.mindgarden.data.vo.DiaryResponse
+import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
+import com.example.mindgarden.ui.login.LoginActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_modify_diary.*
+import kotlinx.android.synthetic.main.data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.json.JSONObject
+import org.koin.android.ext.android.inject
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ModifyDiaryActivity : AppCompatActivity() {
+class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
-    val networkService: NetworkService by lazy{
-        ApplicationController.instance.networkService
+    private var diaryIdx: Int = -1
+
+    private val repository : MindgardenRepository by inject()
+
+    private val MoodItemList : ArrayList<MoodChoiceData> by lazy{
+        ArrayList<MoodChoiceData>()
     }
+    private var diaryItemList : DiaryResponse.Diary? = null
 
-    lateinit var iconList : List<Bitmap>
-    lateinit var textList : List<String>
-    lateinit var dateText : String
-    lateinit var dateValue : String
+    private var date : String? = null
+    private var b : Bitmap? = null
+    private var us : String? = null
 
     val REQUEST_CODE_SELECT_IMAGE = 1004
     val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
     var selectPicUri : Uri? = null
-    var userIdx : Int = 0
-    var us : String? = null
-    var b : Bitmap? = null
-
     var weatherIdx : Int = 0
     var content : String = ""
     var imgState = 0
@@ -66,66 +74,9 @@ class ModifyDiaryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify_diary)
 
-
-        window.decorView.apply {
-            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        }
-
-        //날짜 설정
-        val intent : Intent = getIntent()
-        dateText = intent.getStringExtra("dateText")
-        var kDate = dateText.substring(11, 12)
-        var date2:String=""
-        when(kDate){
-            "월"->date2="Mon"
-            "화"->date2="Tue"
-            "수"->date2="Wed"
-            "목"->date2="Thu"
-            "금"->date2="Fri"
-            "토"->date2="Sat"
-            "일"->date2="Sun"
-        }
-        var eDate = dateText.substring(11, 14)
-        when(eDate) {
-            "Mon"->date2="Mon"
-            "Tue"->date2="Tue"
-            "Wed"->date2="Wed"
-            "Thu"->date2="Thu"
-            "Fri"->date2="Fri"
-            "Sat"->date2="Sat"
-            "Sun"->date2="Sun"
-        }
-        txt_date_toolbar_write_diary.setText(dateText.substring(0, 9) + " (" + date2 + ")")
-        dateValue = intent.getStringExtra("dateValue")
-
-
-        txt_save_toolbar.setText("완료")
-
-        getDiaryResponse()
-
-        btn_back_toolbar.setOnClickListener {
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
-        btn_save_diary_toolbar.setOnClickListener {
-            //수정 API를 이용하여 서버에 등록
-            //일기 쓰기 액티비티 로직과 비슷하게
-            putModifyDiaryResponse()
-            //이미지 있을경우 딜레이 시간 주기 : 1초
-            Thread.sleep(1000)
-
-            val intent : Intent = Intent()
-            intent.putExtra("from" ,200)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
-
-        //기분선택 팝업 띄우기
-        img_mood_text_modify_diary.setOnClickListener {
-            moodChoice()
-        }
-        txt_mood_text_modify_diary.setOnClickListener {
-            moodChoice()
+        init()
+        if(diaryIdx!=-1){
+            loadData()
         }
 
         //갤러리 접근하여 이미지 얻어오기
@@ -173,194 +124,113 @@ class ModifyDiaryActivity : AppCompatActivity() {
 
     }
 
+    //공통
 
-    // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
-    private fun getDiaryResponse() {
-
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this)
-        }
-        //userIdx , date 값
-        val getDiaryResponse = networkService.getDiaryResponse(TokenController.getAccessToken(this), dateValue)
-
-        getDiaryResponse.enqueue(object : Callback<GetDiaryResponse> {
-            override fun onFailure(call: Call<GetDiaryResponse>, t: Throwable) {
-                Log.e("일기 조희 실패", t.toString())
-            }
-
-            override fun onResponse(call: Call<GetDiaryResponse>, response: Response<GetDiaryResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        //데이터 넣어주기
-                        //date, 기분 텍스트, 아이콘, 내용, 사진(있을경우)
-                        //set icon and text
-
-                        //아이콘 set
-                        weatherIdx  = response.body()!!.data!![0].weatherIdx
-                        setIcon()
-
-                         for(i  in 0..weatherIdx ){
-                            if(weatherIdx == i){
-                                btn_mood_icon_modify_diary.setImageBitmap(iconList.get(i))
-                                txt_mood_text_modify_diary.setText(textList.get(i))
-                            }
-                        }
-
-
-                        //내용 set
-                        content = response.body()!!.data!![0].diary_content
-                        Log.e("cotent", content)
-                        edt_content_modify_diary.setText(content)
-
-                        if(response.body()!!.data!![0].diary_img != null){
-                            icn_gallary_modify_diary.visibility = View.INVISIBLE
-
-                            val target = object : SimpleTarget<Bitmap>() {
-                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                                    img_gallary_modify_diary.setImageBitmap(resource)
-                                    b = resource
-                                }
-                            }
-
-                            Glide.with(this@ModifyDiaryActivity)
-                                .asBitmap()
-                                .load(response.body()!!.data!![0].diary_img)
-                                .fitCenter()
-                                .into<SimpleTarget<Bitmap>>(target)
-
-                            //이미지 상태 : 이미지가 이미 있는 경우
-                            imgState = 1
-
-                            //서버가 주는 url String
-                            us = response.body()!!.data!![0].diary_img
-
-                        }
-
-                    }
-                }
-
-
-            }
-        })
+    private fun init(){
+        getDiaryIdx()
+        setToolbarText()
+        showMoodChoiceActivity()
+        setMoodText()
+        btnSaveClick()
+        btnBackClick()
     }
 
-    fun bitmapToFile(b : Bitmap, fileName : String) : String{
+    private fun getDiaryIdx(){
+        diaryIdx =  intent.getIntExtra(DIARY_IDX, -1)
+    }
 
-        //임시파일 저장 경로
+    private fun setToolbarText(){
+        when(diaryIdx){
+            -1-> {
+                txt_save_toolbar.text = "등록"
+                txt_date_toolbar_write_diary.text = getCurrentDate()
+            }
+            else-> {
+                txt_save_toolbar.text = "완료"
+            }
+
+        }
+    }
+
+
+    private fun setMoodIcn(idx : Int){
+        getMoodList(this, MoodItemList)
+        btn_mood_icon_modify_diary.setImageBitmap(MoodItemList[idx].moodIcn)
+        txt_mood_text_modify_diary.text = MoodItemList[idx].moodTxt
+    }
+
+    private fun setMoodText(){
+        if(txt_mood_text_modify_diary.text.equals(getString(R.string.defaultMoodText))){
+            txt_mood_text_modify_diary.setTextColor(Color.parseColor("#c6c6c6"))
+        }else{
+            txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2b2b2b"))
+        }
+    }
+
+    private fun showMoodChoiceActivity(){
+        img_mood_text_modify_diary.setOnClickListener {
+            chooseMood()
+        }
+        txt_mood_text_modify_diary.setOnClickListener {
+            chooseMood()
+        }
+    }
+
+    private fun btnBackClick(){
+        btn_back_toolbar.setOnClickListener {
+           onBackPressed()
+        }
+    }
+
+    private fun postOrPut(){
+        when(diaryIdx){
+            -1-> postDiary()
+            else-> putDiary()
+        }
+    }
+    private fun btnSaveClick(){
+        btn_save_diary_toolbar.setOnClickListener {
+            postOrPut()
+        }
+    }
+
+    private fun saveBitmapToFile(bitmap: Bitmap?, fileName : String): String{
         val storage : File = this.cacheDir
         val name = fileName
+        val tempFile =  File(storage, name)
 
-        val tempFile = File(storage, name)
-
-        tempFile.createNewFile()
-        val fos  = FileOutputStream(tempFile)
-        b.compress(Bitmap.CompressFormat.JPEG, 90, fos)
-        fos.close()
+        try{
+            tempFile.createNewFile()
+            val fos  = FileOutputStream(tempFile)
+            bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+            fos.close()
+        }catch (e: FileNotFoundException){
+            Log.e("FileNotFoundException: ", e.message)
+        }catch (e: IOException){
+            Log.e("IOException: ", e.message)
+        }
 
         return tempFile.absolutePath
     }
 
-    //통신 2. 수정 API를 이용하여 서버에 등록
-    private fun putModifyDiaryResponse(){
-
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this)
-        }
-        content = edt_content_modify_diary.text.toString()
-        //타입 변환(String->RequestBody)
-        val content_rb = RequestBody.create(MediaType.parse("text/plain"), content)
-        val date_rb = RequestBody.create(MediaType.parse("text/plain"), dateValue.substring(0,10))
-
-        when(imgState){
-            0->{    //이미지 삭제할 경우
-                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb, weatherIdx, date_rb, null)
-
-                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                        Log.e("ModifyDiary failed", t.toString())
-                    }
-
-                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                        if(response.isSuccessful) {
-                            if (response.body()!!.status == 200) {
-                                Log.e("ModifyDiary", response.body()!!.message)
-                            }
-                        }
-                        else{
-                            Log.e("Modify fail", response.body()!!.message)
-                        }
-                    }
-                })
-            }
-            1->{    //이미지 원래 있을 경우
-
-                //URL을 파일로 바꿈
-                val fn = File(us).name
-                Log.e("us", us)
-
-                val file = File(bitmapToFile(b!!,fn))
-
-                    val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
-                    val picture_rb = MultipartBody.Part.createFormData("diary_img", fn, photoBody)
-                    val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
-
-                    putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                        override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                            Log.e("수정 실패", t.toString())
-                        }
-
-                        override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                            if(response.isSuccessful) {
-                                if (response.body()!!.status == 200) {
-                                    Log.e("ModifyActivity", response.body()!!.message)
-                                }
-                            }
-                            else{
-                                // 400 :
-                            }
-                        }
-                    })
-
-                }
-            2->{    //이미지 새로 첨부할 경우우
-               val options = BitmapFactory.Options()
-                val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
-                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream)
-
-                val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-
-                val picture_rb = MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
-
-
-                val putModifyDiaryResponse = networkService.putModifyDiaryResponse( TokenController.getAccessToken(this), content_rb,  weatherIdx, date_rb, picture_rb)
-
-                putModifyDiaryResponse.enqueue(object : Callback<PutModifyDiaryResponse>{
-                    override fun onFailure(call: Call<PutModifyDiaryResponse>, t: Throwable) {
-                        Log.e("수정 실패", t.toString())
-                    }
-
-                    override fun onResponse(call: Call<PutModifyDiaryResponse>, response: Response<PutModifyDiaryResponse>) {
-                        if(response.isSuccessful) {
-                            if (response.body()!!.status == 200) {
-                                Log.e("ModifyActivity", response.body()!!.message)
-                            }
-                        }
-                        else{
-                            // 400 :
-                        }
-                    }
-                })
-            }
-        }
-
+    private fun stringConvertToRB(str: String?) : RequestBody {
+        return RequestBody.create(MediaType.parse("text/plain"),str)
     }
 
+    private fun convertPhotoRB(): MultipartBody.Part?{
+        val options = BitmapFactory.Options()
+        val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
+        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+
+        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+        return MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
+    }
 
     //MoodChoice액티비티 팝업
-    fun moodChoice(){
-        val intent : Intent = Intent(this, MoodChoiceActivity::class.java)
+    fun chooseMood(){
+        val intent = Intent(this, MoodActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE_MODIFY_ACTIVITY)
     }
 
@@ -371,7 +241,6 @@ class ModifyDiaryActivity : AppCompatActivity() {
         //갤러리 접근
         if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
-                //gallaryImg = selectImage(data)
                 data?.let {
                     selectPicUri = it.data
                     Glide.with(this).load(selectPicUri)
@@ -386,44 +255,211 @@ class ModifyDiaryActivity : AppCompatActivity() {
         if(requestCode == REQUEST_CODE_MODIFY_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
                 weatherIdx = data!!.getIntExtra("weatherIdx", 0)
-                //선택한 기분 아이콘 넣어주기
-                btn_mood_icon_modify_diary.setImageBitmap(data!!.getParcelableExtra<Bitmap>("moodIcn") as Bitmap)
-
-                //선택한 기분 텍스트 넣어주기
-                txt_mood_text_modify_diary.text = data!!.getStringExtra("moodTxt")
+                txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2b2b2b"))
+                setMoodIcn(weatherIdx)
             }
         }
     }
 
     //이미지 삭제
     private fun deleteImage(){
-        icn_gallary_modify_diary.visibility = View.VISIBLE
+        showIcnGallery()
         img_gallary_modify_diary.setImageBitmap(null)
         imgState = 0
     }
 
-    //setIcon
-    fun setIcon(){
-        val icn1 = drawableToBitmap(R.drawable.img_weather1_good)
-        val icn2  = drawableToBitmap(R.drawable.img_weather2_excited)
-        val icn3 = drawableToBitmap(R.drawable.img_weather3_soso)
-        val icn4 = drawableToBitmap(R.drawable.img_weather4_bored)
-        val icn5 = drawableToBitmap(R.drawable.img_weather5_funny)
-        val icn6 = drawableToBitmap(R.drawable.img_weather6_rainbow)
-        val icn7 = drawableToBitmap(R.drawable.img_weather7_notgood)
-        val icn8 = drawableToBitmap(R.drawable.img_weather8_sad)
-        val icn9 = drawableToBitmap(R.drawable.img_weather9_annoying)
-        val icn10 = drawableToBitmap(R.drawable.img_weather10_lightning)
-        val icn11 = drawableToBitmap(R.drawable.img_weather11_none)
-
-        iconList = listOf<Bitmap>(icn1, icn2, icn3, icn4, icn5, icn6, icn7, icn8, icn9, icn10, icn11)
-        textList = listOf<String>("좋아요", "신나요", "그냥 그래요", "심심해요", "재미있어요", "설레요",
-            "별로에요", "우울해요", "짜증나요", "화가나요", "기분없음")
-    }
-    private fun drawableToBitmap(icnName : Int) : Bitmap {
-        val drawable = resources.getDrawable(icnName) as BitmapDrawable
-        val bitmap = drawable.bitmap
-        return bitmap
+    //일기 쓰기
+    private fun getCurrentDate():String{
+        val f = SimpleDateFormat("yy.MM.dd.(EEE)", Locale.KOREA)
+        return f.format(Calendar.getInstance(Locale.KOREA).time)
     }
 
+    private fun postDiary(){
+        if(selectPicUri != null){
+            postDiaryImageOK()
+        }else{
+            postDiaryImageNull()
+        }
+    }
+
+    private fun postIntent(){
+        Intent(this, ReadDiaryActivity::class.java).apply {
+            putExtra(DIARY_IDX,diaryIdx)
+            startActivity(this)
+            finish()
+        }
+    }
+
+    private fun postDiaryImageOK(){
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
+        }
+        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val pictureRB = convertPhotoRB()
+
+        repository
+            .postDiary(
+                TokenController.getAccessToken(this),contentRB, weatherIdx, pictureRB,
+                {
+                    diaryIdx = it.diaryIdx
+                    postIntent()
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
+    }
+
+    private fun postDiaryImageNull(){
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
+        }
+        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+
+        repository
+            .postDiary(
+                TokenController.getAccessToken(this),contentRB, weatherIdx,null,
+                {
+                    diaryIdx = it.diaryIdx
+                    postIntent()
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
+    }
+
+    //일기 수정
+    private fun setContents(str : String) = edt_content_modify_diary.setText(str)
+
+    private fun setDate(d : String) {
+        date = getDiaryDate(d)
+        txt_date_toolbar_write_diary.text = date
+    }
+
+    private fun setImageData(url : String){
+        val target = object : SimpleTarget<Bitmap>() {
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                img_gallary_modify_diary.setImageBitmap(resource)
+                b = resource
+                us = url
+            }
+        }
+
+        Glide.with(this@ModifyDiaryActivity)
+            .asBitmap()
+            .load(url)
+            .fitCenter()
+            .into<SimpleTarget<Bitmap>>(target)
+    }
+
+    private fun loadData(){
+        if(!TokenController.isValidToken(this)){
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
+        }
+
+        repository
+            .getDiary(
+                TokenController.getAccessToken(this), diaryIdx,
+                {
+                    hideErrorView()
+                    it.diaryResponse[0].let {resp->
+                        setContents(resp.diary_content)
+                        setMoodIcn(resp.weatherIdx)
+                        setDate(resp.date)
+                        resp.diary_img?.let { img->
+                            hideIcnGallery()
+                            setImageData(img)
+                            imgState = 1
+                        }
+                    }
+                },
+                {
+                    showErrorView()
+                    btnRetryDataLoad()
+                }
+            )
+    }
+
+    private fun showErrorView(){
+        llWriteDiary.visibility = View.GONE
+        dataLoadFailModifyDiary.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        llWriteDiary.visibility = View.VISIBLE
+        dataLoadFailModifyDiary.visibility = View.GONE
+    }
+
+    private fun btnRetryDataLoad(){
+        btnRetryDataLoadFail.setOnClickListener {
+            loadData()
+        }
+    }
+
+    private fun hideIcnGallery(){
+        icn_gallary_modify_diary.visibility = View.INVISIBLE
+    }
+
+    private fun showIcnGallery(){
+        icn_gallary_modify_diary.visibility = View.VISIBLE
+    }
+
+    private fun putDiary(){
+        when(imgState){
+            0->{putDiaryImageNull()}
+            1->{putDiaryImageOK()}
+            2->{putDiaryImageNew()}
+        }
+    }
+
+    private fun putIntent(){
+        Intent(this, ReadDiaryActivity::class.java).apply {
+            putExtra(DIARY_IDX,diaryIdx)
+            setResult(Activity.RESULT_OK,this)
+            finish()
+        }
+    }
+    private fun putDiaryImageOK(){
+        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+
+        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val fileName =  File(us).name
+        val file = File(saveBitmapToFile(b,fileName))
+        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
+        val pictureRB = MultipartBody.Part.createFormData("diary_img", fileName, photoBody)
+        repository
+            .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
+                {
+                    if(it.status == 200){
+                        putIntent()
+                    }else{
+                        Log.e("ModifyDIaryActivity", it.message)
+                    }
+
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+            )
+    }
+
+    private fun putDiaryImageNew(){
+        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val pictureRB = convertPhotoRB()
+
+        repository
+            .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
+                {
+                    putIntent()
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+            )
+    }
+
+    private fun putDiaryImageNull(){
+        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+
+        repository
+            .putDiary(TokenController.getAccessToken(this), contentRB, weatherIdx, diaryIdx, null,
+                {
+                    putIntent()
+                },
+                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+            )
+    }
 }
