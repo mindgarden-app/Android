@@ -48,7 +48,7 @@ interface NetworkService {
     fun deleteDiaryList(
         @Header("token") token: String,
         @Path("diaryIdx") date: Int
-    ): Call<Unit>
+    ): Call<DeleteDiaryListResponse>
 
     //나무심기
     @POST("/garden/plant")

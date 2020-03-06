@@ -47,7 +47,7 @@ interface MindgardenRepository {
     fun deleteDiaryList(
         token: String,
         diaryIdx: Int,
-        onSuccess: () -> Unit,
+        onSuccess: (DeleteDiaryListResponse) -> Unit,
         onFail: (errorMsg: String) -> Unit
     )
 

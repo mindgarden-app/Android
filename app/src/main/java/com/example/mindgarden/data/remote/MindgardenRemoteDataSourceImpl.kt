@@ -110,19 +110,24 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     override fun deleteDiaryList(
         token: String,
         diaryIdx: Int,
-        onSuccess: () -> Unit,
+        onSuccess: (DeleteDiaryListResponse) -> Unit,
         onFail: (errorMsg: String) -> Unit
     ) {
         mindgardenApiService
             .deleteDiaryList(token,diaryIdx)
-            .enqueue(object : Callback<Unit>{
-                override fun onFailure(call: Call<Unit>, t: Throwable) {
+            .enqueue(object : Callback<DeleteDiaryListResponse>{
+                override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                override fun onResponse(call: Call<DeleteDiaryListResponse>, response: Response<DeleteDiaryListResponse>) {
                     when(response.isSuccessful){
-                        true->{}
+                        //true-> response.body()?.let { onSuccess(it) }
+                        //false-> onFail(response.errorBody().toString())
+                        true-> when (response.body()!!.status == 200) {
+                            true->response.body()?.let { onSuccess(it) }
+                            false-> onFail(response.errorBody().toString())
+                        }
                         false-> onFail(response.errorBody().toString())
                     }
                 }

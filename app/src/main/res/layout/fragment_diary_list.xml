@@ -30,6 +30,8 @@
 
         </LinearLayout>
 
+        <include layout="@layout/data_load_fail" android:visibility="gone" android:id="@+id/dataLoadFailDiaryList"/>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_diary_list"
                 android:layout_width="match_parent"
