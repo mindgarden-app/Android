@@ -148,8 +148,6 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
             var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
             var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-            var weather_container = itemView.findViewById(R.id.ll_diary_list_weather) as LinearLayout
-            var weather_image = itemView.findViewById(R.id.diary_list_weather_img) as ImageView
         }
     }
 }
