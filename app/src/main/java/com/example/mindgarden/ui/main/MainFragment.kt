@@ -510,7 +510,8 @@ class MainFragment : Fragment(), DiaryDate,Tree {
                     if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
                         btn_reward.visibility = View.VISIBLE
 
-                        if (it.data?.get(0)?.balloon == 1) {
+                        //hee_ing
+                        if (it.data?.get(0)?.balloon == 0) {
                             img_balloon.visibility = View.VISIBLE
                             btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
                             Log.e("balloon", balloon.toString())
