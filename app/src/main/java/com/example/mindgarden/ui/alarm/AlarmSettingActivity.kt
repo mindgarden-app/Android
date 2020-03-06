@@ -14,11 +14,11 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import com.example.mindgarden.R
 import android.widget.TimePicker
 import android.app.AlarmManager
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import com.example.mindgarden.BroadCastReceiver.BroadcastD
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.db.SharedPreferenceController
 import android.view.WindowManager
 import com.example.mindgarden.ui.mypage.MypageActivity
 
@@ -151,9 +151,9 @@ class AlarmSettingActivity : AppCompatActivity() {
         setChannel()
 
         //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
-       val intent = Intent(this, BroadcastD::class.java)
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
+        Log.e("Alarm", tgTime.toString())
         //알람 예약
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, tgTime, 24 * 60 * 60 * 1000 ,pendingIntent)
@@ -164,7 +164,6 @@ class AlarmSettingActivity : AppCompatActivity() {
     fun alarmCancle(){
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
 
-        val intent = Intent(this, BroadcastD::class.java)
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
 
         alarmManager.cancel(pendingIntent)

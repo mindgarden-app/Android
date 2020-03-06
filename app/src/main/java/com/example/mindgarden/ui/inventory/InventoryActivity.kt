@@ -1,44 +1,38 @@
 package com.example.mindgarden.ui.inventory
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Data.GridData
-import com.example.mindgarden.Data.InventoryData
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.GET.GetPlantResponse
-import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.Network.POST.PostPlantResponse
+import androidx.core.content.ContextCompat
+import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.data.GridData
+import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class InventoryActivity : AppCompatActivity() {
-    val networkService: NetworkService by lazy {
-        ApplicationController.instance.networkService
-    }
+    private val repository : MindgardenRepository by inject()
 
     val cal = Calendar.getInstance()
     var month = (cal.get(Calendar.MONTH) + 1).toString()
@@ -127,7 +121,7 @@ class InventoryActivity : AppCompatActivity() {
 
         configureRecyclerView()
 
-        getPlantResponse()
+        loadData()
 
         btn_save_inventory.setOnClickListener {
             val toast: Toast = Toast(this)
@@ -139,7 +133,7 @@ class InventoryActivity : AppCompatActivity() {
                     inventoryIdx
                 )) {
                 if (rBal == 1 && rCheck == 0) {
-                    postPlantResponse(
+                    postPlant(
                         TokenController.getAccessToken(this),
                         gridList[gridIdx].product_id ,
                         inventoryIdx
@@ -261,9 +255,9 @@ class InventoryActivity : AppCompatActivity() {
         return false
     }
 
-    fun postPlantResponse(accessToken: String, location: Int, treeIdx: Int) {
+    private fun postPlant(accessToken: String, location: Int, treeIdx: Int){
         var jsonObject = JSONObject()
-       //TODO 수정 필요 함수파라메터 useIdx에서 accessToken으로 바꿈
+        //TODO 수정 필요 함수파라메터 useIdx에서 accessToken으로 바꿈
         //TODO 수정 필요 jsonObject.put("userIdx", userIdx)
 
         jsonObject.put("location", location)
@@ -271,77 +265,60 @@ class InventoryActivity : AppCompatActivity() {
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
-        val postPlantResponse: Call<PostPlantResponse> =
-            networkService.postPlantResponse(TokenController.getAccessToken(this), gsonObject)
-        postPlantResponse.enqueue(object: Callback<PostPlantResponse> {
-            override fun onFailure(call: Call<PostPlantResponse>, t: Throwable) {
-                Log.e("fail", t.toString())
-            }
-
-            override fun onResponse(call: Call<PostPlantResponse>, response: Response<PostPlantResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                    }
-                }
-            }
-        })
+        repository
+            .postPlant(TokenController.getAccessToken(this), gsonObject,
+                {},
+                {
+                    //에러처리
+                })
     }
 
-    fun getPlantResponse() {
 
+    private fun loadData(){
         if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this)
+            RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
 
         if (month.toInt() < 10) {
             month = "0$month"
         }
 
-        val getPlantResponse = networkService.getPlantResponse(
-            TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString())
-        Log.e("why", cal.get(Calendar.YEAR).toString() + "-" + month.toString())
-        getPlantResponse.enqueue(object: Callback<GetPlantResponse> {
-            override fun onFailure(call: Call<GetPlantResponse>, t: Throwable) {
-                Log.e("garden select fail", t.toString())
-            }
+        repository
+            .getGarden(TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString(),
+                {
+                    rBal = it.data!![0].balloon
+                    rCheck = it.data!![0].check
 
-            override fun onResponse(call: Call<GetPlantResponse>, response: Response<GetPlantResponse>) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        Log.e("Adapter: mainfragment : ", response.body()!!.message)
+                    //나무 수만큼
+                    for(i in 0..(it.data.size - 1)) {
+                        Log.e("Adapter: rdate : ", it.data[i].date)
 
-                        rBal = response.body()!!.data!![0].balloon
-                        rCheck = response.body()!!.data!![0].check
+                        var treeIdx = 0
+                        var location = 0
+                        treeIdx = it.data[i].treeIdx
+                        location = it.data[i].location
+                        Log.e("Adapter:location ", location.toString())
+                        Log.e("Adapter: treeIdx", treeIdx.toString())
 
-                        //나무 수만큼
-                        for(i in 0..(response.body()!!.data!!.size - 1)) {
-                            Log.e("Adapter: rdate : ", response.body()!!.data!![i].date)
+                        locationList[i] = location
 
-                            var treeIdx = 0
-                            var location = 0
-                            treeIdx = response.body()!!.data!![i].treeIdx
-                            location = response.body()!!.data!![i].location
-                            Log.e("Adapter:location ", location.toString())
-                            Log.e("Adapter: treeIdx", treeIdx.toString())
+                        if(it.data[i].treeIdx == 16) {
+                            gridList[fromServerToUs[location]].img = R.drawable.android_weeds
+                            gridRecyclerViewAdapter.notifyDataSetChanged()
+                        } else {
+                            Log.e("h", location.toString())
 
-                            locationList[i] = location
+                            gridList[fromServerToUs[location]].img = inventoryList.get(treeIdx)
+                            gridRecyclerViewAdapter.notifyDataSetChanged()
 
-                            if(response.body()!!.data!![i].treeIdx == 16) {
-                                gridList[fromServerToUs[location]].img = R.drawable.android_weeds
-                                gridRecyclerViewAdapter.notifyDataSetChanged()
-                            } else {
-                                Log.e("h", location.toString())
-
-                                gridList[fromServerToUs[location]].img = inventoryList.get(treeIdx)
-                                gridRecyclerViewAdapter.notifyDataSetChanged()
-
-                                Log.e("position ",
-                                    fromServerToUs[location].toString())
-                            }
+                            Log.e("position ",
+                                fromServerToUs[location].toString())
                         }
                     }
-                }
-            }
-        })
+                },
+                {
+                    //에러처리
+                })
     }
+
 }

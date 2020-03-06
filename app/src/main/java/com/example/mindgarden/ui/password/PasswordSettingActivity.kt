@@ -10,7 +10,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import com.example.mindgarden.ui.mypage.MypageActivity
-import com.example.mindgarden.DB.SharedPreferenceController
+import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.R
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 

@@ -2,7 +2,6 @@ package com.example.mindgarden.ui.diary
 
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 interface DiaryDate {
     private fun stringToDate(str : String) = SimpleDateFormat("yyyy-MM-dd EEE HH:mm:ss", Locale.ENGLISH).parse(str)

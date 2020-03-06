@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        tools:context=".ui.login.EmailLoginActivity">
+        tools:context=".ui.login.EmailSignInActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar_email_login" />
 
     <EditText
-            android:id="@+id/edt_email"
+            android:id="@+id/edt_email_sign_in"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="16dp"
@@ -43,6 +43,8 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:background="@color/colorBlockGray"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,20 +54,20 @@
             android:id="@+id/txt_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/notosanscjkr_regular"
             android:gravity="center_horizontal"
+            android:includeFontPadding="false"
             android:letterSpacing="0.02"
             android:text="비밀번호"
-            android:includeFontPadding="false"
             android:textColor="@color/colorBlack"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_email_sign_in" />
 
     <EditText
-            android:id="@+id/edt_pssword"
+            android:id="@+id/edt_password_sign_in"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="16dp"
@@ -74,24 +76,27 @@
             android:background="@color/colorBlockGray"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password" />
 
     <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/btn_email_sign_in"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/gv_mint_line_border"
-            android:text="로그인"
             android:gravity="center"
+            android:text="로그인"
             android:textColor="@color/colorPrimaryMint"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_pssword" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_password_sign_in" />
 
     <LinearLayout
             android:id="@+id/linearLayout2"
@@ -104,7 +109,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
+            app:layout_constraintTop_toBottomOf="@+id/btn_email_sign_in">
 
     </LinearLayout>
 
@@ -144,5 +149,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

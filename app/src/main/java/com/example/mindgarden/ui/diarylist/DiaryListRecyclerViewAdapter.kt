@@ -3,8 +3,6 @@ package com.example.mindgarden.ui.diarylist
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
@@ -12,31 +10,24 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
-import com.example.mindgarden.DB.TokenController
-import com.example.mindgarden.Data.DiaryListData
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.Delete.DeleteDiaryListResponse
-import com.example.mindgarden.Network.NetworkService
 import com.example.mindgarden.R
-import com.example.mindgarden.DB.RenewAcessTokenController
+import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.ui.diary.DiaryDate
+import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
 import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import kotlinx.android.synthetic.main.rv_item_diary_list.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import kotlin.collections.ArrayList
-import kotlin.coroutines.coroutineContext
 
 class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
-    val networkService: NetworkService by lazy {
-        ApplicationController.instance.networkService
-    }
+    //Adapter
+    //class DiaryListRecyclerViewAdapter(var ctx: Context, var dataList: ArrayList<DiaryListData>): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate
+    //context도 없앰
+    //Adapter
     var dataList = ArrayList<DiaryListData>()
     var isPressed = false
 
+    //수정중
     lateinit var dlgNew : AlertDialog
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(clickEvent, viewGroup)
