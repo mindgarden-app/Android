@@ -52,10 +52,10 @@
                     android:layout_width="180dp"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
-                    android:fontFamily="@font/notosanscjkr_demilight"
+                    android:fontFamily="@font/notosanscjkr_regular"
                     android:text="Content"
                     android:textSize="13.5dp"
-                    android:textColor="#2B2B2B"
+                    android:textColor="#000000"
                     android:singleLine="true"/>
 
         </LinearLayout>

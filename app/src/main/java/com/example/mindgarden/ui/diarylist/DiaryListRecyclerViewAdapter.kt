@@ -25,11 +25,11 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(clickEvent, viewGroup)
 
-    override fun getItemCount(): Int = dataList.size
-
     override fun getItemViewType(position: Int): Int {
         return position
     }
+
+    override fun getItemCount(): Int = dataList.size
 
     fun getDataAt(position: Int) = dataList[position]
 
@@ -43,10 +43,6 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         //binding
-        Log.e("인터페이스1", dataList[position].date)
-        Log.e("인터페이스2", getDay(dataList[position].date))
-        Log.e("인터페이스3", getDayOfWeek(dataList[position].date))
-
         holder.itemView.txt_rv_item_diary_list_day_num.text = getDay(dataList[position].date)
         holder.itemView.txt_rv_item_diary_list_day_text.text = getDayOfWeek(dataList[position].date)
         holder.itemView.txt_rv_item_diary_list_content.text = dataList[position].diary_content
