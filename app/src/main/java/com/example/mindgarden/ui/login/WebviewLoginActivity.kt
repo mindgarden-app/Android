@@ -103,7 +103,6 @@ class WebviewLoginActivity : AppCompatActivity() {
                         //로그인 성공시
                         if (it.endsWith("http://15.165.86.150:3000/auth/login/success")) {
 
-                            whyOpen=intent.getStringExtra("whyOpen")
 
                             Log.e("WebView WhyOpen Success",whyOpen)
                             Log.e("webview","성공페이지 화면 뜸")
