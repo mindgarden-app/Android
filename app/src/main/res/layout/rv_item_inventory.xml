@@ -16,7 +16,7 @@
                 android:id="@+id/img_rv_item_inventory"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/android_tree1"/>
+                android:src="@drawable/tree_size"/>
 
     </LinearLayout>
 
