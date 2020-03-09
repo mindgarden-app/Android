@@ -178,7 +178,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun btnBackClick(){
         btn_back_toolbar.setOnClickListener {
-           onBackPressed()
+            onBackPressed()
         }
     }
 

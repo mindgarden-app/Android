@@ -7,6 +7,6 @@ data class PlantResponse(
     val data: ArrayList<Plant>
 ){
     data class Plant(
-        var balloon: Int
+        var ballon: Int
     )
 }

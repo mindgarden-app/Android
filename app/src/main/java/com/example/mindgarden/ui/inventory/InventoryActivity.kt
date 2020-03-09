@@ -304,4 +304,5 @@ class InventoryActivity : AppCompatActivity() {
             loadData()
         }
     }
+
 }

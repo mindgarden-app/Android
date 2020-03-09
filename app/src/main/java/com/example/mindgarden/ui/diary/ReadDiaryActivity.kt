@@ -46,7 +46,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         setContentView(R.layout.activity_read_diary)
         init()
         if(diaryIdx != -1){
-           loadData()
+            loadData()
         }else{
             Log.e("diaryIdx", "not intent")
         }

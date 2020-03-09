@@ -13,7 +13,8 @@ import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 
 class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private val data = ArrayList<InventoryData>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder{

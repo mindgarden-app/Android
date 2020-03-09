@@ -1,108 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.diary.ModifyDiaryActivity"
-            android:orientation="vertical"
-            android:background="#FFFFFF">
+<LinearLayout android:background="#FFFFFF" android:orientation="vertical" tools:context=".ui.diary.ModifyDiaryActivity" android:layout_height="match_parent" android:layout_width="match_parent" xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <include layout="@layout/toolbar_read_diary"/>
+    <include layout="@layout/toolbar_read_diary"/>
+
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:id="@+id/llReadDiary">
-        <RelativeLayout
-                android:layout_width="match_parent"
+
+
+    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="32dp">
+
+    <ImageView
+            android:layout_height="55dp"
+            android:layout_width="325dp"
+            android:id="@+id/img_mood_text_read_diary"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_moodchoice"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"/>
+
+    <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/txt_mood_text_read_diary"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="#2B2B2B"
+            android:text="@string/defaultMoodText"
+            android:fontFamily="@font/notosanscjkr_regular"/>
+
+
+    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@id/img_mood_text_read_diary">
+
+        <ImageView
+                android:layout_height="55dp"
+                android:layout_width="55dp"
+                android:src="@drawable/btn_mood_show"/>
+
+        <ImageView
+                android:layout_height="33dp"
+                android:layout_width="33dp"
+                android:id="@+id/img_mood_icon_read_diary"
+                android:layout_centerInParent="true"
+                android:src="@drawable/img_weather11_none"/>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <ScrollView android:layout_height="wrap_content" android:layout_width="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp">
+                android:layout_width="match_parent">
 
-            <ImageView
-                    android:layout_width="325dp"
-                    android:layout_height="55dp"
-                    android:scaleType="fitXY"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/img_mood_text_read_diary"
-                    android:src="@drawable/btn_moodchoice"
-                    android:layout_centerInParent="true"/>
+        <TextView
+                android:background="@null"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/txt_time_read_diary"
+                android:layout_marginTop="18dp"
+                android:textSize="12sp"
+                android:textColor="#2B2B2B"
+                android:fontFamily="@font/notosanscjkr_bold"
+                android:textStyle="bold"
+                android:layout_marginBottom="18dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp"/>
 
-            <TextView
-                    android:id="@+id/txt_mood_text_read_diary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="@font/notosanscjkr_regular"
-                    android:text="@string/defaultMoodText"
-                    android:textColor="#2B2B2B"
-                    android:textSize="15sp" />
+        <ImageView
+                android:layout_height="202dp"
+                android:layout_width="match_parent"
+                android:id="@+id/img_gallary_read_diary"
+                android:layout_marginBottom="48dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
 
-            <RelativeLayout
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" android:layout_alignStart="@id/img_mood_text_read_diary">
-                <ImageView
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:src="@drawable/btn_mood_show"/>
-                <ImageView
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/img_weather11_none"
-                        android:id="@+id/img_mood_icon_read_diary" />
-            </RelativeLayout>
+        <TextView
+                android:background="@null"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:id="@+id/txt_cotent_read_diary"
+                android:textSize="13.5sp"
+                android:textColor="#2B2B2B"
+                android:fontFamily="@font/notosanscjkr_demilight"
+                android:layout_marginRight="22dp" android:layout_marginLeft="22dp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-            <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+    </ScrollView>
 
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout android:background="#F8F8F8" android:layout_height="match_parent" android:layout_width="match_parent"/>
 
-
-                    <TextView
-                            android:id="@+id/txt_time_read_diary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="23dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginRight="23dp"
-                            android:layout_marginBottom="18dp"
-                            android:background="@null"
-                            android:fontFamily="@font/notosanscjkr_bold"
-                            android:textColor="#2B2B2B"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-
-                    <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="202dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginBottom="48dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/img_gallary_read_diary"
-                            android:visibility="gone"/>
-
-                    <TextView
-                            android:id="@+id/txt_cotent_read_diary"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="22dp"
-                            android:layout_marginRight="22dp"
-                            android:background="@null"
-                            android:fontFamily="@font/notosanscjkr_demilight"
-                            android:textColor="#2B2B2B"
-                            android:textSize="13.5sp" />
-                </LinearLayout>
-
-            </ScrollView>
-
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F8F8F8"/>
     </LinearLayout>
-    <include layout="@layout/data_load_fail" android:visibility="gone" android:id="@+id/dataLoadFailReadDiary"/>
-    </LinearLayout>
+
+    <include layout="@layout/data_load_fail" android:id="@+id/dataLoadFailReadDiary" android:visibility="gone"/>
+
+</LinearLayout>
