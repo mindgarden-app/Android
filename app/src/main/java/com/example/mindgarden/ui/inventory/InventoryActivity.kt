@@ -141,9 +141,7 @@ class InventoryActivity : AppCompatActivity(), Tree {
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
             location == -1 ->  showToast("위치를 고르세요")
             treeIdx == -1  -> showToast("나무를 선택하세요")
-            else -> {
-                postPlant(location, treeIdx)
-            }
+            else -> postPlant(location, treeIdx)
         }
     }
 

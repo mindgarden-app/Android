@@ -66,6 +66,7 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
 
     class DefaultInventoryRecyclerViewHolder(clickEvent: (position: Int) -> Unit, viewGroup: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_inventory, viewGroup, false)) {
+
         val imgInventory = itemView.findViewById(R.id.img_rv_item_inventory) as ImageView
 
         init {
@@ -79,6 +80,7 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
 
     class ClickInventoryRecyclerViewHolder(private val clickEvent: (position: Int) -> Unit, viewGroup:ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_inventory, viewGroup, false)){
+
         val imgInventory = itemView.findViewById(R.id.img_rv_item_inventory) as ImageView
 
         init {

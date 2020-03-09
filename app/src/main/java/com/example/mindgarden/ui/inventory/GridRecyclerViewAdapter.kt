@@ -71,8 +71,6 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
         }
     }
 
-    fun getDataAt(position: Int) = data[position]
-
     fun setData(newData : ArrayList<GridData>){
         newData?.let {
             data.clear()
