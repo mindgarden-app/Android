@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
                                    xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,10 +39,10 @@
                     android:paddingHorizontal="40dp"
                     android:src="@drawable/btn_left"/>
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-
-                          android:id="@+id/ll_date_toolbar_diary_list">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_date_toolbar_diary_list">
 
                 <TextView
                         android:id="@+id/txt_year"
@@ -81,7 +81,6 @@
 
             </LinearLayout>
 
-
             <ImageView
                     android:id="@+id/btn_right"
                     android:layout_width="100dp"
@@ -109,4 +108,4 @@
 
     </RelativeLayout>
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

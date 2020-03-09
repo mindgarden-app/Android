@@ -1,4 +1,4 @@
-package com.example.mindgarden.DB
+package com.example.mindgarden.db
 
 import android.content.Context
 import android.content.SharedPreferences

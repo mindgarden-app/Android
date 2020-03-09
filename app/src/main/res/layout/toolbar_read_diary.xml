@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
+<androidx.appcompat.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -20,14 +20,14 @@
                 android:id="@+id/btnBack" />
 
         <TextView
+                android:id="@+id/txt_date_toolbar_read_diary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="작성날짜"
                 android:fontFamily="@font/notosanscjkr_regular"
+                android:text="@string/titleToolbarReadDiary"
                 android:textColor="#2B2B2B"
-                android:textSize="14dp"
-                android:id="@+id/txt_date_toolbar_read_diary"/>
+                android:textSize="14dp" />
 
         <ImageButton
                 android:layout_width="44dp"
@@ -38,17 +38,19 @@
                 android:background="@drawable/gray_border_fill"
                 android:id="@+id/btn_modify_diary_toolbar"
         />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_alignParentRight="true"
-                  android:text="수정"
-                  android:textSize="13dp"
-                  android:layout_marginRight="25dp"
-                  android:fontFamily="@font/notosanscjkr_regular"
-                  android:textColor="#505050"
-        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="25dp"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:text="@string/btnEdit"
+                android:textColor="#505050"
+                android:textSize="13dp" />
 
         </RelativeLayout>
 
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

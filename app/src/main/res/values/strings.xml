@@ -1,11 +1,13 @@
 <resources>
 
+    <!-- app name -->
     <string name="app_name">Mindgarden</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Channel-->
     <string name="channel_description">MindGarden push notification</string>
     <string name="channel_name">mindgarden</string>
+
+    <!--main-->
     <string name="defaultText">정원을 꾸며볼까요?</string>
     <string name="treeNumText0">나무가 하나도 없어요\n정원이 휑하네요 </string>
     <string name="treeNumText10">개의 나무를 심었네요\n많이 바빴나요?</string>
@@ -15,4 +17,21 @@
     <string name="treeNumTextCurrent10">오늘 기분은 어땠어요?\n정원이 조금씩 채워지고 있어요</string>
     <string name="treeNumTextCurrent20">정원이 복작복작 해졌어요\n이번 달 마무리를 잘해봅시다</string>
     <string name="treeNumTextCurrent21">축하해요!\n정원을 멋지게 완성했네요</string>
+
+    <!--Toolbar-->
+    <string name="titleToolbarReadDiary">작성날짜</string>
+    <string name="btnEdit">수정</string>
+    <string name="btnComplete">완료</string>
+
+    <!--ReadDiary-->
+    <string name="defaultMoodText">기분을 선택하세요</string>
+
+    <!--WriteDiary-->
+    <string name="defaultContentsText">일기를 작성해보세요</string>
+
+    <!--DataLoadFail-->
+    <string name="titleDataLoadError">서버 불러오기 실패</string>
+    <string name="textDataLoadError">네트워크가 원활하지 않아 접속이 지연되고 있습니다.\n
+    앱을 재실행하거나 다시 시도해주세요</string>
+    <string name="btnRetryDataLoadError">다시 시도</string>
 </resources>
