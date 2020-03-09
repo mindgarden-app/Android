@@ -36,7 +36,7 @@ import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 
-
+//수정중
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
