@@ -8,14 +8,18 @@
                                              android:background="#ffffff"
                                              android:id="@+id/cl_fragment_main">
 
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  app:layout_constraintTop_toTopOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  android:id="@+id/linearLayout">
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/linearLayout">
+
         <include
                 android:id="@+id/toolbar_main"
                 layout="@layout/toolbar_main"/>
+
     </LinearLayout>
 
     <ImageView
@@ -24,10 +28,13 @@
             android:src="@drawable/android_land"
             android:id="@+id/img_land"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.45" android:layout_marginTop="70dp"
-            app:layout_constraintTop_toBottomOf="@+id/btn_reward" app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintHorizontal_bias="0.45"
+            android:layout_marginTop="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/btn_reward"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
             android:id="@+id/img1"
@@ -407,7 +414,6 @@
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="@+id/img_land" />
 
-
     <TextView
             android:id="@+id/txt_main_day_text"
             android:text="Wed"
@@ -419,7 +425,8 @@
             android:layout_marginTop="22dp"
             android:layout_marginEnd="16dp"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
             android:text="th."
@@ -428,10 +435,12 @@
             android:fontFamily="@font/montserratalternates_blackitalic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_main_day_num_word" android:layout_marginTop="22dp"
+            android:id="@+id/txt_main_day_num_word"
+            android:layout_marginTop="22dp"
             android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintEnd_toStartOf="@+id/txt_main_day_text" android:layout_marginEnd="8dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/txt_main_day_text"
+            android:layout_marginEnd="8dp"/>
 
     <TextView
             android:text="28"
@@ -440,7 +449,8 @@
             android:fontFamily="@font/montserratalternates_blackitalic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_main_day_num" android:layout_marginTop="22dp"
+            android:id="@+id/txt_main_day_num"
+            android:layout_marginTop="22dp"
             android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             app:layout_constraintEnd_toStartOf="@+id/txt_main_day_num_word"/>
@@ -455,8 +465,10 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginTop="46dp"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="15dp"/>
+
     <ImageView
             android:src="@drawable/btn_reward"
             android:layout_width="24dp"
@@ -464,6 +476,8 @@
             android:id="@+id/btn_reward"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" android:layout_marginTop="111dp"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            android:layout_marginTop="111dp"
             android:layout_marginEnd="15dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
