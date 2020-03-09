@@ -7,26 +7,18 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import androidx.core.widget.addTextChangedListener
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.NetworkService
-import com.example.mindgarden.Network.POST.PostEmailSignUpResponse
 import com.example.mindgarden.R
+import com.example.mindgarden.data.MindgardenRepository
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_email_sign_up.*
 import kotlinx.android.synthetic.main.activity_email_sign_up.edt_email
 import kotlinx.android.synthetic.main.toolbar_write_diary.view.*
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.koin.android.ext.android.inject
 
 class EmailSignUpActivity : AppCompatActivity() {
-    val networkService: NetworkService by lazy {
-        ApplicationController.instance.networkService
-    }
-
+    private val repository : MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +32,7 @@ class EmailSignUpActivity : AppCompatActivity() {
         }
 
         //실시간 이메일인지  아닌지 확인
-        edt_email.addTextChangedListener (object : TextWatcher{
+        edt_email.addTextChangedListener (object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -106,7 +98,7 @@ class EmailSignUpActivity : AppCompatActivity() {
 
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
             if (canEnroll()) {
-                postEmailSignUpResponse()
+                postEmailSignUp()
                 val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
                 startActivity(enrolledIntent)
             }
@@ -136,9 +128,7 @@ class EmailSignUpActivity : AppCompatActivity() {
         return edt_email.toString().isNotEmpty() && edt_name.toString().isNotEmpty() && (edt_password.text.toString() == edt_password_check.text.toString())
     }
 
-
-
-    fun postEmailSignUpResponse() {
+    private fun postEmailSignUp(){
         var jsonObject = JSONObject()
 
         jsonObject.put("email", edt_email.text.toString())
@@ -147,29 +137,20 @@ class EmailSignUpActivity : AppCompatActivity() {
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
-        val postEmailSignUpResponse = networkService.postEmailSignUp(gsonObject)
-        postEmailSignUpResponse.enqueue(object : Callback<PostEmailSignUpResponse> {
-            override fun onFailure(call: Call<PostEmailSignUpResponse>, t: Throwable) {
-                Log.e("회원가입 실패", "이메일 회원가입 실패")
-            }
-
-            override fun onResponse(
-                call: Call<PostEmailSignUpResponse>,
-                response: Response<PostEmailSignUpResponse>
-            ) {
-                if (response.isSuccessful) {
-                    if (response.body()!!.status == 200) {
-                        if (response.body()!!.success) {
-                            Log.e("회원가입 성공 메세지", response.body()!!.message)
-                        } else {
-                            Log.e("회원가입 메세지", response.body()!!.message)
-                        }
-
+        repository
+            .postEmailSignUp(gsonObject,
+                {
+                    if (it.status == 200) {
+                        if (it.success) {
+                            Log.e("회원가입 성공 메세지", it.message)
+                     } else{
+                         Log.e("회원가입 메세지", it.message)
                     }
-
                 }
-            }
-
-        })
+                },
+                {
+                    //에러처리
+                }
+            )
     }
 }

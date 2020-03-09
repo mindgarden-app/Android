@@ -1,7 +1,6 @@
 package com.example.mindgarden.ui.inventory
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.example.mindgarden.Data.GridData
-import com.example.mindgarden.Network.ApplicationController
-import com.example.mindgarden.Network.NetworkService
+import com.example.mindgarden.data.GridData
 import com.example.mindgarden.R
 import kotlin.collections.ArrayList
 
 class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): androidx.recyclerview.widget.RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
-    val networkService: NetworkService by lazy{
-        ApplicationController.instance.networkService
-    }
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_grid, viewGroup, false)

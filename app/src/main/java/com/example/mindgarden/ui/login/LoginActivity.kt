@@ -19,7 +19,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.example.mindgarden.DB.TokenController
+import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
