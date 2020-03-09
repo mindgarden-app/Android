@@ -132,7 +132,23 @@ class InventoryActivity : AppCompatActivity() {
             if (isValid(TokenController.getAccessToken(this), gridList[gridIdx].product_id,
                     inventoryIdx
                 )) {
-                if (rBal == 1 && rCheck == 0) {
+                if (rBal == 1) {
+                    postPlant(
+                        TokenController.getAccessToken(this),
+                        gridList[gridIdx].product_id ,
+                        inventoryIdx
+                    )
+
+                    finish()
+                } else {
+                    toastText.setText("나무 심을 수 없어요.")
+                    //toastText.width = 248
+                    toastText.gravity = Gravity.CENTER
+                    toast.view = toastView
+                    toast.show()
+                    //toast("일기를 써야 나무를 심을 수 있어요")
+                }
+                /*if (rBal == 1 && rCheck == 0) {
                     postPlant(
                         TokenController.getAccessToken(this),
                         gridList[gridIdx].product_id ,
@@ -154,7 +170,7 @@ class InventoryActivity : AppCompatActivity() {
                     toast.view = toastView
                     toast.show()
                     //toast("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
-                }
+                }*/
             }
 
             Log.e("start", gridList[gridIdx].product_id.toString())
@@ -287,7 +303,7 @@ class InventoryActivity : AppCompatActivity() {
             .getGarden(TokenController.getAccessToken(this), cal.get(Calendar.YEAR).toString() + "-" + month.toString(),
                 {
                     rBal = it.data!![0].balloon
-                    rCheck = it.data!![0].check
+                    //rCheck = it.data!![0].check
 
                     //나무 수만큼
                     for(i in 0..(it.data.size - 1)) {

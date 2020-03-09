@@ -32,6 +32,7 @@ import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.login.LoginActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.data_load_fail.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
@@ -556,11 +557,153 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         repository
             .getGarden(TokenController.getAccessToken(activity!!.applicationContext), date,
                 {
-                    if (it.status == 200) {
+                    /*if (it.status == 200) {
                         Log.e("mainFragment load", it.message)
                     }else{
                         Log.e("mainFragment load", it.message)
+                    }*/
+
+                    if (it.status == 200) {
+                        Log.e("mainFragment load", it.message)
+
+                        hideErrorView()
+
+                        initializeTree()
+
+                        var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
+                        if (mmonth.toInt() < 10) {
+                            mmonth = "0$mmonth"
+                        }
+
+                        if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                            txt_main_day_num.visibility = View.VISIBLE
+                            txt_main_day_num_word.visibility = View.VISIBLE
+                            txt_main_day_text.visibility = View.VISIBLE
+
+                            var date = SimpleDateFormat("dd")
+                            var intDate = SimpleDateFormat("u")
+                            var date2: String = ""
+                            when (intDate.format(Date()).toInt()) {
+                                1->date2="Mon"
+                                2->date2="Tue"
+                                3->date2="Wed"
+                                4->date2="Thu"
+                                5->date2="Fri"
+                                6->date2="Sat"
+                                7->date2="Sun"
+                            }
+
+                            txt_main_day_num.setText(date.format(Date()).toString())
+                            txt_main_day_text.setText(date2)
+
+                            btn_reward.visibility = View.VISIBLE
+
+                            Log.e("balloon", it.data!![0].balloon.toString())
+
+                            if (it.data?.get(0)?.balloon == 1) {
+                                img_balloon.visibility = View.VISIBLE
+                                btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
+                                Log.e("balloon", balloon.toString())
+                                Log.e("img_ballon_visibility", img_balloon.visibility.toString())
+                            } else {
+                                img_balloon.visibility = View.INVISIBLE
+                                btn_reward.setImageResource(R.drawable.btn_reward)
+                            }
+                        } else {
+                            txt_main_day_num.visibility = View.INVISIBLE
+                            txt_main_day_num_word.visibility = View.INVISIBLE
+                            txt_main_day_text.visibility = View.INVISIBLE
+
+                            img_balloon.visibility = View.INVISIBLE
+                            btn_reward.visibility = View.INVISIBLE
+                        }
+
+                        for (i in 0..(it.data!!.size - 1)) {
+                            var treeIdx = 0
+                            var location = 0
+
+                            treeIdx = it.data[i].treeIdx
+                            location = it.data[i].location
+
+                            //잡초만 있을 경우
+                            if (it.data[i].treeIdx == 16) {
+                                locationList.get(location - 1).setImageBitmap(drawableToBitmap(activity!!.applicationContext, R.drawable.android_weeds))
+                            } else {
+                                locationList.get(location - 1).setImageBitmap(treeArray.get(treeIdx))
+                            }
+
+                            //요일 설정
+                            /*if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                txt_main_day_num_word.visibility = View.VISIBLE
+                                txt_main_day_num.visibility = View.VISIBLE
+                                txt_main_day_text.visibility = View.VISIBLE
+
+                                var date = SimpleDateFormat("dd")
+                                var intDate = SimpleDateFormat("u")
+                                var date2: String = ""
+                                when (intDate.format(Date()).toInt()) {
+                                    1->date2="Mon"
+                                    2->date2="Tue"
+                                    3->date2="Wed"
+                                    4->date2="Thu"
+                                    5->date2="Fri"
+                                    6->date2="Sat"
+                                    7->date2="Sun"
+                                }
+
+                                txt_main_day_num.setText(date.format(Date()).toString())
+                                txt_main_day_text.setText(date2)
+                            } else {
+                                txt_main_day_num_word.visibility = View.INVISIBLE
+                                txt_main_day_num.visibility = View.INVISIBLE
+                                txt_main_day_text.visibility = View.INVISIBLE
+                            }*/
+
+                            //문구 설정
+                            treeNum = it.data[i].treeNum
+                            Log.e("treeNum", treeNum.toString())
+
+                            //현재달이고, 심은 나무가 없을 경우(초기상태) -> 정원을 꾸며보아요 문구
+                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                if (treeNum < 1) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent0))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if (treeNum < 11) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent10))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if (treeNum < 21) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent20))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else {
+                                    txt_main_exp1.setText(getString(R.string.treeNumTextCurrent21))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                }
+                            } else {
+                                if (treeNum < 1) {
+                                    txt_main_exp1.setText(getString(R.string.treeNumText0))
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if (treeNum < 11) {
+                                    val text = treeNum.toString() + getString( R.string.treeNumText10)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else if (treeNum < 21) {
+                                    val text = treeNum.toString() + getString(R.string.treeNumText20)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                } else {
+                                    val text = treeNum.toString() + getString(R.string.treeNumText21)
+                                    txt_main_exp1.setText(text)
+                                    txt_main_exp1.visibility = View.VISIBLE
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("mainFragment load", it.message)
+
+                        showErrorView()
                     }
+
+                    /*hideErrorView()
 
                     initializeTree()
 
@@ -592,7 +735,9 @@ class MainFragment : Fragment(), DiaryDate, Tree {
 
                         btn_reward.visibility = View.VISIBLE
 
-                        if (it.data?.get(0)?.balloon == 0) {
+                        Log.e("balloon", it.data!![0].balloon.toString())
+
+                        if (it.data?.get(0)?.balloon == 1) {
                             img_balloon.visibility = View.VISIBLE
                             btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
                             Log.e("balloon", balloon.toString())
@@ -688,9 +833,14 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                                 txt_main_exp1.visibility = View.VISIBLE
                             }
                         }
-                    }
+                    }*/
                 },
-                {Log.e("MainFragment", it)})
+                {
+                    Log.e("MainFragment", it)
+
+                    showErrorView()
+                    btnRetryDataLoad()
+                })
     }
 
     private fun leftYearChange() {
@@ -760,4 +910,18 @@ class MainFragment : Fragment(), DiaryDate, Tree {
             locationArray.append(i, cl_fragment_main.findViewWithTag("area$i"))
         }
     }*/
+
+    private fun showErrorView() {
+        dataLoadFailMain.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView() {
+        dataLoadFailMain.visibility = View.GONE
+    }
+
+    private fun btnRetryDataLoad() {
+        btnRetryDataLoadFail.setOnClickListener {
+            loadData()
+        }
+    }
 }
