@@ -44,16 +44,16 @@ class EmailSignInActivity : AppCompatActivity() {
             postEmailSignInResponse()
         }
         btn_email_password_forgot.setOnClickListener {
-            val passwordIntent=Intent(this,EmailPasswordActivity::class.java)
+            val passwordIntent = Intent(this, EmailPasswordActivity::class.java)
             startActivity(passwordIntent)
         }
 
         //회원가입으로 이동
         btn_email_sign_up.setOnClickListener {
-            if (edt_email_sign_in.text.toString().isNotEmpty() && edt_password_sign_in.text.toString().isNotEmpty()) {
-                val signUpIntent = Intent(this, EmailSignUpActivity::class.java)
-                startActivity(signUpIntent)
-            }
+
+            val signUpIntent = Intent(this, EmailSignUpActivity::class.java)
+            startActivity(signUpIntent)
+
         }
 
 

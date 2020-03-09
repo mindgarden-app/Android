@@ -16,6 +16,7 @@ import com.example.mindgarden.R
 import com.example.mindgarden.DB.RenewAcessTokenController
 import com.example.mindgarden.ui.alarm.AlarmSettingActivity
 import com.example.mindgarden.ui.login.LoginActivity
+import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.ui.password.PasswordSettingActivity
 import kotlinx.android.synthetic.main.activity_mypage.*
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
@@ -24,11 +25,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
-
 class MypageActivity : AppCompatActivity() {
 
-    val networkService: NetworkService by lazy{
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
 
@@ -36,8 +35,8 @@ class MypageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypage)
 
-        userName.text=SharedPreferenceController.getUserName(this)
-        userMail.text=SharedPreferenceController.getUserMail(this)
+        userName.text = SharedPreferenceController.getUserName(this)
+        userMail.text = SharedPreferenceController.getUserMail(this)
 
         //Toolbar
         btnBack.setOnClickListener {
@@ -48,26 +47,26 @@ class MypageActivity : AppCompatActivity() {
         //RelativeLayout
         btnLogout.setOnClickListener {
             TokenController.clearRefreshToken(this)
+            Log.e("이름",SharedPreferenceController.getUserName(this))
+            Log.e("리프레시",TokenController.getRefreshToken(this))
 
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             //로그아웃 누르면 다시 일단 로그인 페이지로
             startActivity(intent)
             finish()
         }
-        btnDelete.setOnClickListener{
+        btnDelete.setOnClickListener {
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
 
-            dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n\n"+"mindgarden2019@gmail.com")
+            dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n\n" + "mindgarden2019@gmail.com")
 
 
             dlg.setNeutralButton("                             확인         ", null)
 
 
-
-
             var dlgNew: AlertDialog = dlg.show()
-            var messageText:TextView? = dlgNew.findViewById(android.R.id.message)
-            messageText!!.gravity= Gravity.CENTER
+            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.CENTER
 
 
 
@@ -88,51 +87,57 @@ class MypageActivity : AppCompatActivity() {
             startActivity(Intent)
             */
 
-}
+        }
 
 //LinerLayout 버튼들
-btnPasswordSetting.setOnClickListener {
-val intent = Intent(this, PasswordSettingActivity::class.java)
+        btnPasswordSetting.setOnClickListener {
+            val intent = Intent(this, PasswordSettingActivity::class.java)
 //암호 설정버튼 누르면 암호 액티비티로 넘어가는 것으로 구현
 
-startActivity(intent)
+            startActivity(intent)
 
-finish()
-}
+            finish()
+        }
 
-alarmSetting.setOnClickListener {
-val intent3 = Intent(this, AlarmSettingActivity::class.java)
+        alarmSetting.setOnClickListener {
+            val intent3 = Intent(this, AlarmSettingActivity::class.java)
 // 알람 설정하는 페이즈로 넘어감
 
-startActivity(intent3)
+            startActivity(intent3)
 
-finish()
-}
-}
-private fun deleteUserResponse() {
-if(!TokenController.isValidToken(this)){
-RenewAcessTokenController.postRenewAccessToken(this)
-}
-
-val deleteDiaryListResponse = networkService.deleteUserResponse(
-TokenController.getAccessToken(this))
-Log.e("delete", "delete")
-
-deleteDiaryListResponse.enqueue(object: Callback<DeleteUserResponse> {
-override fun onFailure(call: Call<DeleteUserResponse>, t: Throwable) {
-
-}
-override fun onResponse(call: Call<DeleteUserResponse>, response: Response<DeleteUserResponse>) {
-
-    if (response.isSuccessful) {
-        if (response.body()!!.status == 200) {
-           Log.e("Delete User",response.body()!!.message)
-
+            finish()
         }
     }
-}
+
+    private fun deleteUserResponse() {
+        if (!TokenController.isValidToken(this)) {
+            RenewAcessTokenController.postRenewAccessToken(this)
+        }
+
+        val deleteDiaryListResponse = networkService.deleteUserResponse(
+            TokenController.getAccessToken(this)
+        )
+        Log.e("delete", "delete")
+
+        deleteDiaryListResponse.enqueue(object : Callback<DeleteUserResponse> {
+            override fun onFailure(call: Call<DeleteUserResponse>, t: Throwable) {
+
+            }
+
+            override fun onResponse(
+                call: Call<DeleteUserResponse>,
+                response: Response<DeleteUserResponse>
+            ) {
+
+                if (response.isSuccessful) {
+                    if (response.body()!!.status == 200) {
+                        Log.e("Delete User", response.body()!!.message)
+
+                    }
+                }
+            }
 
 
-})
-}
+        })
+    }
 }
