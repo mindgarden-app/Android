@@ -24,7 +24,8 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:usesCleartextTraffic="true">
-        <activity android:name=".ui.login.TermsOfUseActivity"></activity>
+        <activity android:name=".ui.login.EmailPasswordActivity"></activity>
+        <activity android:name=".ui.login.TermsOfUseActivity" />
         <activity android:name=".ui.login.PrivacyStatementActivity" />
         <activity android:name=".ui.login.EmailSignUpActivity" />
         <activity android:name=".ui.login.EmailSignInActivity" />

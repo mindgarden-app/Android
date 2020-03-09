@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import androidx.core.view.isVisible
 import com.example.mindgarden.DB.SharedPreferenceController
 import com.example.mindgarden.DB.TokenController
 import com.example.mindgarden.Network.ApplicationController
@@ -33,33 +35,38 @@ class EmailSignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_email_login)
 
         //툴바 재활용을 위해 text 교체
-        toolbar_email_login.txtSetting.text = "이메일 회원가입"
+        toolbar_email_login.txtSetting.text = "이메일 로그인"
         toolbar_email_login.btnBack.setOnClickListener {
-
             finish()
-
         }
-        //canLogin()
+        //로그인하기
+        btn_email_sign_in.setOnClickListener {
+            postEmailSignInResponse()
+        }
+        btn_email_password_forgot.setOnClickListener {
+            val passwordIntent=Intent(this,EmailPasswordActivity::class.java)
+            startActivity(passwordIntent)
+        }
+
+        //회원가입으로 이동
         btn_email_sign_up.setOnClickListener {
             if (edt_email_sign_in.text.toString().isNotEmpty() && edt_password_sign_in.text.toString().isNotEmpty()) {
                 val signUpIntent = Intent(this, EmailSignUpActivity::class.java)
                 startActivity(signUpIntent)
             }
         }
-        btn_email_sign_in.setOnClickListener {
-            postEmailSignInResponse()
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
-        }
+
 
         //누를시에 그린 border로 변화
         edt_email_sign_in.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-              canLogin()
+                canLogin()
             }
         })
 
@@ -67,8 +74,10 @@ class EmailSignInActivity : AppCompatActivity() {
         edt_password_sign_in.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 canLogin()
 
@@ -79,14 +88,13 @@ class EmailSignInActivity : AppCompatActivity() {
     private fun canLogin() {
         //이메일이랑 비밀번호 채워져있을 때 버튼 색 바꿔주기
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(edt_email_sign_in.text).matches() && edt_password_sign_in.text.toString().isNotEmpty()) {
-
-            btn_email_sign_in.isEnabled=true
-            //팝업을 줘야하나??
+            txt_check_email_password.visibility = View.INVISIBLE
+            btn_email_sign_in.isEnabled = true
             btn_email_sign_in.setBackgroundResource(R.drawable.green_border_square)
             btn_email_sign_in.setTextColor(getColor(R.color.colorWhite))
-        }
-        else{
-            btn_email_sign_in.isEnabled=false
+        } else {
+            btn_email_sign_in.isEnabled = false
+            txt_check_email_password.visibility = View.VISIBLE
             btn_email_sign_in.setBackgroundResource(R.drawable.grid_border)
             btn_email_sign_in.setTextColor(getColor(R.color.colorPrimaryMint))
         }
@@ -106,7 +114,8 @@ class EmailSignInActivity : AppCompatActivity() {
         postEmailSignInResponse.enqueue(
             object : Callback<PostEmailSignInResponse> {
                 override fun onFailure(call: Call<PostEmailSignInResponse>, t: Throwable) {
-                    Log.e("회원가입 실패", "이메일 회원가입 실패")
+                    Log.e("로그인 실패", "이메일 로그인 실패")
+                    txt_check_email_password.visibility = View.VISIBLE
                 }
 
                 override fun onResponse(
@@ -136,6 +145,10 @@ class EmailSignInActivity : AppCompatActivity() {
                                     this@EmailSignInActivity,
                                     response.body()!!.data?.get(0)?.name.toString()
                                 )
+                                //로그인의 성공하면 메인으로 이동
+                                val mainIntent =
+                                    Intent(this@EmailSignInActivity, MainActivity::class.java)
+                                startActivity(mainIntent)
 
                                 Log.e(
                                     "리프레시 토큰",
@@ -149,7 +162,6 @@ class EmailSignInActivity : AppCompatActivity() {
                                     "토큰 만료기한",
                                     TokenController.getExpAccessToken(this@EmailSignInActivity).toString()
                                 )
-
                                 Log.e(
                                     "메일",
                                     SharedPreferenceController.getUserMail(this@EmailSignInActivity)
@@ -159,11 +171,15 @@ class EmailSignInActivity : AppCompatActivity() {
                                     SharedPreferenceController.getUserName(this@EmailSignInActivity)
                                 )
                                 Log.e("회원가입 성공 메세지", response.body()!!.message)
+
+
                             } else {
                                 Log.e("회원가입 메세지", response.body()!!.message)
+                                txt_check_email_password.visibility = View.VISIBLE
                             }
 
                         }
+
 
                     }
                 }
