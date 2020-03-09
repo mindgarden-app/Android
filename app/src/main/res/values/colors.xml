@@ -4,16 +4,18 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGridMint">#88FFC9</color>
     <color name="colorPrimaryMint">#78DEB0</color>
 
     <color name="colorLightGray">#f8f8f8</color>
     <color name="colorPopupGray">#e8e8e8</color>
+    <color name="colorEmptySpaceGray">#f8f8f8</color>
     <color name="colorToolBarGray">#DDDDDD</color>
     <color name="colorBlockGray">#C6C6C6</color>
     <color name="colorRoundGray">#888888</color>
 
     <color name="colorBlack">#292929</color>
-
+    <color name="colorRed">#fc7676</color>
 </resources>

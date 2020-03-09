@@ -1,22 +1,24 @@
 package com.example.mindgarden.ui.inventory
 
-
 import android.content.Context
-import android.media.Image
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mindgarden.data.GridData
 import com.example.mindgarden.R
+import kotlin.collections.ArrayList
 
 class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object{
-       val selectedStatus = SparseBooleanArray(0)
+        val selectedStatus = SparseBooleanArray(0)
     }
     private val data = ArrayList<GridData>()
 
@@ -48,16 +50,16 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
                     data[position].img?.let { img->
                         setGridImage(holder.itemView.context,img, holder.gridImg)
                     }
-                        when(selectedStatus.get(position)){
-                            true->{
-                                holder.gridImg.setBackgroundResource(R.drawable.grid_border_selected)
-                            }
-                            else->  {
-                                holder.gridImg.setBackgroundResource(R.drawable.grid_border)
-                                setGridImage(holder.itemView.context,null, holder.gridImg)
-                            }
-
+                    when(selectedStatus.get(position)){
+                        true->{
+                            holder.gridImg.setBackgroundResource(R.drawable.grid_border_selected)
                         }
+                        else->  {
+                            holder.gridImg.setBackgroundResource(R.drawable.grid_border)
+                            setGridImage(holder.itemView.context,null, holder.gridImg)
+                        }
+
+                    }
 
                 }
                 GridData.alreadyExistType->{

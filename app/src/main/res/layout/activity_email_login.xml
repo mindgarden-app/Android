@@ -40,9 +40,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:background="@color/colorBlockGray"
             android:paddingHorizontal="12dp"
             android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
             android:id="@+id/txt_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/notosanscjkr_regular"
             android:gravity="center_horizontal"
@@ -73,9 +73,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/colorBlockGray"
+            android:background="@drawable/gray_border_square"
             android:ems="10"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:paddingHorizontal="12dp"
             android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,31 +87,54 @@
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="22dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/gv_mint_line_border"
+            android:background="@drawable/grid_border"
+            android:fontFamily="@font/notosanscjkr_medium"
             android:gravity="center"
             android:text="로그인"
             android:textColor="@color/colorPrimaryMint"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_password_sign_in" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_check_email_password" />
 
-    <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="200dp"
-            android:layout_height="20dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_email_password_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="41dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/colorGridMint"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_email_sign_in">
 
-    </LinearLayout>
+        <ImageView
+                android:id="@+id/img_question_password"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_questionmark" />
+
+        <TextView
+                android:id="@+id/btn_password_forgot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/notosanscjkr_regular"
+                android:text="비밀번호를 잊으셨나요?"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_question_password"
+                app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
             android:id="@+id/imageView3"
@@ -120,7 +143,7 @@
             android:layout_marginTop="75dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/btn_email_password_forgot"
             app:srcCompat="@color/colorBlockGray" />
 
     <TextView
@@ -129,8 +152,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:fontFamily="@font/notosanscjkr_regular"
-            android:text="처음 오셨나요?"
             android:paddingHorizontal="10dp"
+            android:text="처음 오셨나요?"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,12 +164,27 @@
             android:id="@+id/btn_email_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:fontFamily="@font/notosanscjkr_medium"
             android:text="회원 가입"
             android:textColor="@color/colorPrimaryMint"
             android:textSize="13.5sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+            android:id="@+id/txt_check_email_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/notosanscjkr_medium"
+            android:text="이메일 또는 비밀번로를 다시 확인하세요."
+            android:textColor="@color/colorRed"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_password_sign_in" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

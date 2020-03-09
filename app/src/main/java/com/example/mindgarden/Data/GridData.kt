@@ -1,6 +1,5 @@
 package com.example.mindgarden.data
 
-
 data class GridData(var type : Int,var gridId: Int, var img: Int?){
     companion object{
         const val defaultType = 0
@@ -8,4 +7,3 @@ data class GridData(var type : Int,var gridId: Int, var img: Int?){
         const val alreadyExistType = 2
     }
 }
-

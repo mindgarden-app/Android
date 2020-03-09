@@ -1,6 +1,9 @@
 package com.example.mindgarden.ui.inventory
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindgarden.db.TokenController
@@ -17,8 +21,8 @@ import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.main.MainActivity
-import com.example.mindgarden.ui.main.Tree
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
@@ -31,7 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class InventoryActivity : AppCompatActivity(), Tree {
+class InventoryActivity : AppCompatActivity() {
     private val repository : MindgardenRepository by inject()
 
     private lateinit var treeList: List<Int>
@@ -300,5 +304,4 @@ class InventoryActivity : AppCompatActivity(), Tree {
             loadData()
         }
     }
-
 }

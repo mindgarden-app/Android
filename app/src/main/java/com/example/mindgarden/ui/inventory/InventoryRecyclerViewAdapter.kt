@@ -2,16 +2,18 @@ package com.example.mindgarden.ui.inventory
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 
 class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     private val data = ArrayList<InventoryData>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
@@ -97,8 +99,7 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
         val imgInventory = itemView.findViewById(R.id.img_rv_item_inventory) as ImageView
 
         init {
-                imgInventory.isClickable = false
-            }
+            imgInventory.isClickable = false
+        }
     }
 }
-
