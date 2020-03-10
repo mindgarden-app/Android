@@ -19,21 +19,39 @@ import org.koin.android.ext.android.inject
 import java.util.regex.Pattern
 
 class EmailSignUpActivity : AppCompatActivity() {
-    private val repository : MindgardenRepository by inject()
+    private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_sign_up)
 
         toolbar_email_sign_up.txt_date_toolbar_write_diary.text = "이메일 회원가입"
+        toolbar_email_sign_up.txt_save_toolbar.text = "등록"
+
+
+
+        toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
+            canEnroll()
+            postEmailSignUp()
+            val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
+            startActivity(enrolledIntent)
+
+
+        }
+        //뒤로가기 버튼 누를시 signinactivity로 이동
+        toolbar_email_sign_up.btn_back_toolbar.setOnClickListener {
+            finish()
+        }
+
+
+        //Email
         edt_email.setOnFocusChangeListener { view, b ->
 
             hasFocus(view, b) //포커스 잡혀있으면 green  border로 바꾸기
 
         }
-
         //실시간 이메일인지  아닌지 확인
-        edt_email.addTextChangedListener (object : TextWatcher {
+        edt_email.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -44,10 +62,9 @@ class EmailSignUpActivity : AppCompatActivity() {
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(edt_email.text).matches()) {
                     txt_check_email.visibility = View.VISIBLE
                     txt_check_email.setTextColor(getColor(R.color.colorRed))
-                }
-                else{
-                    txt_check_email.visibility=View.INVISIBLE
-                    canEnroll()
+                } else {
+                    txt_check_email.visibility = View.INVISIBLE
+
                 }
             }
         })
@@ -55,37 +72,41 @@ class EmailSignUpActivity : AppCompatActivity() {
         //이름
         edt_name.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
-            canEnroll()
+
         }
+
+
         //비밀번호
         edt_password.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
 
         }
-        edt_password.addTextChangedListener(object : TextWatcher{
+        edt_password.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-              if(isValidPassword()){
-                  txt_check_password.visibility=View.INVISIBLE
-                  canEnroll()
-              }
-              else{
-                  txt_check_password.visibility=View.VISIBLE
-              }
+                if (isValidPassword()) {
+                    txt_check_password.visibility = View.INVISIBLE
+
+                } else {
+                    txt_check_password.visibility = View.VISIBLE
+                }
             }
 
         })
+
+
         //비밀번호 화인
         edt_password_check.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
 
         }
 
-        edt_password_check.addTextChangedListener(object : TextWatcher{
+        edt_password_check.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -97,41 +118,25 @@ class EmailSignUpActivity : AppCompatActivity() {
                     txt_check_password_again.visibility = View.VISIBLE
                     txt_check_password_again.setTextColor(getColor(R.color.colorRed))
 
-                }
-                else{
-                    txt_check_password_again.visibility=View.INVISIBLE
-                    canEnroll()
+                } else {
+                    txt_check_password_again.visibility = View.INVISIBLE
+
                 }
             }
         })
 
+
         //개인정보처리방침으로 이동
         btn_privacy_statement.setOnClickListener {
-            val privacyIntent=Intent(this, PrivacyStatementActivity::class.java)
+            val privacyIntent = Intent(this, PrivacyStatementActivity::class.java)
             startActivity(privacyIntent)
         }
 
         //이용약관으로 이동
         btn_terms_of_use.setOnClickListener {
-            val termsOfUseIntent=Intent(this,TermsOfUseActivity::class.java)
+            val termsOfUseIntent = Intent(this, TermsOfUseActivity::class.java)
             startActivity(termsOfUseIntent)
         }
-
-
-        canEnroll()
-        toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
-
-                postEmailSignUp()
-                val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
-                startActivity(enrolledIntent)
-
-
-        }
-        //뒤로가기 버튼 누를시 signinactivity로 이동
-        toolbar_email_sign_up.btn_back_toolbar.setOnClickListener {
-            finish()
-        }
-
 
 
     }
@@ -147,25 +152,32 @@ class EmailSignUpActivity : AppCompatActivity() {
     }
 
     private fun canEnroll() {
-        //유효성 판단하는 함수
-        if((txt_check_email.visibility==View.INVISIBLE)&&(edt_name.text.toString().isNotEmpty())&&(txt_check_password.visibility==View.INVISIBLE)&&(txt_check_password_again.visibility==View.INVISIBLE)){
-            toolbar_email_sign_up.btn_save_diary_toolbar.isEnabled=true
-            toolbar_email_sign_up.btn_save_diary_toolbar.setBackgroundResource(R.drawable.green_border_square)
-        }
-        else{
-            toolbar_email_sign_up.btn_save_diary_toolbar.isEnabled=false
-            toolbar_email_sign_up.btn_save_diary_toolbar.setBackgroundResource(R.drawable.grid_border)
+        //빈칸이 다 없어야 하며
+        //빈칸이 있을시에 포커스 옮겨줌
+        if (txt_check_email.visibility == View.VISIBLE || edt_email.text.toString().isEmpty()) {
+            edt_email.requestFocus()
+        } else if (edt_name.text.toString().isEmpty()) {
+            edt_name.requestFocus()
+        } else if (txt_check_password.visibility == View.VISIBLE || edt_password.text.toString().isEmpty()) {
+            edt_password.requestFocus()
+        } else if (txt_check_password_again.visibility == View.VISIBLE || edt_password_check.text.toString().isEmpty()) {
+            edt_password_check.requestFocus()
+        } else if (!checkBox_agree.isChecked) {
+            checkBox_agree.requestFocus()
         }
     }
 
     //영문 숫자 8자 이상
-    fun isValidPassword():Boolean{
-        return Pattern.matches("^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*\$",edt_password.text.toString())
+    fun isValidPassword(): Boolean {
+        return Pattern.matches(
+            "^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*\$",
+            edt_password.text.toString()
+        )
     }
 
 
     //회원가입 통신
-    private fun postEmailSignUp(){
+    private fun postEmailSignUp() {
         var jsonObject = JSONObject()
 
         jsonObject.put("email", edt_email.text.toString())
@@ -180,10 +192,10 @@ class EmailSignUpActivity : AppCompatActivity() {
                     if (it.status == 200) {
                         if (it.success) {
                             Log.e("회원가입 성공 메세지", it.message)
-                     } else{
-                         Log.e("회원가입 메세지", it.message)
+                        } else {
+                            Log.e("회원가입 메세지", it.message)
+                        }
                     }
-                }
                 },
                 {
                     //에러처리
