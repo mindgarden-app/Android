@@ -23,7 +23,9 @@ object RenewAcessTokenController {
         Log.e("Renew token","in Renew access token")
 
         repository
-            .postRenewAccessToken(TokenController.getRefreshToken(ctx),gsonObject,
+            .postRenewAccessToken(
+                TokenController.getRefreshToken(ctx),gsonObject,
+
                 {
                     //리프레시 토큰 유효
                     if (it.status == 200) {

@@ -2,262 +2,106 @@ package com.example.mindgarden.ui.inventory
 
 import android.content.Context
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mindgarden.data.GridData
 import com.example.mindgarden.R
 import kotlin.collections.ArrayList
 
-class GridRecyclerViewAdapter(var ctx: Context, var gridDataList:ArrayList<GridData>): androidx.recyclerview.widget.RecyclerView.Adapter<GridRecyclerViewAdapter.Holder>() {
+class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_grid, viewGroup, false)
-        return Holder(view)
+    companion object{
+        val selectedStatus = SparseBooleanArray(0)
     }
+    private val data = ArrayList<GridData>()
 
-    override fun getItemCount(): Int = gridDataList.size
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType){
+            GridData.defaultType-> DefaultGridRecyclerViewHolder(clickEvent,viewGroup)
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        Glide.with(ctx)
-            .load(gridDataList[position].img)
-            .into(holder.grid_img)
+            GridData.lakeType-> LakeGridRecyclerViewHolder(viewGroup)
 
-        var num:Int = 0
+            GridData.alreadyExistType-> AETypeRecyclerViewHolder(viewGroup)
 
-        holder.container.setOnClickListener{
-            if (InventoryActivity.isGridClick) {
-                holder.container.isSelected = true
-                InventoryActivity.isGridClick = false
-            }
-
-            else if (!InventoryActivity.isGridClick && holder.container.isSelected) {
-                holder.container.isSelected = false
-                InventoryActivity.isGridClick = true
-            }
-
-            if (holder.container.isSelected) {
-                InventoryActivity.gridIdx = holder.adapterPosition
-                Log.e("grid", InventoryActivity.gridIdx.toString())
-                if (InventoryActivity.inventoryIdx == 0) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {
-                        holder.grid_img.setImageResource(R.drawable.img_selcted011)
-                    }
-                } else if (InventoryActivity.inventoryIdx == 1) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted012)}
-                } else if (InventoryActivity.inventoryIdx == 2) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted015)}
-                } else if (InventoryActivity.inventoryIdx == 3) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted016)}
-                } else if (InventoryActivity.inventoryIdx == 4) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted007)}
-                } else if (InventoryActivity.inventoryIdx == 5) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted013)}
-                } else if (InventoryActivity.inventoryIdx == 6) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted014)}
-                } else if (InventoryActivity.inventoryIdx == 7) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted008)}
-                } else if (InventoryActivity.inventoryIdx == 8) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted010)}
-                } else if (InventoryActivity.inventoryIdx == 9) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted004)}
-                } else if (InventoryActivity.inventoryIdx == 10) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted005)}
-                } else if (InventoryActivity.inventoryIdx == 11) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted003)}
-                } else if (InventoryActivity.inventoryIdx == 12) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted009)}
-                } else if (InventoryActivity.inventoryIdx == 13) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted002)}
-                } else if (InventoryActivity.inventoryIdx == 14) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted006)}
-                } else if (InventoryActivity.inventoryIdx == 15) {
-                    for (i in 0..InventoryActivity.locationList.size - 1) {
-                        if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                            num = num + 1
-                        }
-                    }
-                    if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                        holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                    } else if (num > 0) {
-                        holder.container.setBackgroundResource(R.drawable.grid_border)
-                    }
-                    else if (num == 0) {holder.grid_img.setImageResource(R.drawable.img_selcted001)}
-                }
-            } else {
-                for (i in 0..InventoryActivity.locationList.size - 1) {
-                    if (holder.adapterPosition == InventoryActivity.fromServerToUs[InventoryActivity.locationList[i]]) {
-                        num = num + 1
-                    }
-                }
-                if (holder.adapterPosition == 14 || holder.adapterPosition == 15 || holder.adapterPosition == 20 || holder.adapterPosition == 21) {
-                    holder.grid_img.setImageResource(R.drawable.img_small_lake)
-                } else if (num > 0) {
-                    holder.container.setBackgroundResource(R.drawable.grid_border)
-                }
-                else if (num == 0) {holder.grid_img.setImageResource(R.drawable.tree_size)}
-            }
-
-            holder.container.isSelected = !holder.container.isSelected
+            else-> throw RuntimeException("알 수 없는 뷰타입 에러")
         }
     }
 
-    inner class Holder(itemView: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-        var container = itemView.findViewById(R.id.ll_rv_item_grid_container) as LinearLayout
-        var grid_img = itemView.findViewById(R.id.img_rv_item_grid) as ImageView
+    override fun getItemCount(): Int = data.size
+
+    override fun getItemViewType(position: Int): Int = data[position].type
+
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        data[position].let {
+            when(it.type) {
+                GridData.lakeType -> {
+                    holder as LakeGridRecyclerViewHolder
+                }
+                GridData.defaultType -> {
+                    holder as DefaultGridRecyclerViewHolder
+                    data[position].img?.let { img->
+                        setGridImage(holder.itemView.context,img, holder.gridImg)
+                    }
+                    when(selectedStatus.get(position)){
+                        true->{
+                            holder.gridImg.setBackgroundResource(R.drawable.grid_border_selected)
+                        }
+                        else->  {
+                            holder.gridImg.setBackgroundResource(R.drawable.grid_border)
+                            setGridImage(holder.itemView.context,null, holder.gridImg)
+                        }
+
+                    }
+
+                }
+                GridData.alreadyExistType->{
+                    holder as AETypeRecyclerViewHolder
+                    data[position].img?.let { img->
+                        setGridImage(holder.itemView.context,img, holder.gridImg)
+                    }
+                }
+                else-> throw RuntimeException("알 수 없는 뷰타입 에러")
+            }
+        }
+    }
+
+    fun setData(newData : ArrayList<GridData>){
+        newData?.let {
+            data.clear()
+            data.addAll(newData)
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun setGridImage(ctx : Context, img: Int?, iv : ImageView){
+        Glide.with(ctx)
+            .load(img)
+            .into(iv)
+
+    }
+    class DefaultGridRecyclerViewHolder(private val clickEvent: (position: Int) -> Unit, viewGroup:ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid, viewGroup,false))
+    {
+        val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
+
+        init {
+            gridImg.setOnClickListener { clickEvent(adapterPosition) }
+        }
+    }
+    class LakeGridRecyclerViewHolder(viewGroup: ViewGroup):
+        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid_lake, viewGroup, false))
+
+    class AETypeRecyclerViewHolder(viewGroup: ViewGroup) :
+        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid, viewGroup,false))
+    {
+        val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
     }
 }

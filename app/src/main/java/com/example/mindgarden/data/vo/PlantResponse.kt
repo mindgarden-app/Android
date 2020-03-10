@@ -1,7 +1,10 @@
 package com.example.mindgarden.data.vo
 
 data class PlantResponse(
-    val data: ArrayList<Plant>?
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: ArrayList<Plant>
 ){
     data class Plant(
         var ballon: Int

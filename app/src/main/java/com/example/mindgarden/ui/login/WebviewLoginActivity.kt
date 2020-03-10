@@ -11,10 +11,10 @@ import android.view.View
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.ui.password.PasswordActivity
 import com.example.mindgarden.db.SharedPreferenceController
-import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.google.gson.JsonParser
 import im.delight.android.webview.AdvancedWebView
@@ -103,7 +103,6 @@ class WebviewLoginActivity : AppCompatActivity() {
                         //로그인 성공시
                         if (it.endsWith("http://15.165.86.150:3000/auth/login/success")) {
 
-                            whyOpen=intent.getStringExtra("whyOpen")
 
                             Log.e("WebView WhyOpen Success",whyOpen)
                             Log.e("webview","성공페이지 화면 뜸")

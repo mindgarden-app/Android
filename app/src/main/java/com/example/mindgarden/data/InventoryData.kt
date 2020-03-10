@@ -1,5 +1,9 @@
 package com.example.mindgarden.data
 
-import android.graphics.Bitmap
-
-data class InventoryData(var icn_tree : Bitmap, var idx_tree : Int)
+data class InventoryData(var treeIcn : Int, var treeIdx : Int, var type : Int){
+    companion object{
+        val default = 0
+        val click = 1
+        val block = 2
+    }
+}

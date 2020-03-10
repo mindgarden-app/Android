@@ -50,7 +50,6 @@ class LoginActivity : AppCompatActivity() {
 
         btnWebLogin.setOnClickListener {
             val loginIntent = Intent(this, WebviewLoginActivity::class.java)
-            loginIntent.putExtra("whyOpen", "login")
             startActivity(loginIntent)
 
             //settings.domStorageEnabled = true

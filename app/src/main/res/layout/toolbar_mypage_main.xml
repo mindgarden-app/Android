@@ -19,17 +19,18 @@
                     android:src="@drawable/btn_back"
                     android:background="@color/colorWhite"
                     android:id="@+id/btnBack"/>
+
             <TextView
+                    android:id="@+id/txtSetting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:id="@+id/txtSetting"
-                    android:text="환경설정"
                     android:fontFamily="@font/notosanscjkr_regular"
-                    android:textSize="14dp"
-                    android:textColor="#2B2B2B"
                     android:gravity="center|center"
+                    android:text="환경설정"
+                    android:textColor="#2B2B2B"
+                    android:textSize="14sp"
 
-        />
+                    />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

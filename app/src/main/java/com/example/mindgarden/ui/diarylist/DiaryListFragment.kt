@@ -201,11 +201,27 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 TokenController.getAccessToken(activity!!.applicationContext),
                 txt_year.text.toString() + "-" + txt_month.text.toString(),
                 { response ->
-                    Log.e("diaryList", "일기 조회 성공")
-
                     hideErrorView()
 
-                    val tmp: ArrayList<DiaryListData> = response.data!!
+                    when (response.status) {
+                        200 -> {
+                            val tmp: ArrayList<DiaryListData> = response.data!!
+
+                            if (tmp.isEmpty()) {
+                                ll_list_zero.visibility = View.VISIBLE
+                            } else {
+                                ll_list_zero.visibility = View.GONE
+
+                                diaryListRecyclerViewAdapter.setData(tmp)
+                                //diaryListRecyclerViewAdapter.dataList = tmp
+                                diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
+                                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        else -> Log.e("diaryList", response.message)
+                    }
+
+                    /*val tmp: ArrayList<DiaryListData> = response.data!!
 
                     if (tmp.isEmpty()) {
                         ll_list_zero.visibility = View.VISIBLE
@@ -216,7 +232,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         //diaryListRecyclerViewAdapter.dataList = tmp
                         diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
                         diaryListRecyclerViewAdapter.notifyDataSetChanged()
-                    }
+                    }*/
                 },
                 {
                     showErrorView()
@@ -239,7 +255,21 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 {
                     hideErrorView()
 
-                    val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
+                    when (it.status) {
+                        200 -> {
+                            val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
+
+                            while (iterator.hasNext()) {
+                                if (iterator.next().diaryIdx == diaryIdx) {
+                                    iterator.remove()
+                                    diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                                }
+                            }
+                        }
+                        else -> Log.e("diaryList", it.message)
+                    }
+
+                    /*val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
 
                     while (iterator.hasNext()) {
                         if (iterator.next().diaryIdx == diaryIdx) {
@@ -248,7 +278,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         }
                     }
 
-                    Log.e("diaryList", "일기 삭제 성공")
+                    Log.e("diaryList", "일기 삭제 성공")*/
                 },
                 {
                     showErrorView()

@@ -19,6 +19,7 @@ import com.example.mindgarden.ui.login.LoginActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_read_diary.*
+import kotlinx.android.synthetic.main.data_load_fail.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 
@@ -44,7 +45,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         setContentView(R.layout.activity_read_diary)
         init()
         if(diaryIdx != -1){
-           loadData()
+            loadData()
         }else{
             Log.e("diaryIdx", "not intent")
         }
@@ -83,6 +84,10 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         }
     }
 
+    private fun showIv(){
+        img_gallary_read_diary.visibility = View.VISIBLE
+    }
+
     private fun setMoodIcn(idx : Int){
         getMoodList(this@ReadDiaryActivity,MoodItemList)
         img_mood_icon_read_diary.setImageBitmap(MoodItemList[idx].moodIcn)
@@ -117,12 +122,12 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         }
     }
 
-
-    // 통신 1. 일기 상세 조회 API를 이용하여 데이터 요청
     private fun loadData(){
         if(!TokenController.isValidToken(this)){
             RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
+
+        hideErrorView()
 
         repository
             .getDiary(
@@ -132,11 +137,30 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                     setMoodIcn(it.diaryResponse[0].weatherIdx)
                     setDateText(it.diaryResponse[0].date)
                     it.diaryResponse[0].diary_img?.let { img->
+                        showIv()
                         setImage(img)
                     }
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+                {
+                    showErrorView()
+                    btnRetryDataLoad()
+                }
             )
     }
 
+    private fun showErrorView(){
+        llReadDiary.visibility = View.GONE
+        dataLoadFailReadDiary.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorView(){
+        llReadDiary.visibility = View.VISIBLE
+        dataLoadFailReadDiary.visibility = View.GONE
+    }
+
+    private fun btnRetryDataLoad(){
+        btnRetryDataLoadFail.setOnClickListener {
+            loadData()
+        }
+    }
 }

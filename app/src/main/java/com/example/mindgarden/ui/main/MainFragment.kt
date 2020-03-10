@@ -59,9 +59,6 @@ class MainFragment : Fragment(), DiaryDate, Tree {
     var treeNum = 0 //트리수
     var balloon = 0 //나무 심기 여부
 
-    //활성화 관련
-    var activated = 0
-
     private val treeArray = SparseArray<Bitmap>()
     lateinit var locationList: List<ImageView>
 
@@ -156,7 +153,6 @@ class MainFragment : Fragment(), DiaryDate, Tree {
 
         btn_reward.setOnClickListener {
             var intent: Intent = Intent(context, InventoryActivity::class.java)
-            intent.putExtra("activated", activated)
             startActivity(intent)
         }
 
@@ -314,15 +310,122 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         repository
             .getGarden(TokenController.getAccessToken(activity!!.applicationContext), date,
                 {
-                    if (it.status == 200) {
+                    /*if (it.status == 200) {
                         Log.e("mainFragment load", it.message)
                     }else{
                         Log.e("mainFragment load", it.message)
-                    }
+                    }*/
 
                     hideErrorView()
 
-                    initializeTree()
+                    when (it.status) {
+                        200 -> {
+                            initializeTree()
+
+                            var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
+                            if (mmonth.toInt() < 10) {
+                                mmonth = "0$mmonth"
+                            }
+
+                            if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                txt_main_day_num.visibility = View.VISIBLE
+                                txt_main_day_num_word.visibility = View.VISIBLE
+                                txt_main_day_text.visibility = View.VISIBLE
+
+                                var date = SimpleDateFormat("dd")
+                                var intDate = SimpleDateFormat("u")
+                                var date2: String = ""
+                                when (intDate.format(Date()).toInt()) {
+                                    1->date2="Mon"
+                                    2->date2="Tue"
+                                    3->date2="Wed"
+                                    4->date2="Thu"
+                                    5->date2="Fri"
+                                    6->date2="Sat"
+                                    7->date2="Sun"
+                                }
+
+                                txt_main_day_num.setText(date.format(Date()).toString())
+                                txt_main_day_text.setText(date2)
+
+                                btn_reward.visibility = View.VISIBLE
+
+                                Log.e("balloon", it.data?.get(0)?.balloon.toString())
+                                Log.e("size", it.data?.size.toString())
+
+                                if (it.data?.get(0)?.balloon == 1) {
+                                    img_balloon.visibility = View.VISIBLE
+                                    btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
+                                } else {
+                                    img_balloon.visibility = View.INVISIBLE
+                                    btn_reward.setImageResource(R.drawable.btn_reward)
+                                }
+                            } else {
+                                txt_main_day_num.visibility = View.INVISIBLE
+                                txt_main_day_num_word.visibility = View.INVISIBLE
+                                txt_main_day_text.visibility = View.INVISIBLE
+
+                                img_balloon.visibility = View.INVISIBLE
+                                btn_reward.visibility = View.INVISIBLE
+                            }
+
+                            for (i in 0..(it.data!!.size - 1)) {
+                                var treeIdx = 0
+                                var location = 0
+
+                                treeIdx = it.data[i].treeIdx
+                                location = it.data[i].location
+
+                                //잡초만 있을 경우
+                                if (it.data[i].treeIdx == 16) {
+                                    locationList.get(location - 1).setImageBitmap(drawableToBitmap(activity!!.applicationContext, R.drawable.android_weeds))
+                                } else {
+                                    locationList.get(location - 1).setImageBitmap(treeArray.get(treeIdx))
+                                }
+
+                                //문구 설정
+                                treeNum = it.data[i].treeNum
+                                Log.e("treeNum", treeNum.toString())
+
+                                //현재달이고, 심은 나무가 없을 경우(초기상태) -> 정원을 꾸며보아요 문구
+                                if (txt_main_year.text == cal.get(Calendar.YEAR).toString() && txt_main_month.text == mmonth) {
+                                    if (treeNum < 1) {
+                                        txt_main_exp1.setText(getString(R.string.treeNumTextCurrent0))
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else if (treeNum < 11) {
+                                        txt_main_exp1.setText(getString(R.string.treeNumTextCurrent10))
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else if (treeNum < 21) {
+                                        txt_main_exp1.setText(getString(R.string.treeNumTextCurrent20))
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else {
+                                        txt_main_exp1.setText(getString(R.string.treeNumTextCurrent21))
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    }
+                                } else {
+                                    if (treeNum < 1) {
+                                        txt_main_exp1.setText(getString(R.string.treeNumText0))
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else if (treeNum < 11) {
+                                        val text = treeNum.toString() + getString( R.string.treeNumText10)
+                                        txt_main_exp1.setText(text)
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else if (treeNum < 21) {
+                                        val text = treeNum.toString() + getString(R.string.treeNumText20)
+                                        txt_main_exp1.setText(text)
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    } else {
+                                        val text = treeNum.toString() + getString(R.string.treeNumText21)
+                                        txt_main_exp1.setText(text)
+                                        txt_main_exp1.visibility = View.VISIBLE
+                                    }
+                                }
+                            }
+                        }
+                        else -> Log.e("mainFragment", it.message)
+                    }
+
+                    /*initializeTree()
 
                     var mmonth = (cal.get(Calendar.MONTH) + 1).toString()
                     if (mmonth.toInt() < 10) {
@@ -358,11 +461,9 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                         if (it.data?.get(0)?.balloon == 1) {
                             img_balloon.visibility = View.VISIBLE
                             btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
-                            activated = 1
                         } else {
                             img_balloon.visibility = View.INVISIBLE
                             btn_reward.setImageResource(R.drawable.btn_reward)
-                            activated = 0
                         }
                     } else {
                         txt_main_day_num.visibility = View.INVISIBLE
@@ -424,11 +525,9 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                                 txt_main_exp1.visibility = View.VISIBLE
                             }
                         }
-                    }
+                    }*/
                 },
                 {
-                    Log.e("MainFragment", it)
-
                     showErrorView()
                     btnRetryDataLoad()
                 })
