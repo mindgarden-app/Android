@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_email_sign_up.edt_email
 import kotlinx.android.synthetic.main.toolbar_write_diary.view.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
+import java.util.regex.Pattern
 
 class EmailSignUpActivity : AppCompatActivity() {
     private val repository : MindgardenRepository by inject()
@@ -58,6 +59,22 @@ class EmailSignUpActivity : AppCompatActivity() {
         edt_password.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
         }
+        edt_password.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+              if(isValidPassword()){
+                  txt_check_password.visibility=View.INVISIBLE
+              }
+              else{
+                  txt_check_password.visibility=View.VISIBLE
+              }
+            }
+
+        })
         //비밀번호 화인
         edt_password_check.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
@@ -128,6 +145,13 @@ class EmailSignUpActivity : AppCompatActivity() {
         return edt_email.toString().isNotEmpty() && edt_name.toString().isNotEmpty() && (edt_password.text.toString() == edt_password_check.text.toString())
     }
 
+    //영문 숫자 8자 이상
+    fun isValidPassword():Boolean{
+        return Pattern.matches("^[0-9]{1,7}+[a-zA-Z]{1}+[a-zA-Z0-9]*|[a-zA-Z]{7,}+[0-9]{1}+[a-zA-Z0-9]*|[a-zA-Z]{1,7}+[0-9]{1}+[a-zA-Z0-9]*\$",edt_password.text.toString())
+    }
+
+
+    //회원가입 통신
     private fun postEmailSignUp(){
         var jsonObject = JSONObject()
 
