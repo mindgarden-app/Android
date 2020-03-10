@@ -251,7 +251,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="13dp"
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
             android:text="가입 시 마인드가든의  "

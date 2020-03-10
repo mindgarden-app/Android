@@ -125,6 +125,15 @@ class EmailSignUpActivity : AppCompatActivity() {
             }
         })
 
+        checkBox_agree.setOnClickListener {
+
+            if(checkBox_agree.isChecked){
+                checkBox_agree.buttonTintList=getColorStateList(R.color.colorPrimaryMint)
+            }else{
+                checkBox_agree.buttonTintList=getColorStateList(R.color.colorBlockGray)
+            }
+        }
+
 
 
         //개인정보처리방침으로 이동
