@@ -1,5 +1,6 @@
 package com.example.mindgarden.ui.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -16,15 +17,27 @@ class EmailPasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_password)
 
-        toolbar_email_password.txtSetting.text = "이메일 로그인"
+        toolbar_email_password.txtSetting.text = "비밀번호 재설정"
         toolbar_email_password.btnBack.setOnClickListener {
             finish()
         }
         btn_email_password_find.setOnClickListener {
             //통신
             //통신안에서 성공하면 다음 뷰로 넘어가고 실패하면 팝업 띄우기
+
+            val sendPasswordIntent= Intent(this,EmailSendPasswordActivity::class.java)
+            sendPasswordIntent.putExtra("email",edt_email_password_forgot.text.toString())
+            startActivity(sendPasswordIntent)
+
         }
 
+        edt_email_password_forgot.setOnFocusChangeListener { view, b ->
+            if (b) {
+                view.setBackgroundResource(R.drawable.grid_border)
+            } else {
+                view.setBackgroundResource(R.drawable.gray_border_square)
+            }
+        }
         edt_email_password_forgot.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }

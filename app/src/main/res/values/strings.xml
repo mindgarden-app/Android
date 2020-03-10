@@ -34,6 +34,9 @@
     <string name="textDataLoadError">네트워크가 원활하지 않아 접속이 지연되고 있습니다.\n
     앱을 재실행하거나 다시 시도해주세요</string>
     <string name="btnRetryDataLoadError">다시 시도</string>
+
+    <string name="txtEmailPasswordSendSuccess">으로 새로운 비밀번호가 전송되었습니다.</string>
+
     <string name="terms_of_use">Mindgarden 이용약관\n
         제 1장 총칙\n
         제1조 (목적) 이 약관은 mindgarden(이하 “회사”라 합니다)가 모바일 기기를 통해 제공하는 모바일 서비스 및 이에 부수하는 네트워크, 웹사이트, 기타 서비스(이하 “서비스”라 합니다)의 이용에 대한 회사와 서비스 이용자의 권리ㆍ의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.\n
