@@ -64,6 +64,9 @@ class InventoryActivity : AppCompatActivity() {
 
         //txtSetting.text = "나무 심기"
 
+        var rActivated = intent?.getIntExtra("activated", 0)
+        Log.e("rActivated", rActivated.toString())
+
         btn_back_toolbar.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             //백 스페이스 누르면 다시 메인 페이지로
@@ -132,7 +135,7 @@ class InventoryActivity : AppCompatActivity() {
             if (isValid(TokenController.getAccessToken(this), gridList[gridIdx].product_id,
                     inventoryIdx
                 )) {
-                if (rBal == 1) {
+                if (rActivated == 1) {
                     postPlant(
                         TokenController.getAccessToken(this),
                         gridList[gridIdx].product_id ,
@@ -283,9 +286,12 @@ class InventoryActivity : AppCompatActivity() {
 
         repository
             .postPlant(TokenController.getAccessToken(this), gsonObject,
-                {},
+                {
+                    Log.e("plant success", "성공")
+                },
                 {
                     //에러처리
+                    Log.e("plant failed", "실패")
                 })
     }
 
