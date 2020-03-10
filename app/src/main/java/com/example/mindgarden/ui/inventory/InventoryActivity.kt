@@ -64,6 +64,7 @@ class InventoryActivity : AppCompatActivity() {
 
         //txtSetting.text = "나무 심기"
 
+        //활성화 관련
         var rActivated = intent?.getIntExtra("activated", 0)
         Log.e("rActivated", rActivated.toString())
 
@@ -151,29 +152,6 @@ class InventoryActivity : AppCompatActivity() {
                     toast.show()
                     //toast("일기를 써야 나무를 심을 수 있어요")
                 }
-                /*if (rBal == 1 && rCheck == 0) {
-                    postPlant(
-                        TokenController.getAccessToken(this),
-                        gridList[gridIdx].product_id ,
-                        inventoryIdx
-                    )
-
-                    finish()
-                } else if (rBal == 0 && rCheck == 2) {
-                    toastText.setText("일기를 써야 나무를 심을 수 있어요.")
-                    //toastText.width = 248
-                    toastText.gravity = Gravity.CENTER
-                    toast.view = toastView
-                    toast.show()
-                    //toast("일기를 써야 나무를 심을 수 있어요")
-                } else if (rBal == 0 && rCheck == 1) {
-                    toastText.setText("나무는 하루에 하나만 심을 수 있어요!ㅠㅠ")
-                    //toastText.width = 248
-                    toastText.gravity = Gravity.CENTER
-                    toast.view = toastView
-                    toast.show()
-                    //toast("나무는 하루에 하나만 심을 수 있어요ㅠㅠ!")
-                }*/
             }
 
             Log.e("start", gridList[gridIdx].product_id.toString())
