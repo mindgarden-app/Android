@@ -47,6 +47,7 @@ class EmailSignUpActivity : AppCompatActivity() {
                 }
                 else{
                     txt_check_email.visibility=View.INVISIBLE
+                    canEnroll()
                 }
             }
         })
@@ -54,10 +55,12 @@ class EmailSignUpActivity : AppCompatActivity() {
         //이름
         edt_name.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
+            canEnroll()
         }
         //비밀번호
         edt_password.setOnFocusChangeListener { view, b ->
             hasFocus(view, b)
+
         }
         edt_password.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(p0: Editable?) {
@@ -68,6 +71,7 @@ class EmailSignUpActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
               if(isValidPassword()){
                   txt_check_password.visibility=View.INVISIBLE
+                  canEnroll()
               }
               else{
                   txt_check_password.visibility=View.VISIBLE
@@ -92,9 +96,11 @@ class EmailSignUpActivity : AppCompatActivity() {
                 if (edt_password.text.toString() != edt_password_check.text.toString()) {
                     txt_check_password_again.visibility = View.VISIBLE
                     txt_check_password_again.setTextColor(getColor(R.color.colorRed))
+
                 }
                 else{
                     txt_check_password_again.visibility=View.INVISIBLE
+                    canEnroll()
                 }
             }
         })
@@ -112,13 +118,13 @@ class EmailSignUpActivity : AppCompatActivity() {
         }
 
 
-
+        canEnroll()
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
-            if (canEnroll()) {
+
                 postEmailSignUp()
                 val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
                 startActivity(enrolledIntent)
-            }
+
 
         }
         //뒤로가기 버튼 누를시 signinactivity로 이동
@@ -140,14 +146,21 @@ class EmailSignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun canEnroll(): Boolean {
+    private fun canEnroll() {
         //유효성 판단하는 함수
-        return edt_email.toString().isNotEmpty() && edt_name.toString().isNotEmpty() && (edt_password.text.toString() == edt_password_check.text.toString())
+        if((txt_check_email.visibility==View.INVISIBLE)&&(edt_name.text.toString().isNotEmpty())&&(txt_check_password.visibility==View.INVISIBLE)&&(txt_check_password_again.visibility==View.INVISIBLE)){
+            toolbar_email_sign_up.btn_save_diary_toolbar.isEnabled=true
+            toolbar_email_sign_up.btn_save_diary_toolbar.setBackgroundResource(R.drawable.green_border_square)
+        }
+        else{
+            toolbar_email_sign_up.btn_save_diary_toolbar.isEnabled=false
+            toolbar_email_sign_up.btn_save_diary_toolbar.setBackgroundResource(R.drawable.grid_border)
+        }
     }
 
     //영문 숫자 8자 이상
     fun isValidPassword():Boolean{
-        return Pattern.matches("^[0-9]{1,7}+[a-zA-Z]{1}+[a-zA-Z0-9]*|[a-zA-Z]{7,}+[0-9]{1}+[a-zA-Z0-9]*|[a-zA-Z]{1,7}+[0-9]{1}+[a-zA-Z0-9]*\$",edt_password.text.toString())
+        return Pattern.matches("^.*(?=.{8,20})(?=.*[0-9])(?=.*[a-zA-Z]).*\$",edt_password.text.toString())
     }
 
 
