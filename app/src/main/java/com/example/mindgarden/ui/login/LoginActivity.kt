@@ -8,11 +8,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import com.google.android.material.tabs.TabLayout
 import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +21,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
+import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -49,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[2])
 
         btnWebLogin.setOnClickListener {
+
             val loginIntent = Intent(this, WebviewLoginActivity::class.java)
             startActivity(loginIntent)
 
@@ -56,6 +58,8 @@ class LoginActivity : AppCompatActivity() {
 
         }
         btnEmailLogin.setOnClickListener {
+
+
             val emailLoginIntent=Intent(this,EmailSignInActivity::class.java)
             startActivity(emailLoginIntent)
         }

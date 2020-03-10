@@ -47,6 +47,7 @@
 
             android:paddingHorizontal="12dp"
             android:paddingVertical="9dp"
+            android:paddingLeft="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +94,7 @@
             android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:paddingLeft="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_name" />
@@ -124,6 +126,7 @@
             android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:paddingLeft="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password" />
@@ -154,6 +157,7 @@
             android:background="@drawable/gray_border_square"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:paddingLeft="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password_check" />
