@@ -33,8 +33,8 @@ class EmailSignUpActivity : AppCompatActivity() {
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
             canEnroll()
             postEmailSignUp()
-            val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
-            startActivity(enrolledIntent)
+//            val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
+//            startActivity(enrolledIntent)
 
 
         }
@@ -126,6 +126,7 @@ class EmailSignUpActivity : AppCompatActivity() {
         })
 
 
+
         //개인정보처리방침으로 이동
         btn_privacy_statement.setOnClickListener {
             val privacyIntent = Intent(this, PrivacyStatementActivity::class.java)
@@ -163,7 +164,8 @@ class EmailSignUpActivity : AppCompatActivity() {
         } else if (txt_check_password_again.visibility == View.VISIBLE || edt_password_check.text.toString().isEmpty()) {
             edt_password_check.requestFocus()
         } else if (!checkBox_agree.isChecked) {
-            checkBox_agree.requestFocus()
+            currentFocus.clearFocus()
+            checkBox_agree.isChecked=true
         }
     }
 

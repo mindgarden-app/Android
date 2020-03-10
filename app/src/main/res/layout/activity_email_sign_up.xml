@@ -199,6 +199,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="180dp"
+            android:buttonTint="@color/colorPrimaryMint"
+            android:checked="false"
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
