@@ -60,9 +60,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     override fun onResume() {
         super.onResume()
 
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
-            loadData()
-        }
+        getData()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -81,9 +79,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 leftMonthChange()
             }
 
-            if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
-                loadData()
-            }
+            getData()
         }
 
         btn_right.setOnClickListener {
@@ -93,9 +89,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 rightMonthChange()
             }
 
-            if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
-                loadData()
-            }
+            getData()
         }
 
         configureRecyclerView()
@@ -162,9 +156,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
 
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
-           loadData()
-        }
+        getData()
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
@@ -286,7 +278,13 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 })
     }
 
-    private fun showErrorView() {
+    private fun getData() {
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+            loadData()
+        }
+    }
+
+   private fun showErrorView() {
         dataLoadFailDiaryList.visibility = View.VISIBLE
     }
 
