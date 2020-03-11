@@ -1,12 +1,16 @@
 package com.example.mindgarden.ui.login
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.google.gson.JsonObject
@@ -197,14 +201,59 @@ class EmailSignUpActivity : AppCompatActivity() {
 
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
+        val loginButtonClick = { dialog: DialogInterface, which: Int ->
+          finish()
+        }
+
         repository
             .postEmailSignUp(gsonObject,
                 {
                     if (it.status == 200) {
                         if (it.success) {
                             Log.e("회원가입 성공 메세지", it.message)
+                            //팝업 띄우기
+                            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
+
+
+                            dlg.setMessage("가입이 완료되었습니다.")
+                                .setNeutralButton("                              로그인하기                            ",loginButtonClick)
+
+
+                            var dlgNew: AlertDialog = dlg.show()
+                            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+                            messageText!!.gravity = Gravity.CENTER
+
+
+                            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+                            dlgNew.show()
                         } else {
                             Log.e("회원가입 메세지", it.message)
+
+                            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
+
+
+                            dlg.setMessage("이미 등록된 메일입니다.")
+                                .setNeutralButton("                닫기        ",null)
+                                .setPositiveButton("       로그인하기          ",loginButtonClick)
+
+
+
+                            var dlgNew: AlertDialog = dlg.show()
+                            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+                            messageText!!.gravity = Gravity.CENTER
+//                            var button1=dlgNew.getButton(0)
+//                            button1.setTextColor(getColor(R.color.colorBlockGray))
+//                            var button2=dlgNew.getButton(1)
+//                            button2.setTextColor(getColor(R.color.colorPrimaryMint))
+
+
+
+                            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+                            dlgNew.show()
+
+
                         }
                     }
                 },

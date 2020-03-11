@@ -86,7 +86,7 @@ class EmailPasswordActivity : AppCompatActivity() {
                     if (it.message != "메일 전송 성공") {
                         Log.e("email",it.message)
                         //팝업 띄우기
-                        var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                        var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
 
 
                         dlg.setMessage("존재하지 않는 메일 주소입니다.")

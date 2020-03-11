@@ -22,6 +22,13 @@
         <item name="android:height">80dp</item>
     </style>
 
+    <style name="MyAlertDialogStyle2" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#78DEB0</item>
+        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
+        <item name="android:height">60dp</item>
+    </style>
+
     <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
