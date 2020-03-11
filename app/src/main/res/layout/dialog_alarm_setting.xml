@@ -10,12 +10,13 @@
     <TimePicker
             android:id="@+id/alarmTimePicker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="center|center"
             android:timePickerMode="spinner"
+            android:theme="@style/AlarmDialogStyle"
     />
 
 
@@ -23,14 +24,14 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="53dp"
                   android:orientation="horizontal">
         <TextView android:layout_width="0px" android:layout_height="match_parent" android:layout_weight="1"
-                  android:text="취소" android:fontFamily="@font/notosanscjkr_medium" android:textSize="14dp" android:textColor="#2B2B2B"
+                  android:text="취소" android:fontFamily="@font/notosanscjkr_regular" android:textSize="14dp" android:textColor="#2B2B2B"
                   android:gravity="center" android:layout_marginBottom="5dp" android:layout_marginTop="5dp"
                   android:id="@+id/btn_cancel_alarm_setting"
                   android:onClick="mClick"
         />
         <View android:layout_width="1dp" android:layout_height="wrap_content"  android:background="#E8E8E8"/>
         <TextView android:layout_width="0px" android:layout_height="match_parent" android:layout_weight="1"
-                  android:text="확인" android:fontFamily="@font/notosanscjkr_medium" android:textSize="14dp" android:textColor="#2B2B2B"
+                  android:text="확인" android:fontFamily="@font/notosanscjkr_regular" android:textSize="14dp" android:textColor="#2B2B2B"
                   android:gravity="center" android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:id="@+id/btn_ok_alarm_setting"
                   android:onClick="mClick"
         />

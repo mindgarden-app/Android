@@ -5,9 +5,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
 import com.example.mindgarden.R
 import com.example.mindgarden.data.vo.DiaryListResponse.*
@@ -23,7 +20,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
     lateinit var dlgNew : AlertDialog
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(clickEvent, viewGroup)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(viewGroup)
 
     override fun getItemViewType(position: Int): Int {
         return position
@@ -96,7 +93,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 window.attributes = display
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
-                    Log.e("index:", dataList[holder.adapterPosition].diaryIdx.toString())
+                    Log.e("diary_index:", dataList[holder.adapterPosition].diaryIdx.toString())
                     Log.e("adapter:", holder.adapterPosition.toString())
 
                     clickEvent(holder.adapterPosition)
@@ -105,7 +102,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 }
 
                 dlgView.txt_diary_list_no.setOnClickListener {
-                    Log.e("index:", dataList[holder.adapterPosition].diaryIdx.toString())
+                    Log.e("diary_index:", dataList[holder.adapterPosition].diaryIdx.toString())
                     Log.e("adapter:", holder.adapterPosition.toString())
 
                     dlgNew.dismiss()
@@ -118,8 +115,8 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         }
     }
 
-    class Holder(private val clickEvent: (position: Int) -> Unit, parent: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.rv_item_diary_list, parent, false)) {
-        init {
+    class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false)) {
+        /*init {
             //binding
             var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
             var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
@@ -127,6 +124,6 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
             var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
             var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-        }
+        }*/
     }
 }

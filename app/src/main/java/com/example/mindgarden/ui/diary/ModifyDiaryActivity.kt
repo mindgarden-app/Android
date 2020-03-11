@@ -178,7 +178,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun btnBackClick(){
         btn_back_toolbar.setOnClickListener {
-           onBackPressed()
+            onBackPressed()
         }
     }
 
@@ -228,7 +228,6 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         return MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
     }
 
-    //MoodChoice액티비티 팝업
     fun chooseMood(){
         val intent = Intent(this, MoodActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE_MODIFY_ACTIVITY)
