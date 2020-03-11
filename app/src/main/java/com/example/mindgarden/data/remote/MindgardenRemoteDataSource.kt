@@ -96,10 +96,18 @@ interface MindgardenRemoteDataSource {
         onFail: (errorMsg: String) -> Unit
     )
 
-    //비밀번호
+    //앱 내 비밀번호
     fun getForgetPassword(
         token: String,
         onSuccess: (ForgetPasswordResponse) -> Unit,
+        onFail: (errorMsg: String) -> Unit
+    )
+    
+    //아이디-비밀번호 메일보내기
+    //TODO
+    fun postEmailSendPassword(
+        body: JsonObject,
+        onSuccess: (EmailSendPasswordResponse) -> Unit,
         onFail: (errorMsg: String) -> Unit
     )
 

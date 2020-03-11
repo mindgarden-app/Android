@@ -4,6 +4,7 @@ import com.example.mindgarden.data.vo.*
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -92,4 +93,9 @@ interface NetworkService {
     fun getForgetPassword(
         @Header("token") token: String
     ):Call<ForgetPasswordResponse>
+
+    @POST("/user/mail")
+    fun postEmailSendPassword(
+        @Body() body: JsonObject
+    ):Call<EmailSendPasswordResponse>
 }

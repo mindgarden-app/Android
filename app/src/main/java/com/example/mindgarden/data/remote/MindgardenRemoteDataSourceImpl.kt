@@ -9,8 +9,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkService) :
-        MindgardenRemoteDataSource{
+class MindgardenRemoteDataSourceImpl(private val mindgardenApiService: NetworkService) :
+    MindgardenRemoteDataSource {
     override fun getDiary(
         token: String,
         diaryIdx: Int,
@@ -19,15 +19,18 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .getDiary(token, diaryIdx)
-            .enqueue(object : Callback<DiaryResponse>{
+            .enqueue(object : Callback<DiaryResponse> {
                 override fun onFailure(call: Call<DiaryResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<DiaryResponse>, response: Response<DiaryResponse>) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                override fun onResponse(
+                    call: Call<DiaryResponse>,
+                    response: Response<DiaryResponse>
+                ) {
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -43,15 +46,15 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .postDiary(token, diary_content, weatherIdx, diary_img)
-            .enqueue(object : Callback<DiaryIdx>{
+            .enqueue(object : Callback<DiaryIdx> {
                 override fun onFailure(call: Call<DiaryIdx>, t: Throwable) {
                     onFail(t.toString())
                 }
 
                 override fun onResponse(call: Call<DiaryIdx>, response: Response<DiaryIdx>) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -67,16 +70,19 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
         onFail: (errorMsg: String) -> Unit
     ) {
         mindgardenApiService
-            .putDiary(token,diary_content,weatherIdx,diaryIdx,diary_img)
-            .enqueue(object : Callback<PostDiaryResponse>{
+            .putDiary(token, diary_content, weatherIdx, diaryIdx, diary_img)
+            .enqueue(object : Callback<PostDiaryResponse> {
                 override fun onFailure(call: Call<PostDiaryResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<PostDiaryResponse>, response: Response<PostDiaryResponse>) {
-                    when(response.isSuccessful){
-                        true->response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                override fun onResponse(
+                    call: Call<PostDiaryResponse>,
+                    response: Response<PostDiaryResponse>
+                ) {
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -90,7 +96,7 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .getDiaryList(token, date)
-            .enqueue(object: Callback<DiaryListResponse>{
+            .enqueue(object : Callback<DiaryListResponse> {
                 override fun onFailure(call: Call<DiaryListResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -99,9 +105,9 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<DiaryListResponse>,
                     response: Response<DiaryListResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -114,21 +120,24 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
         onFail: (errorMsg: String) -> Unit
     ) {
         mindgardenApiService
-            .deleteDiaryList(token,diaryIdx)
-            .enqueue(object : Callback<DeleteDiaryListResponse>{
+            .deleteDiaryList(token, diaryIdx)
+            .enqueue(object : Callback<DeleteDiaryListResponse> {
                 override fun onFailure(call: Call<DeleteDiaryListResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<DeleteDiaryListResponse>, response: Response<DeleteDiaryListResponse>) {
-                    when(response.isSuccessful){
+                override fun onResponse(
+                    call: Call<DeleteDiaryListResponse>,
+                    response: Response<DeleteDiaryListResponse>
+                ) {
+                    when (response.isSuccessful) {
                         //true-> response.body()?.let { onSuccess(it) }
                         //false-> onFail(response.errorBody().toString())
-                        true-> when (response.body()!!.status == 200) {
-                            true->response.body()?.let { onSuccess(it) }
-                            false-> onFail(response.errorBody().toString())
+                        true -> when (response.body()!!.status == 200) {
+                            true -> response.body()?.let { onSuccess(it) }
+                            false -> onFail(response.errorBody().toString())
                         }
-                        false-> onFail(response.errorBody().toString())
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -142,7 +151,7 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .postPlant(token, body)
-            .enqueue(object : Callback<PlantResponse>{
+            .enqueue(object : Callback<PlantResponse> {
                 override fun onFailure(call: Call<PlantResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -151,9 +160,9 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<PlantResponse>,
                     response: Response<PlantResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -167,7 +176,7 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .getPlant(token, date)
-            .enqueue(object : Callback<GardenResponse>{
+            .enqueue(object : Callback<GardenResponse> {
                 override fun onFailure(call: Call<GardenResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -176,9 +185,9 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<GardenResponse>,
                     response: Response<GardenResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -191,8 +200,8 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
         onFail: (errorMsg: String) -> Unit
     ) {
         mindgardenApiService
-            .postRenewAccessToken(refreshtoken,body)
-            .enqueue(object : Callback<RenewAccessTokenResponse>{
+            .postRenewAccessToken(refreshtoken, body)
+            .enqueue(object : Callback<RenewAccessTokenResponse> {
                 override fun onFailure(call: Call<RenewAccessTokenResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -201,9 +210,9 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<RenewAccessTokenResponse>,
                     response: Response<RenewAccessTokenResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -216,15 +225,18 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .deleteUser(token)
-            .enqueue(object : Callback<DeleteUserResponse>{
+            .enqueue(object : Callback<DeleteUserResponse> {
                 override fun onFailure(call: Call<DeleteUserResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<DeleteUserResponse>, response: Response<DeleteUserResponse>) {
-                    when(response.isSuccessful){
-                        true->  response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                override fun onResponse(
+                    call: Call<DeleteUserResponse>,
+                    response: Response<DeleteUserResponse>
+                ) {
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -237,15 +249,18 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .postEmailSignUp(body)
-            .enqueue(object : Callback<EmailSignUpResponse>{
+            .enqueue(object : Callback<EmailSignUpResponse> {
                 override fun onFailure(call: Call<EmailSignUpResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
 
-                override fun onResponse(call: Call<EmailSignUpResponse>, response: Response<EmailSignUpResponse>) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                override fun onResponse(
+                    call: Call<EmailSignUpResponse>,
+                    response: Response<EmailSignUpResponse>
+                ) {
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -258,7 +273,7 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .postEmailSignIn(body)
-            .enqueue(object : Callback<EmailSignInResponse>{
+            .enqueue(object : Callback<EmailSignInResponse> {
                 override fun onFailure(call: Call<EmailSignInResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -267,9 +282,9 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<EmailSignInResponse>,
                     response: Response<EmailSignInResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
             })
@@ -282,7 +297,7 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
     ) {
         mindgardenApiService
             .getForgetPassword(token)
-            .enqueue(object : Callback<ForgetPasswordResponse>{
+            .enqueue(object : Callback<ForgetPasswordResponse> {
                 override fun onFailure(call: Call<ForgetPasswordResponse>, t: Throwable) {
                     onFail(t.toString())
                 }
@@ -291,11 +306,36 @@ class MindgardenRemoteDataSourceImpl (private val mindgardenApiService: NetworkS
                     call: Call<ForgetPasswordResponse>,
                     response: Response<ForgetPasswordResponse>
                 ) {
-                    when(response.isSuccessful){
-                        true-> response.body()?.let { onSuccess(it) }
-                        false-> onFail(response.errorBody().toString())
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false -> onFail(response.errorBody().toString())
                     }
                 }
+            })
+    }
+
+    override fun postEmailSendPassword(
+        body: JsonObject,
+        onSuccess: (EmailSendPasswordResponse) -> Unit,
+        onFail: (errorMsg: String) -> Unit
+    ) {
+        mindgardenApiService
+            .postEmailSendPassword(body)
+            .enqueue(object : Callback<EmailSendPasswordResponse> {
+                override fun onFailure(call: Call<EmailSendPasswordResponse>, t: Throwable) {
+                    onFail(t.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<EmailSendPasswordResponse>,
+                    response: Response<EmailSendPasswordResponse>
+                ) {
+                    when (response.isSuccessful) {
+                        true -> response.body()?.let { onSuccess(it) }
+                        false ->onFail(response.errorBody().toString())
+                    }
+                }
+
             })
     }
 }
