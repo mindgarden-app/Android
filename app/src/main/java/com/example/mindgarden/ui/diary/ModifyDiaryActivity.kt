@@ -269,7 +269,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     //일기 쓰기
     private fun getCurrentDate():String{
-        val f = SimpleDateFormat("yy.MM.dd.(EEE)", Locale.KOREA)
+        val f = SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH)
         return f.format(Calendar.getInstance(Locale.KOREA).time)
     }
 

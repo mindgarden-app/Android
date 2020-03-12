@@ -1,6 +1,9 @@
 package com.example.mindgarden.data.vo
 
 data class DiaryListResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
     val data: ArrayList<DiaryListData>?
 ){
     data class DiaryListData(

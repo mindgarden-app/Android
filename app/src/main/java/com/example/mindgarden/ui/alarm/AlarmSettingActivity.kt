@@ -53,7 +53,7 @@ class AlarmSettingActivity : AppCompatActivity() {
             finish()
         }
 
-        alarmSwitch = findViewById (R.id.alarmSwitch)    //스위치 토글 버튼
+        alarmSwitch = findViewById(R.id.alarmSwitch)    //스위치 토글 버튼
         alarmSwitch.isChecked = SharedPreferenceController.getAlarmState(this)
 
         btnSetTimeState(alarmSwitch.isChecked)
@@ -112,7 +112,7 @@ class AlarmSettingActivity : AppCompatActivity() {
         //크기조절
         val lp = WindowManager.LayoutParams()
         lp.copyFrom(builderNew.window.attributes)
-        lp.width = 800
+
         val window = builderNew.window
         window.attributes = lp
 

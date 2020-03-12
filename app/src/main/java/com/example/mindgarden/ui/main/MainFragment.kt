@@ -189,8 +189,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                         setMainDateText()   //날짜
                         it.data[0].let {d->
                             setMainComment(d.treeNum)  //코멘트
-                            //나무
-                            setTree(it.data.size,it.data)
+                            setTree(it.data.size,it.data)//namu
                             setGardenBalloon(d.balloon) //풍선
                         }
 

@@ -21,12 +21,4 @@ interface DiaryDate {
 
     fun getTime(d: String) = getFormat(d, SimpleDateFormat("HH:mm:ss", Locale.getDefault()))
 
-    fun getMainToolbarDateFormet(): Format {
-      return SimpleDateFormat("yyyy년 MM월", Locale.KOREA)
-    }
-
-    fun getMainDateFormat() = SimpleDateFormat("dd 스. EEE", Locale.KOREA)
-
-    fun getServerDateFormat() : Format {
-        return SimpleDateFormat("yyyy-MM", Locale.KOREA)}
 }

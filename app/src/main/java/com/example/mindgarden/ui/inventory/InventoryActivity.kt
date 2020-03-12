@@ -162,8 +162,7 @@ class InventoryActivity : AppCompatActivity() {
                     hideErrorView()
                     when(it.success){
                         true-> {
-                            Log.e("Inventory", it.message)
-                            //finish()
+                            finish()
                         }
                         else-> {
                             Log.e("Inventory", it.message)
