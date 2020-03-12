@@ -103,6 +103,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         Glide.with(this@ReadDiaryActivity)
             .load(img)
             .fitCenter()
+            .placeholder(R.drawable.icn_gallery)
             .into(img_gallary_read_diary)
     }
 
@@ -133,12 +134,17 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             .getDiary(
                 TokenController.getAccessToken(this), diaryIdx,
                 {
-                    setContents(it.diaryResponse[0].diary_content)
-                    setMoodIcn(it.diaryResponse[0].weatherIdx)
-                    setDateText(it.diaryResponse[0].date)
-                    it.diaryResponse[0].diary_img?.let { img->
-                        showIv()
-                        setImage(img)
+                    if(it.status == 200){
+                        setContents(it.diaryResponse[0].diary_content)
+                        setMoodIcn(it.diaryResponse[0].weatherIdx)
+                        setDateText(it.diaryResponse[0].date)
+                        it.diaryResponse[0].diary_img?.let { img->
+                            showIv()
+                            setImage(img)
+                        }
+                    }else{
+                        showErrorView()
+                        btnRetryDataLoad()
                     }
                 },
                 {
