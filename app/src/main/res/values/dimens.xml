@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="dimen" name="dialog_min_width_major">69%</item>
-    <item type="dimen" name="dialog_min_width_minor">69%</item>
+    <!--<item type="dimen" name="dialog_min_width_major">69%</item>
+    <item type="dimen" name="dialog_min_width_minor">69%</item>-->
 
     <item type="dimen" name="between_top_and_minimap"></item>
     <item type="dimen" name="between_minimap_and_N"></item>

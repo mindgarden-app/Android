@@ -1,10 +1,12 @@
 package com.example.mindgarden.ui.diarylist
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
 import com.example.mindgarden.R
 import com.example.mindgarden.data.vo.DiaryListResponse.*
@@ -86,8 +88,8 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
                 val display = WindowManager.LayoutParams()
                 display.copyFrom(dlgNew.window.attributes)
-                display.width = 1000
-                display.height = 750
+                //display.width = 1000
+                //display.height = 750
 
                 val window = dlgNew.window
                 window.attributes = display
