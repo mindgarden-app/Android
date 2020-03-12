@@ -13,6 +13,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
@@ -85,7 +86,12 @@ class MainActivity  : AppCompatActivity() {
                 //3번으로 바꿔주기
                 val vp = findViewById<ViewPager>(R.id.vp_main)
                 vp.setCurrentItem(1,true)
+                refresh()
             }
         }
+    }
+
+    fun refresh(){
+        vp_main.adapter?.notifyDataSetChanged()
     }
 }

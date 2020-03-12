@@ -160,11 +160,15 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    when(it.status){
-                        200-> {
-                            finish()
+                    when(it.success){
+                        true-> {
+                            Log.e("Inventory", it.message)
+                            //finish()
                         }
-                        else-> showToast(it.message)
+                        else-> {
+                            Log.e("Inventory", it.message)
+                            showToast(it.message)
+                        }
                     }
                 },
                 {
