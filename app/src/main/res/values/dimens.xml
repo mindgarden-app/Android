@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<item type="dimen" name="dialog_min_width_major">69%</item>
-    <item type="dimen" name="dialog_min_width_minor">69%</item>-->
-
     <item type="dimen" name="between_top_and_minimap"></item>
     <item type="dimen" name="between_minimap_and_N"></item>
     <item type="dimen" name="margin_NorS"></item>
@@ -12,6 +9,4 @@
 
     <item type="dimen" name="gridview_scale"></item>
     <item type="dimen" name="treeview_scale"></item>
-
-
 </resources>

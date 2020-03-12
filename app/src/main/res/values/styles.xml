@@ -12,8 +12,6 @@
     <style name="AlarmDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <!--<item name="colorAccent">#2B2B2B</item>-->
         <item name="colorControlNormal">#78DEB0</item>
-        <!--<item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>-->
     </style>
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">

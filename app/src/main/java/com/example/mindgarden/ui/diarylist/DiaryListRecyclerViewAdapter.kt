@@ -88,8 +88,6 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
 
                 val display = WindowManager.LayoutParams()
                 display.copyFrom(dlgNew.window.attributes)
-                //display.width = 1000
-                //display.height = 750
 
                 val window = dlgNew.window
                 window.attributes = display
