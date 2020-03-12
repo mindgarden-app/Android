@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import kotlinx.android.synthetic.main.rv_item_diary_list.view.*
 import kotlin.collections.ArrayList
 
+//merge
 class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
     var dataList = ArrayList<DiaryListData>()
     var isPressed = false
