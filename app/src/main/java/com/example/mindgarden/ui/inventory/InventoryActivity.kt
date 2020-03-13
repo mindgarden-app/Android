@@ -100,6 +100,8 @@ class InventoryActivity : AppCompatActivity() {
                     true -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, false)
                         gridRecyclerViewAdapter.notifyItemChanged(position)
+                        //수정중
+                        location = -1
                     }
                     false -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, true)
