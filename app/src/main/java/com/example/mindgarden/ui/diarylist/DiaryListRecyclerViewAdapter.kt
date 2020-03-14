@@ -84,11 +84,11 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
                 dlgNew.show()
 
-                val display = WindowManager.LayoutParams()
+                /*val display = WindowManager.LayoutParams()
                 display.copyFrom(dlgNew.window.attributes)
 
                 val window = dlgNew.window
-                window.attributes = display
+                window.attributes = display*/
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
                     Log.e("diary_index:", dataList[holder.adapterPosition].diaryIdx.toString())

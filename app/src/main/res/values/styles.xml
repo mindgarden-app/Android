@@ -16,7 +16,6 @@
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#78DEB0</item>
-        <!--<item name="android:height">80dp</item>-->
     </style>
 
     <style name="Theme.MyPopUpWindow" parent="Theme.AppCompat.Light.Dialog">

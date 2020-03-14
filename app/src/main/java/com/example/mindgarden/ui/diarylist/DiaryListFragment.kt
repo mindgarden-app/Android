@@ -11,7 +11,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -57,87 +56,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_diary_list, container, false)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        init()
-    }
-
-    private fun init() {
-        //btnToolbarClick()
-        configureRecyclerView()
-        initToolbarTextCurrent()
-        diaryListFragmentClick()
-        getData()
-    }
-
-    private fun diaryListFragmentClick() {
-        btnToolbarClick()
-        btnUpdownClick()
-        btnSettingClick()
-    }
-
-    private fun btnUpdownClick() {
-        btn_updown.setOnClickListener {
-            if (ascending) {
-                diaryListRecyclerViewAdapter.dataList.sortBy { data -> data.date }
-                diaryListRecyclerViewAdapter.notifyDataSetChanged()
-            } else {
-                diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
-                diaryListRecyclerViewAdapter.notifyDataSetChanged()
-            }
-
-            ascending = !ascending
-        }
-    }
-
-    private fun btnSettingClick() {
-        btn_setting.setOnClickListener {
-            startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
-        }
-    }
-
-    private fun initToolbarTextCurrent() {
-        txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
-    }
-
-    private fun btnToolbarClick() {
-        btn_left.setOnClickListener {
-            txt_date_toolbar_diary_list.text = setDateMoveControl(1)
-        }
-
-        btn_right.setOnClickListener {
-            txt_date_toolbar_diary_list.text = setDateMoveControl(0)
-        }
-    }
-
-    private fun setDateMoveControl(i: Int): String {
-        when (i) {
-            0 -> {
-                cal.add(Calendar.MONTH, 1)
-                getData()
-            }
-            1 -> {
-                val mindgardenStartDate = Calendar.getInstance()
-                mindgardenStartDate.set(2019, 6, 31)
-                if (txt_date_toolbar_diary_list.text != getToolbarDate(mindgardenStartDate)) cal.add(Calendar.MONTH, -1)
-                getData()
-            }
-        }
-
-        return getToolbarDate(cal)
-    }
-
-    private fun getToolbarDate(calendar: Calendar): String {
-        val f = SimpleDateFormat("yyyy년 MM월", Locale.getDefault())
-        return f.format(calendar.time)
-    }
-
-    private fun getServerDate(calendar: Calendar): String {
-        val f = SimpleDateFormat("yyyy-MM", Locale.getDefault())
-        return f.format(calendar.time)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -210,6 +128,19 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         txt_month.setText(month)
     }*/
 
+    override fun onResume() {
+        super.onResume()
+
+        init()
+    }
+
+    private fun init() {
+        configureRecyclerView()
+        initToolbarTextCurrent()
+        diaryListFragmentClick()
+        getData()
+    }
+
     private fun configureRecyclerView() {
         var dataList: ArrayList<DiaryListData> = ArrayList()
 
@@ -236,6 +167,73 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
 
         //getData()
+    }
+
+    private fun diaryListFragmentClick() {
+        btnToolbarClick()
+        btnUpdownClick()
+        btnSettingClick()
+    }
+
+    private fun btnUpdownClick() {
+        btn_updown.setOnClickListener {
+            if (ascending) {
+                diaryListRecyclerViewAdapter.dataList.sortBy { data -> data.date }
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            }
+
+            ascending = !ascending
+        }
+    }
+
+    private fun btnSettingClick() {
+        btn_setting.setOnClickListener {
+            startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
+        }
+    }
+
+    private fun initToolbarTextCurrent() {
+        txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
+    }
+
+    private fun btnToolbarClick() {
+        btn_left.setOnClickListener {
+            txt_date_toolbar_diary_list.text = setDateMoveControl(1)
+            getData()
+        }
+
+        btn_right.setOnClickListener {
+            txt_date_toolbar_diary_list.text = setDateMoveControl(0)
+            getData()
+        }
+    }
+
+    private fun setDateMoveControl(i: Int): String {
+        when (i) {
+            0 -> {
+                cal.add(Calendar.MONTH, 1)
+            }
+            1 -> {
+                val mindgardenStartDate = Calendar.getInstance()
+                mindgardenStartDate.set(2019, 6, 31)
+                if (txt_date_toolbar_diary_list.text != getToolbarDate(mindgardenStartDate)) cal.add(Calendar.MONTH, -1)
+            }
+        }
+
+        return getToolbarDate(cal)
+    }
+
+    private fun getToolbarDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy년 MM월", Locale.getDefault())
+        return f.format(calendar.time)
+    }
+
+    private fun getServerDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        return f.format(calendar.time)
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
@@ -269,6 +267,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         }
 
         val date = getServerDate(cal)
+        Log.e("diaryList date_loadData():", date)
 
         repository
             .getDiaryList(
