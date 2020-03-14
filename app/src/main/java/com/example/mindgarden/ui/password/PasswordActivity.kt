@@ -244,7 +244,7 @@ class PasswordActivity : AppCompatActivity() {
                                 //첫번쨰 비밀번호를 입력한다
                                 firstPassword = subPassword
                                 subPassword = ""
-                                txtPassword.text = "다시 입력해주세요."
+                                txtPassword.text = "한 번 더 입력해주세요."
                                 btnForgetPw.visibility= View.INVISIBLE
                                 btnForgetPw.isEnabled=false
                             } else {

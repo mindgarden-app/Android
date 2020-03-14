@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
@@ -14,14 +13,13 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import com.example.mindgarden.R
 import android.widget.TimePicker
 import android.app.AlarmManager
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import com.example.mindgarden.db.SharedPreferenceController
 import android.view.WindowManager
+import com.example.mindgarden.service.AlarmService
 import com.example.mindgarden.ui.mypage.MypageActivity
-
 
 /*
 [완료]특정 시간에 알림오도록 설정 완료 _ 2019.07.29
@@ -39,7 +37,6 @@ class AlarmSettingActivity : AppCompatActivity() {
     lateinit var alarmManager: AlarmManager
     lateinit var builderNew: AlertDialog
     var triggerTime : Long = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +57,7 @@ class AlarmSettingActivity : AppCompatActivity() {
 
         alarmSwitch.setOnCheckedChangeListener { _, isChecked ->
             btnSetTimeState(isChecked)
-            if(!isChecked) alarmCancle()    //알람취소
+            if(!isChecked) alarmCancel()    //알람취소
         }
     }
 
@@ -90,7 +87,6 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     //알림 시간을 설정하는 다이얼로그
     fun showDialog(){
-
         val builder = AlertDialog.Builder(this, R.style.AlarmDialogStyle)
         val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
         val alarmTimePicker= dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
@@ -100,14 +96,11 @@ class AlarmSettingActivity : AppCompatActivity() {
             alarmTimePicker(hourOfDay, minute)
         }
 
-
         builder.setView(dialogView)
-
 
         builderNew= builder.show()
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
-
 
         //크기조절
         val lp = WindowManager.LayoutParams()
@@ -115,7 +108,6 @@ class AlarmSettingActivity : AppCompatActivity() {
 
         val window = builderNew.window
         window.attributes = lp
-
     }
 
     fun mClick(v : View){
@@ -123,18 +115,15 @@ class AlarmSettingActivity : AppCompatActivity() {
             R.id.btn_ok_alarm_setting -> {
                 setAlarm(triggerTime)
                 builderNew.dismiss()
-
             }
             R.id.btn_cancel_alarm_setting->{
                 builderNew.dismiss()
             }
         }
-
     }
 
     //시간설정
     fun alarmTimePicker(hourOfDay: Int, minute : Int){
-
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
         cal.set(Calendar.MINUTE, minute)
 
@@ -148,20 +137,15 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     //알람설정
     fun setAlarm(tgTime: Long){
-        setChannel()
-
-        //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
-        val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-
-        Log.e("Alarm", tgTime.toString())
-        //알람 예약
-        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, tgTime, 24 * 60 * 60 * 1000 ,pendingIntent)
-
+        //수정
+        startService(Intent(this@AlarmSettingActivity, AlarmService::class.java).putExtra("alarmTime", tgTime).putExtra("index", 0))
     }
 
     //알람 해제
-    fun alarmCancle(){
+    fun alarmCancel(){
+        //수정
+        //startService(Intent(this@AlarmSettingActivity, AlarmService::class.java).putExtra("index", 1))
+
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
 
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
@@ -178,21 +162,4 @@ class AlarmSettingActivity : AppCompatActivity() {
         toast.view = toastView
         toast.show()
     }
-
-    //notification을 위한 채널설정
-    fun setChannel(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.channel_name)
-            val descriptionText = getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-
-    }
-
 }

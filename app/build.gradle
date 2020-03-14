@@ -65,6 +65,9 @@ dependencies {
     implementation 'com.anjlab.android.iab.v3:library:1.0.44'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
+    //alarm
+    implementation 'androidx.core:core:1.0.0'
+
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
