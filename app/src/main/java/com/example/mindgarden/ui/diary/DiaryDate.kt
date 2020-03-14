@@ -17,7 +17,7 @@ interface DiaryDate {
 
     fun getDayOfWeek(d : String) = getFormat(d, SimpleDateFormat("EEE", Locale.ENGLISH))
 
-    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH))
+    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH))
 
     fun getTime(d: String) = getFormat(d, SimpleDateFormat("HH:mm:ss", Locale.getDefault()))
 
