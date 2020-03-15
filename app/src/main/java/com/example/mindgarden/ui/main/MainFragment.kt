@@ -157,7 +157,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
 
 
     fun isValid() {
-        val toast: Toast = Toast(activity!!.applicationContext)
+        val toast = Toast(activity!!.applicationContext)
         val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
@@ -175,8 +175,10 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         if (!TokenController.isValidToken(activity!!.applicationContext)) {
             RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext, repository)
         }
+        initGarden()
 
-        val date = getServerDate(Calendar.getInstance())
+        val date = getServerDate(cal)
+        Log.e("mainF date", date)
         repository
             .getGarden(TokenController.getAccessToken(activity!!.applicationContext), date,
                 {
@@ -187,7 +189,6 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                             setTree(it.data.size,it.data)//namu
                             setGardenBalloon(d.balloon) //풍선
                         }
-
                     }else{
                         Log.e("mainFragment load", it.message)
                     }
@@ -258,6 +259,12 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         }
     }
 
+    private fun initGarden(){
+        for(i in 0..31){
+            locationList[i].setImageResource(0)
+        }
+    }
+
 
     private fun isCurrentToolbarDate(): Boolean{
         return txtDateToolbarMain.text == getToolbarDate(Calendar.getInstance(Locale.KOREA))
@@ -276,12 +283,18 @@ class MainFragment : Fragment(), DiaryDate, Tree {
     private fun setDateMoveControl(rl : Int): String{
         when(rl){
             0->{    //right +
-                if(!isCurrentToolbarDate()) cal.add(Calendar.MONTH, 1)
+                if(!isCurrentToolbarDate()) {
+                    cal.add(Calendar.MONTH, 1)
+                    isValid()
+                }
             }
             1->{    //left -
                 val mindgardenStartDate = Calendar.getInstance()
                 mindgardenStartDate.set(2019, 6,31)
-                if(txtDateToolbarMain.text != getToolbarDate(mindgardenStartDate))cal.add(Calendar.MONTH, -1)
+                if(txtDateToolbarMain.text != getToolbarDate(mindgardenStartDate)){
+                    cal.add(Calendar.MONTH, -1)
+                    isValid()
+                }
             }
         }
         return getToolbarDate(cal)
