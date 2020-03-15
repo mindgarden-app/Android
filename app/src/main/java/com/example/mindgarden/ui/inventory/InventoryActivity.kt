@@ -1,9 +1,6 @@
 package com.example.mindgarden.ui.inventory
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindgarden.db.TokenController
@@ -21,12 +17,11 @@ import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
@@ -96,6 +91,7 @@ class InventoryActivity : AppCompatActivity() {
                     true -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, false)
                         gridRecyclerViewAdapter.notifyItemChanged(position)
+                        location = -1
                     }
                     false -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, true)
@@ -162,6 +158,8 @@ class InventoryActivity : AppCompatActivity() {
                     hideErrorView()
                     when(it.success){
                         true-> {
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
                             finish()
                         }
                         else-> {

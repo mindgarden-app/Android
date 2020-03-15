@@ -454,7 +454,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_main_exp1" />
 
-    <include layout="@layout/data_load_fail"
+    <include layout="@layout/layout_data_load_fail"
              android:visibility="gone"
              android:id="@+id/dataLoadFailMain"
              app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
