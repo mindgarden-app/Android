@@ -97,7 +97,7 @@ class MainCalendarActivity : AppCompatActivity() {
 
         if(isCurrentYear()) setMonthClick(0,currentCal.get(Calendar.MONTH))
         else{
-            if(cal.get(Calendar.YEAR) == 2019) setMonthClick(5,11)
+            if(cal.get(Calendar.YEAR) == 2019) setMonthClick(6,11)
             else setMonthClick(0, 11)
         }
     }
