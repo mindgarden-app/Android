@@ -144,9 +144,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     }
     private fun btnSaveClick(){
         btn_save_diary_toolbar.setOnClickListener {
-            showProgressBar()
-            postOrPut()
-
+           isValid()
         }
     }
 
@@ -226,6 +224,14 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         imgState = 0
     }
 
+    private fun isValid(){
+        if(etContentWrite.text.toString() == ""){
+            Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
+        }else{
+            showProgressBar()
+            postOrPut()
+        }
+    }
     //일기 쓰기
     private fun getCurrentDate():String{
         val f = SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH)
@@ -252,7 +258,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         if(!TokenController.isValidToken(this)){
             RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
-        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val pictureRB = convertPhotoRB()
 
         repository
@@ -272,7 +278,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         if(!TokenController.isValidToken(this)){
             RenewAcessTokenController.postRenewAccessToken(this,repository)
         }
-        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val contentRB = stringConvertToRB(etContentWrite.text.toString())
 
         repository
             .postDiary(
@@ -291,7 +297,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     }
 
     //일기 수정
-    private fun setContents(str : String) = edt_content_modify_diary.setText(str)
+    private fun setContents(str : String) = etContentWrite.setText(str)
 
     private fun setDate(d : String) {
         date = getDiaryDate(d)
@@ -396,7 +402,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     private fun putDiaryImageOK(){
         if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
 
-        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val fileName =  File(us).name
         val file = File(saveBitmapToFile(b,fileName))
         val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
@@ -418,7 +424,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun putDiaryImageNew(){
         if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
-        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val pictureRB = convertPhotoRB()
 
         repository
@@ -438,7 +444,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun putDiaryImageNull(){
         if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
-        val contentRB = stringConvertToRB(edt_content_modify_diary.text.toString())
+        val contentRB = stringConvertToRB(etContentWrite.text.toString())
 
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB, weatherIdx, diaryIdx, null,
