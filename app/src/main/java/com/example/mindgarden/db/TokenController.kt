@@ -41,12 +41,14 @@ object TokenController {
     }
 
     //리프레시 토큰이 만료될 경우 사용
-    fun clearRefreshToken(ctx: Context) {
+    fun clearRefreshToken(ctx:Context) {
         preference = ctx.getSharedPreferences(TOKEN, Context.MODE_PRIVATE)
+
         val userPreference = ctx.getSharedPreferences("user", Context.MODE_PRIVATE)
         val userEditor = userPreference.edit()
         userEditor.clear()
         userEditor.apply()
+
         editor = preference.edit()
         editor.clear()
         editor.commit()

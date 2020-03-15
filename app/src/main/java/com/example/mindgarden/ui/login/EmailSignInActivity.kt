@@ -33,6 +33,11 @@ class EmailSignInActivity : AppCompatActivity() {
         toolbar_email_login.btnBack.setOnClickListener {
             finish()
         }
+        Log.e("name",SharedPreferenceController.getUserName(this))
+        Log.e("mail",SharedPreferenceController.getUserMail(this))
+        Log.e("access",TokenController.getAccessToken(this))
+        Log.e("refresh",TokenController.getRefreshToken(this))
+
         //로그인하기
         btn_email_sign_in.setOnClickListener {
             postEmailSignIn()
@@ -52,7 +57,8 @@ class EmailSignInActivity : AppCompatActivity() {
             postEmailSignIn()
         }
 
-
+        //누를시에 그린 border로 변화
+        edt_email_sign_in.setOnFocusChangeListener { view, b -> hasFocus(view,b) }
         //누를시에 그린 border로 변화
         edt_email_sign_in.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -66,7 +72,10 @@ class EmailSignInActivity : AppCompatActivity() {
             }
         })
 
+
+
         //누를시에 그린 border로 변화
+        edt_password_sign_in.setOnFocusChangeListener { view, b -> hasFocus(view,b) }
         edt_password_sign_in.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -94,6 +103,13 @@ class EmailSignInActivity : AppCompatActivity() {
             txt_check_email_password.visibility = View.VISIBLE
             btn_email_sign_in.setBackgroundResource(R.drawable.grid_border)
             btn_email_sign_in.setTextColor(getColor(R.color.colorPrimaryMint))
+        }
+    }
+    fun hasFocus(view: View, b: Boolean) {
+        if (b) {
+            view.setBackgroundResource(R.drawable.grid_border)
+        } else {
+            view.setBackgroundResource(R.drawable.gray_border_square)
         }
     }
 
