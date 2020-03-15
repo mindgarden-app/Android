@@ -8,11 +8,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import com.google.android.material.tabs.TabLayout
 import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -51,13 +51,37 @@ class LoginActivity : AppCompatActivity() {
         //setupPermissions(permissionsRequired[2])
 
         btnWebLogin.setOnClickListener {
-            val loginIntent = Intent(this, WebviewLoginActivity::class.java)
-            startActivity(loginIntent)
 
+
+//            val loginIntent = Intent(this, WebviewLoginActivity::class.java)
+//            startActivity(loginIntent)
+
+            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyleNOTICE)
+
+
+            dlg.setMessage("카카오 서비스가 업데이트 중이오니\n" +
+                    "기존 사용자분들께서는\n" +
+                    "mindgarden2019@gmail.com으로\n" +
+                    "기존 이메일을 제출해주시면\n" +
+                    "해결 도와드리도록 하겠습니다.")
+                .setNeutralButton("                                 확인                            ",null)
+
+
+
+            var dlgNew: AlertDialog = dlg.show()
+            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.LEFT
+
+
+            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+            dlgNew.show()
             //settings.domStorageEnabled = true
 
         }
         btnEmailLogin.setOnClickListener {
+
+
             val emailLoginIntent=Intent(this,EmailSignInActivity::class.java)
             startActivity(emailLoginIntent)
         }

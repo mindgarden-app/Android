@@ -118,4 +118,12 @@ class MindgardenRepositoryImpl(private val remoteDataSource: MindgardenRemoteDat
     ) {
         remoteDataSource.getForgetPassword(token, onSuccess, onFail)
     }
+
+    override fun postEmailSendPassword(
+        body: JsonObject,
+        onSuccess: (EmailSendPasswordResponse) -> Unit,
+        onFail: (errorMsg: String) -> Unit
+    ) {
+        remoteDataSource.postEmailSendPassword(body, onSuccess, onFail)
+    }
 }
