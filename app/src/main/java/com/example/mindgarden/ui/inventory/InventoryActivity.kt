@@ -1,9 +1,6 @@
 package com.example.mindgarden.ui.inventory
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindgarden.db.TokenController
@@ -21,12 +17,11 @@ import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
@@ -100,7 +95,6 @@ class InventoryActivity : AppCompatActivity() {
                     true -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, false)
                         gridRecyclerViewAdapter.notifyItemChanged(position)
-                        //수정중
                         location = -1
                     }
                     false -> {
@@ -127,9 +121,6 @@ class InventoryActivity : AppCompatActivity() {
             1-> {
                 setInventoryType(0)
                 inventoryRecyclerViewAdapter.setData(inventoryList)
-                //수정중
-                //초기화
-                //초기화 하지 않으면 전에 고른 나무 값이 남아 보여지는 것에서는 선택이 안되어 있지만 선택되어 있다고 인식함
                 treeIdx = -1
             }
         }
@@ -173,20 +164,9 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    /*when(it.success){
-                        true-> {
-                            finish()
-                        }
-                        else-> {
-                            Log.e("Inventory", it.message)
-                            showToast(it.message)
-                        }
-                    }*/
-
-                    //수정중
-                    //인벤토리 토스트 작업
-                    //문구는 서버 문서에 정해진 것 사용
                     if (rBalloon == 1) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                         finish()
                     } else {
                         showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")

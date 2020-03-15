@@ -5,22 +5,23 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import com.example.mindgarden.R
 import android.app.Activity
-import android.content.Context
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.data.MoodChoiceData
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.login.LoginActivity
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
+import com.example.mindgarden.ui.main.RxEventBus
 import kotlinx.android.synthetic.main.activity_read_diary.*
-import kotlinx.android.synthetic.main.data_load_fail.*
-import org.json.JSONObject
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import org.koin.android.ext.android.inject
 
 class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
@@ -80,36 +81,52 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         //뒤로가기 -> DiaryListAcitivy로 이동
         btnBack.setOnClickListener {
             setResult(Activity.RESULT_OK)
+            RxEventBus.publish("load")
             finish()
         }
     }
 
     private fun showIv(){
-        img_gallary_read_diary.visibility = View.VISIBLE
+        clReadDiary.visibility = View.VISIBLE
     }
 
     private fun setMoodIcn(idx : Int){
-        getMoodList(this@ReadDiaryActivity,MoodItemList)
-        img_mood_icon_read_diary.setImageBitmap(MoodItemList[idx].moodIcn)
-        txt_mood_text_read_diary.text = MoodItemList[idx].moodTxt
+        getMoodList(MoodItemList)
+        icnMoodRead.setImageResource(MoodItemList[idx].moodIcn)
+        txtMoodRextRead.text = MoodItemList[idx].moodTxt
     }
 
     private fun setContents(content : String){
-        txt_cotent_read_diary.text = content
+        txtCotentsRead.text = content
     }
 
     private fun setImage(img : String){
-        img_gallary_read_diary.visibility = View.VISIBLE
+        showIv()
+        pbImgRead.visibility = View.VISIBLE
         Glide.with(this@ReadDiaryActivity)
             .load(img)
-            .fitCenter()
-            .placeholder(R.drawable.icn_gallery)
-            .into(img_gallary_read_diary)
+            .listener(object : RequestListener<Drawable>{
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    pbImgRead.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    pbImgRead.visibility = View.GONE
+                    ivGalleryRead.setImageDrawable(resource)
+                    return false
+                }
+            })
+            .into(ivGalleryRead)
     }
 
     private fun setDateText(date : String){
         txt_date_toolbar_read_diary.text = getDiaryDate(date)
-        txt_time_read_diary.text = getTime(date)
+        txtTimeRead.text = getTime(date)
     }
 
     //갱신
@@ -153,6 +170,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                 }
             )
     }
+
 
     private fun showErrorView(){
         llReadDiary.visibility = View.GONE

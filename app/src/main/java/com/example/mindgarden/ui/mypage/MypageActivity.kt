@@ -49,6 +49,7 @@ class MypageActivity : AppCompatActivity() {
 
             val intent = Intent(this, LoginActivity::class.java)
             //로그아웃 누르면 다시 일단 로그인 페이지로
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()
         }

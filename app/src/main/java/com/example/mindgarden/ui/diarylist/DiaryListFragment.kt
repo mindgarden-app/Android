@@ -24,7 +24,7 @@ import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList

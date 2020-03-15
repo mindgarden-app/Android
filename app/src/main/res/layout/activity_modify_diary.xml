@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,51 +17,62 @@
             android:orientation="vertical"
             android:id="@+id/llWriteDiary">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp">
 
             <ImageView
-                    android:id="@+id/img_mood_text_modify_diary"
+                    android:id="@+id/ivMoodTextWrite"
                     android:layout_width="325dp"
                     android:layout_height="55dp"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/btn_moodchoice"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.507"
                     tools:ignore="ContentDescription" />
 
             <TextView
-                    android:id="@+id/txt_mood_text_modify_diary"
+                    android:id="@+id/txtMoodTextWrite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="@string/defaultMoodText"
                     android:textColor="#2b2b2b "
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivMoodTextWrite"
+                    app:layout_constraintEnd_toEndOf="@+id/ivMoodTextWrite"
+                    app:layout_constraintStart_toStartOf="@+id/ivMoodTextWrite"
+                    app:layout_constraintTop_toTopOf="@+id/ivMoodTextWrite" />
 
-            <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/img_mood_text_modify_diary"
-                    android:layout_centerVertical="true">
 
-                <ImageView
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:src="@drawable/btn_mood_show" />
+            <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/btn_mood_show"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivMoodTextWrite"
+                    app:layout_constraintStart_toStartOf="@+id/ivMoodTextWrite"
+                    app:layout_constraintTop_toTopOf="@+id/ivMoodTextWrite" />
 
-                <ImageView
-                        android:id="@+id/btn_mood_icon_modify_diary"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/img_weather11_none" />
+            <ImageView
+                    android:id="@+id/btn_mood_icon_modify_diary"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:src="@drawable/img_weather11_none"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
-            </RelativeLayout>
 
-        </RelativeLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -70,35 +82,55 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
 
-            <RelativeLayout android:layout_width="match_parent"
-                            android:layout_height="202dp"
-            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rlGalleryModify"
+                    android:layout_width="match_parent"
+                    android:layout_height="202dp">
 
-                <ImageView android:layout_width="300dp"
-                           android:layout_height="202dp"
-                           android:layout_marginRight="40dp"
-                           android:layout_marginLeft="40dp"
-                           android:layout_centerInParent="true"
-                           android:background="@drawable/img_shadow"
-                           android:id="@+id/img_gallary_modify_diary"
+                <ImageView
+                        android:id="@+id/ivGalleryWrite"
+                        android:layout_width="320dp"
+                        android:layout_height="202dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/img_shadow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
                 <ImageView
+                        android:id="@+id/icnGalleryWrite"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/icn_gallery"
-                        android:id="@+id/icn_gallary_modify_diary"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivGalleryWrite"
+                        app:layout_constraintEnd_toEndOf="@+id/ivGalleryWrite"
+                        app:layout_constraintStart_toStartOf="@+id/ivGalleryWrite"
+                        app:layout_constraintTop_toTopOf="@+id/ivGalleryWrite"
                         tools:ignore="ContentDescription" />
 
-            </RelativeLayout>
+                <ProgressBar
+                        android:id="@+id/pbImgWrite"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:theme="@style/progressbar_color"
+                        android:layout_centerInParent="true"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivGalleryWrite"
+                        app:layout_constraintEnd_toEndOf="@+id/ivGalleryWrite"
+                        app:layout_constraintStart_toStartOf="@+id/ivGalleryWrite"
+                        app:layout_constraintTop_toTopOf="@+id/ivGalleryWrite"
+                        android:visibility="gone"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                    android:id="@+id/edt_content_modify_diary"
+                    android:id="@+id/etContentWrite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="23dp"
                     android:layout_marginTop="48dp"
+                    android:layout_marginLeft="23dp"
                     android:layout_marginRight="23dp"
                     android:background="@null"
                     android:fontFamily="@font/notosanscjkr_regular"
@@ -110,6 +142,7 @@
 
     </ScrollView>
     </LinearLayout>
-    <include layout="@layout/data_load_fail" android:visibility="gone" android:id="@+id/dataLoadFailModifyDiary"/>
+    <include layout="@layout/layout_data_load_fail" android:visibility="gone" android:id="@+id/dataLoadFailModifyDiary"/>
+    <include layout="@layout/layout_progress" android:visibility="visible" android:id="@+id/pbModifyDiary"/>
 </LinearLayout>
 
