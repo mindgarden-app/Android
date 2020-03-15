@@ -50,10 +50,7 @@ class InventoryActivity : AppCompatActivity() {
     }
     private var treeIdx : Int = -1
     private var location : Int = -1
-
-    //수정중
-    //인벤토리 토스트 작업
-    var rBalloon = intent?.getIntExtra("balloon", 0)
+    private var balloon : Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +86,7 @@ class InventoryActivity : AppCompatActivity() {
 
     private fun gridClickEventCallback(position: Int){
         when(treeIdx){
-            -1-> showToast("나무를 고르세요")
+            -1-> showToast("나무를 골라주세요")
             else-> {
                 when(GridRecyclerViewAdapter.selectedStatus.get(position)) {
                     true -> {
@@ -144,11 +141,9 @@ class InventoryActivity : AppCompatActivity() {
         }
         when{
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
-            //수정중
-            //treeIdx와 location 순서 바꿈
-            //나무를 고르지 않은 상태에서 심기 버튼 눌렀을 때, 위치 관련 문구가 먼저 나와서 수정함
-            treeIdx == -1  -> showToast("나무를 고르세요")
+            treeIdx == -1  -> showToast("나무를 선택하세요")
             location == -1 ->  showToast("위치를 고르세요")
+            balloon == 0 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
             else -> postPlant(location, treeIdx)
         }
     }
@@ -164,13 +159,9 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    if (rBalloon == 1) {
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
-                    }
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 },
                 {
                     showErrorView()
@@ -197,6 +188,7 @@ class InventoryActivity : AppCompatActivity() {
                         for(i in 0 until it.data.size) {
                             it.data[i].let {data->
                                 val location = serverGardenLocation[data.location]
+                                balloon = data.balloon
                                 if(data.treeIdx == 16){   //weed
                                     gridList[location].img = R.drawable.android_weeds
                                     gridList[location].type = 2
