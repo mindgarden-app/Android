@@ -1,9 +1,6 @@
 package com.example.mindgarden.ui.inventory
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindgarden.db.TokenController
@@ -21,12 +17,11 @@ import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_inventory.*
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_inventory.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
@@ -55,6 +50,10 @@ class InventoryActivity : AppCompatActivity() {
     }
     private var treeIdx : Int = -1
     private var location : Int = -1
+
+    //수정중
+    //인벤토리 토스트 작업
+    var rBalloon = intent?.getIntExtra("balloon", 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +95,7 @@ class InventoryActivity : AppCompatActivity() {
                     true -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, false)
                         gridRecyclerViewAdapter.notifyItemChanged(position)
+                        location = -1
                     }
                     false -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, true)
@@ -121,6 +121,7 @@ class InventoryActivity : AppCompatActivity() {
             1-> {
                 setInventoryType(0)
                 inventoryRecyclerViewAdapter.setData(inventoryList)
+                treeIdx = -1
             }
         }
         inventoryRecyclerViewAdapter.notifyItemChanged(position)
@@ -143,8 +144,11 @@ class InventoryActivity : AppCompatActivity() {
         }
         when{
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
-            location == -1 ->  showToast("위치를 고르세요")
+            //수정중
+            //treeIdx와 location 순서 바꿈
+            //나무를 고르지 않은 상태에서 심기 버튼 눌렀을 때, 위치 관련 문구가 먼저 나와서 수정함
             treeIdx == -1  -> showToast("나무를 선택하세요")
+            location == -1 ->  showToast("위치를 고르세요")
             else -> postPlant(location, treeIdx)
         }
     }
@@ -160,11 +164,12 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    when(it.status){
-                        200-> {
-                            finish()
-                        }
-                        else-> showToast(it.message)
+                    if (rBalloon == 1) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
                     }
                 },
                 {

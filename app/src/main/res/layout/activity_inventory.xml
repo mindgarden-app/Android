@@ -28,6 +28,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/data_load_fail" android:id="@+id/dataLoadFailInventory" android:visibility="gone"/>
+    <include layout="@layout/layout_data_load_fail" android:id="@+id/dataLoadFailInventory" android:visibility="gone"/>
 
 </LinearLayout>

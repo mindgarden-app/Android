@@ -42,7 +42,7 @@ class MoodActivity : AppCompatActivity(), Mood {
     //데이터
     private fun configureRecyclerView(){
         val dataList = ArrayList<MoodChoiceData>()
-        getMoodList(this, dataList)
+        getMoodList(dataList)
 
         rv_mood_mood_choice_list.adapter = MoodChoiceRecyclerViewAdapter(this, dataList)
         rv_mood_mood_choice_list.layoutManager =

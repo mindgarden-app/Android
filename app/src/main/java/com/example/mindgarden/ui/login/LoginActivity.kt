@@ -23,6 +23,7 @@ import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.ui.main.MainActivity
+import com.example.mindgarden.ui.password.PasswordActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -58,8 +59,8 @@ class LoginActivity : AppCompatActivity() {
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyleNOTICE)
 
 
-            dlg.setMessage("카카오 로그인 서비스가 \n업데이트 중입니다.  \n 기존 사용자 분들께서는 \nmindgarden2019@gmail.com\n으로 이메일 제출해주시면 \n일기를 옮겨드리도록 \n하겠습니다.죄송합니다")
-
+            dlg.setMessage("카카오 로그인 서비스가 업데이트 중입니다. 기존 사용자 분들께서는 mindgarden2019@gmail.com으로 이메일 제출해주시면 일기를 옮겨드리도록 하겠습니다.죄송합니다")
+                .setNeutralButton("                                 확인                            ",null)
 
 
             var dlgNew: AlertDialog = dlg.show()
@@ -102,9 +103,21 @@ class LoginActivity : AppCompatActivity() {
         super.onResume()
 
         //토큰있으면 메인으로 돌려줘
-        if(TokenController.getAccessToken(this)!=""){
+        /*if(TokenController.getAccessToken(this)!=""){
             val alreadyLoginIntent = Intent(this,MainActivity::class.java)
             startActivity(alreadyLoginIntent)
+        }*/
+
+        //수정
+        if(TokenController.getAccessToken(this)!=""){
+            if(SharedPreferenceController.getPassword(this) != "") {
+                val passwordIntent = Intent(this, PasswordActivity::class.java)
+                passwordIntent.putExtra("whereFrom","login")
+                startActivity(passwordIntent)
+            } else {
+                val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+                startActivity(alreadyLoginIntent)
+            }
         }
     }
 

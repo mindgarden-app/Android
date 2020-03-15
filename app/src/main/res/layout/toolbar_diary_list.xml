@@ -45,6 +45,15 @@
                     android:id="@+id/ll_date_toolbar_diary_list">
 
                 <TextView
+                        android:id="@+id/txt_date_toolbar_diary_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0000"
+                        android:fontFamily="@font/notosanscjkr_medium"
+                        android:textSize="14dp"
+                        android:textColor="#2B2B2B"/>
+
+                <!--<TextView
                         android:id="@+id/txt_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -77,7 +86,7 @@
                         android:text="월"
                         android:fontFamily="@font/notosanscjkr_medium"
                         android:textSize="14dp"
-                        android:textColor="#2B2B2B"/>
+                        android:textColor="#2B2B2B"/>-->
 
             </LinearLayout>
 

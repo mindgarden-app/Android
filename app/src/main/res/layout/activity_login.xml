@@ -20,7 +20,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/btn_log_in_kakao" />
+            app:srcCompat="@drawable/btn_sign_up_kakao" />
 
     <TextView
             android:id="@+id/btnEmailLogin"
@@ -36,6 +36,7 @@
             android:includeFontPadding="true"
             android:scaleType="fitCenter"
             android:text="이메일로 시작하기"
+            android:textColor="#ffffff"
             app:layout_constraintBottom_toTopOf="@+id/btnWebLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
