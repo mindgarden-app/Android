@@ -9,4 +9,7 @@
 
     <item type="dimen" name="gridview_scale"></item>
     <item type="dimen" name="treeview_scale"></item>
+
+    <item type="dimen" name="dialog_min_width_major">69%</item>
+    <item type="dimen" name="dialog_min_width_minor">69%</item>
 </resources>

@@ -52,9 +52,25 @@ class LoginActivity : AppCompatActivity() {
 
         btnWebLogin.setOnClickListener {
 
-            val loginIntent = Intent(this, WebviewLoginActivity::class.java)
-            startActivity(loginIntent)
 
+//            val loginIntent = Intent(this, WebviewLoginActivity::class.java)
+//            startActivity(loginIntent)
+
+            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyleNOTICE)
+
+
+            dlg.setMessage("카카오 로그인 서비스가 업데이트 중입니다. 기존 사용자 분들께서는 mindgarden2019@gmail.com으로 이메일 제출해주시면 일기를 옮겨드리도록 하겠습니다.죄송합니다")
+                .setNeutralButton("                                 확인                            ",null)
+
+
+            var dlgNew: AlertDialog = dlg.show()
+            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.CENTER
+
+
+            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+            dlgNew.show()
             //settings.domStorageEnabled = true
 
         }
