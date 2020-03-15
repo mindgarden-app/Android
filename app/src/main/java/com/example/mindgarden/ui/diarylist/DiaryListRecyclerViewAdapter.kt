@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import kotlinx.android.synthetic.main.rv_item_diary_list.view.*
 import kotlin.collections.ArrayList
 
-//merge
 class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit): RecyclerView.Adapter<DiaryListRecyclerViewAdapter.Holder>(), DiaryDate {
     var dataList = ArrayList<DiaryListData>()
     var isPressed = false
@@ -66,7 +65,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             false
         }
 
-        holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
+        holder.itemView.ll_diary_list_content.setOnClickListener {
             Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
                 putExtra(DIARY_IDX, dataList[position].diaryIdx)
                 holder.itemView.context.startActivity(this)
@@ -114,15 +113,5 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         }
     }
 
-    class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false)) {
-        /*init {
-            //binding
-            var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
-            var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
-            var container = itemView.findViewById(R.id.ll_rv_item_diary_list_container) as LinearLayout
-            var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
-            var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
-            var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-        }*/
-    }
+    class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false))
 }

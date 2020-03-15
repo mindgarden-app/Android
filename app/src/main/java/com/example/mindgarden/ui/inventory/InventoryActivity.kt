@@ -51,6 +51,10 @@ class InventoryActivity : AppCompatActivity() {
     private var treeIdx : Int = -1
     private var location : Int = -1
 
+    //수정중
+    //인벤토리 토스트 작업
+    var rBalloon = intent?.getIntExtra("balloon", 0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
@@ -117,6 +121,10 @@ class InventoryActivity : AppCompatActivity() {
             1-> {
                 setInventoryType(0)
                 inventoryRecyclerViewAdapter.setData(inventoryList)
+                //수정중
+                //초기화
+                //초기화 하지 않으면 전에 고른 나무 값이 남아 보여지는 것에서는 선택이 안되어 있지만 선택되어 있다고 인식함
+                treeIdx = -1
             }
         }
         inventoryRecyclerViewAdapter.notifyItemChanged(position)
@@ -139,8 +147,11 @@ class InventoryActivity : AppCompatActivity() {
         }
         when{
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
-            location == -1 ->  showToast("위치를 고르세요")
+            //수정중
+            //treeIdx와 location 순서 바꿈
+            //나무를 고르지 않은 상태에서 심기 버튼 눌렀을 때, 위치 관련 문구가 먼저 나와서 수정함
             treeIdx == -1  -> showToast("나무를 선택하세요")
+            location == -1 ->  showToast("위치를 고르세요")
             else -> postPlant(location, treeIdx)
         }
     }
@@ -156,7 +167,7 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    when(it.success){
+                    /*when(it.success){
                         true-> {
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
@@ -166,6 +177,15 @@ class InventoryActivity : AppCompatActivity() {
                             Log.e("Inventory", it.message)
                             showToast(it.message)
                         }
+                    }*/
+
+                    //수정중
+                    //인벤토리 토스트 작업
+                    //문구는 서버 문서에 정해진 것 사용
+                    if (rBalloon == 1) {
+                        finish()
+                    } else {
+                        showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
                     }
                 },
                 {

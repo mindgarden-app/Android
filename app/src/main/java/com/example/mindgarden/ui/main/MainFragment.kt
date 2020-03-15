@@ -52,6 +52,10 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         const val INVENTORY_REQUEST_CODE = 200
     }
 
+    //수정중
+    //인벤토리 토스트 작업
+    var balloon: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -111,9 +115,11 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         }
     }
 
+    //수정중
+    //인벤토리 토스트 작업
     private fun btnRewardClick(){
         btn_reward.setOnClickListener {
-            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java),INVENTORY_REQUEST_CODE)
+            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("balloon", balloon), INVENTORY_REQUEST_CODE)
         }
     }
 
@@ -238,10 +244,16 @@ class MainFragment : Fragment(), DiaryDate, Tree {
             1->{
                 img_balloon.visibility = View.VISIBLE
                 btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
+                //수정중
+                //인벤토리 토스트 작업
+                balloon = 1
             }
             0->{
                 img_balloon.visibility = View.INVISIBLE
                 btn_reward.setImageResource(R.drawable.btn_reward)
+                //수정중
+                //인벤토리 토스트 작업
+                balloon = 0
             }
         }
     }

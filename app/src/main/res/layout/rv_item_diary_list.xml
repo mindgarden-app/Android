@@ -43,6 +43,7 @@
         </RelativeLayout>
 
         <LinearLayout
+                android:id="@+id/ll_diary_list_content"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8">

@@ -212,19 +212,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         }
                         else -> Log.e("diaryList", response.message)
                     }
-
-                    /*val tmp: ArrayList<DiaryListData> = response.data!!
-
-                    if (tmp.isEmpty()) {
-                        ll_list_zero.visibility = View.VISIBLE
-                    } else {
-                        ll_list_zero.visibility = View.GONE
-
-                        diaryListRecyclerViewAdapter.setData(tmp)
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
-                        diaryListRecyclerViewAdapter.notifyDataSetChanged()
-                    }*/
                 },
                 {
                     showErrorView()
@@ -260,17 +247,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         }
                         else -> Log.e("diaryList", it.message)
                     }
-
-                    /*val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
-
-                    while (iterator.hasNext()) {
-                        if (iterator.next().diaryIdx == diaryIdx) {
-                            iterator.remove()
-                            diaryListRecyclerViewAdapter.notifyDataSetChanged()
-                        }
-                    }
-
-                    Log.e("diaryList", "일기 삭제 성공")*/
                 },
                 {
                     showErrorView()
