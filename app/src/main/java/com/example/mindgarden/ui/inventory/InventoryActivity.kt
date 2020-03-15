@@ -121,9 +121,6 @@ class InventoryActivity : AppCompatActivity() {
             1-> {
                 setInventoryType(0)
                 inventoryRecyclerViewAdapter.setData(inventoryList)
-                //수정중
-                //초기화
-                //초기화 하지 않으면 전에 고른 나무 값이 남아 보여지는 것에서는 선택이 안되어 있지만 선택되어 있다고 인식함
                 treeIdx = -1
             }
         }
@@ -167,22 +164,9 @@ class InventoryActivity : AppCompatActivity() {
             .postPlant(TokenController.getAccessToken(this), gsonObject,
                 {
                     hideErrorView()
-                    /*when(it.success){
-                        true-> {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }
-                        else-> {
-                            Log.e("Inventory", it.message)
-                            showToast(it.message)
-                        }
-                    }*/
-
-                    //수정중
-                    //인벤토리 토스트 작업
-                    //문구는 서버 문서에 정해진 것 사용
                     if (rBalloon == 1) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                         finish()
                     } else {
                         showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")

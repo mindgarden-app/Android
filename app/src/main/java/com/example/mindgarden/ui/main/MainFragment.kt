@@ -86,7 +86,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         mainFragmentClick()
         initToolbarTextCurrent()
         initTreeList()
-        loadData()
+        isValid()
     }
 
     private fun initToolbarTextCurrent(){
@@ -141,7 +141,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                     cal.set(Calendar.MONTH, data.getIntExtra("month",-1))
                     cal.set(Calendar.YEAR, data.getIntExtra("year",-1))
                     txtDateToolbarMain.text = getToolbarDate(cal)
-                    loadData()
+                    isValid()
                 }else{
                     Log.e("MainFragment", "intentFail")
                 }
@@ -156,29 +156,18 @@ class MainFragment : Fragment(), DiaryDate, Tree {
     }
 
 
-    fun isValid(accessToken: String, date: String): Boolean {
+    fun isValid() {
         val toast: Toast = Toast(activity!!.applicationContext)
         val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        if (accessToken == "") {
+        if (TokenController.getAccessToken(activity!!.applicationContext) == "") {
             toastText.setText("로그인하세요")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
             toast.show()
-        }
-
-        else if (date == "") {
-            toastText.setText("보고 싶은 달을 선택하세요")
-            toastText.gravity = Gravity.CENTER
-            toast.view = toastView
-            toast.show()
-        }
-
-        else return true
-
-        return false
+        }else loadData()
     }
 
 
@@ -205,6 +194,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
                 },
                 {Log.e("MainFragment", it)})
     }
+
 
 
     private fun setMainDateText(){
