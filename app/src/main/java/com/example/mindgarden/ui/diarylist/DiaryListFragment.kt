@@ -24,8 +24,9 @@ import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import org.koin.android.ext.android.inject
+import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
 
 
@@ -46,8 +47,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     private var ascending = true
 
     val cal = Calendar.getInstance()
-    var year = cal.get(Calendar.YEAR).toString()
-    var month = (cal.get(Calendar.MONTH) + 1).toString()
+    //var year = cal.get(Calendar.YEAR).toString()
+    //var month = (cal.get(Calendar.MONTH) + 1).toString()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,16 +58,10 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         return inflater.inflate(R.layout.fragment_diary_list, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        getData()
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        txt_year.setText(year)
+        /*txt_year.setText(year)
         if (month.toInt() < 10) {
             month = "0$month"
         }
@@ -90,12 +85,14 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
             }
 
             getData()
-        }
+        }*/
 
-        configureRecyclerView()
+        init()
+
+        //configureRecyclerView()
     }
 
-    private fun leftYearChange() {
+    /*private fun leftYearChange() {
         month = (month.toInt() + 11).toString()
         year = (year.toInt() - 1).toString()
         if (month.toInt() < 10) {
@@ -129,6 +126,19 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
             month = "0$month"
         }
         txt_month.setText(month)
+    }*/
+
+    override fun onResume() {
+        super.onResume()
+
+        init()
+    }
+
+    private fun init() {
+        configureRecyclerView()
+        initToolbarTextCurrent()
+        diaryListFragmentClick()
+        getData()
     }
 
     private fun configureRecyclerView() {
@@ -136,7 +146,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
         dataList.sortByDescending { data -> data.date }
 
-        btn_updown.setOnClickListener {
+        /*btn_updown.setOnClickListener {
             if (ascending) {
                 diaryListRecyclerViewAdapter.dataList.sortBy { data -> data.date }
                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
@@ -150,13 +160,80 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
         btn_setting.setOnClickListener {
             startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
-        }
+        }*/
 
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
         rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
 
-        getData()
+        //getData()
+    }
+
+    private fun diaryListFragmentClick() {
+        btnToolbarClick()
+        btnUpdownClick()
+        btnSettingClick()
+    }
+
+    private fun btnUpdownClick() {
+        btn_updown.setOnClickListener {
+            if (ascending) {
+                diaryListRecyclerViewAdapter.dataList.sortBy { data -> data.date }
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
+                diaryListRecyclerViewAdapter.notifyDataSetChanged()
+            }
+
+            ascending = !ascending
+        }
+    }
+
+    private fun btnSettingClick() {
+        btn_setting.setOnClickListener {
+            startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
+        }
+    }
+
+    private fun initToolbarTextCurrent() {
+        txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
+    }
+
+    private fun btnToolbarClick() {
+        btn_left.setOnClickListener {
+            txt_date_toolbar_diary_list.text = setDateMoveControl(1)
+            getData()
+        }
+
+        btn_right.setOnClickListener {
+            txt_date_toolbar_diary_list.text = setDateMoveControl(0)
+            getData()
+        }
+    }
+
+    private fun setDateMoveControl(i: Int): String {
+        when (i) {
+            0 -> {
+                cal.add(Calendar.MONTH, 1)
+            }
+            1 -> {
+                val mindgardenStartDate = Calendar.getInstance()
+                mindgardenStartDate.set(2019, 6, 31)
+                if (txt_date_toolbar_diary_list.text != getToolbarDate(mindgardenStartDate)) cal.add(Calendar.MONTH, -1)
+            }
+        }
+
+        return getToolbarDate(cal)
+    }
+
+    private fun getToolbarDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy년 MM월", Locale.getDefault())
+        return f.format(calendar.time)
+    }
+
+    private fun getServerDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        return f.format(calendar.time)
     }
 
     fun isValid(accessToken: String, date: String): Boolean {
@@ -188,10 +265,13 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         if (!TokenController.isValidToken(activity!!.applicationContext)) {
             RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext, repository)
         }
+
+        val date = getServerDate(cal)
+        Log.e("diaryList date_loadData():", date)
+
         repository
             .getDiaryList(
-                TokenController.getAccessToken(activity!!.applicationContext),
-                txt_year.text.toString() + "-" + txt_month.text.toString(),
+                TokenController.getAccessToken(activity!!.applicationContext), date,
                 { response ->
                     hideErrorView()
 
@@ -212,19 +292,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         }
                         else -> Log.e("diaryList", response.message)
                     }
-
-                    /*val tmp: ArrayList<DiaryListData> = response.data!!
-
-                    if (tmp.isEmpty()) {
-                        ll_list_zero.visibility = View.VISIBLE
-                    } else {
-                        ll_list_zero.visibility = View.GONE
-
-                        diaryListRecyclerViewAdapter.setData(tmp)
-                        //diaryListRecyclerViewAdapter.dataList = tmp
-                        diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
-                        diaryListRecyclerViewAdapter.notifyDataSetChanged()
-                    }*/
                 },
                 {
                     showErrorView()
@@ -233,7 +300,9 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun clickEventCallback(position: Int) {
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        val date = getServerDate(cal)
+
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
             deleteDiary(diaryListRecyclerViewAdapter.dataList[position].diaryIdx)
         }
     }
@@ -260,17 +329,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                         }
                         else -> Log.e("diaryList", it.message)
                     }
-
-                    /*val iterator: MutableIterator<DiaryListData> = diaryListRecyclerViewAdapter.dataList.iterator()
-
-                    while (iterator.hasNext()) {
-                        if (iterator.next().diaryIdx == diaryIdx) {
-                            iterator.remove()
-                            diaryListRecyclerViewAdapter.notifyDataSetChanged()
-                        }
-                    }
-
-                    Log.e("diaryList", "일기 삭제 성공")*/
                 },
                 {
                     showErrorView()
@@ -279,7 +337,9 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun getData() {
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), txt_year.text.toString() + "-" + txt_month.text.toString())) {
+        val date = getServerDate(cal)
+
+        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
             loadData()
         }
     }

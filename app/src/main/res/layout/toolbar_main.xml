@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   app:contentInsetStart="0dp"
-                                   android:background="@drawable/toolbar_layout_border">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:contentInsetStart="0dp"
+        android:background="@drawable/toolbar_layout_border">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -27,39 +27,12 @@
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ll_date_toolbar_main">
+                    android:id="@+id/llDateToolbarMain">
 
                 <TextView
-                        android:id="@+id/txt_main_year"
+                        android:id="@+id/txtDateToolbarMain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0000"
-                        android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="14dp"
-                        android:textColor="#2B2B2B"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="년"
-                        android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="14dp"
-                        android:textColor="#2B2B2B"/>
-
-                <TextView
-                        android:id="@+id/txt_main_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="00"
-                        android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="14dp"
-                        android:textColor="#2B2B2B"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="월"
                         android:fontFamily="@font/notosanscjkr_medium"
                         android:textSize="14dp"
                         android:textColor="#2B2B2B"/>

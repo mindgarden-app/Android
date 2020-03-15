@@ -114,7 +114,7 @@ class PasswordActivity : AppCompatActivity() {
             //암호 변경하는 경우
             //일단 버튼 클릭
             if (whereFrom != "login") {
-                txtPassword.text = "비밀번호를 입력해주세요."
+                txtPassword.text = "기존 비밀번호를 입력해주세요."
                 btnForgetPw.visibility= View.VISIBLE
                 btnForgetPw.isEnabled=true}
 
@@ -244,7 +244,7 @@ class PasswordActivity : AppCompatActivity() {
                                 //첫번쨰 비밀번호를 입력한다
                                 firstPassword = subPassword
                                 subPassword = ""
-                                txtPassword.text = "다시 입력해주세요."
+                                txtPassword.text = "한 번 더 입력해주세요."
                                 btnForgetPw.visibility= View.INVISIBLE
                                 btnForgetPw.isEnabled=false
                             } else {
@@ -283,6 +283,14 @@ class PasswordActivity : AppCompatActivity() {
                                     val intent2 = Intent(this, MainActivity::class.java)
                                     startActivity(intent2)
                                     finish()
+                                } else {
+                                    //수정
+                                    toastText.setText("비밀번호가 다릅니다.")
+                                    toastText.gravity = Gravity.CENTER
+                                    toast.view = toastView
+                                    toast.show()
+
+                                    subPassword = ""
                                 }
                             }
                                 else{
@@ -303,6 +311,12 @@ class PasswordActivity : AppCompatActivity() {
                                     txtPassword.text = "한 번 더 입력해주세요."
                                     btnForgetPw.visibility= View.INVISIBLE
                                     btnForgetPw.isEnabled=false
+
+                                    toastText.setText("비밀번호가 다릅니다.")
+                                    toastText.gravity = Gravity.CENTER
+                                    toast.view = toastView
+                                    toast.show()
+
                                     //isSet = true
                                     //finish()}
                                     /* while(previousPassword != subPassword){

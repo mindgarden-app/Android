@@ -1,5 +1,6 @@
 package com.example.mindgarden.ui.diary
 
+import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,9 +17,8 @@ interface DiaryDate {
 
     fun getDayOfWeek(d : String) = getFormat(d, SimpleDateFormat("EEE", Locale.ENGLISH))
 
-    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH))
+    fun getDiaryDate(d: String) = getFormat(d, SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH))
 
     fun getTime(d: String) = getFormat(d, SimpleDateFormat("HH:mm:ss", Locale.getDefault()))
 
-    fun getReadDate(d: String) = getFormat(d, SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
 }

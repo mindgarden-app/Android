@@ -65,7 +65,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             false
         }
 
-        holder.itemView.txt_rv_item_diary_list_content.setOnClickListener {
+        holder.itemView.ll_diary_list_content.setOnClickListener {
             Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
                 putExtra(DIARY_IDX, dataList[position].diaryIdx)
                 holder.itemView.context.startActivity(this)
@@ -84,13 +84,11 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
                 dlgNew.show()
 
-                val display = WindowManager.LayoutParams()
+                /*val display = WindowManager.LayoutParams()
                 display.copyFrom(dlgNew.window.attributes)
-                display.width = 1000
-                display.height = 750
 
                 val window = dlgNew.window
-                window.attributes = display
+                window.attributes = display*/
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
                     Log.e("diary_index:", dataList[holder.adapterPosition].diaryIdx.toString())
@@ -115,15 +113,5 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         }
     }
 
-    class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false)) {
-        /*init {
-            //binding
-            var lay1 = itemView.findViewById(R.id.lay1) as LinearLayout
-            var icn_delete = itemView.findViewById(R.id.icn_delete) as ImageView
-            var container = itemView.findViewById(R.id.ll_rv_item_diary_list_container) as LinearLayout
-            var day_num = itemView.findViewById(R.id.txt_rv_item_diary_list_day_num) as TextView
-            var day_text = itemView.findViewById(R.id.txt_rv_item_diary_list_day_text) as TextView
-            var content = itemView.findViewById(R.id.txt_rv_item_diary_list_content) as TextView
-        }*/
-    }
+    class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false))
 }
