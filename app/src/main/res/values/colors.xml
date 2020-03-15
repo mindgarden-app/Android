@@ -16,6 +16,7 @@
     <color name="colorBlockGray">#C6C6C6</color>
     <color name="colorRoundGray">#888888</color>
 
+    <color name="colorBlack2b">#2b2b2b</color>
     <color name="colorBlack">#292929</color>
     <color name="colorRed">#fc7676</color>
 </resources>
