@@ -35,8 +35,10 @@ class EmailSignUpActivity : AppCompatActivity() {
 
 
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
-            canEnroll()
-            postEmailSignUp()
+            if(canEnroll()){
+                postEmailSignUp()
+            }
+
 //            val enrolledIntent = Intent(this, EmailSignInActivity::class.java)
 //            startActivity(enrolledIntent)
 
@@ -165,21 +167,35 @@ class EmailSignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun canEnroll() {
+    private fun canEnroll():Boolean {
         //빈칸이 다 없어야 하며
         //빈칸이 있을시에 포커스 옮겨줌
+
         if (txt_check_email.visibility == View.VISIBLE || edt_email.text.toString().isEmpty()) {
             edt_email.requestFocus()
+            return false
+
         } else if (edt_name.text.toString().isEmpty()) {
             edt_name.requestFocus()
+            return false
         } else if (txt_check_password.visibility == View.VISIBLE || edt_password.text.toString().isEmpty()) {
             edt_password.requestFocus()
+            return false
         } else if (txt_check_password_again.visibility == View.VISIBLE || edt_password_check.text.toString().isEmpty()) {
             edt_password_check.requestFocus()
+            return false
         } else if (!checkBox_agree.isChecked) {
+
             currentFocus.clearFocus()
             checkBox_agree.isChecked=true
+            return false
+        }else{
+            return true
         }
+
+
+
+
     }
 
     //영문 숫자 8자 이상
