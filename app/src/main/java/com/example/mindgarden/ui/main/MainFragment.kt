@@ -3,11 +3,9 @@ package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.util.Log
-import android.util.SparseArray
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -23,13 +21,12 @@ import java.util.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.GardenResponse
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
+import com.example.mindgarden.ui.diary.ModifyDiaryActivity
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
@@ -71,6 +68,13 @@ class MainFragment : Fragment(), DiaryDate, Tree {
         setLocation()
 
         init()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(ModifyDiaryActivity.CHECK){
+            init()
+        }
     }
 
     private fun init(){
@@ -140,11 +144,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
 
         if(requestCode == INVENTORY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                loadData()
-                val ft = fragmentManager?.beginTransaction()
-                ft?.let {
-                    ft.detach(this).attach(this).commit()
-                }
+                init()
             }
         }
     }
@@ -251,8 +251,6 @@ class MainFragment : Fragment(), DiaryDate, Tree {
             if(data[i].treeIdx == 16){
                 locationList[data[i].location-1].setImageResource(treeList[16])
             }else{
-                Log.e("mainF", data[i].location.toString())
-                Log.e("mainF", data[i].treeIdx.toString())
                 locationList[data[i].location-1].setImageResource(treeList[data[i].treeIdx])
             }
         }

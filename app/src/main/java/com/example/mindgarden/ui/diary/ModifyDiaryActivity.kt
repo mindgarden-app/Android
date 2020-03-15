@@ -25,7 +25,6 @@ import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.MoodChoiceData
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
-import com.example.mindgarden.ui.main.RxEventBus
 import kotlinx.android.synthetic.main.activity_modify_diary.*
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
