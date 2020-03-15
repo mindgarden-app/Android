@@ -90,7 +90,7 @@ class EmailPasswordActivity : AppCompatActivity() {
 
 
                         dlg.setMessage("존재하지 않는 메일 주소입니다.")
-                            .setNeutralButton("                              다시보내기                            ",null)
+                            .setNeutralButton("                              다시 입력하기                            ",null)
 
 
                         var dlgNew: AlertDialog = dlg.show()
