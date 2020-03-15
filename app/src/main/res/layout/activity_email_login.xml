@@ -180,7 +180,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/notosanscjkr_medium"
-            android:text="이메일 또는 비밀번로를 다시 확인하세요."
+            android:text="이메일 또는 비밀번호를 다시 확인하세요."
             android:textColor="@color/colorRed"
             android:textSize="10sp"
             android:visibility="invisible"

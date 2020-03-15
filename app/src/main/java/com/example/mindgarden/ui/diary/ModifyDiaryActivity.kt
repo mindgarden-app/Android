@@ -3,17 +3,20 @@ package com.example.mindgarden.ui.diary
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -77,6 +80,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     private fun init(){
         getDiaryIdx()
         setToolbarText()
+        checkPermission()
         showMoodChoiceActivity()
         btnSaveClick()
         btnBackClick()
@@ -501,5 +505,27 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         lp.width = 700
         val window = dialog.window
         window.attributes = lp
+    }
+
+    //permission
+    fun checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Tag", "권한 설정 완료")
+            }  else {
+                Log.d("Tag", "권한 설정 요청")
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+            }
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        Log.d("Tag", "onRequestPermissionsResult")
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            Log.d("Tag", "Permission: " + permissions[0] + "was " + grantResults[0])
+        }
     }
 }
