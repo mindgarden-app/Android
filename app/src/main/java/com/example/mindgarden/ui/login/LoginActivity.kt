@@ -16,9 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.db.SharedPreferenceController
@@ -57,27 +55,30 @@ class LoginActivity : AppCompatActivity() {
 //            startActivity(loginIntent)
 
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyleNOTICE)
-
-
             dlg.setMessage("카카오 서비스가 업데이트 중이오니\n" +
                     "기존 사용자분들께서는\n" +
                     "mindgarden2019@gmail.com으로\n" +
                     "기존 이메일을 제출해주시면\n" +
                     "해결 도와드리도록 하겠습니다.")
-                .setNeutralButton("                                 확인                            ",null)
-
-
+                //.setNeutralButton("                                 확인                            ",null)
+            dlg.setPositiveButton("확인", null)
 
             var dlgNew: AlertDialog = dlg.show()
             var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
             messageText!!.gravity = Gravity.LEFT
 
-
             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
             dlgNew.show()
-            //settings.domStorageEnabled = true
 
+            //버튼 가운데 정렬
+            val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+            val parent : LinearLayout = button.parent as LinearLayout
+            parent.gravity = Gravity.CENTER_HORIZONTAL
+            val leftSpacer : View = parent.getChildAt(1)
+            leftSpacer.visibility = View.GONE
+
+            //settings.domStorageEnabled = true
         }
         btnEmailLogin.setOnClickListener {
 
@@ -113,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(alreadyLoginIntent)
         }*/
 
-        //수정
+        //암호 작동
         if(TokenController.getAccessToken(this)!=""){
             if(SharedPreferenceController.getPassword(this) != "") {
                 val passwordIntent = Intent(this, PasswordActivity::class.java)
@@ -124,7 +125,6 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(alreadyLoginIntent)
             }
         } else {
-            //수정
             if (TokenController.getRefreshToken(this) != "") {
                 if(SharedPreferenceController.getPassword(this) != "") {
                     val passwordIntent = Intent(this, PasswordActivity::class.java)

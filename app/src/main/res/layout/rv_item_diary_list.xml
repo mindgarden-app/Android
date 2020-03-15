@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
-                android:background="#ffffff">
+                android:background="@drawable/diary_list_border">
 
     <LinearLayout
             android:id="@+id/ll_rv_item_diary_list_container"
@@ -83,6 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
+                android:layout_marginBottom="1.5dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="#78DEB0"

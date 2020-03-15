@@ -136,12 +136,8 @@ class AlarmSettingActivity : AppCompatActivity() {
         }
     }
 
-    //수정
     //알람설정
     fun setAlarm(tgTime: Long){
-        //수정 //사용 안 함
-        //startService(Intent(this@AlarmSettingActivity, AlarmService::class.java).putExtra("alarmTime", tgTime).putExtra("index", 0))
-
         setChannel()
 
         //알람이 발생했을 경우 BroadcastD에게 방송을 해주기 위해 명시
@@ -152,17 +148,12 @@ class AlarmSettingActivity : AppCompatActivity() {
         //알람 예약
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager     //AlarmManager
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, tgTime, 24 * 60 * 60 * 1000, pendingIntent)
-        //alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
 
-        Log.e("service", "alarmOk")
+        Log.e("alarmsetting", "alarmOk")
     }
 
-    //수정
     //알람 해제
     fun alarmCancel(){
-        //수정 //사용 안 함
-        //startService(Intent(this@AlarmSettingActivity, AlarmService::class.java).putExtra("index", 1))
-
         val intent = Intent(this, BroadcastD::class.java)
 
         val pendingIntent : PendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
@@ -181,7 +172,6 @@ class AlarmSettingActivity : AppCompatActivity() {
         toast.show()
     }
 
-    //수정
     fun setChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val name = getString(R.string.channel_name)

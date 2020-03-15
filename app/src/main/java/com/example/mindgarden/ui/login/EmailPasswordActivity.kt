@@ -9,6 +9,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -87,11 +89,9 @@ class EmailPasswordActivity : AppCompatActivity() {
                         Log.e("email",it.message)
                         //팝업 띄우기
                         var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
-
-
                         dlg.setMessage("존재하지 않는 메일 주소입니다.")
-                            .setNeutralButton("                              다시보내기                            ",null)
-
+                            //.setNeutralButton("                              다시 입력하기                            ",null)
+                        dlg.setPositiveButton("다시 입력하기", null)
 
                         var dlgNew: AlertDialog = dlg.show()
                         var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
@@ -101,6 +101,13 @@ class EmailPasswordActivity : AppCompatActivity() {
                         dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                         dlgNew.show()
+
+                        //버튼 가운데 정렬
+                        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+                        val parent : LinearLayout = button.parent as LinearLayout
+                        parent.gravity = Gravity.CENTER_HORIZONTAL
+                        val leftSpacer : View = parent.getChildAt(1)
+                        leftSpacer.visibility = View.GONE
                     }
                     else{
                         val sendPasswordIntent = Intent(this, EmailSendPasswordActivity::class.java)

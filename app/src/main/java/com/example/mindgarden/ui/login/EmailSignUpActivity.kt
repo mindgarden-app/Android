@@ -9,6 +9,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.mindgarden.R
@@ -229,31 +231,33 @@ class EmailSignUpActivity : AppCompatActivity() {
                             Log.e("회원가입 성공 메세지", it.message)
                             //팝업 띄우기
                             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
-
-
                             dlg.setMessage("가입이 완료되었습니다.")
-                                .setNeutralButton("                              로그인하기                            ",loginButtonClick)
-
+                                //.setNeutralButton("                              로그인하기                            ",loginButtonClick)
+                            dlg.setPositiveButton("로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
                             var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
                             messageText!!.gravity = Gravity.CENTER
 
-
                             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                             dlgNew.show()
+
+                            //버튼 가운데 정렬
+                            val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+                            val parent : LinearLayout = button.parent as LinearLayout
+                            parent.gravity = Gravity.CENTER_HORIZONTAL
+                            val leftSpacer : View = parent.getChildAt(1)
+                            leftSpacer.visibility = View.GONE
                         } else {
                             Log.e("회원가입 메세지", it.message)
 
                             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
-
-
                             dlg.setMessage("이미 등록된 메일입니다.")
-                                .setNeutralButton("                닫기        ",null)
-                                .setPositiveButton("       로그인하기          ",loginButtonClick)
-
-
+                                //.setNeutralButton("                닫기        ",null)
+                                //.setPositiveButton("       로그인하기          ",loginButtonClick)
+                            dlg.setNegativeButton("닫기", null)
+                            dlg.setPositiveButton("로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
                             var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
@@ -263,13 +267,19 @@ class EmailSignUpActivity : AppCompatActivity() {
 //                            var button2=dlgNew.getButton(1)
 //                            button2.setTextColor(getColor(R.color.colorPrimaryMint))
 
-
-
                             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                             dlgNew.show()
 
+                            //2개 버튼 비율 같게 정렬 & 하나의 버튼 글씨 색 변경
+                            val btnPositive = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE);
+                            val btnNegative = dlgNew.getButton(AlertDialog.BUTTON_NEGATIVE);
+                            btnNegative.setTextColor(getColor(R.color.colorBlack2b))
 
+                            val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+                            layoutParams.weight = 10f;
+                            btnPositive.setLayoutParams(layoutParams);
+                            btnNegative.setLayoutParams(layoutParams);
                         }
                     }
                 },
