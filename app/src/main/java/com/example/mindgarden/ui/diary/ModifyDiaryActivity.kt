@@ -2,7 +2,6 @@ package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,30 +13,25 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import android.widget.*
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.MoodChoiceData
-import com.example.mindgarden.data.vo.DiaryResponse
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
-import com.example.mindgarden.ui.login.LoginActivity
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
+import com.example.mindgarden.ui.main.RxEventBus
 import kotlinx.android.synthetic.main.activity_modify_diary.*
-import kotlinx.android.synthetic.main.data_load_fail.*
+import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import java.io.*
 import java.text.SimpleDateFormat
@@ -46,29 +40,28 @@ import kotlin.collections.ArrayList
 
 class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
-    private var diaryIdx: Int = -1
-
     private val repository : MindgardenRepository by inject()
-
-    private val MoodItemList : ArrayList<MoodChoiceData> by lazy{
+    private val moodItemList : ArrayList<MoodChoiceData> by lazy{
         ArrayList<MoodChoiceData>()
     }
-    private var diaryItemList : DiaryResponse.Diary? = null
 
     private var date : String? = null
     private var b : Bitmap? = null
     private var us : String? = null
 
-    val REQUEST_CODE_SELECT_IMAGE = 1004
-    val REQUEST_CODE_MODIFY_ACTIVITY = 1000
+    private val REQUEST_CODE_SELECT_IMAGE = 1004
+    private val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
-    var selectPicUri : Uri? = null
-    var weatherIdx : Int = 0
-    var content : String = ""
-    var imgState = 0
+    private var selectPicUri : Uri? = null
+    private var diaryIdx: Int = -1
+    private var weatherIdx : Int = 10
+    private var imgState = 0
 
-    val choiceList = arrayOf<String>("이미지 선택", "삭제")
+    private val choiceList = arrayOf("이미지 선택", "삭제")
 
+    companion object{
+        var CHECK = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,50 +71,6 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         if(diaryIdx!=-1){
             loadData()
         }
-
-        //갤러리 접근하여 이미지 얻어오기
-        img_gallary_modify_diary.setOnClickListener{
-            val builder = AlertDialog.Builder(this)
-
-            val inflater = layoutInflater
-            val view = inflater.inflate(R.layout.dialog_chice_listview, null)
-
-            builder.setView(view)
-
-
-            val listview= view.findViewById(R.id.listview_dialog_choice) as ListView
-            val dialog = builder.create()
-
-            val myAdapter = MyListAdapter(this, choiceList)
-
-            listview.setAdapter(myAdapter)
-
-            listview.setOnItemClickListener(AdapterView.OnItemClickListener { adapterView, view, i, l ->
-                when (i) {
-                    0 -> {
-                        val intent = Intent(Intent.ACTION_PICK)
-                        intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
-                        intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
-                    }
-                    1 -> {
-                        deleteImage()
-                    }
-                }
-                dialog.dismiss()
-            })
-            dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-            dialog.show()
-
-            //크기조절
-            val lp = WindowManager.LayoutParams()
-            lp.copyFrom(dialog.window.attributes)
-            lp.width = 700
-            val window = dialog.window
-            window.attributes = lp
-        }
-
     }
 
     //공통
@@ -130,9 +79,9 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         getDiaryIdx()
         setToolbarText()
         showMoodChoiceActivity()
-        setMoodText()
         btnSaveClick()
         btnBackClick()
+        ivGalleryClick()
     }
 
     private fun getDiaryIdx(){
@@ -148,34 +97,35 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             else-> {
                 txt_save_toolbar.text = "완료"
             }
-
         }
     }
 
 
     private fun setMoodIcn(idx : Int){
-        getMoodList(this, MoodItemList)
-        btn_mood_icon_modify_diary.setImageBitmap(MoodItemList[idx].moodIcn)
-        txt_mood_text_modify_diary.text = MoodItemList[idx].moodTxt
-    }
-
-    private fun setMoodText(){
-        if(txt_mood_text_modify_diary.text.equals(getString(R.string.defaultMoodText))){
-            txt_mood_text_modify_diary.setTextColor(Color.parseColor("#c6c6c6"))
-        }else{
-            txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2b2b2b"))
-        }
+        weatherIdx = idx
+        getMoodList(moodItemList)
+        btn_mood_icon_modify_diary.setImageResource(moodItemList[idx].moodIcn)
+        txtMoodTextWrite.text = moodItemList[idx].moodTxt
     }
 
     private fun showMoodChoiceActivity(){
-        img_mood_text_modify_diary.setOnClickListener {
-            chooseMood()
+        ivMoodTextWrite.setOnClickListener {
+            intentToMoodChoiceActivity()
         }
-        txt_mood_text_modify_diary.setOnClickListener {
-            chooseMood()
+        txtMoodTextWrite.setOnClickListener {
+            intentToMoodChoiceActivity()
         }
     }
 
+    private fun showProgressBar(){
+        llWriteDiary.visibility = View.GONE
+        pbModifyDiary.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar(){
+        pbModifyDiary.visibility = View.GONE
+        llWriteDiary.visibility = View.VISIBLE
+    }
     private fun btnBackClick(){
         btn_back_toolbar.setOnClickListener {
             onBackPressed()
@@ -184,13 +134,20 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun postOrPut(){
         when(diaryIdx){
-            -1-> postDiary()
-            else-> putDiary()
+            -1-> {
+                CHECK = true
+                postDiary()
+            }else-> {
+                CHECK = false
+                putDiary()
+            }
         }
     }
     private fun btnSaveClick(){
         btn_save_diary_toolbar.setOnClickListener {
+            showProgressBar()
             postOrPut()
+
         }
     }
 
@@ -228,12 +185,17 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         return MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
     }
 
-    fun chooseMood(){
+    private fun intentToMoodChoiceActivity(){
         val intent = Intent(this, MoodActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE_MODIFY_ACTIVITY)
     }
 
-    //이미지 받아오기
+    private fun ivGalleryClick(){
+        ivGalleryWrite.setOnClickListener{
+            showChoiceDialog()
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -243,8 +205,8 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                 data?.let {
                     selectPicUri = it.data
                     Glide.with(this).load(selectPicUri)
-                        .into(img_gallary_modify_diary)
-                    icn_gallary_modify_diary.visibility = View.INVISIBLE
+                        .into(ivGalleryWrite)
+                    icnGalleryWrite.visibility = View.INVISIBLE
                     imgState = 2
                 }
             }
@@ -253,9 +215,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         //기분선택 팝업 -> this
         if(requestCode == REQUEST_CODE_MODIFY_ACTIVITY){
             if(resultCode == Activity.RESULT_OK){
-                weatherIdx = data!!.getIntExtra("weatherIdx", 0)
-                txt_mood_text_modify_diary.setTextColor(Color.parseColor("#2b2b2b"))
-                setMoodIcn(weatherIdx)
+                setMoodIcn(data!!.getIntExtra("weatherIdx", 10))
             }
         }
     }
@@ -263,13 +223,13 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     //이미지 삭제
     private fun deleteImage(){
         showIcnGallery()
-        img_gallary_modify_diary.setImageBitmap(null)
+        ivGalleryWrite.setImageBitmap(null)
         imgState = 0
     }
 
     //일기 쓰기
     private fun getCurrentDate():String{
-        val f = SimpleDateFormat("yy.MM.dd.(EEE)", Locale.ENGLISH)
+        val f = SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH)
         return f.format(Calendar.getInstance(Locale.KOREA).time)
     }
 
@@ -300,8 +260,11 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             .postDiary(
                 TokenController.getAccessToken(this),contentRB, weatherIdx, pictureRB,
                 {
-                    diaryIdx = it.diaryIdx
-                    postIntent()
+                    if(it.status == 200){
+                        showProgressBar()
+                        diaryIdx = it.diaryIdx
+                        postIntent()
+                    }
                 },
                 {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
     }
@@ -316,10 +279,16 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             .postDiary(
                 TokenController.getAccessToken(this),contentRB, weatherIdx,null,
                 {
+                    hideErrorView()
+                    showProgressBar()
                     diaryIdx = it.diaryIdx
                     postIntent()
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                })
     }
 
     //일기 수정
@@ -331,19 +300,29 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     }
 
     private fun setImageData(url : String){
-        val target = object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                img_gallary_modify_diary.setImageBitmap(resource)
-                b = resource
-                us = url
-            }
-        }
+        icnGalleryWrite.visibility = View.GONE
+        pbImgWrite.visibility = View.VISIBLE
 
-        Glide.with(this@ModifyDiaryActivity)
+        Glide.with(this)
             .asBitmap()
             .load(url)
-            .fitCenter()
-            .into<SimpleTarget<Bitmap>>(target)
+            .listener(object : RequestListener<Bitmap>{
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean
+                ): Boolean {
+                    pbImgWrite.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    pbImgWrite.visibility = View.GONE
+                    ivGalleryWrite.setImageBitmap(resource)
+                    b = resource
+                    us = url
+                    return false
+                }
+            }).into(ivGalleryWrite)
     }
 
     private fun loadData(){
@@ -366,8 +345,10 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                             imgState = 1
                         }
                     }
+
                 },
                 {
+                    hideProgressBar()
                     showErrorView()
                     btnRetryDataLoad()
                 }
@@ -391,11 +372,11 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     }
 
     private fun hideIcnGallery(){
-        icn_gallary_modify_diary.visibility = View.INVISIBLE
+        icnGalleryWrite.visibility = View.INVISIBLE
     }
 
     private fun showIcnGallery(){
-        icn_gallary_modify_diary.visibility = View.VISIBLE
+        icnGalleryWrite.visibility = View.VISIBLE
     }
 
     private fun putDiary(){
@@ -424,14 +405,15 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
-                    if(it.status == 200){
-                        putIntent()
-                    }else{
-                        Log.e("ModifyDIaryActivity", it.message)
-                    }
-
+                    hideErrorView()
+                    showProgressBar()
+                    putIntent()
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                }
             )
     }
 
@@ -443,9 +425,15 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
+                    hideErrorView()
+                    showProgressBar()
                     putIntent()
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                }
             )
     }
 
@@ -456,9 +444,57 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB, weatherIdx, diaryIdx, null,
                 {
+                    hideErrorView()
+                    showProgressBar()
                     putIntent()
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()}
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                }
             )
+    }
+
+    //dialog
+    private fun showChoiceDialog(){
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.dialog_chice_listview, null)
+        val listView =view.findViewById<ListView>(R.id.lvDialogChoice)
+        builder.setView(view)
+
+        val choiceListAdapter = ChoiceListAdapter(this, choiceList)
+
+        val dialog = builder.create()
+
+        listView.adapter = choiceListAdapter
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            when(position){
+                0->{
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
+                }
+                1->{
+                    deleteImage()
+                }
+            }
+            dialog.dismiss()
+        }
+
+        setDialogSize(dialog)
+    }
+
+    private fun setDialogSize(dialog : AlertDialog){
+        dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        //크기조절
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window.attributes)
+        lp.width = 700
+        val window = dialog.window
+        window.attributes = lp
     }
 }
