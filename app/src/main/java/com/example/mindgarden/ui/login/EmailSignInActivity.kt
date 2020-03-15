@@ -133,6 +133,11 @@ class EmailSignInActivity : AppCompatActivity() {
                             )
                             TokenController.setExpAccessToken(this@EmailSignInActivity, it.data?.get(0)?.expires_in!!
                             )
+                            TokenController.setStartTimeAccessToken(
+                                this@EmailSignInActivity,
+                                System.currentTimeMillis()
+                            )
+
                             SharedPreferenceController.setUserMail(this@EmailSignInActivity, it.data?.get(0)?.email.toString()
                             )
                             SharedPreferenceController.setUserName(this@EmailSignInActivity, it.data?.get(0)?.name.toString()
