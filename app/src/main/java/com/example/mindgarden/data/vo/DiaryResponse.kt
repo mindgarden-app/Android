@@ -19,6 +19,9 @@ data class DiaryResponse(
 }
 
 data class DiaryIdx(
+        val status: Int,
+        val success: Boolean,
+        val message: String,
         @SerializedName("data") val diaryIdx: Int
 )
 
