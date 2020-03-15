@@ -26,11 +26,6 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:usesCleartextTraffic="true">
-        <service android:name=".service.AlarmService">
-            <intent-filter>
-                <action android:name="com.example.mindgarden.service.AlarmService"></action>
-            </intent-filter>
-        </service>
         <activity android:name=".ui.login.EmailPasswordActivity"></activity>
         <activity android:name=".ui.login.TermsOfUseActivity" />
         <activity android:name=".ui.login.PrivacyStatementActivity" />
