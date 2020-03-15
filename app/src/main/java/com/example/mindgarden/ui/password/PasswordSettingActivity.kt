@@ -7,8 +7,13 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
 import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.R
@@ -69,6 +74,16 @@ class PasswordSettingActivity : AppCompatActivity() {
             changePassword.isClickable = false
             SharedPreferenceController.setPassword(this,"")
             changePassword.setTextColor(Color.parseColor("#c6c6c6"))
+
+            val toast: Toast = Toast(this)
+            val inflater: LayoutInflater = LayoutInflater.from(this)
+            val toastView: View = inflater.inflate(R.layout.toast, null)
+            val toastText: TextView = toastView.findViewById(R.id.toastText)
+
+            toastText.setText("암호가 해제되었습니다.")
+            toastText.gravity = Gravity.CENTER
+            toast.view = toastView
+            toast.show()
         }
 
     }
