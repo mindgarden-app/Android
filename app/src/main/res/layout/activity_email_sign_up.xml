@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" android:background="#ffffff"
         tools:context=".ui.login.EmailSignUpActivity">
 
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="유효하지 않은 email 입니다"
+            android:text="유효한 이메일 형식이 아닙니다."
             android:fontFamily="@font/notosanscjkr_medium"
             android:textColor="@color/colorRed"
             android:includeFontPadding="false"
@@ -110,7 +110,7 @@
             android:gravity="center_horizontal"
             android:includeFontPadding="false"
             android:letterSpacing="0.02"
-            android:text="비밀번호 (영문,숫자 조합 8자 이상)"
+            android:text="비밀번호 (영문, 숫자 조합 8자 이상)"
             android:textColor="@color/colorBlack"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +172,7 @@
             android:textColor="@color/colorRed"
             android:includeFontPadding="false"
             android:textSize="10sp"
-            android:text="유효하지 않은 비밀번호입니다."
+            android:text="영문, 숫자 조합 8자 이상을 입력해주세요."
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password" />
@@ -185,7 +185,7 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/notosanscjkr_medium"
             android:includeFontPadding="false"
-            android:text="비밀번호가 일치하지 않습니다."
+            android:text="비밀번호가 동일하지 않습니다."
             android:textColor="@color/colorRed"
             android:textSize="10sp"
             android:visibility="invisible"
