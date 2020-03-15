@@ -21,7 +21,9 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
+import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.ui.main.MainActivity
+import com.example.mindgarden.ui.password.PasswordActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -82,9 +84,21 @@ class LoginActivity : AppCompatActivity() {
         super.onResume()
 
         //토큰있으면 메인으로 돌려줘
-        if(TokenController.getAccessToken(this)!=""){
+        /*if(TokenController.getAccessToken(this)!=""){
             val alreadyLoginIntent = Intent(this,MainActivity::class.java)
             startActivity(alreadyLoginIntent)
+        }*/
+
+        //수정
+        if(TokenController.getAccessToken(this)!=""){
+            if(SharedPreferenceController.getPassword(this) != "") {
+                val passwordIntent = Intent(this, PasswordActivity::class.java)
+                passwordIntent.putExtra("whereFrom","login")
+                startActivity(passwordIntent)
+            } else {
+                val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+                startActivity(alreadyLoginIntent)
+            }
         }
     }
 

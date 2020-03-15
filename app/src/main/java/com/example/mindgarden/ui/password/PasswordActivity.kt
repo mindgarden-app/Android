@@ -283,6 +283,14 @@ class PasswordActivity : AppCompatActivity() {
                                     val intent2 = Intent(this, MainActivity::class.java)
                                     startActivity(intent2)
                                     finish()
+                                } else {
+                                    //수정
+                                    toastText.setText("비밀번호가 다릅니다.")
+                                    toastText.gravity = Gravity.CENTER
+                                    toast.view = toastView
+                                    toast.show()
+
+                                    subPassword = ""
                                 }
                             }
                                 else{
