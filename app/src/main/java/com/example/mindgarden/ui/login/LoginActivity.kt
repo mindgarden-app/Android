@@ -99,6 +99,18 @@ class LoginActivity : AppCompatActivity() {
                 val alreadyLoginIntent = Intent(this,MainActivity::class.java)
                 startActivity(alreadyLoginIntent)
             }
+        } else {
+            //수정
+            if (TokenController.getRefreshToken(this) != "") {
+                if(SharedPreferenceController.getPassword(this) != "") {
+                    val passwordIntent = Intent(this, PasswordActivity::class.java)
+                    passwordIntent.putExtra("whereFrom","login")
+                    startActivity(passwordIntent)
+                } else {
+                    val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+                    startActivity(alreadyLoginIntent)
+                }
+            }
         }
     }
 
