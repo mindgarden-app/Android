@@ -89,7 +89,7 @@ class InventoryActivity : AppCompatActivity() {
 
     private fun gridClickEventCallback(position: Int){
         when(treeIdx){
-            -1-> showToast("나무를 골라주세요")
+            -1-> showToast("나무를 고르세요")
             else-> {
                 when(GridRecyclerViewAdapter.selectedStatus.get(position)) {
                     true -> {
@@ -147,7 +147,7 @@ class InventoryActivity : AppCompatActivity() {
             //수정중
             //treeIdx와 location 순서 바꿈
             //나무를 고르지 않은 상태에서 심기 버튼 눌렀을 때, 위치 관련 문구가 먼저 나와서 수정함
-            treeIdx == -1  -> showToast("나무를 선택하세요")
+            treeIdx == -1  -> showToast("나무를 고르세요")
             location == -1 ->  showToast("위치를 고르세요")
             else -> postPlant(location, treeIdx)
         }
