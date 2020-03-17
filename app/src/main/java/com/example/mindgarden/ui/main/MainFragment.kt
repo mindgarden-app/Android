@@ -254,6 +254,8 @@ class MainFragment : Fragment(), DiaryDate, Tree {
             if(data[i].treeIdx == 16){
                 locationList[data[i].location-1].setImageResource(treeList[16])
             }else{
+                Log.e("mainF serverlocation", (data[i].location-1).toString())
+                Log.e("mainF locationList", (locationList[data[i].location-1]).toString())
                 locationList[data[i].location-1].setImageResource(treeList[data[i].treeIdx])
             }
         }
@@ -261,7 +263,7 @@ class MainFragment : Fragment(), DiaryDate, Tree {
 
     private fun initGarden(){
         for(i in 0..31){
-            locationList[i].setImageResource(0)
+            locationList[i].setImageResource(R.drawable.tree_size)
         }
     }
 
