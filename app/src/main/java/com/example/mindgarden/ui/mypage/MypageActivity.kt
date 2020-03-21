@@ -5,12 +5,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.DialogTitle
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
@@ -58,13 +61,18 @@ class MypageActivity : AppCompatActivity() {
         }
         btnDelete.setOnClickListener {
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-            dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n\n" + "mindgarden2019@gmail.com")
+            dlg.setTitle(" ")
+            dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
             //dlg.setNeutralButton("                             확인         ", null)
             dlg.setPositiveButton("확인", null)
 
             var dlgNew: AlertDialog = dlg.show()
+
             var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
             messageText!!.gravity = Gravity.CENTER
+            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
 
             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
@@ -76,6 +84,9 @@ class MypageActivity : AppCompatActivity() {
             parent.gravity = Gravity.CENTER_HORIZONTAL
             val leftSpacer : View = parent.getChildAt(1)
             leftSpacer.visibility = View.GONE
+
+            button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
 
             //TODO 웹쿠키 지우고 내부 디비 지우고 계정삭제
 
