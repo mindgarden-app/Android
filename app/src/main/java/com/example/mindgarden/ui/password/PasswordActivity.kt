@@ -3,17 +3,22 @@ package com.example.mindgarden.ui.password
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.db.TokenController
@@ -75,7 +80,7 @@ class PasswordActivity : AppCompatActivity() {
 
         btnForgetPw.setOnClickListener {
 
-            val builder = android.app.AlertDialog.Builder(this, R.style.AlarmDialogStyle)
+            /*val builder = android.app.AlertDialog.Builder(this, R.style.AlarmDialogStyle)
             val dialogView = layoutInflater.inflate(R.layout.dialog_password_forget, null)
             builder.setView(dialogView)
             var mail:String =SharedPreferenceController.getUserMail(this)
@@ -92,9 +97,53 @@ class PasswordActivity : AppCompatActivity() {
             lp.copyFrom(builderNew.window.attributes)
             lp.width = 800
             val window = builderNew.window
-            window.attributes = lp
+            window.attributes = lp*/
 
+            var builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+            builder.setTitle(" ")
 
+            var mail: String = SharedPreferenceController.getUserMail(this)
+            if (mail != null) {
+                builder.setMessage(mail + "으로\n새로운 비밀번호를 보내겠습니까?")
+            } else {
+                throw NullPointerException("Expression 'mail' must not be null")
+            }
+
+            builder.setNegativeButton("취소", null)
+                .setPositiveButton("메일 보내기") {
+                        dlgInterface: DialogInterface?, which: Int ->
+                    mClick()
+                    null
+                }
+
+            var dlg: AlertDialog = builder.show()
+
+            var messageText: TextView? = dlg.findViewById(android.R.id.message)
+            messageText!!.gravity = Gravity.CENTER
+            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+
+            dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+            dlg.show()
+
+            val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
+            val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
+
+            btnNegative.gravity = Gravity.CENTER
+            btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+            btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+            btnNegative.setTextColor(getColor(R.color.colorBlack2b))
+
+            btnPositive.gravity = Gravity.CENTER
+            btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+            btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+            val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+            layoutParams.weight = 10f;
+            btnNegative.setLayoutParams(layoutParams);
+            btnPositive.setLayoutParams(layoutParams);
         }
 
 
@@ -124,7 +173,7 @@ class PasswordActivity : AppCompatActivity() {
 
     }
 
-    fun mClick(v : View){
+    /*fun mClick(v : View){
         when (v.id){
             R.id.btn_ok_password_forget -> {
                 //메일보내기 눌렀을때
@@ -144,6 +193,20 @@ class PasswordActivity : AppCompatActivity() {
             }
         }
 
+    }*/
+
+    fun mClick() {
+        //메일보내기 눌렀을때
+        getForgetPassword(TokenController.getAccessToken(this))
+
+        Log.e("통신 후 받아온 비밀번호", forgetPassword)
+
+        fun do_p() {
+            Log.e("다이얼로그", SharedPreferenceController.getPassword(this@PasswordActivity))
+
+            Log.e("메일로 4자리 받았어요!", SharedPreferenceController.getPassword(this))
+            Log.e("다이얼로그", SharedPreferenceController.getPassword(this@PasswordActivity))
+        }
     }
 
     private fun getForgetPassword(accessToken:String){

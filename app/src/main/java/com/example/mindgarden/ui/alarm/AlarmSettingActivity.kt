@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 import com.example.mindgarden.R
 import android.widget.TimePicker
 import android.app.AlarmManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
@@ -88,7 +89,7 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     //알림 시간을 설정하는 다이얼로그
     fun showDialog() {
-        val builder = AlertDialog.Builder(this, R.style.AlarmDialogStyle)
+        val builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
         val dialogView = layoutInflater.inflate(R.layout.dialog_alarm_setting, null)
         val alarmTimePicker = dialogView.findViewById<TimePicker>(R.id.alarmTimePicker)
 
@@ -103,12 +104,14 @@ class AlarmSettingActivity : AppCompatActivity() {
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
 
-        //크기 조절
+        /*val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+
         val lp = WindowManager.LayoutParams()
         lp.copyFrom(builderNew.window.attributes)
+        lp.width = (display.width * 0.69).toInt()
 
         val window = builderNew.window
-        window.attributes = lp
+        window.attributes = lp*/
     }
 
     fun mClick(v : View) {
