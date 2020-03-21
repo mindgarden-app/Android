@@ -53,6 +53,7 @@ class EmailSignInActivity : AppCompatActivity() {
             startActivity(signUpIntent)
         }
 
+
         btn_email_sign_in.setOnClickListener {
             postEmailSignIn()
         }
