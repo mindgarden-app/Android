@@ -44,7 +44,8 @@ class PasswordSettingActivity : AppCompatActivity() {
         pwSwitchState(passwordSwitch.isChecked)
 
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
-                pwSwitchState(isChecked)
+            pwSwitchState(isChecked)
+            if (!isChecked) showToast()
         }
 
     }
@@ -75,7 +76,7 @@ class PasswordSettingActivity : AppCompatActivity() {
             SharedPreferenceController.setPassword(this,"")
             changePassword.setTextColor(Color.parseColor("#c6c6c6"))
 
-            val toast: Toast = Toast(this)
+            /*val toast: Toast = Toast(this)
             val inflater: LayoutInflater = LayoutInflater.from(this)
             val toastView: View = inflater.inflate(R.layout.toast, null)
             val toastText: TextView = toastView.findViewById(R.id.toastText)
@@ -83,10 +84,23 @@ class PasswordSettingActivity : AppCompatActivity() {
             toastText.setText("암호가 해제되었습니다.")
             toastText.gravity = Gravity.CENTER
             toast.view = toastView
-            toast.show()
+            toast.show()*/
         }
 
     }
+
+    fun showToast() {
+        val toast: Toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+
+        toastText.setText("암호가 해제되었습니다.")
+        toastText.gravity = Gravity.CENTER
+        toast.view = toastView
+        toast.show()
+    }
+
     //switch 상태 저장
     override fun onPause() {
         super.onPause()

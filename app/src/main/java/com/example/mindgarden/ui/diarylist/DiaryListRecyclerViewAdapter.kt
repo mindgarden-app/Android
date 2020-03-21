@@ -1,10 +1,17 @@
 package com.example.mindgarden.ui.diarylist
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Typeface
+import android.provider.FontsContract
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.ui.diary.ReadDiaryActivity
 import com.example.mindgarden.R
 import com.example.mindgarden.data.vo.DiaryListResponse.*
@@ -76,7 +83,44 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             holder.itemView.lay1.visibility = View.VISIBLE
 
             holder.itemView.icn_delete.setOnClickListener {
-                val builder = AlertDialog.Builder(holder.itemView.context, R.style.MyAlertDialogStyle)
+                var builder = AlertDialog.Builder(holder.itemView.context, R.style.MyAlertDialogStyle)
+                builder.setTitle("삭제").setMessage("삭제하시겠습니까?")
+                    .setNegativeButton("네") {
+                        dlgInterface: DialogInterface?, which: Int ->
+                        clickEvent(holder.adapterPosition)
+                        notifyDataSetChanged()
+                        null
+                    }
+                    .setPositiveButton("아니오", null)
+
+                var dlg: AlertDialog = builder.show()
+
+                var messageText: TextView? = dlg.findViewById(android.R.id.message)
+                messageText!!.gravity = Gravity.CENTER
+                messageText!!.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_regular)
+                messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+                dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+                dlg.show()
+
+                val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
+                val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
+
+                btnNegative.gravity = Gravity.CENTER
+                btnNegative.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
+                btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+                btnPositive.gravity = Gravity.CENTER
+                btnPositive.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
+                btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+                val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+                layoutParams.weight = 10f;
+                btnNegative.setLayoutParams(layoutParams);
+                btnPositive.setLayoutParams(layoutParams);
+
+                /*val builder = AlertDialog.Builder(holder.itemView.context, R.style.MyAlertDialogStyle2)
                 val dlgView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.dialog_diary_list_delete, null)
                 builder.setView(dlgView)
 
@@ -106,7 +150,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                     dlgNew.dismiss()
                 }
 
-                notifyDataSetChanged()
+                notifyDataSetChanged()*/
             }
         } else {
             holder.itemView.lay1.visibility = View.GONE

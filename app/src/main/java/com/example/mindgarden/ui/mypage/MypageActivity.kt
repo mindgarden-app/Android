@@ -6,6 +6,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.mindgarden.db.SharedPreferenceController
@@ -55,22 +58,24 @@ class MypageActivity : AppCompatActivity() {
         }
         btnDelete.setOnClickListener {
             var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-
             dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n\n" + "mindgarden2019@gmail.com")
-
-
-            dlg.setNeutralButton("                             확인         ", null)
-
+            //dlg.setNeutralButton("                             확인         ", null)
+            dlg.setPositiveButton("확인", null)
 
             var dlgNew: AlertDialog = dlg.show()
             var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
             messageText!!.gravity = Gravity.CENTER
 
-
-
             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
             dlgNew.show()
+
+            //버튼 가운데 정렬
+            val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+            val parent : LinearLayout = button.parent as LinearLayout
+            parent.gravity = Gravity.CENTER_HORIZONTAL
+            val leftSpacer : View = parent.getChildAt(1)
+            leftSpacer.visibility = View.GONE
 
             //TODO 웹쿠키 지우고 내부 디비 지우고 계정삭제
 
