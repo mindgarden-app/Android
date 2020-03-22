@@ -33,7 +33,6 @@ import kotlin.collections.ArrayList
 class InventoryActivity : AppCompatActivity() {
     private val repository : MindgardenRepository by inject()
 
-    private lateinit var treeList: List<Int>
     private val  inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter by lazy {
         InventoryRecyclerViewAdapter{inventoryClickEventCallback(it)}
     }
@@ -96,7 +95,7 @@ class InventoryActivity : AppCompatActivity() {
                     }
                     false -> {
                         GridRecyclerViewAdapter.selectedStatus.put(position, true)
-                        gridList[position].img = treeList[treeIdx]
+                        gridList[position].img = treeIdx
                         location = gridList[position].gridId
                         gridRecyclerViewAdapter.notifyItemChanged(position)
                     }
@@ -125,7 +124,7 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     private fun setInventoryType(t: Int){
-        for(i in 0 until treeList.size) inventoryList[i].type = t
+        for(i in 0 until 15) inventoryList[i].type = t
     }
 
     //post garden
@@ -143,7 +142,7 @@ class InventoryActivity : AppCompatActivity() {
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
             treeIdx == -1  -> showToast("나무를 선택하세요")
             location == -1 ->  showToast("위치를 고르세요")
-            balloon == 0 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
+            balloon == 0 or 2 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
             else -> postPlant(location, treeIdx)
         }
     }
@@ -185,15 +184,16 @@ class InventoryActivity : AppCompatActivity() {
                 {
                     hideErrorView()
                     if(it.success){
+                        Log.e("InventoryActivity Bal",it.data[0].balloon.toString())
                         for(i in 0 until it.data.size) {
                             it.data[i].let {data->
                                 val location = serverGardenLocation[data.location]
                                 balloon = data.balloon
                                 if(data.treeIdx == 16){   //weed
-                                    gridList[location].img = R.drawable.android_weeds
+                                    gridList[location].img = data.treeIdx
                                     gridList[location].type = 2
                                 }else{  //not weed
-                                    gridList[location].img = treeList[data.treeIdx]
+                                    gridList[location].img = data.treeIdx
                                     gridList[location].type = 2
                                 }
                             }
@@ -272,16 +272,7 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     private fun initInventoryList() {
-        treeList = listOf (
-            R.drawable.android_tree1, R.drawable.android_tree2, R.drawable.android_tree3, R.drawable.android_tree4,
-            R.drawable.android_tree5, R.drawable.android_tree6, R.drawable.android_tree7, R.drawable.android_tree8,
-            R.drawable.android_tree9, R.drawable.android_tree10, R.drawable.android_tree11, R.drawable.android_tree12,
-            R.drawable.android_tree13, R.drawable.android_tree14, R.drawable.android_tree15, R.drawable.android_tree16
-        )
-
-        for (i in 0 until treeList.size){
-            inventoryList.add(InventoryData(treeList[i], i, 0))
-        }
+        for (i in 0 until 15) inventoryList.add(InventoryData(i, i, 0))
         inventoryRecyclerViewAdapter.setData(inventoryList)
     }
 
