@@ -168,11 +168,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="180dp"
             android:buttonTint="@color/colorBlockGray"
-            android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_check_password_again" />
 
