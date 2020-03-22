@@ -15,12 +15,22 @@
                 android:layout_height="wrap_content"
                 android:gravity="left">
 
-            <ImageView
+            <!--<ImageView
                     android:id="@+id/btn_updown"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="17dp"
+                    android:src="@drawable/btn_updown"/>-->
+
+            <ImageView
+                    android:id="@+id/btn_updown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16.6dp"
+                    android:paddingBottom="15.4dp"
+                    android:paddingStart="21.3dp"
+                    android:paddingEnd="30dp"
                     android:src="@drawable/btn_updown"/>
 
         </LinearLayout>
@@ -50,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="0000"
                         android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="13dp"
+                        android:textSize="13sp"
                         android:textColor="#2B2B2B"/>
 
             </LinearLayout>
@@ -72,10 +82,12 @@
 
             <ImageView
                     android:id="@+id/btn_setting"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginRight="19dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15.6dp"
+                    android:paddingBottom="15.4dp"
+                    android:paddingEnd="22.4dp"
+                    android:paddingStart="30dp"
                     android:src="@drawable/btn_setting"/>
 
         </LinearLayout>
