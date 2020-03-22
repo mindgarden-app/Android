@@ -1,17 +1,13 @@
 package com.example.mindgarden.ui.inventory
 
-import android.content.Context
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mindgarden.data.GridData
 import com.example.mindgarden.R
+import com.example.mindgarden.setDefaultTreeImage
 import kotlin.collections.ArrayList
 
 class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
@@ -48,7 +44,7 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
                 GridData.defaultType -> {
                     holder as DefaultGridRecyclerViewHolder
                     data[position].img?.let { img->
-                        setGridImage(holder.itemView.context,img, holder.gridImg)
+                            holder.gridImg.setDefaultTreeImage(img)
                     }
                     when(selectedStatus.get(position)){
                         true->{
@@ -56,7 +52,8 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
                         }
                         else->  {
                             holder.gridImg.setBackgroundResource(R.drawable.grid_border)
-                            setGridImage(holder.itemView.context,null, holder.gridImg)
+                            holder.gridImg.setDefaultTreeImage(-1)
+//                            setGridImage(holder.itemView.context,null, holder.gridImg)
                         }
 
                     }
@@ -65,7 +62,7 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
                 GridData.alreadyExistType->{
                     holder as AETypeRecyclerViewHolder
                     data[position].img?.let { img->
-                        setGridImage(holder.itemView.context,img, holder.gridImg)
+                        holder.gridImg.setDefaultTreeImage(img)
                     }
                 }
                 else-> throw RuntimeException("알 수 없는 뷰타입 에러")
@@ -81,12 +78,6 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
         }
     }
 
-    private fun setGridImage(ctx : Context, img: Int?, iv : ImageView){
-        Glide.with(ctx)
-            .load(img)
-            .into(iv)
-
-    }
     class DefaultGridRecyclerViewHolder(private val clickEvent: (position: Int) -> Unit, viewGroup:ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid, viewGroup,false))
     {
