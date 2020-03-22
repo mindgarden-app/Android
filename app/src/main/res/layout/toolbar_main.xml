@@ -34,8 +34,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="13sp"
-                        android:textColor="#2b2b2b"/>
+                        android:textColor="#2b2b2b"
+                        android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -56,10 +56,12 @@
 
             <ImageView
                     android:id="@+id/btn_main_setting"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="15.6dp"
-                    android:layout_marginEnd="22.4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="22.4dp"
+                    android:paddingTop="15.6dp"
+                    android:paddingBottom="15.4dp"
+                    android:paddingStart="30dp"
                     android:src="@drawable/btn_setting" />
 
         </LinearLayout>

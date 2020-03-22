@@ -104,14 +104,6 @@ class AlarmSettingActivity : AppCompatActivity() {
         builderNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
         builderNew.show()
 
-        /*val display = (getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
-
-        val lp = WindowManager.LayoutParams()
-        lp.copyFrom(builderNew.window.attributes)
-        lp.width = (display.width * 0.69).toInt()
-
-        val window = builderNew.window
-        window.attributes = lp*/
     }
 
     fun mClick(v : View) {
