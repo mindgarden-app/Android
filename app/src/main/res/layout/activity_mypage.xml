@@ -30,6 +30,7 @@
                     android:id="@+id/myImage"
                     android:layout_width="37.59dp"
                     android:layout_height="37.59dp"
+                    android:layout_marginStart="10dp"
                     android:layout_alignParentTop="true"
                     app:srcCompat="@drawable/img_profile_duck"
                     android:layout_marginTop="10dp" android:layout_alignParentBottom="true"
@@ -46,7 +47,7 @@
                     android:layout_alignTop="@+id/myImage"
                     android:layout_toEndOf="@id/myImage"
                     android:layout_marginStart="13dp"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textColor="#2B2B2B">
             </TextView>
             <TextView
@@ -61,7 +62,7 @@
                     android:layout_alignBottom="@id/myImage"
                     android:layout_toEndOf="@id/myImage"
                     android:layout_marginStart="13dp"
-                    android:textSize="10dp"
+                    android:textSize="12sp"
                     android:textColor="#B2B2B2"
             >
             </TextView>
@@ -78,7 +79,7 @@
                 android:gravity="start|center"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border">
         </Button>
@@ -93,7 +94,7 @@
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
                 android:elevation="10dp"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border">
         </Button>
@@ -118,7 +119,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"/>
 
@@ -131,7 +132,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 android:elevation="10dp"/>
