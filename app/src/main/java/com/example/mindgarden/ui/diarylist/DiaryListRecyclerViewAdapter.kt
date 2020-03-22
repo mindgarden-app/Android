@@ -120,23 +120,11 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 btnNegative.setLayoutParams(layoutParams);
                 btnPositive.setLayoutParams(layoutParams);
 
-                /*val builder = AlertDialog.Builder(holder.itemView.context, R.style.DiaryListDialogStyle)
+                /*val builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
                 val dlgView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.dialog_diary_list_delete, null)
                 builder.setView(dlgView)
 
                 dlgNew = builder.show()
-
-                dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-                val display = WindowManager.LayoutParams()
-                display.copyFrom(dlgNew.window.attributes)
-                display.width = (holder.itemView.context.applicationContext.resources.displayMetrics.widthPixels * 0.69).toInt()
-                display.height = (holder.itemView.context.applicationContext.resources.displayMetrics.heightPixels * 0.25).toInt()
-
-                val window = dlgNew.window
-                window.attributes = display
-
-                dlgNew.show()
 
                 dlgView.txt_diary_list_yes.setOnClickListener {
                     Log.e("diary_index:", dataList[holder.adapterPosition].diaryIdx.toString())
