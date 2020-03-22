@@ -21,6 +21,10 @@
         <item name="android:height">60dp</item>
     </style>
 
+    <style name="DiaryListDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorAccent">#78DEB0</item>
+    </style>
+
     <style name="MyAlertDialogStyle2" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">#78DEB0</item>
         <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
