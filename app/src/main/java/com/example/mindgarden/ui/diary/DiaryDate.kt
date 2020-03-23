@@ -9,10 +9,6 @@ interface DiaryDate {
 
     private fun getFormat(d: String, f : SimpleDateFormat) = f.format(stringToDate(d))
 
-    fun getMainDate(d: String) = getDay(d) + "th. " + getDayOfWeek(d)
-
-    fun getDiaryListDate(d: String) = getFormat(d, SimpleDateFormat("yyyy년 MM월", Locale.getDefault()))
-
     fun getDay(d: String) = getFormat(d, SimpleDateFormat("dd", Locale.getDefault()))
 
     fun getDayOfWeek(d : String) = getFormat(d, SimpleDateFormat("EEE", Locale.ENGLISH))

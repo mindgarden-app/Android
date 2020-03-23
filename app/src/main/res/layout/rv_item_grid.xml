@@ -16,7 +16,7 @@
                 android:id="@+id/img_rv_item_grid"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/tree_size"/>
+                android:src="@drawable/android_tree_empty"/>
 
     </LinearLayout>
 

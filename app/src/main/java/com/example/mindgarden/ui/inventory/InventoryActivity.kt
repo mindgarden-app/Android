@@ -16,7 +16,9 @@ import com.example.mindgarden.data.GridData
 import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.data.vo.GardenResponse
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -30,7 +32,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class InventoryActivity : AppCompatActivity() {
+class InventoryActivity : AppCompatActivity(), DiaryDate {
     private val repository : MindgardenRepository by inject()
 
     private val  inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter by lazy {
@@ -50,7 +52,7 @@ class InventoryActivity : AppCompatActivity() {
     private var treeIdx : Int = -1
     private var location : Int = -1
     private var balloon : Int = -1
-
+    private var season : Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventory)
@@ -58,10 +60,15 @@ class InventoryActivity : AppCompatActivity() {
     }
 
     private fun init(){
-        initRecyclerView()
         btnBackClick()
         btnSaveClick()
+        setSeason()
+        initRecyclerView()
         loadData()
+    }
+
+    private fun setSeason(){
+        season = intent.getIntExtra("season", -1)
     }
 
     private fun showToast(msg : String){
@@ -184,18 +191,11 @@ class InventoryActivity : AppCompatActivity() {
                 {
                     hideErrorView()
                     if(it.success){
-                        Log.e("InventoryActivity Bal",it.data[0].balloon.toString())
                         for(i in 0 until it.data.size) {
                             it.data[i].let {data->
-                                val location = serverGardenLocation[data.location]
                                 balloon = data.balloon
-                                if(data.treeIdx == 16){   //weed
-                                    gridList[location].img = data.treeIdx
-                                    gridList[location].type = 2
-                                }else{  //not weed
-                                    gridList[location].img = data.treeIdx
-                                    gridList[location].type = 2
-                                }
+                                if(data.treeIdx == 16) setTree(data)
+                                else setTree(data)
                             }
                             gridRecyclerViewAdapter.notifyDataSetChanged()
                         }
@@ -208,6 +208,13 @@ class InventoryActivity : AppCompatActivity() {
                     btnRetryDataLoad()
                 })
     }
+
+    private fun setTree(data: GardenResponse.GardenData){
+        val location = serverGardenLocation[data.location]
+        gridList[location].img = data.treeIdx
+        gridList[location].type = 2
+    }
+
 
     //init
     private fun initRecyclerView(){
@@ -225,54 +232,54 @@ class InventoryActivity : AppCompatActivity() {
 
     private fun initGridList(){
         gridList.run {
-            add(GridData(0,1, null))
-            add(GridData(0,3, null))
-            add(GridData(0,6, null))
-            add(GridData(0,10, null))
-            add(GridData(0,14, null))
-            add(GridData(0,18, null))
+            add(GridData(0,1, null, season))
+            add(GridData(0,3, null, season))
+            add(GridData(0,6, null, season))
+            add(GridData(0,10, null, season))
+            add(GridData(0,14, null, season))
+            add(GridData(0,18, null, season))
 
-            add(GridData(0,2, null))
-            add(GridData(0,5, null))
-            add(GridData(0,9, null))
-            add(GridData(0,13, null))
-            add(GridData(0,17, null))
-            add(GridData(0,22, null))
+            add(GridData(0,2, null, season))
+            add(GridData(0,5, null, season))
+            add(GridData(0,9, null, season))
+            add(GridData(0,13, null, season))
+            add(GridData(0,17, null, season))
+            add(GridData(0,22, null, season))
 
-            add(GridData(0,4, null))
-            add(GridData(0,8, null))
-            add(GridData(1,33, null)) //호수
-            add(GridData(1,33,  null)) //호수
-            add(GridData(0,21, null))
-            add(GridData(0,26, null))
+            add(GridData(0,4, null, season))
+            add(GridData(0,8, null, season))
+            add(GridData(1,33, null, season)) //호수
+            add(GridData(1,33,  null, season)) //호수
+            add(GridData(0,21, null, season))
+            add(GridData(0,26, null, season))
 
-            add(GridData(0,7, null))
-            add(GridData(0,12, null))
-            add(GridData(1,33,  null)) //호수
-            add(GridData(1,33,  null)) //호수
-            add(GridData(0,25, null))
-            add(GridData(0,29, null))
+            add(GridData(0,7, null, season))
+            add(GridData(0,12, null, season))
+            add(GridData(1,33,  null, season)) //호수
+            add(GridData(1,33,  null, season)) //호수
+            add(GridData(0,25, null, season))
+            add(GridData(0,29, null, season))
 
-            add(GridData(0,11, null))
-            add(GridData(0,16, null))
-            add(GridData(0,20, null))
-            add(GridData(0,24, null))
-            add(GridData(0,28, null))
-            add(GridData(0,31, null))
+            add(GridData(0,11, null, season))
+            add(GridData(0,16, null, season))
+            add(GridData(0,20, null, season))
+            add(GridData(0,24, null, season))
+            add(GridData(0,28, null, season))
+            add(GridData(0,31, null, season))
 
-            add(GridData(0,15, null))
-            add(GridData(0,19,null))
-            add(GridData(0,23, null))
-            add(GridData(0,27, null))
-            add(GridData(0,30, null))
-            add(GridData(0,32, null))
+            add(GridData(0,15, null, season))
+            add(GridData(0,19,null, season))
+            add(GridData(0,23, null, season))
+            add(GridData(0,27, null, season))
+            add(GridData(0,30, null, season))
+            add(GridData(0,32, null, season))
         }
 
         gridRecyclerViewAdapter.setData(gridList)
     }
 
     private fun initInventoryList() {
-        for (i in 0 until 15) inventoryList.add(InventoryData(i, i, 0))
+        for (i in 0 until 15) inventoryList.add(InventoryData(i, i, 0,season))
         inventoryRecyclerViewAdapter.setData(inventoryList)
     }
 

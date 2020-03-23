@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
 import com.example.mindgarden.setDefaultTreeImage
+import com.example.mindgarden.setSpringTreeImage
 
 class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,18 +33,25 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
             when (it.type) {
                 InventoryData.default->{
                     holder as DefaultInventoryRecyclerViewHolder
-                    holder.imgInventory.setDefaultTreeImage(data[position].treeIcn)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 InventoryData.click->{
                     holder as ClickInventoryRecyclerViewHolder
-                    holder.imgInventory.setDefaultTreeImage(data[position].treeIcn)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 InventoryData.block->{
                     holder as BlockInventoryRecyclerViewHolder
-                    holder.imgInventory.setDefaultTreeImage(data[position].treeIcn)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 else-> throw RuntimeException("알 수 없는 뷰타입 에러")
             }
+        }
+    }
+
+    private fun setTreeImage(season: Int, iv : ImageView, treeIcn : Int){
+        when(season){
+            0-> iv.setSpringTreeImage(treeIcn)
+            else -> iv.setDefaultTreeImage(treeIcn)
         }
     }
 

@@ -26,10 +26,12 @@ import com.example.mindgarden.data.vo.GardenResponse
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.setDefaultTreeImage
+import com.example.mindgarden.setSpringTreeImage
 import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.diary.ModifyDiaryActivity
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
+import java.time.Month
 import kotlin.collections.ArrayList
 
 //수정중
@@ -43,7 +45,7 @@ import kotlin.collections.ArrayList
 class MainFragment : Fragment(), DiaryDate {
     private val repository: MindgardenRepository by inject()
 
-    val cal = Calendar.getInstance()
+    private val cal = Calendar.getInstance()
 
     lateinit var locationList: List<ImageView>
 
@@ -111,7 +113,7 @@ class MainFragment : Fragment(), DiaryDate {
 
     private fun btnRewardClick(){
         btn_reward.setOnClickListener {
-            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java), INVENTORY_REQUEST_CODE)
+            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE)
         }
     }
 
@@ -178,6 +180,7 @@ class MainFragment : Fragment(), DiaryDate {
                         setMainDateText()   //날짜
                         it.data[0].let {d->
                             setMainComment(d.treeNum)  //코멘트
+                            setLand()
                             setTree(it.data.size,it.data)//namu
                             setGardenBalloon(d.balloon) //풍선
                         }
@@ -236,9 +239,26 @@ class MainFragment : Fragment(), DiaryDate {
     }
 
     private fun setTree(dataSize : Int, data: ArrayList<GardenResponse.GardenData>){
-        for(i in 0 until dataSize){
-            if(data[i].treeIdx == 16) locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
-            else locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
+        when(getSeason()){
+            0->{
+                for(i in 0 until dataSize){
+                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+                    else locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+                }
+            }
+            else->{
+                for(i in 0 until dataSize){
+                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
+                    else locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
+                }
+            }
+        }
+    }
+
+    private fun setLand(){
+        when(getSeason()){
+            0-> img_land.setImageResource(R.drawable.android_spring_land)
+            else-> img_land.setImageResource(R.drawable.android_land)
         }
     }
 
@@ -248,6 +268,12 @@ class MainFragment : Fragment(), DiaryDate {
         }
     }
 
+    private fun getSeason(): Int{
+        return when(cal.get(Calendar.MONTH)){
+            2,3,4-> 0
+            else-> 1
+        }
+    }
 
     private fun isCurrentToolbarDate(): Boolean{
         return txtDateToolbarMain.text == getToolbarDate(Calendar.getInstance(Locale.KOREA))
