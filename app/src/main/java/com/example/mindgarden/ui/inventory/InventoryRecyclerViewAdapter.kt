@@ -1,16 +1,13 @@
 package com.example.mindgarden.ui.inventory
 
-import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import com.bumptech.glide.Glide
 import com.example.mindgarden.data.InventoryData
 import com.example.mindgarden.R
+import com.example.mindgarden.setDefaultTreeImage
+import com.example.mindgarden.setSpringTreeImage
 
 class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -36,18 +33,25 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
             when (it.type) {
                 InventoryData.default->{
                     holder as DefaultInventoryRecyclerViewHolder
-                    setInventoryImage(holder.itemView.context, data[position].treeIcn, holder.imgInventory)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 InventoryData.click->{
                     holder as ClickInventoryRecyclerViewHolder
-                    setInventoryImage(holder.itemView.context, data[position].treeIcn, holder.imgInventory)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 InventoryData.block->{
                     holder as BlockInventoryRecyclerViewHolder
-                    setInventoryImage(holder.itemView.context, data[position].treeIcn, holder.imgInventory)
+                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
                 else-> throw RuntimeException("알 수 없는 뷰타입 에러")
             }
+        }
+    }
+
+    private fun setTreeImage(season: Int, iv : ImageView, treeIcn : Int){
+        when(season){
+            0-> iv.setSpringTreeImage(treeIcn)
+            else -> iv.setDefaultTreeImage(treeIcn)
         }
     }
 
@@ -59,12 +63,6 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
             data.addAll(newData)
             notifyDataSetChanged()
         }
-    }
-
-    private fun setInventoryImage(ctx : Context, img :Int, iv : ImageView){
-        Glide.with(ctx)
-            .load(img)
-            .into(iv)
     }
 
     class DefaultInventoryRecyclerViewHolder(clickEvent: (position: Int) -> Unit, viewGroup: ViewGroup) :

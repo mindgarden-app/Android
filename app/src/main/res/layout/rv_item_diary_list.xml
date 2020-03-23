@@ -24,7 +24,7 @@
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/notosanscjkr_medium"
                     android:text="00"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textColor="#2B2B2B"/>
 
             <TextView
@@ -36,7 +36,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="Day"
-                    android:textSize="12.5dp"
+                    android:textSize="12.5sp"
                     android:textColor="#888888"/>
 
         </RelativeLayout>
@@ -49,12 +49,12 @@
 
             <TextView
                     android:id="@+id/txt_rv_item_diary_list_content"
-                    android:layout_width="170dp"
+                    android:layout_width="210dp"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="Content"
-                    android:textSize="13.5dp"
+                    android:textSize="13.5sp"
                     android:textColor="#000000"
                     android:singleLine="true"/>
 

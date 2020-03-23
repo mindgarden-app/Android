@@ -131,6 +131,7 @@
                 android:text="비밀번호를 잊으셨나요?"
                 android:textColor="@color/colorBlack2b"
                 android:textSize="11sp"
+                android:textColor="#2b2b2b"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_question_password"
@@ -145,7 +146,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_email_password_forgot"
-            app:srcCompat="@color/colorBlockGray" />
+            app:srcCompat="@color/colorToolBarGray" />
 
     <TextView
             android:id="@+id/textView"
@@ -156,6 +157,7 @@
             android:paddingHorizontal="10dp"
             android:text="처음 오셨나요?"
             android:textSize="12sp"
+            android:textColor="#2b2b2b"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -178,7 +180,7 @@
             android:id="@+id/txt_check_email_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/notosanscjkr_medium"
             android:text="이메일 또는 비밀번호를 다시 확인하세요."
