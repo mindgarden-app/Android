@@ -208,13 +208,11 @@
             android:id="@+id/btn_terms_of_use"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
-            android:text=" 이용 약관"
-            android:textColor="@color/colorPrimaryMint"
+            android:text="@string/title_terme_of_use"
+            android:textColor="@color/colorRoundGray"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree" />
 
@@ -226,7 +224,6 @@
             android:includeFontPadding="false"
             android:text="  및  "
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_terms_of_use"
             app:layout_constraintStart_toEndOf="@+id/btn_privacy_statement"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree" />
 
@@ -236,8 +233,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
-            android:text="개인 정보 처리 방침 "
-            android:textColor="@color/colorPrimaryMint"
+            android:text="@string/title_privacy_statement"
+            android:textColor="@color/colorRoundGray"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -252,6 +249,7 @@
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
             android:text="가입 시 마인드가든의  "
+            android:textColor="@color/colorRoundGray"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/btn_privacy_statement"
             app:layout_constraintStart_toEndOf="@+id/checkBox_agree"
@@ -264,6 +262,7 @@
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
             android:text="에 동의한 것으로 간주합니다."
+            android:textColor="@color/colorRoundGray"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />

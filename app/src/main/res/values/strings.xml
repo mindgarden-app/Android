@@ -36,7 +36,8 @@
     <string name="btnRetryDataLoadError">다시 시도</string>
 
     <string name="txtEmailPasswordSendSuccess">으로 새로운 비밀번호가 전송되었습니다.</string>
-
+    <string name="title_privacy_statement"><u>개인 정보 처리 방침</u></string>
+    <string name="title_terme_of_use"><u>이용약관</u> </string>
     <string name="terms_of_use">
         제 1장 총칙\n
         \n제1조 (목적) 이 약관은 mindgarden(이하 “회사”라 합니다)가 모바일 기기를 통해 제공하는 모바일 서비스 및 이에 부수하는 네트워크, 웹사이트, 기타 서비스(이하 “서비스”라 합니다)의 이용에 대한 회사와 서비스 이용자의 권리ㆍ의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.\n

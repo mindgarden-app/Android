@@ -38,6 +38,7 @@ class EmailSignUpActivity : AppCompatActivity() {
 
 
 
+
         toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
             if(canEnroll()){
                 postEmailSignUp()

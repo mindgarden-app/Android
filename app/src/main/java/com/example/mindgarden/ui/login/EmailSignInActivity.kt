@@ -55,6 +55,7 @@ class EmailSignInActivity : AppCompatActivity() {
 
 
         btn_email_sign_in.setOnClickListener {
+            canLogin()
             postEmailSignIn()
         }
 
