@@ -27,7 +27,7 @@
             android:layout_width="460dp"
             android:layout_height="347dp"
             android:layout_marginTop="70dp"
-            android:src="@drawable/android_land_grid"
+            android:src="@drawable/android_land"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
