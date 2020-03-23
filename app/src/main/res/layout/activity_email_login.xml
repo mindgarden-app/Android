@@ -131,7 +131,6 @@
                 android:text="비밀번호를 잊으셨나요?"
                 android:textColor="@color/colorBlack2b"
                 android:textSize="11sp"
-                android:textColor="#2b2b2b"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_question_password"
