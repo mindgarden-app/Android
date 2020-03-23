@@ -1,60 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:id="@+id/cl_fragment_main"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        tools:context=".ui.main.MainFragment"
         android:background="#ffffff"
-        android:id="@+id/cl_fragment_main">
+        tools:context=".ui.main.MainFragment">
 
     <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/linearLayout">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <include
                 android:id="@+id/toolbar_main"
-                layout="@layout/toolbar_main"/>
+                layout="@layout/toolbar_main" />
 
     </LinearLayout>
 
     <ImageView
             android:id="@+id/img_land"
-            android:layout_width="413dp"
-            android:layout_height="310dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="460dp"
+            android:layout_height="347dp"
             android:layout_marginTop="70dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/android_land"
+            android:src="@drawable/android_land_grid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_reward" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_reward"
+            app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
             android:id="@+id/img1"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginBottom="280dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="316dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area0"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img2"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="155dp"
-            android:layout_marginBottom="267dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="172dp"
+            android:layout_marginBottom="300dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area1"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -62,10 +59,10 @@
 
     <ImageView
             android:id="@+id/img3"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="155dp"
-            android:layout_marginBottom="267dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="172dp"
+            android:layout_marginBottom="300dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area2"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -73,10 +70,10 @@
 
     <ImageView
             android:id="@+id/img4"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginBottom="252dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="144dp"
+            android:layout_marginBottom="282dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area3"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -84,21 +81,22 @@
 
     <ImageView
             android:id="@+id/img5"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginBottom="252dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="282dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area4"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="252dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="282dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area5"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -106,10 +104,10 @@
 
     <ImageView
             android:id="@+id/img7"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="104dp"
-            android:layout_marginBottom="236dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginBottom="264dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area6"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -117,10 +115,10 @@
 
     <ImageView
             android:id="@+id/img8"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="156dp"
-            android:layout_marginBottom="236dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="168dp"
+            android:layout_marginBottom="264dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area7"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -128,21 +126,21 @@
 
     <ImageView
             android:id="@+id/img9"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="154dp"
-            android:layout_marginBottom="236dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="170dp"
+            android:layout_marginBottom="266dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area8"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img10"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="104dp"
-            android:layout_marginBottom="236dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginBottom="264dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area9"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -150,10 +148,10 @@
 
     <ImageView
             android:id="@+id/img11"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginBottom="222dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginBottom="248dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area10"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -161,10 +159,10 @@
 
     <ImageView
             android:id="@+id/img12"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginBottom="222dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginBottom="250dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area11"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -172,10 +170,10 @@
 
     <ImageView
             android:id="@+id/img13"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="222dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="144dp"
+            android:layout_marginBottom="250dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area12"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -183,20 +181,20 @@
 
     <ImageView
             android:id="@+id/img14"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="222dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="86dp"
+            android:layout_marginBottom="250dp"
             android:src="@drawable/android_tree_empty"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img15"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginBottom="208dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginBottom="232dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area14"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -204,10 +202,10 @@
 
     <ImageView
             android:id="@+id/img16"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="105dp"
-            android:layout_marginBottom="208dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="118dp"
+            android:layout_marginBottom="232dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area15"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -215,10 +213,10 @@
 
     <ImageView
             android:id="@+id/img17"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="105dp"
-            android:layout_marginBottom="208dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginBottom="234dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area16"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -226,10 +224,10 @@
 
     <ImageView
             android:id="@+id/img18"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="54dp"
-            android:layout_marginBottom="208dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="58dp"
+            android:layout_marginBottom="232dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area17"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -237,10 +235,10 @@
 
     <ImageView
             android:id="@+id/img19"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginBottom="192dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginBottom="216dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area18"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -248,10 +246,10 @@
 
     <ImageView
             android:id="@+id/img20"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginBottom="192dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="146dp"
+            android:layout_marginBottom="216dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area19"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -259,21 +257,21 @@
 
     <ImageView
             android:id="@+id/img21_weed"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="128dp"
-            android:layout_marginBottom="192dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="146dp"
+            android:layout_marginBottom="216dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area20"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img22"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="192dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="86dp"
+            android:layout_marginBottom="216dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area21"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -281,9 +279,9 @@
 
     <ImageView
             android:id="@+id/img_balloon"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginBottom="208dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="230dp"
             android:src="@drawable/balloon"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -293,10 +291,10 @@
 
     <ImageView
             android:id="@+id/img23"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="106dp"
-            android:layout_marginBottom="178dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="118dp"
+            android:layout_marginBottom="200dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area22"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -304,10 +302,10 @@
 
     <ImageView
             android:id="@+id/img24"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="156dp"
-            android:layout_marginBottom="178dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="174dp"
+            android:layout_marginBottom="200dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area23"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -315,21 +313,21 @@
 
     <ImageView
             android:id="@+id/img25"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="154dp"
-            android:layout_marginBottom="178dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="172dp"
+            android:layout_marginBottom="200dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area24"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img26"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="104dp"
-            android:layout_marginBottom="178dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginBottom="200dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area25"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -337,10 +335,10 @@
 
     <ImageView
             android:id="@+id/img27"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="132dp"
-            android:layout_marginBottom="163dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="146dp"
+            android:layout_marginBottom="183dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area26"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -348,22 +346,21 @@
 
     <ImageView
             android:id="@+id/img28"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginBottom="163dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="184dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area27"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land"
-            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img29"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="163dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="142dp"
+            android:layout_marginBottom="183dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area28"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -371,10 +368,10 @@
 
     <ImageView
             android:id="@+id/img30_weed"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginStart="155dp"
-            android:layout_marginBottom="150dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="174dp"
+            android:layout_marginBottom="168dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area29"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
@@ -382,27 +379,25 @@
 
     <ImageView
             android:id="@+id/img31"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginEnd="155dp"
-            android:layout_marginBottom="148dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="170dp"
+            android:layout_marginBottom="168dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area30"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
-            app:layout_constraintEnd_toEndOf="@+id/img_land"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/img30_weed" />
+            app:layout_constraintEnd_toEndOf="@+id/img_land" />
 
     <ImageView
             android:id="@+id/img32"
-            android:layout_width="51dp"
-            android:layout_height="59dp"
-            android:layout_marginBottom="134dp"
+            android:layout_width="58dp"
+            android:layout_height="66dp"
+            android:layout_marginBottom="152dp"
             android:src="@drawable/android_tree_empty"
             android:tag="area31"
             app:layout_constraintBottom_toBottomOf="@+id/img_land"
             app:layout_constraintEnd_toEndOf="@+id/img_land"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="@+id/img_land" />
 
     <TextView
@@ -443,9 +438,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_main_exp1" />
 
-    <include layout="@layout/layout_data_load_fail"
-             android:visibility="gone"
-             android:id="@+id/dataLoadFailMain"
-             app:layout_constraintTop_toBottomOf="@id/linearLayout"/>
+    <include
+            android:id="@+id/dataLoadFailMain"
+            layout="@layout/layout_data_load_fail"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
