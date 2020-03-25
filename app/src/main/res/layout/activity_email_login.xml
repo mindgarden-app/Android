@@ -155,7 +155,7 @@
             android:fontFamily="@font/notosanscjkr_regular"
             android:paddingHorizontal="10dp"
             android:text="처음 오셨나요?"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textColor="#2b2b2b"
             app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
