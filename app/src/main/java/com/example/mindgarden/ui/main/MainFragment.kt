@@ -2,6 +2,7 @@ package com.example.mindgarden.ui.main
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -52,6 +53,7 @@ class MainFragment : Fragment(), DiaryDate {
     companion object{
         const val TOOLBAR_DATE_REQUEST_CODE = 100
         const val INVENTORY_REQUEST_CODE = 200
+        private var userOut = false
     }
 
 
@@ -71,10 +73,18 @@ class MainFragment : Fragment(), DiaryDate {
         init()
     }
 
+    override fun onPause() {
+        super.onPause()
+        userOut = true
+    }
     override fun onResume() {
         super.onResume()
         if(ModifyDiaryActivity.CHECK){
             init()
+        }
+        if(userOut){
+            init()
+            userOut = false
         }
     }
 
