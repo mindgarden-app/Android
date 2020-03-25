@@ -19,7 +19,7 @@
             <TextView
                     android:id="@+id/txt_rv_item_diary_list_day_num"
                     android:layout_width="30dp"
-                    android:layout_height="29dp"
+                    android:layout_height="31dp"
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/notosanscjkr_medium"
