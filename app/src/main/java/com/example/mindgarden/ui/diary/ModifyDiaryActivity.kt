@@ -2,16 +2,21 @@ package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.ColorDrawable
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -51,10 +56,12 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     private var b : Bitmap? = null
     private var us : String? = null
 
+    private var rotatedImg : Bitmap? = null
+    private var selectPicUri: Uri? = null
+
     private val REQUEST_CODE_SELECT_IMAGE = 1004
     private val REQUEST_CODE_MODIFY_ACTIVITY = 1000
 
-    private var selectPicUri : Uri? = null
     private var diaryIdx: Int = -1
     private var weatherIdx : Int = 10
     private var imgState = 0
@@ -175,16 +182,6 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         return RequestBody.create(MediaType.parse("text/plain"),str)
     }
 
-    private fun convertPhotoRB(): MultipartBody.Part?{
-        val options = BitmapFactory.Options()
-        val inputStream : InputStream = contentResolver.openInputStream(selectPicUri)
-        val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-
-        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-        return MultipartBody.Part.createFormData("diary_img", File(selectPicUri.toString()).name, photoBody)
-    }
 
     private fun intentToMoodChoiceActivity(){
         val intent = Intent(this, MoodActivity::class.java)
@@ -205,11 +202,13 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             if (resultCode == Activity.RESULT_OK) {
                 data?.let {
                     selectPicUri = it.data
-                    Glide.with(this).load(selectPicUri)
-                        .into(ivGalleryWrite)
+                    rotatedImg = getRotatedBitmap(it.data)
+                    ivGalleryWrite.setImageBitmap(rotatedImg)
                     icnGalleryWrite.visibility = View.INVISIBLE
                     imgState = 2
+
                 }
+
             }
         }
 
@@ -411,6 +410,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         val file = File(saveBitmapToFile(b,fileName))
         val photoBody = RequestBody.create(MediaType.parse("image/jpg"), file)
         val pictureRB = MultipartBody.Part.createFormData("diary_img", fileName, photoBody)
+
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
@@ -430,7 +430,6 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val pictureRB = convertPhotoRB()
-
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
@@ -480,20 +479,95 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
         listView.setOnItemClickListener { _, _, position, _ ->
             when(position){
-                0->{
-                    val intent = Intent(Intent.ACTION_PICK)
-                    intent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
-                    intent.data = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE)
-                }
-                1->{
-                    deleteImage()
-                }
+                0-> imageChooser(REQUEST_CODE_SELECT_IMAGE)
+                1-> deleteImage()
             }
             dialog.dismiss()
         }
 
         setDialogSize(dialog)
+    }
+
+    //camera image
+    private fun imageChooser(requestCode: Int) {
+        val selectionIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+            data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        }
+        startActivityForResult(selectionIntent, requestCode)
+    }
+
+    private fun getFilePathFromUri(uri: Uri): String?{
+        var path: String? = null
+        val contentResolver = applicationContext.contentResolver
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            cursor.moveToNext()
+            val pathColumnIdx = cursor.getColumnIndex("_data")
+            if (pathColumnIdx != -1) {
+                path = cursor.getString(pathColumnIdx)
+            } else {
+                val idColumnIdx = cursor.getColumnIndex("document_id")
+                if (idColumnIdx != -1) {
+                    val documentId = cursor.getString(idColumnIdx)
+                    val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    val selection = "_id = ?"
+                    val selectionArgs = arrayOf(documentId.split(':')[1])
+                    contentResolver.query(contentUri, null, selection, selectionArgs, null)
+                        ?.use { cursor2 ->
+                            cursor2.moveToNext()
+                            val pathColumnIdx2 = cursor2.getColumnIndex("_data")
+                            if (pathColumnIdx2 != -1)
+                                path = cursor2.getString(pathColumnIdx2)
+                        }
+                }
+            }
+        }
+        return path
+    }
+
+     fun getRotatedBitmap(uri: Uri): Bitmap? {
+        contentResolver.openFileDescriptor(uri, "r")?.fileDescriptor?.let {
+            var bitmap = BitmapFactory.decodeFileDescriptor(it)
+            getFilePathFromUri(uri)?.let { path ->
+                ExifInterface(path).run {
+                    val orientation =
+                        getAttributeInt(
+                            ExifInterface.TAG_ORIENTATION,
+                            ExifInterface.ORIENTATION_NORMAL
+                        )
+                    val degrees = when (orientation) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                        ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                        ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                        else -> 0f
+                    }
+                    if (degrees != 0f && bitmap != null) {
+                        val matrix = Matrix().apply {
+                            setRotate(degrees)
+                        }
+                        val converted = Bitmap.createBitmap(
+                            bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+                        )
+
+                        if (converted != bitmap) {
+                            bitmap.recycle()
+                            bitmap = converted
+                        }
+                    }
+                }
+                return bitmap
+            }
+        }
+        return null
+    }
+
+    private fun convertPhotoRB(): MultipartBody.Part?{
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        rotatedImg?.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
+
+        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
+        return MultipartBody.Part.createFormData("diary_img", getFilePathFromUri(selectPicUri!!), photoBody)
     }
 
     private fun setDialogSize(dialog : AlertDialog){
@@ -520,6 +594,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             }
         }
     }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

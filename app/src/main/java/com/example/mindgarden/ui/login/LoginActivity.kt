@@ -198,10 +198,10 @@ class LoginActivity : AppCompatActivity() {
 
         } else {
             //You already have the permission, just go ahead.
-            toastText.setText("Allowed All Permissions")
-            toastText.gravity = Gravity.CENTER
-            toast.view = toastView
-            toast.show()
+//            toastText.setText("Allowed All Permissions")
+//            toastText.gravity = Gravity.CENTER
+//            toast.view = toastView
+//            toast.show()
         }
     }
 

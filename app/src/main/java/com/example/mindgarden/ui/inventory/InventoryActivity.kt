@@ -137,6 +137,7 @@ class InventoryActivity : AppCompatActivity(), DiaryDate {
     //post garden
     private fun btnSaveClick(){
         btn_save_inventory.setOnClickListener {
+            Log.e("balloon", balloon.toString())
             isValid()
         }
     }
@@ -149,7 +150,8 @@ class InventoryActivity : AppCompatActivity(), DiaryDate {
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
             treeIdx == -1  -> showToast("나무를 선택하세요")
             location == -1 ->  showToast("위치를 고르세요")
-            balloon == 0 or 2 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
+            balloon == 0 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
+            balloon == 2 -> showToast("나무는 하루에 하나, 일기를 쓴 후 심을 수 있어요!")
             else -> postPlant(location, treeIdx)
         }
     }

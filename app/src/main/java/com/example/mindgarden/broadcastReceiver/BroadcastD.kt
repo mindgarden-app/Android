@@ -10,6 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import android.util.Log
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.R
+import com.example.mindgarden.ui.splash.SplashActivity
 import java.util.*
 
 
@@ -20,7 +21,7 @@ class BroadcastD() : BroadcastReceiver(){
         //푸시 알림 설정
         Log.e("broadcast", "broadcastOK")
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, SplashActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
             .setSmallIcon(R.drawable.icn_pup_topbar)
