@@ -2,7 +2,6 @@ package com.example.mindgarden.ui.main
 
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -29,10 +28,9 @@ import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.setDefaultTreeImage
 import com.example.mindgarden.setSpringTreeImage
 import com.example.mindgarden.ui.diary.DiaryDate
-import com.example.mindgarden.ui.diary.ModifyDiaryActivity
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
-import java.time.Month
 import kotlin.collections.ArrayList
 
 //수정중
@@ -79,7 +77,7 @@ class MainFragment : Fragment(), DiaryDate {
     }
     override fun onResume() {
         super.onResume()
-        if(ModifyDiaryActivity.CHECK){
+        if(WriteDiaryActivity.CHECK){
             init()
         }
         if(userOut){

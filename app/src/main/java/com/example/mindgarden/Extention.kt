@@ -1,5 +1,9 @@
 package com.example.mindgarden
 
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 
 fun ImageView.setDefaultTreeImage(treeIdx: Int){

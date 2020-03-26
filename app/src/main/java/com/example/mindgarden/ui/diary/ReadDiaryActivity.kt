@@ -5,11 +5,9 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import com.example.mindgarden.R
 import android.app.Activity
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -70,7 +68,7 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     private fun btnModifyClick(){
         btn_modify_diary_toolbar.setOnClickListener {
-            Intent(this, ModifyDiaryActivity::class.java).apply {
+            Intent(this, WriteDiaryActivity::class.java).apply {
                 putExtra(DIARY_IDX, diaryIdx)
                 startActivityForResult(this, READ_DIARY_REQUEST)
             }

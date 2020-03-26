@@ -15,7 +15,7 @@ import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.diary.ModifyDiaryActivity
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
@@ -52,10 +52,10 @@ class MainActivity  : AppCompatActivity() {
 
 
         btn_write.setOnClickListener {
-                startActivityForResult(Intent(this, ModifyDiaryActivity::class.java),1100)
+                startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
         }
 
-        ModifyDiaryActivity.CHECK = false
+        WriteDiaryActivity.CHECK = false
     }
 
     private fun configureMainTab() {
