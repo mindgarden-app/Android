@@ -99,18 +99,18 @@ class PasswordActivity : AppCompatActivity() {
             val window = builderNew.window
             window.attributes = lp*/
 
-            var builder = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+            var builder = AlertDialog.Builder(this, R.style.NewDialogStyle)
             builder.setTitle(" ")
 
             var mail: String = SharedPreferenceController.getUserMail(this)
             if (mail != null) {
-                builder.setMessage(mail + "으로\n새로운 비밀번호를 보내겠습니까?")
+                builder.setMessage("\n" + mail + "으로\n새로운 비밀번호를 보내겠습니까?")
             } else {
                 throw NullPointerException("Expression 'mail' must not be null")
             }
 
-            builder.setNegativeButton("취소", null)
-                .setPositiveButton("메일 보내기") {
+            builder.setNegativeButton("\n취소", null)
+                .setPositiveButton("\n메일 보내기") {
                         dlgInterface: DialogInterface?, which: Int ->
                     mClick()
                     null

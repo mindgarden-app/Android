@@ -19,7 +19,7 @@
             <TextView
                     android:id="@+id/txt_rv_item_diary_list_day_num"
                     android:layout_width="30dp"
-                    android:layout_height="29dp"
+                    android:layout_height="32dp"
                     android:layout_centerHorizontal="true"
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/notosanscjkr_medium"
@@ -54,7 +54,7 @@
                     android:gravity="left|center_vertical"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="Content"
-                    android:textSize="13.5sp"
+                    android:textSize="14.5sp"
                     android:textColor="#000000"
                     android:singleLine="true"/>
 
@@ -70,8 +70,8 @@
 
             <ImageView
                     android:id="@+id/diary_list_weather_img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:gravity="center"
                     android:src="@drawable/icn_weather_list_ver_01"/>
 
@@ -82,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
-                android:layout_marginBottom="1.5dp"
+                android:layout_marginBottom="0.5dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:background="#78DEB0"

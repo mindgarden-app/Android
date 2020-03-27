@@ -233,10 +233,10 @@ class EmailSignUpActivity : AppCompatActivity() {
                         if (it.success) {
                             Log.e("회원가입 성공 메세지", it.message)
                             //팝업 띄우기
-                            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
-                            dlg.setMessage("가입이 완료되었습니다.")
+                            var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
+                            dlg.setMessage("\n\n가입이 완료되었습니다.")
                                 //.setNeutralButton("                              로그인하기                            ",loginButtonClick)
-                            dlg.setPositiveButton("로그인하기", loginButtonClick)
+                            dlg.setPositiveButton("\n로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
 
@@ -262,12 +262,12 @@ class EmailSignUpActivity : AppCompatActivity() {
                         } else {
                             Log.e("회원가입 메세지", it.message)
 
-                            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle2)
-                            dlg.setMessage("이미 등록된 메일입니다.")
+                            var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
+                            dlg.setMessage("\n\n이미 등록된 메일입니다.")
                                 //.setNeutralButton("                닫기        ",null)
                                 //.setPositiveButton("       로그인하기          ",loginButtonClick)
-                            dlg.setNegativeButton("닫기", null)
-                            dlg.setPositiveButton("로그인하기", loginButtonClick)
+                            dlg.setNegativeButton("\n닫기", null)
+                            dlg.setPositiveButton("\n로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
 

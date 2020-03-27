@@ -83,15 +83,15 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             holder.itemView.lay1.visibility = View.VISIBLE
 
             holder.itemView.icn_delete.setOnClickListener {
-                var builder = AlertDialog.Builder(holder.itemView.context, R.style.MyAlertDialogStyle)
-                builder.setTitle("삭제").setMessage("삭제하시겠습니까?")
-                    .setNegativeButton("네") {
+                var builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
+                builder.setTitle("삭제").setMessage("\n삭제하시겠습니까?")
+                    .setNegativeButton("\n네") {
                         dlgInterface: DialogInterface?, which: Int ->
                         clickEvent(holder.adapterPosition)
                         notifyDataSetChanged()
                         null
                     }
-                    .setPositiveButton("아니오", null)
+                    .setPositiveButton("\n아니오", null)
 
                 var dlg: AlertDialog = builder.show()
 

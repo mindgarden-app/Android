@@ -60,11 +60,11 @@ class MypageActivity : AppCompatActivity() {
             finish()
         }
         btnDelete.setOnClickListener {
-            var dlg = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+            var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
             dlg.setTitle(" ")
-            dlg.setMessage("계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
+            dlg.setMessage("\n계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
             //dlg.setNeutralButton("                             확인         ", null)
-            dlg.setPositiveButton("확인", null)
+            dlg.setPositiveButton("\n확인", null)
 
             var dlgNew: AlertDialog = dlg.show()
 
