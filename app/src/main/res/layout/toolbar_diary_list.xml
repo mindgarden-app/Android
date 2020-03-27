@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="0000"
                         android:fontFamily="@font/notosanscjkr_medium"
-                        android:textSize="13sp"
+                        android:textSize="15sp"
                         android:textColor="#2B2B2B"/>
 
             </LinearLayout>

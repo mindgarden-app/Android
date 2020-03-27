@@ -81,7 +81,8 @@
                 android:layout_width="match_parent"
                 android:textSize="14sp"
                 android:textColor="#2B2B2B"
-                android:background="@drawable/gray_bottom_border">
+                android:background="@drawable/gray_bottom_border"
+                style="?android:attr/borderlessButtonStyle">
         </Button>
 
         <Button
@@ -93,10 +94,11 @@
                 android:gravity="start|center"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
-                android:elevation="10dp"
+                android:elevation="0dp"
                 android:textSize="14sp"
                 android:textColor="#2B2B2B"
-                android:background="@drawable/gray_bottom_border">
+                android:background="@drawable/gray_bottom_border"
+                style="?android:attr/borderlessButtonStyle">
         </Button>
 
     </LinearLayout>
@@ -121,7 +123,8 @@
                 android:gravity="start|center"
                 android:textSize="14sp"
                 android:textColor="#2B2B2B"
-                android:background="@drawable/gray_bottom_border"/>
+                android:background="@drawable/gray_bottom_border"
+                style="?android:attr/borderlessButtonStyle"/>
 
         <Button
                 android:text="알림 설정"
@@ -135,6 +138,7 @@
                 android:textSize="14sp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
-                android:elevation="10dp"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:elevation="0dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
