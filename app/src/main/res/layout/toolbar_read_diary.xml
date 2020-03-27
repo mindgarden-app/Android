@@ -30,7 +30,7 @@
                 android:fontFamily="@font/notosanscjkr_regular"
                 android:text="@string/titleToolbarReadDiary"
                 android:textColor="#2B2B2B"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
         <ImageButton
                 android:layout_width="44dp"
