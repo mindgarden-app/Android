@@ -47,7 +47,7 @@
                     android:layout_alignTop="@+id/myImage"
                     android:layout_toEndOf="@id/myImage"
                     android:layout_marginStart="13dp"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     android:textColor="#2B2B2B">
             </TextView>
             <TextView
@@ -62,7 +62,7 @@
                     android:layout_alignBottom="@id/myImage"
                     android:layout_toEndOf="@id/myImage"
                     android:layout_marginStart="13dp"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     android:textColor="#B2B2B2"
             >
             </TextView>
@@ -79,7 +79,7 @@
                 android:gravity="start|center"
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 style="?android:attr/borderlessButtonStyle">
@@ -95,7 +95,7 @@
                 android:layout_height="50dp"
                 android:layout_width="match_parent"
                 android:elevation="0dp"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 style="?android:attr/borderlessButtonStyle">
@@ -121,7 +121,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 style="?android:attr/borderlessButtonStyle"/>
@@ -135,7 +135,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:gravity="start|center"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textColor="#2B2B2B"
                 android:background="@drawable/gray_bottom_border"
                 style="?android:attr/borderlessButtonStyle"
