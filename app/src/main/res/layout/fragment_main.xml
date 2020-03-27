@@ -407,7 +407,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/montserratalternates_blackitalic"
             android:textColor="#78deb0"
-            android:textSize="21sp"
+            android:textSize="21dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -422,7 +422,7 @@
             android:fontFamily="@font/notosanscjkkr_light"
             android:gravity="right"
             android:textColor="#2B2B2B"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDateMain" />

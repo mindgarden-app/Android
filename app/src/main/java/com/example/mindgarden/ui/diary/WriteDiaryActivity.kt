@@ -274,7 +274,11 @@ class WriteDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                         postIntent()
                     }
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                })
     }
 
     private fun postDiaryImageNull(){

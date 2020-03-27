@@ -38,7 +38,7 @@
                     android:includeFontPadding="false"
                     android:text="Mindgarden 서비스 이용약관"
                     android:textColor="@color/colorBlack"
-                    android:textSize="17sp"
+                    android:textSize="17dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,8 +50,8 @@
                     android:layout_marginBottom="24dp"
                     android:fontFamily="@font/notosanscjkr_regular"
                     android:text="@string/terms_of_use"
-                    android:textSize="14sp"
                     android:textColor="#000000"
+                    android:textSize="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"

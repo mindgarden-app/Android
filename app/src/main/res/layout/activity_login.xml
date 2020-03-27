@@ -40,6 +40,7 @@
             android:scaleType="fitCenter"
             android:text="이메일로 시작하기"
             android:textColor="#ffffff"
+            android:textSize="14dp"
             app:layout_constraintBottom_toTopOf="@+id/btnWebLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
