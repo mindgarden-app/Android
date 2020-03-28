@@ -120,9 +120,11 @@ class LoginActivity : AppCompatActivity() {
                 val passwordIntent = Intent(this, PasswordActivity::class.java)
                 passwordIntent.putExtra("whereFrom","login")
                 startActivity(passwordIntent)
+                finish()
             } else {
                 val alreadyLoginIntent = Intent(this,MainActivity::class.java)
                 startActivity(alreadyLoginIntent)
+                finish()
             }
         } else {
             if (TokenController.getRefreshToken(this) != "") {
@@ -130,9 +132,11 @@ class LoginActivity : AppCompatActivity() {
                     val passwordIntent = Intent(this, PasswordActivity::class.java)
                     passwordIntent.putExtra("whereFrom","login")
                     startActivity(passwordIntent)
+                    finish()
                 } else {
                     val alreadyLoginIntent = Intent(this,MainActivity::class.java)
                     startActivity(alreadyLoginIntent)
+                    finish()
                 }
             }
         }
