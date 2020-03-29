@@ -232,74 +232,36 @@ class EmailSignUpActivity : AppCompatActivity() {
                     if (it.status == 200) {
                         if (it.success) {
                             Log.e("회원가입 성공 메세지", it.message)
-                            //팝업 띄우기
+
                             var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
-                            dlg.setMessage("\n\n가입이 완료되었습니다.")
-                                //.setNeutralButton("                              로그인하기                            ",loginButtonClick)
-                            dlg.setPositiveButton("\n로그인하기", loginButtonClick)
+                            dlg.setMessage("\n\n가입이 완료되었습니다.").setPositiveButton("\n로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
 
-                            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
-                            messageText!!.gravity = Gravity.CENTER
-                            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-                            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-                            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+                            messageModi(dlgNew)
 
                             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                             dlgNew.show()
 
-                            //버튼 가운데 정렬
-                            val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
-                            val parent : LinearLayout = button.parent as LinearLayout
-                            parent.gravity = Gravity.CENTER_HORIZONTAL
-                            val leftSpacer : View = parent.getChildAt(1)
-                            leftSpacer.visibility = View.GONE
-
-                            button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
-                            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+                            buttonModi(dlgNew)
                         } else {
                             Log.e("회원가입 메세지", it.message)
 
                             var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
                             dlg.setMessage("\n\n이미 등록된 메일입니다.")
-                                //.setNeutralButton("                닫기        ",null)
-                                //.setPositiveButton("       로그인하기          ",loginButtonClick)
-                            dlg.setNegativeButton("\n닫기", null)
-                            dlg.setPositiveButton("\n로그인하기", loginButtonClick)
+                                .setNegativeButton("\n닫기", null)
+                                .setPositiveButton("\n로그인하기", loginButtonClick)
 
                             var dlgNew: AlertDialog = dlg.show()
 
-                            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
-                            messageText!!.gravity = Gravity.CENTER
-//                            var button1=dlgNew.getButton(0)
-//                            button1.setTextColor(getColor(R.color.colorBlockGray))
-//                            var button2=dlgNew.getButton(1)
-//                            button2.setTextColor(getColor(R.color.colorPrimaryMint))
-                            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-                            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-                            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+                            messageModi(dlgNew)
 
                             dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
 
                             dlgNew.show()
 
-                            //2개 버튼 비율 같게 정렬 & 하나의 버튼 글씨 색 변경
-                            val btnPositive = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE);
-                            val btnNegative = dlgNew.getButton(AlertDialog.BUTTON_NEGATIVE);
-
-                            btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
-                            btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-                            btnNegative.setTextColor(getColor(R.color.colorBlack2b))
-
-                            btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
-                            btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-
-                            val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
-                            layoutParams.weight = 10f;
-                            btnPositive.setLayoutParams(layoutParams);
-                            btnNegative.setLayoutParams(layoutParams);
+                            twoButtonModi(dlgNew)
                         }
                     }
                 },
@@ -307,5 +269,41 @@ class EmailSignUpActivity : AppCompatActivity() {
                     //에러처리
                 }
             )
+    }
+
+    fun messageModi(dlgNew : AlertDialog) {
+        var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+        messageText!!.gravity = Gravity.CENTER
+        messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+    }
+
+    fun buttonModi(dlgNew : AlertDialog) {
+        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+        val parent : LinearLayout = button.parent as LinearLayout
+        parent.gravity = Gravity.CENTER_HORIZONTAL
+        val leftSpacer : View = parent.getChildAt(1)
+        leftSpacer.visibility = View.GONE
+
+        button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+    }
+
+    fun twoButtonModi(dlgNew : AlertDialog) {
+        val btnPositive = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE);
+        val btnNegative = dlgNew.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+        btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        btnNegative.setTextColor(getColor(R.color.colorBlack2b))
+
+        btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+        btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+        val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 10f;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
     }
 }

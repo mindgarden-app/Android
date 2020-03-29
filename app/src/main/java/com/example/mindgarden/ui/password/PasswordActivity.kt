@@ -103,51 +103,7 @@ class PasswordActivity : AppCompatActivity() {
             val window = builderNew.window
             window.attributes = lp*/
 
-            var builder = AlertDialog.Builder(this, R.style.NewDialogStyle)
-            builder.setTitle(" ")
-
-            var mail: String = SharedPreferenceController.getUserMail(this)
-            if (mail != null) {
-                builder.setMessage("\n" + mail + "으로\n새로운 비밀번호를 보내겠습니까?")
-            } else {
-                throw NullPointerException("Expression 'mail' must not be null")
-            }
-
-            builder.setNegativeButton("\n취소", null)
-                .setPositiveButton("\n메일 보내기") {
-                        dlgInterface: DialogInterface?, which: Int ->
-                    mClick()
-                    null
-                }
-
-            var dlg: AlertDialog = builder.show()
-
-            var messageText: TextView? = dlg.findViewById(android.R.id.message)
-            messageText!!.gravity = Gravity.CENTER
-            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
-
-            dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-            dlg.show()
-
-            val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
-            val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
-
-            btnNegative.gravity = Gravity.CENTER
-            btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
-            btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-            btnNegative.setTextColor(getColor(R.color.colorBlack2b))
-
-            btnPositive.gravity = Gravity.CENTER
-            btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-            btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-
-            val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
-            layoutParams.weight = 10f;
-            btnNegative.setLayoutParams(layoutParams);
-            btnPositive.setLayoutParams(layoutParams);
+            showDialog()
         }
 
 
@@ -175,6 +131,62 @@ class PasswordActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, intent)
         }
 
+    }
+
+    fun showDialog() {
+        var builder = AlertDialog.Builder(this, R.style.NewDialogStyle)
+        builder.setTitle(" ")
+
+        var mail: String = SharedPreferenceController.getUserMail(this)
+        if (mail != null) {
+            builder.setMessage("\n" + mail + "으로\n새로운 비밀번호를 보내겠습니까?")
+        } else {
+            throw NullPointerException("Expression 'mail' must not be null")
+        }
+
+        builder.setNegativeButton("\n취소", null)
+            .setPositiveButton("\n메일 보내기") {
+                    dlgInterface: DialogInterface?, which: Int ->
+                mClick()
+                null
+            }
+
+        var dlg: AlertDialog = builder.show()
+
+        messageModi(dlg)
+
+        dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+        dlg.show()
+
+        buttonModi(dlg)
+    }
+
+    fun messageModi(dlg : AlertDialog) {
+        var messageText: TextView? = dlg.findViewById(android.R.id.message)
+        messageText!!.gravity = Gravity.CENTER
+        messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+    }
+
+    fun buttonModi(dlg : AlertDialog) {
+        val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
+        val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
+
+        btnNegative.gravity = Gravity.CENTER
+        btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+        btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        btnNegative.setTextColor(getColor(R.color.colorBlack2b))
+
+        btnPositive.gravity = Gravity.CENTER
+        btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+        val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 10f;
+        btnNegative.setLayoutParams(layoutParams);
+        btnPositive.setLayoutParams(layoutParams);
     }
 
     /*fun mClick(v : View){

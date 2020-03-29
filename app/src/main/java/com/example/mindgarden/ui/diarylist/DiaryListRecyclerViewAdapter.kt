@@ -79,45 +79,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             holder.itemView.lay1.visibility = View.VISIBLE
 
             holder.itemView.icn_delete.setOnClickListener {
-                //test
                 showDialog(holder)
-
-                /*var builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
-                builder.setTitle("삭제").setMessage("\n삭제하시겠습니까?")
-                    .setNegativeButton("\n네") {
-                        dlgInterface: DialogInterface?, which: Int ->
-                        clickEvent(holder.adapterPosition)
-                        notifyDataSetChanged()
-                        null
-                    }
-                    .setPositiveButton("\n아니오", null)
-
-                var dlg: AlertDialog = builder.show()
-
-                var messageText: TextView? = dlg.findViewById(android.R.id.message)
-                messageText!!.gravity = Gravity.CENTER
-                messageText!!.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_regular)
-                messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-
-                dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-                dlg.show()
-
-                val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
-                val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
-
-                btnNegative.gravity = Gravity.CENTER
-                btnNegative.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
-                btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-
-                btnPositive.gravity = Gravity.CENTER
-                btnPositive.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
-                btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-
-                val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
-                layoutParams.weight = 10f;
-                btnNegative.setLayoutParams(layoutParams);
-                btnPositive.setLayoutParams(layoutParams);*/
 
                 /*val builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
                 val dlgView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.dialog_diary_list_delete, null)

@@ -60,33 +60,7 @@ class MypageActivity : AppCompatActivity() {
             finish()
         }
         btnDelete.setOnClickListener {
-            var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
-            dlg.setTitle(" ")
-            dlg.setMessage("\n계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
-            //dlg.setNeutralButton("                             확인         ", null)
-            dlg.setPositiveButton("\n확인", null)
-
-            var dlgNew: AlertDialog = dlg.show()
-
-            var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
-            messageText!!.gravity = Gravity.CENTER
-            messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-            messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-            messageText!!.setTextColor(getColor(R.color.colorBlack2b))
-
-            dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-            dlgNew.show()
-
-            //버튼 가운데 정렬
-            val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
-            val parent : LinearLayout = button.parent as LinearLayout
-            parent.gravity = Gravity.CENTER_HORIZONTAL
-            val leftSpacer : View = parent.getChildAt(1)
-            leftSpacer.visibility = View.GONE
-
-            button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+            showDialog()
 
             //TODO 웹쿠키 지우고 내부 디비 지우고 계정삭제
 
@@ -121,6 +95,42 @@ class MypageActivity : AppCompatActivity() {
 
             finish()
         }
+    }
+
+    fun showDialog() {
+        var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
+        dlg.setTitle(" ")
+            .setMessage("\n계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
+            .setPositiveButton("\n확인", null)
+
+        var dlgNew: AlertDialog = dlg.show()
+
+        messageModi(dlgNew)
+
+        dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+        dlgNew.show()
+
+        buttonModi(dlgNew)
+    }
+
+    fun messageModi(dlgNew : AlertDialog) {
+        var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+        messageText!!.gravity = Gravity.CENTER
+        messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+    }
+
+    fun buttonModi(dlgNew : AlertDialog) {
+        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+        val parent : LinearLayout = button.parent as LinearLayout
+        parent.gravity = Gravity.CENTER_HORIZONTAL
+        val leftSpacer : View = parent.getChildAt(1)
+        leftSpacer.visibility = View.GONE
+
+        button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
     }
 
     private fun deleteUser() {
