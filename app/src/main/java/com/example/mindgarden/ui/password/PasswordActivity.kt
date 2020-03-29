@@ -49,7 +49,7 @@ class PasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //test
+        //screen size
         val configuration : Configuration = resources.configuration
         configuration.fontScale = 1f
         val metrics : DisplayMetrics = DisplayMetrics()

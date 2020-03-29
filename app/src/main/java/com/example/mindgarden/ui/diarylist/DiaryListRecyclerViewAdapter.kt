@@ -2,11 +2,8 @@ package com.example.mindgarden.ui.diarylist
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Typeface
-import android.provider.FontsContract
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.LinearLayout
@@ -17,7 +14,6 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
-import kotlinx.android.synthetic.main.dialog_diary_list_delete.view.*
 import kotlinx.android.synthetic.main.rv_item_diary_list.view.*
 import kotlin.collections.ArrayList
 

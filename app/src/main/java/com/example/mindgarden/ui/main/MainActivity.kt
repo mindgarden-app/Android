@@ -2,8 +2,10 @@ package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,6 +28,16 @@ class MainActivity  : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //screen size
+        val configuration : Configuration = resources.configuration
+        configuration.fontScale = 1f
+        val metrics : DisplayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        metrics.scaledDensity = configuration.fontScale * metrics.density
+        configuration.densityDpi = resources.displayMetrics.xdpi.toInt()
+        baseContext.resources.updateConfiguration(configuration, metrics)
+
         setContentView(R.layout.activity_main)
 
         val toast: Toast = Toast(this)

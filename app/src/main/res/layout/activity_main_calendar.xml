@@ -212,12 +212,12 @@
                 android:textColor="#6B6B6B"
                 android:textSize="17dp" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="10" android:textSize="17sp" android:layout_marginEnd="18dp"
+                  android:text="10" android:textSize="17dp" android:layout_marginEnd="18dp"
                   android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_10_main_cal" android:tag="9" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="11" android:textSize="17sp" android:layout_marginEnd="18dp"
+                  android:text="11" android:textSize="17dp" android:layout_marginEnd="18dp"
                   android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_11_main_cal" android:tag="10" />
