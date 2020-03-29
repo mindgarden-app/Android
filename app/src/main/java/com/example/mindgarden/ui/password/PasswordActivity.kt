@@ -2,22 +2,21 @@ package com.example.mindgarden.ui.password
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.db.SharedPreferenceController
@@ -26,11 +25,6 @@ import kotlinx.android.synthetic.main.activity_password.*
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.login.LoginActivity
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.dialog_password_forget.view.*
-import org.json.JSONObject
 import org.koin.android.ext.android.inject
 
 
@@ -54,6 +48,16 @@ class PasswordActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //test
+        val configuration : Configuration = resources.configuration
+        configuration.fontScale = 1f
+        val metrics : DisplayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        metrics.scaledDensity = configuration.fontScale * metrics.density
+        configuration.densityDpi = resources.displayMetrics.xdpi.toInt()
+        baseContext.resources.updateConfiguration(configuration, metrics)
+
         setContentView(R.layout.activity_password)
 
         val toast: Toast = Toast(this)
