@@ -21,7 +21,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
     var dataList = ArrayList<DiaryListData>()
     var isPressed = false
 
-    lateinit var dlgNew : AlertDialog
+    //lateinit var dlgNew : AlertDialog
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder = Holder(viewGroup)
 
@@ -79,7 +79,10 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             holder.itemView.lay1.visibility = View.VISIBLE
 
             holder.itemView.icn_delete.setOnClickListener {
-                var builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
+                //test
+                showDialog(holder)
+
+                /*var builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
                 builder.setTitle("삭제").setMessage("\n삭제하시겠습니까?")
                     .setNegativeButton("\n네") {
                         dlgInterface: DialogInterface?, which: Int ->
@@ -114,7 +117,7 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
                 val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
                 layoutParams.weight = 10f;
                 btnNegative.setLayoutParams(layoutParams);
-                btnPositive.setLayoutParams(layoutParams);
+                btnPositive.setLayoutParams(layoutParams);*/
 
                 /*val builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
                 val dlgView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.dialog_diary_list_delete, null)
@@ -143,6 +146,53 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
         } else {
             holder.itemView.lay1.visibility = View.GONE
         }
+    }
+
+    fun showDialog(holder : Holder) {
+        var builder = AlertDialog.Builder(holder.itemView.context, R.style.NewDialogStyle)
+        builder.setTitle("삭제").setMessage("\n삭제하시겠습니까?")
+            .setNegativeButton("\n네") {
+                    dlgInterface: DialogInterface?, which: Int ->
+                clickEvent(holder.adapterPosition)
+                notifyDataSetChanged()
+                null
+            }
+            .setPositiveButton("\n아니오", null)
+
+        var dlg: AlertDialog = builder.show()
+
+        messageModi(dlg, holder)
+
+        dlg.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+        dlg.show()
+
+        buttonModi(dlg, holder)
+    }
+
+    fun messageModi(dlg : AlertDialog, holder : Holder) {
+        var messageText: TextView? = dlg.findViewById(android.R.id.message)
+        messageText!!.gravity = Gravity.CENTER
+        messageText!!.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_regular)
+        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+    }
+
+    fun buttonModi(dlg : AlertDialog, holder: Holder) {
+        val btnNegative = dlg.getButton(AlertDialog.BUTTON_NEGATIVE);
+        val btnPositive = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
+
+        btnNegative.gravity = Gravity.CENTER
+        btnNegative.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
+        btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+        btnPositive.gravity = Gravity.CENTER
+        btnPositive.typeface = ResourcesCompat.getFont(holder.itemView.context, R.font.notosanscjkr_medium)
+        btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+
+        val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 10f;
+        btnNegative.setLayoutParams(layoutParams);
+        btnPositive.setLayoutParams(layoutParams);
     }
 
     class Holder(viewGroup: ViewGroup): RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_diary_list, viewGroup, false))
