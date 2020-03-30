@@ -257,9 +257,7 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
 
     private fun postDiaryImageOK(){
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val pictureRB = convertPhotoRB()
 
@@ -282,9 +280,8 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
 
     private fun postDiaryImageNull(){
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
+
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
 
         repository
@@ -339,9 +336,8 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
 
     private fun loadData(){
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
+
 
         repository
             .getDiary(
@@ -408,7 +404,7 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
         }
     }
     private fun putDiaryImageOK(){
-        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+        TokenController.isValidToken(this,repository)
 
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val fileName =  File(us).name
@@ -433,7 +429,7 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
 
     private fun putDiaryImageNew(){
-        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+        TokenController.isValidToken(this,repository)
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
         val pictureRB = convertPhotoRB()
         repository
@@ -453,7 +449,7 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
 
     private fun putDiaryImageNull(){
-        if(!TokenController.isValidToken(this)) RenewAcessTokenController.postRenewAccessToken(this,repository)
+        TokenController.isValidToken(this,repository)
         val contentRB = stringConvertToRB(etContentWrite.text.toString())
 
         repository

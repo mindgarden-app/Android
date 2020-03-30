@@ -3,6 +3,8 @@ package com.example.mindgarden.db
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.mindgarden.data.MindgardenRepository
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.coroutineContext
 
 object TokenController {
@@ -11,6 +13,8 @@ object TokenController {
 
     lateinit var preference: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
+
+
 
     fun setAccessToken(ctx: Context, userId: String) {
         preference = ctx.getSharedPreferences(TOKEN, Context.MODE_PRIVATE)
@@ -80,7 +84,7 @@ object TokenController {
         return preference.getLong("access_token_exp", 0)
     }
 
-    fun isValidToken(ctx: Context): Boolean {
+    fun isValidToken(ctx: Context,repository:MindgardenRepository){
         val currentTime = System.currentTimeMillis()
         Log.e("Token Controller isValid", currentTime.toString())
         Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
@@ -88,10 +92,11 @@ object TokenController {
         Log.e("Token Controller isValid", (currentTime - getTimeAccessToken(ctx)).toString())
         if (getExpAccessToken(ctx) * 1000 > currentTime - getTimeAccessToken(ctx)) {
             Log.e("Token Controller isValid", "is vaildate")
-            return true
+
         } else {
             Log.e("Token Controller", "is not vaildate")
-            return false
+            RenewAcessTokenController.postRenewAccessToken(ctx, repository)
+
         }
 
 

@@ -160,21 +160,21 @@ class WebviewLoginActivity : BaseActivity(R.layout.activity_webview_login) {
                                     //myWebView.destroy()
                                     //myWebView.loadUrl("http://15.165.86.150:3000/auth/login/kakao")
 
-                                    if(TokenController.isValidToken(this@WebviewLoginActivity)) {
-                                        val loginIntent =
-                                            Intent(
-                                                this@WebviewLoginActivity,
-                                                MainActivity::class.java
-                                            )
-                                        loginIntent.putExtra("whereFrom", "login")
-                                        startActivity(loginIntent)
-                                    }else{
-//                                        myWebView.destroy()
-//                                        myWebView.clearHistory()
-//                                        myWebView.clearCache(true)
-//                                        myWebView.clearFormData()
-                                        myWebView.loadUrl("http://15.165.86.150:3000/auth/login/kakao")
-                                    }
+//                                    if(TokenController.isValidToken(this@WebviewLoginActivity)) {
+//                                        val loginIntent =
+//                                            Intent(
+//                                                this@WebviewLoginActivity,
+//                                                MainActivity::class.java
+//                                            )
+//                                        loginIntent.putExtra("whereFrom", "login")
+//                                        startActivity(loginIntent)
+//                                    }else{
+////                                        myWebView.destroy()
+////                                        myWebView.clearHistory()
+////                                        myWebView.clearCache(true)
+////                                        myWebView.clearFormData()
+//                                        myWebView.loadUrl("http://15.165.86.150:3000/auth/login/kakao")
+//                                    }
                                 }
 
                                 //암호설정을 한 경우
@@ -192,7 +192,8 @@ class WebviewLoginActivity : BaseActivity(R.layout.activity_webview_login) {
 
                         }
                         //로그인 실패시
-                        else if (it.endsWith("http://15.165.86.150:3000/auth/login/fail")) {
+                        //else if
+                            if (it.endsWith("http://15.165.86.150:3000/auth/login/fail")) {
                             myWebView.visibility = View.INVISIBLE
                             startActivity(Intent(context, LoginActivity::class.java))
                         }

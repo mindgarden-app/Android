@@ -133,9 +133,7 @@ class MypageActivity : BaseActivity(R.layout.activity_mypage) {
     }
 
     private fun deleteUser() {
-        if (!TokenController.isValidToken(this)) {
-            RenewAcessTokenController.postRenewAccessToken(this, repository)
-        }
+        TokenController.isValidToken(this,repository)
 
         repository
             .deleteUser(TokenController.getAccessToken(this),

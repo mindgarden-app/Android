@@ -141,9 +141,8 @@ class ReadDiaryActivity : BaseActivity(R.layout.activity_read_diary), Mood, Diar
     }
 
     private fun loadData(){
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+
+        TokenController.isValidToken(this,repository)
 
         hideErrorView()
 

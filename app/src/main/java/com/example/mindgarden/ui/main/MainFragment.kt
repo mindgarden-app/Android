@@ -3,7 +3,9 @@ package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.Gravity
@@ -53,12 +55,11 @@ class MainFragment : Fragment(), DiaryDate {
         const val INVENTORY_REQUEST_CODE = 200
         private var userOut = false
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        disableScreenSizeChange()
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
@@ -174,9 +175,9 @@ class MainFragment : Fragment(), DiaryDate {
 
 
     private fun loadData() {
-        if (!TokenController.isValidToken(activity!!.applicationContext)) {
-            RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext, repository)
-        }
+
+        TokenController.isValidToken(activity!!.applicationContext,repository)
+
         initGarden()
 
         val date = getServerDate(cal)
@@ -323,6 +324,18 @@ class MainFragment : Fragment(), DiaryDate {
         locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
             img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,
             img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32)
+
+    }
+
+    private fun disableScreenSizeChange(){
+        //screen size
+        val configuration : Configuration = resources.configuration
+        configuration.fontScale = 1f
+        val metrics = DisplayMetrics()
+        activity!!.windowManager.defaultDisplay.getMetrics(metrics)
+        metrics.scaledDensity = configuration.fontScale * metrics.density
+        configuration.densityDpi = resources.displayMetrics.xdpi.toInt()
+        activity!!.baseContext.resources.updateConfiguration(configuration, metrics)
 
     }
 }

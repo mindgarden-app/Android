@@ -216,10 +216,8 @@ class PasswordActivity : BaseActivity(R.layout.activity_password) {
     }
 
     private fun getForgetPassword(accessToken:String){
-        if(!TokenController.isValidToken(this)){
-            Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
+       //     Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
 
         repository
             .getForgetPassword(TokenController.getAccessToken(this),

@@ -143,9 +143,7 @@ class InventoryActivity : BaseActivity(R.layout.activity_inventory), DiaryDate {
     }
 
     private fun isValid() {
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
         when{
             TokenController.getAccessToken(this).isNullOrBlank() -> showToast("로그인하세요")
             treeIdx == -1  -> showToast("나무를 선택하세요")
@@ -184,9 +182,7 @@ class InventoryActivity : BaseActivity(R.layout.activity_inventory), DiaryDate {
     }
 
     private fun loadData(){
-        if(!TokenController.isValidToken(this)){
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
 
         repository
             .getGarden(TokenController.getAccessToken(this), getCurrentDate(),

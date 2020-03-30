@@ -177,9 +177,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun loadData() {
-        if (!TokenController.isValidToken(activity!!.applicationContext)) {
-            RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext, repository)
-        }
+        TokenController.isValidToken(activity!!.applicationContext,repository)
 
         val date = getServerDate(cal)
         Log.e("diaryList date_loadData():", date)
@@ -223,9 +221,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun deleteDiary(diaryIdx: Int) {
-        if (!TokenController.isValidToken(activity!!.applicationContext)) {
-            RenewAcessTokenController.postRenewAccessToken(activity!!.applicationContext, repository)
-        }
+        TokenController.isValidToken(activity!!.applicationContext,repository)
         repository
             .deleteDiaryList(TokenController.getAccessToken(activity!!.applicationContext), diaryIdx,
                 {

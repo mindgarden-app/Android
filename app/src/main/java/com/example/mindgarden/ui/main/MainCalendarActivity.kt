@@ -10,19 +10,18 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.mindgarden.R
+import com.example.mindgarden.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main_calendar.*
 import java.util.*
 
 
 @Suppress("DEPRECATION")
-class MainCalendarActivity : AppCompatActivity() {
-
+class MainCalendarActivity  : BaseActivity(R.layout.activity_main_calendar){
     private val cal = Calendar.getInstance()
     private val currentCal = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_calendar)
 
         init()
     }

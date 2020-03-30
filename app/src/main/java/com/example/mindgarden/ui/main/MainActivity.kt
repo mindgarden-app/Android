@@ -36,10 +36,8 @@ class MainActivity  : BaseActivity(R.layout.activity_main) {
 
         configureMainTab()
 
-        if(!TokenController.isValidToken(this)){
-            Log.e("Main Activity token opposite state",(!TokenController.isValidToken(this)).toString())
-            RenewAcessTokenController.postRenewAccessToken(this,repository)
-        }
+        TokenController.isValidToken(this,repository)
+
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
