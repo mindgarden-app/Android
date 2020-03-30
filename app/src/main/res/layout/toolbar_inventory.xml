@@ -23,6 +23,7 @@
                 android:id="@+id/btn_back_toolbar"/>
 
         <TextView
+                android:id="@+id/txt_inventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

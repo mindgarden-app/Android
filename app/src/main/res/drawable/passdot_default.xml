@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:useLevel="false" android:thickness="5dp" android:shape="ring" android:innerRadius="0dp">
+        <shape android:useLevel="false" android:thickness="7dp" android:shape="ring" android:innerRadius="0dp">
             <solid android:color="#C6C6C6"/>
         </shape>
     </item>

@@ -21,7 +21,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_email_sign_up.*
 import kotlinx.android.synthetic.main.activity_email_sign_up.edt_email
-import kotlinx.android.synthetic.main.toolbar_write_diary.view.*
+import kotlinx.android.synthetic.main.toolbar_inventory.view.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import java.util.regex.Pattern
@@ -33,13 +33,13 @@ class EmailSignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_email_sign_up)
 
-        toolbar_email_sign_up.txt_date_toolbar_write_diary.text = "이메일 회원가입"
-        toolbar_email_sign_up.txt_save_toolbar.text = "등록"
+        toolbar_email_sign_up.txt_inventory.text = "이메일 회원가입"
+        toolbar_email_sign_up.txt_save_inventory.text = "등록"
 
 
 
 
-        toolbar_email_sign_up.btn_save_diary_toolbar.setOnClickListener {
+        toolbar_email_sign_up.btn_save_inventory.setOnClickListener {
             if(canEnroll()){
                 postEmailSignUp()
             }
