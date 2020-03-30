@@ -25,9 +25,10 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 import android.webkit.CookieManager
 import com.example.mindgarden.R
+import com.example.mindgarden.ui.base.BaseActivity
 
 
-class WebviewLoginActivity : AppCompatActivity() {
+class WebviewLoginActivity : BaseActivity(R.layout.activity_webview_login) {
 
     var whyOpen: String = ""
 
@@ -35,7 +36,6 @@ class WebviewLoginActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_webview_login)
         val myWebView = findViewById<AdvancedWebView>(R.id.webView)
         val intent = getIntent()
 

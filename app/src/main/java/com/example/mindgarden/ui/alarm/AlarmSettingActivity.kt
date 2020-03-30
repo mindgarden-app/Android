@@ -22,6 +22,7 @@ import android.view.View
 import com.example.mindgarden.db.SharedPreferenceController
 import android.view.WindowManager
 import com.example.mindgarden.broadcastReceiver.BroadcastD
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.mypage.MypageActivity
 
 /*
@@ -31,7 +32,7 @@ import com.example.mindgarden.ui.mypage.MypageActivity
 [완료] 코드 다듬기 _2010.07_30
 [수정필요] 1분차이남
  */
-class AlarmSettingActivity : AppCompatActivity() {
+class AlarmSettingActivity : BaseActivity(R.layout.activity_alarm_setting) {
 
     @SuppressLint("ResourceAsColor")
     val cal = Calendar.getInstance()
@@ -43,7 +44,6 @@ class AlarmSettingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_alarm_setting)
         txtSetting.text = "알림 설정"
 
         //back button

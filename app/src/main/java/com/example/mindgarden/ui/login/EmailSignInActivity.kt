@@ -11,6 +11,7 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -20,13 +21,12 @@ import org.json.JSONObject
 import org.koin.android.ext.android.inject
 
 
-class EmailSignInActivity : AppCompatActivity() {
+class EmailSignInActivity : BaseActivity(R.layout.activity_email_login) {
 
     private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_login)
 
         //툴바 재활용을 위해 text 교체
         toolbar_email_login.txtSetting.text = "이메일 로그인"

@@ -20,6 +20,7 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.ui.alarm.AlarmSettingActivity
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.login.LoginActivity
 import com.example.mindgarden.ui.password.PasswordSettingActivity
 import kotlinx.android.synthetic.main.activity_mypage.*
@@ -32,14 +33,12 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MypageActivity : AppCompatActivity() {
+class MypageActivity : BaseActivity(R.layout.activity_mypage) {
 
     private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mypage)
-
         userName.text = SharedPreferenceController.getUserName(this)
         userMail.text = SharedPreferenceController.getUserMail(this)
 

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.ui.base.BaseActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_email_login.*
@@ -26,12 +27,11 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.view.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 
-class EmailPasswordActivity : AppCompatActivity() {
+class EmailPasswordActivity : BaseActivity(R.layout.activity_email_password) {
     private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_password)
 
         toolbar_email_password.txtSetting.text = "비밀번호 재설정"
         toolbar_email_password.btnBack.setOnClickListener {
