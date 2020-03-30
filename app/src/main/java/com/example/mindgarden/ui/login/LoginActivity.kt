@@ -20,11 +20,12 @@ import android.widget.*
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.db.SharedPreferenceController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.ui.password.PasswordActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity(R.layout.activity_login) {
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 101
     private var permissionsRequired = arrayOf(
@@ -38,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
         configureMainTab()
 
 

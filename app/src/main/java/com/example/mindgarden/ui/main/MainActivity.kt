@@ -17,35 +17,18 @@ import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 
-class MainActivity  : AppCompatActivity() {
+class MainActivity  : BaseActivity(R.layout.activity_main) {
 
     private val repository : MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //screen size
-        val configuration : Configuration = resources.configuration
-        configuration.fontScale = 1f
-        val metrics : DisplayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-        metrics.scaledDensity = configuration.fontScale * metrics.density
-        configuration.densityDpi = resources.displayMetrics.xdpi.toInt()
-        baseContext.resources.updateConfiguration(configuration, metrics)
-
-        setContentView(R.layout.activity_main)
-
-        val toast: Toast = Toast(this)
-        val inflater: LayoutInflater = LayoutInflater.from(this)
-        val toastView: View = inflater.inflate(R.layout.toast, null)
-        val toastText: TextView = toastView.findViewById(R.id.toastText)
-
-        //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
@@ -79,8 +62,6 @@ class MainActivity  : AppCompatActivity() {
             .inflate(R.layout.navigation_category_main, null, false)
         tl_main_category.getTabAt(0)!!.customView = navCategoryMainLayout.
             findViewById(R.id.rl_nav_category_main_home) as RelativeLayout
-       // tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
-         //   findViewById(R.id.rl_nav_category_main_write) as RelativeLayout
        tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
            findViewById(R.id.rl_nav_category_main_list) as RelativeLayout
     }

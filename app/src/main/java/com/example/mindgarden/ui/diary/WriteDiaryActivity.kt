@@ -31,6 +31,7 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.MoodChoiceData
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
 import kotlinx.android.synthetic.main.activity_write_diary.*
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
@@ -44,7 +45,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class WriteDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
+class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, DiaryDate {
 
     private val repository : MindgardenRepository by inject()
     private val moodItemList : ArrayList<MoodChoiceData> by lazy{
@@ -73,7 +74,6 @@ class WriteDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write_diary)
 
         init()
         if(diaryIdx!=-1){

@@ -5,7 +5,9 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.toolbar_read_diary.*
 import com.example.mindgarden.R
 import android.app.Activity
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
@@ -17,12 +19,13 @@ import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.data.MoodChoiceData
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.main.RxEventBus
 import kotlinx.android.synthetic.main.activity_read_diary.*
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import org.koin.android.ext.android.inject
 
-class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
+class ReadDiaryActivity : BaseActivity(R.layout.activity_read_diary), Mood, DiaryDate {
 
     private val MoodItemList : ArrayList<MoodChoiceData> by lazy{
         ArrayList<MoodChoiceData>()
@@ -41,7 +44,6 @@ class ReadDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_read_diary)
         init()
         if(diaryIdx != -1){
             loadData()

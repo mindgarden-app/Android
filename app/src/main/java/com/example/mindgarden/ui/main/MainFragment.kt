@@ -249,9 +249,10 @@ class MainFragment : Fragment(), DiaryDate {
     private fun setTree(dataSize : Int, data: ArrayList<GardenResponse.GardenData>){
         when(getSeason()){
             0->{
-                for(i in 0 until dataSize){
-                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
-                    else locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+                for(i in 0 until 32){
+//                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+//                    else locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+                    locationList[i].setSpringTreeImage(3)
                 }
             }
             else->{

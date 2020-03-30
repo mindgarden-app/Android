@@ -25,11 +25,12 @@ import kotlinx.android.synthetic.main.activity_password.*
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import org.koin.android.ext.android.inject
 
 
 @Suppress("NAME_SHADOWING")
-class PasswordActivity : AppCompatActivity() {
+class PasswordActivity : BaseActivity(R.layout.activity_password) {
 
     private val repository : MindgardenRepository by inject()
 
@@ -48,17 +49,6 @@ class PasswordActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //screen size
-        val configuration : Configuration = resources.configuration
-        configuration.fontScale = 1f
-        val metrics : DisplayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-        metrics.scaledDensity = configuration.fontScale * metrics.density
-        configuration.densityDpi = resources.displayMetrics.xdpi.toInt()
-        baseContext.resources.updateConfiguration(configuration, metrics)
-
-        setContentView(R.layout.activity_password)
 
         val toast: Toast = Toast(this)
         val inflater: LayoutInflater = LayoutInflater.from(this)

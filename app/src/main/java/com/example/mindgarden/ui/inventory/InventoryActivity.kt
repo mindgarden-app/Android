@@ -18,6 +18,7 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.GardenResponse
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.main.MainActivity
 import com.google.gson.JsonObject
@@ -32,7 +33,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class InventoryActivity : AppCompatActivity(), DiaryDate {
+class InventoryActivity : BaseActivity(R.layout.activity_inventory), DiaryDate {
     private val repository : MindgardenRepository by inject()
 
     private val  inventoryRecyclerViewAdapter: InventoryRecyclerViewAdapter by lazy {
@@ -55,7 +56,6 @@ class InventoryActivity : AppCompatActivity(), DiaryDate {
     private var season : Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inventory)
         init()
     }
 

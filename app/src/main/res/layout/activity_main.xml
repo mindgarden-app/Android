@@ -14,18 +14,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <!--<Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="button"/>-->
-
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp_main"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-        >
+                >
         </androidx.viewpager.widget.ViewPager>
 
         <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -37,7 +31,7 @@
                     app:tabIndicatorColor="#ffffff"
                     app:tabRippleColor="@null"
                     android:tabStripEnabled="true"
-            ></com.google.android.material.tabs.TabLayout>
+                    ></com.google.android.material.tabs.TabLayout>
             <ImageButton
                     android:layout_width="wrap_content" android:layout_centerInParent="true"
                     android:background="#ffffff"  android:paddingRight="50dp"   android:paddingLeft="50dp"

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.ui.base.BaseActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_email_sign_up.*
@@ -26,12 +27,11 @@ import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import java.util.regex.Pattern
 
-class EmailSignUpActivity : AppCompatActivity() {
+class EmailSignUpActivity : BaseActivity(R.layout.activity_email_sign_up) {
     private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_sign_up)
 
         toolbar_email_sign_up.txt_inventory.text = "이메일 회원가입"
         toolbar_email_sign_up.txt_save_inventory.text = "등록"
