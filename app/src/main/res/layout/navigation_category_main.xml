@@ -7,21 +7,22 @@
 
         <ImageView
                 android:id="@+id/rl_nav_category_main_home"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_width="100dp"
+                android:layout_height="46dp"
                 android:paddingEnd="30dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="15dp"
                 android:src="@drawable/btn_home_selector" />
-
-
-
 
 
         <ImageView
                 android:id="@+id/rl_nav_category_main_list"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_width="100dp"
+                android:layout_height="46dp"
                 android:paddingStart="30dp"
-                android:src="@drawable/btn_list_selector"/>
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/btn_list_selector" />
 
 
 </LinearLayout>

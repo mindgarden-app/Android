@@ -33,9 +33,9 @@
                     android:tabStripEnabled="true"
                     ></com.google.android.material.tabs.TabLayout>
             <ImageButton
-                    android:layout_width="wrap_content" android:layout_centerInParent="true"
+                    android:layout_width="152dp" android:layout_centerInParent="true"
                     android:background="#ffffff"  android:paddingRight="50dp"   android:paddingLeft="50dp"
-                    android:layout_height="wrap_content" app:srcCompat="@drawable/btn_writing" android:id="@+id/btn_write"/>
+                    android:layout_height="52dp" app:srcCompat="@drawable/btn_writing" android:id="@+id/btn_write"/>
 
         </RelativeLayout>
     </LinearLayout>
