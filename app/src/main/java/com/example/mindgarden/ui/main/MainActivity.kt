@@ -66,11 +66,11 @@ class MainActivity  : AppCompatActivity() {
         val navCategoryMainLayout: View = (this.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.navigation_category_main, null, false)
         tl_main_category.getTabAt(0)!!.customView = navCategoryMainLayout.
-            findViewById(R.id.rl_nav_category_main_home) as RelativeLayout
+            findViewById(R.id.rl_nav_category_main_home)
        // tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
          //   findViewById(R.id.rl_nav_category_main_write) as RelativeLayout
        tl_main_category.getTabAt(1)!!.customView = navCategoryMainLayout.
-           findViewById(R.id.rl_nav_category_main_list) as RelativeLayout
+           findViewById(R.id.rl_nav_category_main_list)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
