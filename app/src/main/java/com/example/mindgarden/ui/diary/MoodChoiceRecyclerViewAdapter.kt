@@ -29,7 +29,7 @@ class MoodChoiceRecyclerViewAdapter (var ctx: Context, var dataList : ArrayList<
         holder.moodTxt.text = dataList[position].moodTxt
 
         holder.container.setOnClickListener{
-            Intent(ctx, ModifyDiaryActivity::class.java).apply {
+            Intent(ctx, WriteDiaryActivity::class.java).apply {
                 putExtra("weatherIdx", dataList[position].weatherIdx)
                 (ctx as Activity).setResult(Activity.RESULT_OK, this)
                 (ctx as Activity).finish()

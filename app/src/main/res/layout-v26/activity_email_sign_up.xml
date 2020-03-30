@@ -14,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/toolbar_write_diary" />
+        <include layout="@layout/toolbar_inventory" />
     </LinearLayout>
 
 
@@ -30,7 +30,7 @@
             android:letterSpacing="0.02"
             android:text="이메일"
             android:textColor="@color/colorBlack"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_email_sign_up" />
 
@@ -45,9 +45,9 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="12dp"
-            android:textSize="15sp"
             android:paddingVertical="9dp"
             android:paddingLeft="12sp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +59,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
-            android:text="유효한 이메일 형식이 아닙니다."
             android:fontFamily="@font/notosanscjkr_medium"
-            android:textColor="@color/colorRed"
             android:includeFontPadding="false"
-            android:textSize="11sp"
+            android:text="유효한 이메일 형식이 아닙니다."
+            android:textColor="@color/colorRed"
+            android:textSize="11dp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_email" />
@@ -80,7 +80,7 @@
             android:letterSpacing="0.02"
             android:text="이름"
             android:textColor="@color/colorBlack"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_check_email" />
 
@@ -95,7 +95,7 @@
             android:ems="10"
             android:inputType="textEmailAddress"
             android:paddingLeft="12sp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_name" />
@@ -113,7 +113,7 @@
             android:letterSpacing="0.02"
             android:text="비밀번호 (영문, 숫자 조합 8자 이상)"
             android:textColor="@color/colorBlack"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_name" />
 
@@ -128,7 +128,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:paddingLeft="12sp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password" />
@@ -145,7 +145,7 @@
             android:letterSpacing="0.02"
             android:text="비밀번호 재확인"
             android:textColor="@color/colorBlack"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_check_password" />
 
@@ -160,7 +160,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:paddingLeft="12sp"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_password_check" />
@@ -172,10 +172,10 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/notosanscjkr_medium"
-            android:textColor="@color/colorRed"
             android:includeFontPadding="false"
-            android:textSize="11sp"
             android:text="영문, 숫자 조합 8자 이상을 입력해주세요."
+            android:textColor="@color/colorRed"
+            android:textSize="11dp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password" />
@@ -190,7 +190,7 @@
             android:includeFontPadding="false"
             android:text="비밀번호가 동일하지 않습니다."
             android:textColor="@color/colorRed"
-            android:textSize="11sp"
+            android:textSize="11dp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password_check" />
@@ -204,6 +204,7 @@
             android:buttonTint="@color/colorBlockGray"
             android:checked="false"
             android:includeFontPadding="false"
+            android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_check_password_again" />
 
@@ -215,7 +216,7 @@
             android:includeFontPadding="false"
             android:text="@string/title_terme_of_use"
             android:textColor="@color/colorRoundGray"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree" />
 
@@ -226,7 +227,7 @@
             android:fontFamily="@font/notosanscjkr_regular"
             android:includeFontPadding="false"
             android:text="  및  "
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toEndOf="@+id/btn_privacy_statement"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree" />
 
@@ -238,7 +239,7 @@
             android:includeFontPadding="false"
             android:text="@string/title_privacy_statement"
             android:textColor="@color/colorRoundGray"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintEnd_toStartOf="@+id/textView2"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree"
@@ -253,7 +254,7 @@
             android:includeFontPadding="false"
             android:text="가입 시 마인드가든의  "
             android:textColor="@color/colorRoundGray"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintEnd_toStartOf="@+id/btn_privacy_statement"
             app:layout_constraintStart_toEndOf="@+id/checkBox_agree"
             app:layout_constraintTop_toTopOf="@+id/checkBox_agree" />
@@ -266,7 +267,7 @@
             android:includeFontPadding="false"
             android:text="에 동의한 것으로 간주합니다."
             android:textColor="@color/colorRoundGray"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

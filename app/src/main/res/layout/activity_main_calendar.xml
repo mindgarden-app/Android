@@ -42,7 +42,7 @@
                 android:fontFamily="@font/notosanscjkr_bold"
                 android:paddingBottom="12dp"
                 android:textColor="#6b6b6b"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
                 android:tag="0"
                 android:text="1"
                 android:textColor="#6B6B6B"
-                android:textSize="17sp" />
+                android:textSize="17dp" />
 
         <TextView
                 android:id="@+id/txt_2_main_cal"
@@ -98,17 +98,34 @@
                 android:tag="1"
                 android:text="2"
                 android:textColor="#6B6B6B"
-                android:textSize="17sp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="3" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:layout_marginEnd="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_3_main_cal" android:tag="2" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="4" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_4_main_cal" android:tag="3" />
+                android:textSize="17dp" />
+
+        <TextView
+                android:id="@+id/txt_3_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="2"
+                android:text="3"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
+
+        <TextView
+                android:id="@+id/txt_4_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="3"
+                android:text="4"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -117,28 +134,61 @@
             android:gravity="center"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="5" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:layout_marginEnd="20dp"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_5_main_cal" android:tag="4" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="6" android:textSize="17sp" android:textColor="#6B6B6B"
-                 android:layout_marginEnd="20dp" android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_6_main_cal" android:tag="5" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="7" android:textColor="#6B6B6B"
-                  android:textSize="17sp" android:layout_marginEnd="20dp"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_7_main_cal" android:tag="6" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:text="8" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:id="@+id/txt_8_main_cal" android:tag="7" />
+
+        <TextView
+                android:id="@+id/txt_5_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="4"
+                android:text="5"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
+
+        <TextView
+                android:id="@+id/txt_6_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="5"
+                android:text="6"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
+
+        <TextView
+                android:id="@+id/txt_7_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="6"
+                android:text="7"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
+
+        <TextView
+                android:id="@+id/txt_8_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="7"
+                android:text="8"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
     </LinearLayout>
     <LinearLayout
             android:layout_width="match_parent"
@@ -147,26 +197,42 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:orientation="horizontal">
+
+        <TextView
+                android:id="@+id/txt_9_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="5dp"
+                android:tag="8"
+                android:text="9"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="9" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:layout_marginEnd="20dp"
-                  android:paddingRight="12dp" android:paddingLeft="12dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_9_main_cal" android:tag="8"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="10" android:textSize="17sp" android:layout_marginEnd="18dp"
+                  android:text="10" android:textSize="17dp" android:layout_marginEnd="18dp"
                   android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_10_main_cal" android:tag="9" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="11" android:textSize="17sp" android:layout_marginEnd="18dp"
+                  android:text="11" android:textSize="17dp" android:layout_marginEnd="18dp"
                   android:paddingRight="8dp" android:paddingLeft="8dp" android:textColor="#6B6B6B"
                   android:paddingBottom="5dp" android:paddingTop="5dp"
                   android:id="@+id/txt_11_main_cal" android:tag="10" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="12" android:textSize="17sp" android:textColor="#6B6B6B"
-                  android:paddingRight="8dp" android:paddingLeft="8dp"
-                  android:paddingBottom="5dp" android:paddingTop="5dp"
-                  android:id="@+id/txt_12_main_cal" android:tag="11" />
+
+        <TextView
+                android:id="@+id/txt_12_main_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingTop="5dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="5dp"
+                android:tag="11"
+                android:text="12"
+                android:textColor="#6B6B6B"
+                android:textSize="17dp" />
     </LinearLayout>
 </LinearLayout>

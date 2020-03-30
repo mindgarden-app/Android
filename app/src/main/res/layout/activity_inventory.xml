@@ -6,25 +6,62 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent" android:layout_width="match_parent" android:id="@+id/clInventory">
 
-    <ImageView android:layout_height="74dp" android:layout_width="93dp" android:id="@+id/img_map" tools:ignore="MissingConstraints" app:srcCompat="@drawable/img_map" app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent" android:gravity="right" android:layout_marginEnd="25dp" android:layout_marginTop="16.5dp"/>
+        <ImageView
+                android:id="@+id/img_map"
+                android:layout_width="93dp"
+                android:layout_height="74dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="right"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_map"
+                tools:ignore="MissingConstraints" />
 
-    <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/imageView2" android:layout_marginTop="0dp" app:layout_constraintTop_toBottomOf="@+id/img_map" app:layout_constraintStart_toStartOf="parent" android:src="@drawable/img_point_n" android:layout_marginStart="25dp" android:layout_gravity="left"/>
+        <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/img_point_n"
+                app:layout_constraintBottom_toTopOf="@+id/rv_grid"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
-    <RelativeLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/relativeLayout" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="3dp" app:layout_constraintTop_toBottomOf="@+id/imageView2" app:layout_constraintStart_toStartOf="parent" android:layout_gravity="center">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/rv_inventory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_map" />
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/rv_grid"/>
 
-    </RelativeLayout>
+        <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:src="@drawable/img_point_s"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_grid"
+                tools:ignore="MissingConstraints" />
 
-    <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/imageView" tools:ignore="MissingConstraints" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="25dp" android:layout_marginTop="3dp" app:layout_constraintTop_toBottomOf="@+id/relativeLayout" android:src="@drawable/img_point_s" android:layout_gravity="right"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginBottom="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-
-    <LinearLayout android:background="@drawable/inventory_layout_border" android:layout_height="80dp" android:layout_width="match_parent" android:id="@+id/lay_inventory" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent">
-
-    <androidx.recyclerview.widget.RecyclerView android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/rv_inventory" android:layout_marginTop="14dp" android:layout_marginBottom="8dp"/>
-
-    </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

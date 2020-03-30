@@ -2,7 +2,6 @@ package com.example.mindgarden.ui.diary
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -15,11 +14,11 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -32,8 +31,9 @@ import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.MoodChoiceData
 import com.example.mindgarden.db.RenewAcessTokenController
+import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.diary.ReadDiaryActivity.Companion.DIARY_IDX
-import kotlinx.android.synthetic.main.activity_modify_diary.*
+import kotlinx.android.synthetic.main.activity_write_diary.*
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_write_diary.*
 import okhttp3.MediaType
@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
+class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, DiaryDate {
 
     private val repository : MindgardenRepository by inject()
     private val moodItemList : ArrayList<MoodChoiceData> by lazy{
@@ -74,7 +74,6 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modify_diary)
 
         init()
         if(diaryIdx!=-1){
@@ -269,12 +268,17 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
                 TokenController.getAccessToken(this),contentRB, weatherIdx, pictureRB,
                 {
                     if(it.status == 200){
+                        hideKeyboard()
                         showProgressBar()
                         diaryIdx = it.diaryIdx
                         postIntent()
                     }
                 },
-                {Toast.makeText(this, it, Toast.LENGTH_SHORT).show()})
+                {
+                    hideProgressBar()
+                    showErrorView()
+                    btnRetryDataLoad()
+                })
     }
 
     private fun postDiaryImageNull(){
@@ -287,6 +291,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
             .postDiary(
                 TokenController.getAccessToken(this),contentRB, weatherIdx,null,
                 {
+                    hideKeyboard()
                     hideErrorView()
                     showProgressBar()
                     diaryIdx = it.diaryIdx
@@ -414,6 +419,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
+                    hideKeyboard()
                     hideErrorView()
                     showProgressBar()
                     putIntent()
@@ -433,6 +439,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB,  weatherIdx, diaryIdx, pictureRB,
                 {
+                    hideKeyboard()
                     hideErrorView()
                     showProgressBar()
                     putIntent()
@@ -452,6 +459,7 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         repository
             .putDiary(TokenController.getAccessToken(this), contentRB, weatherIdx, diaryIdx, null,
                 {
+                    hideKeyboard()
                     hideErrorView()
                     showProgressBar()
                     putIntent()
@@ -488,6 +496,11 @@ class ModifyDiaryActivity : AppCompatActivity(), Mood, DiaryDate {
         setDialogSize(dialog)
     }
 
+    //hide keyboard
+    private fun hideKeyboard(){
+        val imm : InputMethodManager= this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(etContentWrite.windowToken, 0)
+    }
     //camera image
     private fun imageChooser(requestCode: Int) {
         val selectionIntent = Intent(Intent.ACTION_GET_CONTENT).apply {

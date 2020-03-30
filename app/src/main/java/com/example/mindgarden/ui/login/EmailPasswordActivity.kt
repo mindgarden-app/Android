@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.ui.base.BaseActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.activity_email_login.*
@@ -26,12 +27,11 @@ import kotlinx.android.synthetic.main.toolbar_mypage_main.view.*
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 
-class EmailPasswordActivity : AppCompatActivity() {
+class EmailPasswordActivity : BaseActivity(R.layout.activity_email_password) {
     private val repository: MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_email_password)
 
         toolbar_email_password.txtSetting.text = "비밀번호 재설정"
         toolbar_email_password.btnBack.setOnClickListener {
@@ -89,33 +89,8 @@ class EmailPasswordActivity : AppCompatActivity() {
                 {
                     if (it.message != "메일 전송 성공") {
                         Log.e("email",it.message)
-                        //팝업 띄우기
-                        var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
-                        dlg.setMessage("\n\n존재하지 않는 메일 주소입니다.")
-                            //.setNeutralButton("                              다시 입력하기                            ",null)
-                        dlg.setPositiveButton("\n다시 입력하기", null)
 
-                        var dlgNew: AlertDialog = dlg.show()
-
-                        var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
-                        messageText!!.gravity = Gravity.CENTER
-                        messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-                        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
-                        messageText!!.setTextColor(getColor(R.color.colorBlack2b))
-
-                        dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
-
-                        dlgNew.show()
-
-                        //버튼 가운데 정렬
-                        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
-                        val parent : LinearLayout = button.parent as LinearLayout
-                        parent.gravity = Gravity.CENTER_HORIZONTAL
-                        val leftSpacer : View = parent.getChildAt(1)
-                        leftSpacer.visibility = View.GONE
-
-                        button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
-                        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+                        showDialog()
                     }
                     else{
                         val sendPasswordIntent = Intent(this, EmailSendPasswordActivity::class.java)
@@ -127,5 +102,39 @@ class EmailPasswordActivity : AppCompatActivity() {
                 {
                     //에러처리
                 })
+    }
+
+    fun showDialog() {
+        var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
+        dlg.setMessage("\n\n존재하지 않는 메일 주소입니다.").setPositiveButton("\n다시 입력하기", null)
+
+        var dlgNew: AlertDialog = dlg.show()
+
+        messageModi(dlgNew)
+
+        dlgNew.window.setBackgroundDrawableResource(R.drawable.round_layout_border)
+
+        dlgNew.show()
+
+        buttonModi(dlgNew)
+    }
+
+    fun messageModi(dlgNew : AlertDialog) {
+        var messageText: TextView? = dlgNew.findViewById(android.R.id.message)
+        messageText!!.gravity = Gravity.CENTER
+        messageText!!.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        messageText!!.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        messageText!!.setTextColor(getColor(R.color.colorBlack2b))
+    }
+
+    fun buttonModi(dlgNew : AlertDialog) {
+        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
+        val parent : LinearLayout = button.parent as LinearLayout
+        parent.gravity = Gravity.CENTER_HORIZONTAL
+        val leftSpacer : View = parent.getChildAt(1)
+        leftSpacer.visibility = View.GONE
+
+        button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_regular)
+        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
     }
 }

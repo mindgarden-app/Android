@@ -17,18 +17,16 @@ import android.widget.Toast
 import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.R
+import com.example.mindgarden.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.toolbar_mypage_main.*
 
-class PasswordSettingActivity : AppCompatActivity() {
+class PasswordSettingActivity : BaseActivity(R.layout.activity_password_setting) {
     val REQUEST_CODE_PASSWORD_SETTING_ACTIVITY=1000
     lateinit var  passwordSwitch: Switch
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_password_setting)
         txtSetting.text = "암호 설정"
-
-
 
 
         btnBack.setOnClickListener {

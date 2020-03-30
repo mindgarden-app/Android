@@ -11,15 +11,14 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mindgarden.data.MoodChoiceData
+import com.example.mindgarden.ui.base.BaseActivity
 
-class MoodActivity : AppCompatActivity(), Mood {
+class MoodActivity : BaseActivity(R.layout.activity_mood_choice), Mood {
 
     lateinit var moodChoiceRecyclerViewAdapter: MoodChoiceRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mood_choice)
-
         setWindow()
         configureRecyclerView()
     }

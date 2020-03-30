@@ -2,8 +2,10 @@ package com.example.mindgarden.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.viewpager.widget.ViewPager
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,25 +17,18 @@ import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.db.RenewAcessTokenController
-import com.example.mindgarden.ui.diary.ModifyDiaryActivity
+import com.example.mindgarden.ui.base.BaseActivity
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 
-class MainActivity  : AppCompatActivity() {
+class MainActivity  : BaseActivity(R.layout.activity_main) {
 
     private val repository : MindgardenRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val toast: Toast = Toast(this)
-        val inflater: LayoutInflater = LayoutInflater.from(this)
-        val toastView: View = inflater.inflate(R.layout.toast, null)
-        val toastText: TextView = toastView.findViewById(R.id.toastText)
-
-        //Log.e("Main: userID", SharedPreferenceController.getUserID(this).toString())
 
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
@@ -52,10 +47,10 @@ class MainActivity  : AppCompatActivity() {
 
 
         btn_write.setOnClickListener {
-                startActivityForResult(Intent(this, ModifyDiaryActivity::class.java),1100)
+                startActivityForResult(Intent(this, WriteDiaryActivity::class.java),1100)
         }
 
-        ModifyDiaryActivity.CHECK = false
+        WriteDiaryActivity.CHECK = false
     }
 
     private fun configureMainTab() {
