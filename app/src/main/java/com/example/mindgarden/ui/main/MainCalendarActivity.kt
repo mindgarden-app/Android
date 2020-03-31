@@ -86,7 +86,7 @@ class MainCalendarActivity  : BaseActivity(R.layout.activity_main_calendar){
         tv.setOnClickListener {
             tv.setBackgroundResource(R.drawable.round_btn)
             val monthText = tv.text.toString()
-            cal.set(Calendar.MONTH, monthText.toInt())
+            cal.set(Calendar.MONTH, (monthText.toInt() - 1))
             intentToFragment()
         }
     }
@@ -119,7 +119,7 @@ class MainCalendarActivity  : BaseActivity(R.layout.activity_main_calendar){
     private fun intentToFragment(){
         Intent(this, MainFragment::class.java).apply {
             putExtra("year", cal.get(Calendar.YEAR))
-            putExtra("month", ((cal.get(Calendar.MONTH))-1))
+            putExtra("month", cal.get(Calendar.MONTH))
             setResult(Activity.RESULT_OK,this)
             finish()
         }

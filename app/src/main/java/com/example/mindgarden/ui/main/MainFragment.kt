@@ -71,10 +71,10 @@ class MainFragment : Fragment(), DiaryDate {
         init()
     }
 
-    override fun onPause() {
+    /*override fun onPause() {
         super.onPause()
         userOut = true
-    }
+    }*/
     override fun onResume() {
         super.onResume()
         if(WriteDiaryActivity.CHECK){
@@ -162,6 +162,7 @@ class MainFragment : Fragment(), DiaryDate {
 
         TokenController.isValidToken(activity!!.applicationContext,repository)
 
+        setLand()
         initGarden()
 
         val date = getServerDate(cal)
