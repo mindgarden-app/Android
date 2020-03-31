@@ -90,6 +90,7 @@ class MainFragment : Fragment(), DiaryDate {
     private fun init(){
         btnToolbarClick()
         mainFragmentClick()
+        setLand()
         initToolbarTextCurrent()
         isValid()
     }
@@ -189,7 +190,6 @@ class MainFragment : Fragment(), DiaryDate {
                         setMainDateText()   //날짜
                         it.data[0].let {d->
                             setMainComment(d.treeNum)  //코멘트
-                            setLand()
                             setTree(it.data.size,it.data)//namu
                             setGardenBalloon(d.balloon) //풍선
                         }
