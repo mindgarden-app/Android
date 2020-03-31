@@ -25,7 +25,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.GardenResponse
-import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.setDefaultTreeImage
 import com.example.mindgarden.setSpringTreeImage
@@ -92,7 +91,7 @@ class MainFragment : Fragment(), DiaryDate {
         mainFragmentClick()
         setLand()
         initToolbarTextCurrent()
-        isValid()
+        loadData()
     }
 
     private fun initToolbarTextCurrent(){
@@ -145,7 +144,7 @@ class MainFragment : Fragment(), DiaryDate {
                     cal.set(Calendar.MONTH, data.getIntExtra("month",-1))
                     cal.set(Calendar.YEAR, data.getIntExtra("year",-1))
                     txtDateToolbarMain.text = getToolbarDate(cal)
-                    isValid()
+                    loadData()
                 }else{
                     Log.e("MainFragment", "intentFail")
                 }
@@ -158,22 +157,6 @@ class MainFragment : Fragment(), DiaryDate {
             }
         }
     }
-
-
-    fun isValid() {
-        val toast = Toast(activity!!.applicationContext)
-        val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
-        val toastView: View = inflater.inflate(R.layout.toast, null)
-        val toastText: TextView = toastView.findViewById(R.id.toastText)
-
-        if (TokenController.getAccessToken(activity!!.applicationContext) == "") {
-            toastText.setText("로그인하세요")
-            toastText.gravity = Gravity.CENTER
-            toast.view = toastView
-            toast.show()
-        }else loadData()
-    }
-
 
     private fun loadData() {
 
@@ -189,9 +172,9 @@ class MainFragment : Fragment(), DiaryDate {
                     if (it.success) {
                         setMainDateText()   //날짜
                         it.data[0].let {d->
-                            setMainComment(d.treeNum)  //코멘트
-                            setTree(it.data.size,it.data)//namu
-                            setGardenBalloon(d.balloon) //풍선
+                            setMainComment(d.treeNum)
+                            setTree(it.data.size,it.data)
+                            setGardenBalloon(d.balloon)
                         }
                     }else{
                         Log.e("mainFragment load", it.message)
@@ -303,7 +286,7 @@ class MainFragment : Fragment(), DiaryDate {
             0->{    //right +
                 if(!isCurrentToolbarDate()) {
                     cal.add(Calendar.MONTH, 1)
-                    isValid()
+                    loadData()
                 }
             }
             1->{    //left -
@@ -311,7 +294,7 @@ class MainFragment : Fragment(), DiaryDate {
                 mindgardenStartDate.set(2019, 6,31)
                 if(txtDateToolbarMain.text != getToolbarDate(mindgardenStartDate)){
                     cal.add(Calendar.MONTH, -1)
-                    isValid()
+                    loadData()
                 }
             }
         }

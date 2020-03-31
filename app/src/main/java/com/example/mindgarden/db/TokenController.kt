@@ -1,9 +1,11 @@
 package com.example.mindgarden.db
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.ui.login.LoginActivity
 import org.koin.android.ext.android.inject
 import kotlin.coroutines.coroutineContext
 
@@ -85,21 +87,28 @@ object TokenController {
     }
 
     fun isValidToken(ctx: Context,repository:MindgardenRepository){
-        val currentTime = System.currentTimeMillis()
-        Log.e("Token Controller isValid", currentTime.toString())
-        Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
+        if (getAccessToken(ctx) == "") {
+            clearRefreshToken(ctx)
 
-        Log.e("Token Controller isValid", (currentTime - getTimeAccessToken(ctx)).toString())
-        if (getExpAccessToken(ctx) * 1000 > currentTime - getTimeAccessToken(ctx)) {
-            Log.e("Token Controller isValid", "is vaildate")
+            val intent = Intent(ctx, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            ctx.startActivity(intent)
 
-        } else {
-            Log.e("Token Controller", "is not vaildate")
-            RenewAcessTokenController.postRenewAccessToken(ctx, repository)
+        }else{
+            val currentTime = System.currentTimeMillis()
+            Log.e("Token Controller isValid", currentTime.toString())
+            Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
 
+            Log.e("Token Controller isValid", (currentTime - getTimeAccessToken(ctx)).toString())
+            if (getExpAccessToken(ctx) * 1000 > currentTime - getTimeAccessToken(ctx)) {
+                Log.e("Token Controller isValid", "is vaildate")
+
+            } else {
+                Log.e("Token Controller", "is not vaildate")
+                RenewAcessTokenController.postRenewAccessToken(ctx, repository)
+
+            }
         }
-
-
-
     }
 }

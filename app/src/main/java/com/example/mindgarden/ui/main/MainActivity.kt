@@ -39,6 +39,8 @@ class MainActivity  : BaseActivity(R.layout.activity_main) {
         TokenController.isValidToken(this,repository)
 
 
+
+
         Log.e("Main: accessToken",TokenController.getAccessToken(this))
         Log.e("accessToken_exp",TokenController.getExpAccessToken(this).toString())
         Log.e("accessToken_startTime",TokenController.getTimeAccessToken(this).toString())

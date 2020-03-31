@@ -230,7 +230,6 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
         if(etContentWrite.text.toString() == ""){
             Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
         }else{
-            showProgressBar()
             postOrPut()
         }
     }
