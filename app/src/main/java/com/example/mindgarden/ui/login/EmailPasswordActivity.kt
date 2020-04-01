@@ -96,6 +96,7 @@ class EmailPasswordActivity : BaseActivity(R.layout.activity_email_password) {
                         val sendPasswordIntent = Intent(this, EmailSendPasswordActivity::class.java)
                         sendPasswordIntent.putExtra("email", edt_email_password_forgot.text.toString())
                         startActivity(sendPasswordIntent)
+                        //finish()
 
                     }
                 },

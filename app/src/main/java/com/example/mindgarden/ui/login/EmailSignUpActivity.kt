@@ -223,7 +223,10 @@ class EmailSignUpActivity : BaseActivity(R.layout.activity_email_sign_up) {
         val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
         val loginButtonClick = { dialog: DialogInterface, which: Int ->
-          finish()
+            val goLoginIntent =Intent(this,EmailSignInActivity::class.java)
+            goLoginIntent.putExtra("email",edt_email.text.toString())
+            startActivity(goLoginIntent)
+            finish()
         }
 
         repository
