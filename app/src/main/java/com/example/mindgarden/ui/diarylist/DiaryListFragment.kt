@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.toolbar_diary_list.*
 import java.util.*
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.DiaryListResponse.*
-import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
@@ -45,7 +44,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
     private var ascending = true
 
-    val cal = Calendar.getInstance()
+    var cal = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,13 +56,11 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         init()
     }
 
     override fun onResume() {
         super.onResume()
-
         init()
     }
 
@@ -80,7 +77,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         dataList.sortByDescending { data -> data.date }
 
         rv_diary_list.adapter = diaryListRecyclerViewAdapter
-        //rv_diary_list.addItemDecoration(DividerItemDecoration(context!!, 1))
         rv_diary_list.layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
     }
 
@@ -112,6 +108,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     private fun initToolbarTextCurrent() {
         txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
+        cal = Calendar.getInstance()
     }
 
     private fun btnToolbarClick() {
@@ -177,7 +174,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun loadData() {
-        TokenController.isValidToken(activity!!.applicationContext,repository)
+        TokenController.isValidToken(activity!!.applicationContext, repository)
 
         val date = getServerDate(cal)
         Log.e("diaryList date_loadData():", date)
@@ -198,7 +195,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                                 ll_list_zero.visibility = View.GONE
 
                                 diaryListRecyclerViewAdapter.setData(tmp)
-                                //diaryListRecyclerViewAdapter.dataList = tmp
                                 diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
                                 diaryListRecyclerViewAdapter.notifyDataSetChanged()
                             }
@@ -221,7 +217,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
 
     private fun deleteDiary(diaryIdx: Int) {
-        TokenController.isValidToken(activity!!.applicationContext,repository)
+        TokenController.isValidToken(activity!!.applicationContext, repository)
+
         repository
             .deleteDiaryList(TokenController.getAccessToken(activity!!.applicationContext), diaryIdx,
                 {
@@ -246,6 +243,14 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                     btnRetryDataLoad()
                 })
     }
+
+//    private fun getCurrentData(){
+//        val date = getServerDate(Calendar.getInstance())
+//
+//        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
+//            loadData()
+//        }
+//    }
 
     private fun getData() {
         val date = getServerDate(cal)

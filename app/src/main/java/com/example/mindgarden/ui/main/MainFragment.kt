@@ -81,7 +81,6 @@ class MainFragment : Fragment(), DiaryDate {
     private fun init(){
         btnToolbarClick()
         mainFragmentClick()
-        setLand()
         initToolbarTextCurrent()
         loadData()
     }
