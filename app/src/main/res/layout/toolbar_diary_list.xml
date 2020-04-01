@@ -61,7 +61,7 @@
                         android:fontFamily="@font/notosanscjkr_medium"
                         android:text="0000"
                         android:textColor="#2B2B2B"
-                        android:textSize="15dp" />
+                        android:textSize="14dp" />
 
             </LinearLayout>
 

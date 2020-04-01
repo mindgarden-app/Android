@@ -35,7 +35,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/notosanscjkr_medium"
                         android:textColor="#2b2b2b"
-                        android:textSize="15dp" />
+                        android:textSize="14dp" />
 
             </LinearLayout>
 
