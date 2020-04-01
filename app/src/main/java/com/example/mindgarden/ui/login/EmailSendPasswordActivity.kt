@@ -43,7 +43,7 @@ class EmailSendPasswordActivity : BaseActivity(R.layout.activity_email_send_pass
             goBackLogin.putExtra("email",email)
             startActivity(goBackLogin)
             Log.e("",txt_submit_email.text.toString())
-            finish()
+            //finish()
         }
 
     }
