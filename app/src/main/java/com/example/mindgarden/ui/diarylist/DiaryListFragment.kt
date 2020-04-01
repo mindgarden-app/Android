@@ -45,7 +45,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
     }
     private var ascending = true
 
-    val cal = Calendar.getInstance()
+    var cal = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,13 +57,11 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         init()
     }
 
     override fun onResume() {
         super.onResume()
-
         init()
     }
 
@@ -112,6 +110,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     private fun initToolbarTextCurrent() {
         txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
+        cal = Calendar.getInstance()
     }
 
     private fun btnToolbarClick() {
@@ -247,6 +246,13 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                 })
     }
 
+//    private fun getCurrentData(){
+//        val date = getServerDate(Calendar.getInstance())
+//
+//        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
+//            loadData()
+//        }
+//    }
     private fun getData() {
         val date = getServerDate(cal)
 
