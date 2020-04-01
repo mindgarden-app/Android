@@ -408,7 +408,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/montserratalternates_blackitalic"
             android:textColor="#78deb0"
-            android:textSize="23dp"
+            android:textSize="25dp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -418,7 +418,7 @@
             android:id="@+id/txt_main_exp1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="15dp"
             android:fontFamily="@font/notosanscjkkr_light"
             android:gravity="right"
@@ -430,8 +430,8 @@
 
     <ImageView
             android:id="@+id/btn_reward"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginTop="11dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/btn_reward"
