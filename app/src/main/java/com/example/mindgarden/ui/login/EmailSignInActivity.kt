@@ -33,6 +33,7 @@ class EmailSignInActivity : BaseActivity(R.layout.activity_email_login) {
         toolbar_email_login.btnBack.setOnClickListener {
             finish()
         }
+        edt_email_sign_in.setText(intent.getStringExtra("email"))
         Log.e("name",SharedPreferenceController.getUserName(this))
         Log.e("mail",SharedPreferenceController.getUserMail(this))
         Log.e("access",TokenController.getAccessToken(this))
