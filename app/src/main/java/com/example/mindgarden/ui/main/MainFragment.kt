@@ -71,18 +71,10 @@ class MainFragment : Fragment(), DiaryDate {
         init()
     }
 
-    /*override fun onPause() {
-        super.onPause()
-        userOut = true
-    }*/
     override fun onResume() {
         super.onResume()
         if(WriteDiaryActivity.CHECK){
             init()
-        }
-        if(userOut){
-            init()
-            userOut = false
         }
     }
 
@@ -206,13 +198,13 @@ class MainFragment : Fragment(), DiaryDate {
                 when (treeNum) {
                     in 1..10 -> it.text = getString(R.string.treeNumTextCurrent10)
                     in 11..20 -> it.text = getString(R.string.treeNumTextCurrent20)
-                    in 21..31 -> it.text = getString(R.string.treeNumTextCurrent21)
+                    in 21..32 -> it.text = getString(R.string.treeNumTextCurrent21)
                     else -> it.text = getString(R.string.treeNumTextCurrent0) }
             }else{
                 when (treeNum) {
-                    in 1..10 -> it.text = getString( R.string.treeNumText10)
-                    in 11..20 -> it.text = getString(R.string.treeNumText20)
-                    in 21..31 -> it.text = getString(R.string.treeNumText21)
+                    in 1..10 -> it.text = getString(R.string.treeNumText10, treeNum)
+                    in 11..20 -> it.text = getString(R.string.treeNumText20, treeNum)
+                    in 21..32 -> it.text = getString(R.string.treeNumText21, treeNum)
                     else -> it.text = getString(R.string.treeNumText0) }
             }
         }
