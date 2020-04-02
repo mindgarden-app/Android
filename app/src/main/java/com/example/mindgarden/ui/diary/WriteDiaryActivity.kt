@@ -43,6 +43,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.android.ext.android.inject
 import java.io.*
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -588,9 +589,9 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     private fun convertPhotoRB(): MultipartBody.Part?{
         val byteArrayOutputStream = ByteArrayOutputStream()
         rotatedImg?.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
+        val photoBody = RequestBody.create(MediaType.parse("image/*"), byteArrayOutputStream.toByteArray())
 
-        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-        return MultipartBody.Part.createFormData("diary_img", getFilePathFromUri(selectPicUri!!), photoBody)
+        return MultipartBody.Part.createFormData("diary_img", URLEncoder.encode(getFilePathFromUri(selectPicUri!!), "utf-8"), photoBody)
     }
 
     private fun setDialogSize(dialog : AlertDialog){
