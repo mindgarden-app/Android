@@ -11,23 +11,23 @@ import com.example.mindgarden.setDefaultTreeImage
 import com.example.mindgarden.setSpringTreeImage
 import kotlin.collections.ArrayList
 
-class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
+class GridRecyclerViewAdapter(private val clickEvent: (position: Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object{
-        val selectedStatus = SparseBooleanArray(0)
-    }
+
     private val data = ArrayList<GridData>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            GridData.defaultType-> DefaultGridRecyclerViewHolder(clickEvent,viewGroup)
+        return when (viewType) {
+            GridData.defaultType -> DefaultGridRecyclerViewHolder(clickEvent, viewGroup)
 
-            GridData.lakeType-> LakeGridRecyclerViewHolder(viewGroup)
+            GridData.lakeType -> LakeGridRecyclerViewHolder(viewGroup)
 
-            GridData.alreadyExistType-> AETypeRecyclerViewHolder(viewGroup)
+            GridData.alreadyExistType -> AETypeRecyclerViewHolder(viewGroup)
 
-            else-> throw RuntimeException("알 수 없는 뷰타입 에러")
+            GridData.clickType -> ClickGridRecyclerViewHolder(clickEvent, viewGroup)
+
+            else -> throw RuntimeException("알 수 없는 뷰타입 에러")
         }
     }
 
@@ -35,50 +35,48 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
 
     override fun getItemViewType(position: Int): Int = data[position].type
 
-
+    fun getDataAt(position: Int) = data[position]
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         data[position].let {
-            when(it.type) {
+            when (it.type) {
                 GridData.lakeType -> {
                     holder as LakeGridRecyclerViewHolder
                 }
                 GridData.defaultType -> {
                     holder as DefaultGridRecyclerViewHolder
-                    data[position].img?.let { img->
+                    data[position].img?.let { img ->
                         setTreeImage(data[position].season, holder.gridImg, img)
-                    }
-                    when(selectedStatus.get(position)){
-                        true->{
-                            holder.gridImg.setBackgroundResource(R.drawable.grid_border_selected)
-                        }
-                        else->  {
-                            holder.gridImg.setBackgroundResource(R.drawable.grid_border)
-                            holder.gridImg.setDefaultTreeImage(-1)
-                        }
-
                     }
 
                 }
-                GridData.alreadyExistType->{
+                GridData.alreadyExistType -> {
                     holder as AETypeRecyclerViewHolder
-                    data[position].img?.let { img->
+                    data[position].img?.let { img ->
                         setTreeImage(data[position].season, holder.gridImg, img)
 //                        holder.gridImg.setDefaultTreeImage(img)
                     }
                 }
-                else-> throw RuntimeException("알 수 없는 뷰타입 에러")
+                GridData.clickType -> {
+                    holder as ClickGridRecyclerViewHolder
+                    data[position].img?.let { img ->
+                        setTreeImage(data[position].season, holder.gridImg, img)
+                    }
+                }
+                else -> throw RuntimeException("알 수 없는 뷰타입 에러")
             }
         }
+
     }
 
-    private fun setTreeImage(season: Int, iv : ImageView, img : Int){
-        when(season){
-            0-> iv.setSpringTreeImage(img)
+    // fun getDataAt(position: Int) = data[position]
+    private fun setTreeImage(season: Int, iv: ImageView, img: Int) {
+        when (season) {
+            0 -> iv.setSpringTreeImage(img)
             else -> iv.setDefaultTreeImage(img)
         }
     }
 
-    fun setData(newData : ArrayList<GridData>){
+    fun setData(newData: ArrayList<GridData>) {
         newData?.let {
             data.clear()
             data.addAll(newData)
@@ -86,21 +84,67 @@ class GridRecyclerViewAdapter(private val clickEvent : (position : Int)->Unit):
         }
     }
 
-    class DefaultGridRecyclerViewHolder(private val clickEvent: (position: Int) -> Unit, viewGroup:ViewGroup) :
-        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid, viewGroup,false))
-    {
+    class DefaultGridRecyclerViewHolder(
+        private val clickEvent: (position: Int) -> Unit,
+        viewGroup: ViewGroup
+    ) :
+        RecyclerView.ViewHolder(
+            LayoutInflater.from(viewGroup.context).inflate(
+                R.layout.rv_item_grid,
+                viewGroup,
+                false
+            )
+        ) {
         val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
 
         init {
-            gridImg.setOnClickListener { clickEvent(adapterPosition) }
-        }
-    }
-    class LakeGridRecyclerViewHolder(viewGroup: ViewGroup):
-        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid_lake, viewGroup, false))
+            gridImg.setImageResource(R.drawable.android_tree_empty)
+            gridImg.setBackgroundResource(R.drawable.grid_border)
+            gridImg.setDefaultTreeImage(-1)
+            gridImg.setOnClickListener {
 
-    class AETypeRecyclerViewHolder(viewGroup: ViewGroup) :
-        RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.rv_item_grid, viewGroup,false))
-    {
-        val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
+                clickEvent(adapterPosition)
+            }
+        }
+
     }
+        class LakeGridRecyclerViewHolder(viewGroup: ViewGroup) :
+            RecyclerView.ViewHolder(
+                LayoutInflater.from(viewGroup.context).inflate(
+                    R.layout.rv_item_grid_lake,
+                    viewGroup,
+                    false
+                )
+            )
+
+        class AETypeRecyclerViewHolder(viewGroup: ViewGroup) :
+            RecyclerView.ViewHolder(
+                LayoutInflater.from(viewGroup.context).inflate(
+                    R.layout.rv_item_grid,
+                    viewGroup,
+                    false
+                )
+            ) {
+            val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
+        }
+
+        class ClickGridRecyclerViewHolder(
+            private val clickEvent: (position: Int) -> Unit,
+            viewGroup: ViewGroup
+        ) :
+            RecyclerView.ViewHolder(
+                LayoutInflater.from(viewGroup.context).inflate(
+                    R.layout.rv_item_grid,
+                    viewGroup,
+                    false
+                )
+            ) {
+            val gridImg = itemView.findViewById<ImageView>(R.id.img_rv_item_grid)
+
+            init {
+                gridImg.setBackgroundResource(R.drawable.grid_border_selected)
+                gridImg.setOnClickListener { clickEvent(adapterPosition) }
+            }
+        }
+
 }

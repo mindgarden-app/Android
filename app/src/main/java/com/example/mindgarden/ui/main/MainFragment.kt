@@ -154,7 +154,7 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
 
     private fun loadData() {
 
-        TokenController.isValidToken(activity!!.applicationContext,repository)
+       TokenController.isValidToken(activity!!.applicationContext,repository)
 
         setLand()
         initGarden()
