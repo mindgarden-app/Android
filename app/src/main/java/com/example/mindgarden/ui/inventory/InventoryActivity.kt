@@ -116,7 +116,8 @@ class InventoryActivity : BaseActivity(R.layout.activity_inventory), DiaryDate {
 
         when(data.type){
             0-> {
-                setInventoryType(2)
+                for(i in 0 until 15) inventoryList[i].type = 0
+                //setInventoryType(2)
                 inventoryList[position].type = 1
                 inventoryRecyclerViewAdapter.setData(inventoryList)
                 treeIdx = data.treeIdx

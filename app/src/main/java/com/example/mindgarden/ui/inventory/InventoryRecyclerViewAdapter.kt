@@ -18,7 +18,7 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
         return when(viewType){
             InventoryData.default-> DefaultInventoryRecyclerViewHolder(clickEvent, viewGroup)
             InventoryData.click-> ClickInventoryRecyclerViewHolder(clickEvent,viewGroup)
-            InventoryData.block-> BlockInventoryRecyclerViewHolder(viewGroup)
+           // InventoryData.block-> BlockInventoryRecyclerViewHolder(viewGroup)
             else-> throw RuntimeException("알 수 없는 뷰타입 에러")
         }
     }
@@ -39,10 +39,7 @@ class InventoryRecyclerViewAdapter(private val clickEvent : (position : Int)->Un
                     holder as ClickInventoryRecyclerViewHolder
                     setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
                 }
-                InventoryData.block->{
-                    holder as BlockInventoryRecyclerViewHolder
-                    setTreeImage(data[position].season, holder.imgInventory, data[position].treeIcn)
-                }
+
                 else-> throw RuntimeException("알 수 없는 뷰타입 에러")
             }
         }
