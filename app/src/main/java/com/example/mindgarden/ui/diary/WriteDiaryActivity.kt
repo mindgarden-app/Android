@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -41,6 +43,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.android.ext.android.inject
 import java.io.*
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -228,11 +231,24 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
 
     private fun isValid(){
         if(etContentWrite.text.toString() == ""){
-            Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
+            showToast("내용을 작성해주세요")
         }else{
             postOrPut()
         }
     }
+
+    private fun showToast(msg : String){
+        val toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+        toastText.setText(msg)
+        toastText.gravity = Gravity.CENTER
+        toast.view = toastView
+        toast.show()
+    }
+
     //일기 쓰기
     private fun getCurrentDate():String{
         val f = SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH)
@@ -573,9 +589,9 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     private fun convertPhotoRB(): MultipartBody.Part?{
         val byteArrayOutputStream = ByteArrayOutputStream()
         rotatedImg?.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream)
+        val photoBody = RequestBody.create(MediaType.parse("image/*"), byteArrayOutputStream.toByteArray())
 
-        val photoBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray())
-        return MultipartBody.Part.createFormData("diary_img", getFilePathFromUri(selectPicUri!!), photoBody)
+        return MultipartBody.Part.createFormData("diary_img", URLEncoder.encode(getFilePathFromUri(selectPicUri!!), "utf-8"), photoBody)
     }
 
     private fun setDialogSize(dialog : AlertDialog){

@@ -161,7 +161,7 @@ class AlarmSettingActivity : BaseActivity(R.layout.activity_alarm_setting) {
         val toastView: View = inflater.inflate(R.layout.toast, null)
         val toastText: TextView = toastView.findViewById(R.id.toastText)
 
-        toastText.setText("알람이 해제되었습니다.")
+        toastText.setText("알림이 해제되었습니다.")
         toastText.gravity = Gravity.CENTER
         toast.view = toastView
         toast.show()
