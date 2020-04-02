@@ -23,11 +23,13 @@ import java.util.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.*
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.GardenResponse
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.setDefaultTreeImage
 import com.example.mindgarden.setSpringTreeImage
+import com.example.mindgarden.ui.MyObserver
 import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import org.koin.android.ext.android.inject
@@ -42,9 +44,8 @@ import kotlin.collections.ArrayList
  * A simple [Fragment] subclass.
  *
  */
-class MainFragment : Fragment(), DiaryDate {
+class MainFragment : Fragment(), DiaryDate, MyObserver {
     private val repository: MindgardenRepository by inject()
-
     private val cal = Calendar.getInstance()
 
     lateinit var locationList: List<ImageView>
@@ -52,7 +53,6 @@ class MainFragment : Fragment(), DiaryDate {
     companion object{
         const val TOOLBAR_DATE_REQUEST_CODE = 100
         const val INVENTORY_REQUEST_CODE = 200
-        private var userOut = false
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,9 +65,11 @@ class MainFragment : Fragment(), DiaryDate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        init()
+    }
 
-        Log.e("MainFragment","start")
-        setLocation()
+    override fun onAppForegrounded() {
         init()
     }
 
@@ -79,6 +81,7 @@ class MainFragment : Fragment(), DiaryDate {
     }
 
     private fun init(){
+        setLocation()
         btnToolbarClick()
         mainFragmentClick()
         initToolbarTextCurrent()

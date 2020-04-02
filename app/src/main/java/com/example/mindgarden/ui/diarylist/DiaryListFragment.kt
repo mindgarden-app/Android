@@ -22,6 +22,7 @@ import java.util.*
 import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.db.TokenController
+import com.example.mindgarden.ui.MyObserver
 import com.example.mindgarden.ui.diary.DiaryDate
 import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import com.example.mindgarden.ui.main.MainCalendarActivity
@@ -42,7 +43,7 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
+class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserver {
     private val repository : MindgardenRepository by inject()
     val diaryListRecyclerViewAdapter: DiaryListRecyclerViewAdapter by lazy {
         DiaryListRecyclerViewAdapter { clickEventCallback(it) }
@@ -66,6 +67,10 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
         init()
     }
 
+    override fun onAppForegrounded() {
+        init()
+    }
+    
     override fun onResume() {
         super.onResume()
         if(WriteDiaryActivity.CHECK){
