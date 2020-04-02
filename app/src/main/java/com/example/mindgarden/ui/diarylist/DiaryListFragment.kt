@@ -23,6 +23,7 @@ import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
+import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import com.example.mindgarden.ui.main.MainCalendarActivity
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
 import kotlinx.android.synthetic.main.toolbar_diary_list.btn_left
@@ -62,14 +63,15 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         init()
     }
 
-    /*override fun onResume() {
+    override fun onResume() {
         super.onResume()
-        init()
-    }*/
+        if(WriteDiaryActivity.CHECK){
+            init()
+        }
+    }
 
     private fun init() {
         configureRecyclerView()
