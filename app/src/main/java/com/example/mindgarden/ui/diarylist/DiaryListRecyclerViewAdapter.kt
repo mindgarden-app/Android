@@ -68,6 +68,12 @@ class DiaryListRecyclerViewAdapter(private val clickEvent: (position: Int) -> Un
             false
         }
 
+        holder.itemView.ll_diary_list_content.setOnLongClickListener {
+            isPressed = !isPressed
+            notifyDataSetChanged()
+            false
+        }
+
         holder.itemView.ll_diary_list_content.setOnClickListener {
             Intent(holder.itemView.context, ReadDiaryActivity::class.java).apply {
                 putExtra(DIARY_IDX, dataList[position].diaryIdx)
