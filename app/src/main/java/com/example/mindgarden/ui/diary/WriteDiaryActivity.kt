@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -228,11 +230,24 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
 
     private fun isValid(){
         if(etContentWrite.text.toString() == ""){
-            Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "내용을 작성해주세요", Toast.LENGTH_SHORT).show()
+            showToast("내용을 작성해주세요")
         }else{
             postOrPut()
         }
     }
+
+    private fun showToast(msg : String){
+        val toast = Toast(this)
+        val inflater: LayoutInflater = LayoutInflater.from(this)
+        val toastView: View = inflater.inflate(R.layout.toast, null)
+        val toastText: TextView = toastView.findViewById(R.id.toastText)
+        toastText.setText(msg)
+        toastText.gravity = Gravity.CENTER
+        toast.view = toastView
+        toast.show()
+    }
+
     //일기 쓰기
     private fun getCurrentDate():String{
         val f = SimpleDateFormat("yy.MM.dd. (EEE)", Locale.ENGLISH)
