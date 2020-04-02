@@ -1,6 +1,7 @@
 package com.example.mindgarden.ui.diarylist
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,7 +23,10 @@ import com.example.mindgarden.data.MindgardenRepository
 import com.example.mindgarden.data.vo.DiaryListResponse.*
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.ui.diary.DiaryDate
+import com.example.mindgarden.ui.main.MainCalendarActivity
 import kotlinx.android.synthetic.main.layout_data_load_fail.*
+import kotlinx.android.synthetic.main.toolbar_diary_list.btn_left
+import kotlinx.android.synthetic.main.toolbar_diary_list.btn_right
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
@@ -46,6 +50,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     var cal = Calendar.getInstance()
 
+    val TOOLBAR_DATE_REQUEST_CODE = 100
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,13 +62,14 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         init()
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         init()
-    }
+    }*/
 
     private fun init() {
         configureRecyclerView()
@@ -108,7 +115,11 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
 
     private fun initToolbarTextCurrent() {
         txt_date_toolbar_diary_list.text = getToolbarDate(Calendar.getInstance())
-        cal = Calendar.getInstance()
+        //cal = Calendar.getInstance()
+    }
+
+    private fun isCurrentToolbarDate(): Boolean {
+        return txt_date_toolbar_diary_list.text == getToolbarDate(Calendar.getInstance(Locale.KOREA))
     }
 
     private fun btnToolbarClick() {
@@ -121,12 +132,39 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
             txt_date_toolbar_diary_list.text = setDateMoveControl(0)
             getData()
         }
+
+        txt_date_toolbar_diary_list.setOnClickListener {
+            Intent(activity!!.applicationContext, MainCalendarActivity::class.java).apply {
+                putExtra("toolbarDate", txt_date_toolbar_diary_list.text)
+                startActivityForResult(this, TOOLBAR_DATE_REQUEST_CODE)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == TOOLBAR_DATE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    cal.set(Calendar.MONTH, data.getIntExtra("month", - 1))
+                    cal.set(Calendar.YEAR, data.getIntExtra("year", - 1))
+                    txt_date_toolbar_diary_list.text = getToolbarDate(cal)
+                    getData()
+                } else {
+                    Log.e("diaryList", "onActivityResult Failed")
+                }
+            }
+        }
     }
 
     private fun setDateMoveControl(i: Int): String {
         when (i) {
             0 -> {
-                cal.add(Calendar.MONTH, 1)
+                //cal.add(Calendar.MONTH, 1)
+                if (!isCurrentToolbarDate()) {
+                    cal.add(Calendar.MONTH, 1)
+                }
             }
             1 -> {
                 val mindgardenStartDate = Calendar.getInstance()
@@ -243,14 +281,6 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate {
                     btnRetryDataLoad()
                 })
     }
-
-//    private fun getCurrentData(){
-//        val date = getServerDate(Calendar.getInstance())
-//
-//        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
-//            loadData()
-//        }
-//    }
 
     private fun getData() {
         val date = getServerDate(cal)
