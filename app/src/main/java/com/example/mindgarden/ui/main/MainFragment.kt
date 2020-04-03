@@ -115,6 +115,9 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
     }
 
     private fun btnRewardClick(){
+        img_balloon.setOnClickListener {
+            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE)
+        }
         btn_reward.setOnClickListener {
             startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE)
         }

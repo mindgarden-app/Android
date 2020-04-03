@@ -68,6 +68,7 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     private var diaryIdx: Int = -1
     private var weatherIdx : Int = 10
     private var imgState = 0
+    private var saveClickState = false
 
     private val choiceList = arrayOf("이미지 선택", "삭제")
 
@@ -157,7 +158,15 @@ class WriteDiaryActivity : BaseActivity(R.layout.activity_write_diary), Mood, Di
     }
     private fun btnSaveClick(){
         btn_save_diary_toolbar.setOnClickListener {
-           isValid()
+            when(saveClickState){
+                true->{
+                    showToast("일기를 열심히 등록 중이에요 !\n잠시만 기다려주세요 ㄴ(º皿 ºㆀ)ㄱ")
+                }
+                false-> {
+                    isValid()
+                    saveClickState = true
+                }
+            }
         }
     }
 
