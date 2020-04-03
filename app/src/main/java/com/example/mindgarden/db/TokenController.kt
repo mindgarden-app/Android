@@ -86,7 +86,7 @@ object TokenController {
         return preference.getLong("access_token_exp", 0)
     }
 
-    fun isValidToken(ctx: Context,repository:MindgardenRepository){
+    fun isValidToken(ctx: Context,repository:MindgardenRepository):Boolean{
         if (getAccessToken(ctx) == "") {
             clearRefreshToken(ctx)
 
@@ -94,20 +94,21 @@ object TokenController {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             ctx.startActivity(intent)
-
+            return false
         }else{
             val currentTime = System.currentTimeMillis()
             Log.e("Token Controller isValid", currentTime.toString())
             Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
 
             Log.e("Token Controller isValid", (currentTime - getTimeAccessToken(ctx)).toString())
-            if (getExpAccessToken(ctx) * 1000 > currentTime - getTimeAccessToken(ctx)) {
+            if (getExpAccessToken(ctx) * 10 > currentTime - getTimeAccessToken(ctx)) {
                 Log.e("Token Controller isValid", "is vaildate")
+                return true
 
             } else {
                 Log.e("Token Controller", "is not vaildate")
                 RenewAcessTokenController.postRenewAccessToken(ctx, repository)
-
+                return false
             }
         }
     }

@@ -35,6 +35,7 @@ import com.example.mindgarden.ui.diary.WriteDiaryActivity
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 //수정중
 // TODO: Rename parameter arguments, choose names that match
@@ -50,10 +51,11 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
 
     lateinit var locationList: List<ImageView>
 
-    companion object{
+    companion object {
         const val TOOLBAR_DATE_REQUEST_CODE = 100
         const val INVENTORY_REQUEST_CODE = 200
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -75,12 +77,12 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
 
     override fun onResume() {
         super.onResume()
-        if(WriteDiaryActivity.CHECK){
+        if (WriteDiaryActivity.CHECK) {
             init()
         }
     }
 
-    private fun init(){
+    private fun init() {
         setLocation()
         btnToolbarClick()
         mainFragmentClick()
@@ -88,7 +90,7 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         loadData()
     }
 
-    private fun initToolbarTextCurrent(){
+    private fun initToolbarTextCurrent() {
         txtDateToolbarMain.text = getToolbarDate(Calendar.getInstance())
     }
 
@@ -108,7 +110,7 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         }
     }
 
-    private fun btnSettingClick(){
+    private fun btnSettingClick() {
         btn_main_setting.setOnClickListener {
             startActivity(Intent(activity!!.applicationContext, MypageActivity::class.java))
         }
@@ -123,7 +125,7 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         }
     }
 
-    private fun txtToolbarDateClick(){
+    private fun txtToolbarDateClick() {
         llDateToolbarMain.setOnClickListener {
             Intent(activity!!.applicationContext, MainCalendarActivity::class.java).apply {
                 putExtra("toolbarDate", txtDateToolbarMain.text)
@@ -137,18 +139,18 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
 
         if (requestCode == TOOLBAR_DATE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                if(data != null){
-                    cal.set(Calendar.MONTH, data.getIntExtra("month",-1))
-                    cal.set(Calendar.YEAR, data.getIntExtra("year",-1))
+                if (data != null) {
+                    cal.set(Calendar.MONTH, data.getIntExtra("month", -1))
+                    cal.set(Calendar.YEAR, data.getIntExtra("year", -1))
                     txtDateToolbarMain.text = getToolbarDate(cal)
                     loadData()
-                }else{
+                } else {
                     Log.e("MainFragment", "intentFail")
                 }
             }
         }
 
-        if(requestCode == INVENTORY_REQUEST_CODE) {
+        if (requestCode == INVENTORY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 init()
             }
@@ -156,72 +158,81 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
     }
 
     private fun loadData() {
-
-       TokenController.isValidToken(activity!!.applicationContext,repository)
-
         setLand()
         initGarden()
 
         val date = getServerDate(cal)
         Log.e("mainF date", date)
-        repository
-            .getGarden(TokenController.getAccessToken(activity!!.applicationContext), date,
-                {
-                    if (it.success) {
-                        setMainDateText()   //날짜
-                        it.data[0].let {d->
-                            setMainComment(d.treeNum)
-                            setTree(it.data.size,it.data)
-                            setGardenBalloon(d.balloon)
+        if (TokenController.isValidToken(activity!!.applicationContext, repository)) {
+            repository
+                .getGarden(TokenController.getAccessToken(activity!!.applicationContext), date,
+                    {
+                        if (it.success) {
+                            setMainDateText()   //날짜
+                            it.data[0].let { d ->
+                                setMainComment(d.treeNum)
+                                setTree(it.data.size, it.data)
+                                setGardenBalloon(d.balloon)
+                            }
+                        } else {
+                            Log.e("mainFragment load", it.message)
                         }
-                    }else{
-                        Log.e("mainFragment load", it.message)
-                    }
-                },
-                {Log.e("MainFragment", it)})
+                    },
+                    {
+                        Log.e("MainFragment", it)
+                    })
+        } else {
+            thread(start = true) {
+                while (!TokenController.isValidToken(activity!!.applicationContext, repository)) {
+                    loadData()
+                    Thread.sleep(3000)
+                }
+            }
+        }
     }
 
 
-
-    private fun setMainDateText(){
-        if(isCurrentToolbarDate()){
+    private fun setMainDateText() {
+        if (isCurrentToolbarDate()) {
             txtDateMain.visibility = View.VISIBLE
             txtDateMain.text = getMainDateTextFormat(Calendar.getInstance())
-        }else txtDateMain.visibility = View.INVISIBLE
+        } else txtDateMain.visibility = View.INVISIBLE
     }
 
-    private fun getMainDateTextFormat(calendar: Calendar):String{
+    private fun getMainDateTextFormat(calendar: Calendar): String {
         val f = SimpleDateFormat("dd'th.' EEE", Locale.ENGLISH)
         return f.format(calendar.time)
 
     }
 
-    private fun setMainComment(treeNum: Int){
+    private fun setMainComment(treeNum: Int) {
         txt_main_exp1.let {
             it.visibility = View.VISIBLE
-            if(isCurrentToolbarDate()) {
+            if (isCurrentToolbarDate()) {
                 when (treeNum) {
                     in 1..10 -> it.text = getString(R.string.treeNumTextCurrent10)
                     in 11..20 -> it.text = getString(R.string.treeNumTextCurrent20)
                     in 21..32 -> it.text = getString(R.string.treeNumTextCurrent21)
-                    else -> it.text = getString(R.string.treeNumTextCurrent0) }
-            }else{
+                    else -> it.text = getString(R.string.treeNumTextCurrent0)
+                }
+            } else {
                 when (treeNum) {
                     in 1..10 -> it.text = getString(R.string.treeNumText10, treeNum)
                     in 11..20 -> it.text = getString(R.string.treeNumText20, treeNum)
                     in 21..32 -> it.text = getString(R.string.treeNumText21, treeNum)
-                    else -> it.text = getString(R.string.treeNumText0) }
+                    else -> it.text = getString(R.string.treeNumText0)
+                }
             }
         }
     }
 
-    private fun setGardenBalloon(b: Int){
-        when(b){
-            1->{
+    private fun setGardenBalloon(b: Int) {
+        when (b) {
+            1 -> {
                 img_balloon.visibility = View.VISIBLE
                 btn_reward.setImageResource(R.drawable.btn_plus_redbdg)
             }
-            0->{
+            0 -> {
                 img_balloon.visibility = View.INVISIBLE
                 btn_reward.setImageResource(R.drawable.btn_reward)
             }
@@ -236,61 +247,63 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
                     else locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
                 }
             }
-            else->{
-                for(i in 0 until dataSize){
-                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
-                    else locationList[data[i].location-1].setDefaultTreeImage(data[i].treeIdx)
+            else -> {
+                for (i in 0 until dataSize) {
+                    if (data[i].treeIdx == 16) locationList[data[i].location - 1].setDefaultTreeImage(
+                        data[i].treeIdx
+                    )
+                    else locationList[data[i].location - 1].setDefaultTreeImage(data[i].treeIdx)
                 }
             }
         }
     }
 
-    private fun setLand(){
-        when(getSeason()){
-            0-> img_land.setImageResource(R.drawable.android_spring_land)
-            else-> img_land.setImageResource(R.drawable.android_land)
+    private fun setLand() {
+        when (getSeason()) {
+            0 -> img_land.setImageResource(R.drawable.android_spring_land)
+            else -> img_land.setImageResource(R.drawable.android_land)
         }
     }
 
-    private fun initGarden(){
-        for(i in 0..31){
+    private fun initGarden() {
+        for (i in 0..31) {
             locationList[i].setDefaultTreeImage(-1)
         }
     }
 
-    private fun getSeason(): Int{
-        return when(cal.get(Calendar.MONTH)){
-            2,3,4-> 0
-            else-> 1
+    private fun getSeason(): Int {
+        return when (cal.get(Calendar.MONTH)) {
+            2, 3, 4 -> 0
+            else -> 1
         }
     }
 
-    private fun isCurrentToolbarDate(): Boolean{
+    private fun isCurrentToolbarDate(): Boolean {
         return txtDateToolbarMain.text == getToolbarDate(Calendar.getInstance(Locale.KOREA))
     }
 
-    private fun getToolbarDate(calendar: Calendar):String{
-        val f =SimpleDateFormat("yyyy년 MM월", Locale.getDefault())
+    private fun getToolbarDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy년 MM월", Locale.getDefault())
         return f.format(calendar.time)
     }
 
-    private fun getServerDate(calendar: Calendar):String{
-        val f =SimpleDateFormat("yyyy-MM", Locale.getDefault())
+    private fun getServerDate(calendar: Calendar): String {
+        val f = SimpleDateFormat("yyyy-MM", Locale.getDefault())
         return f.format(calendar.time)
     }
 
-    private fun setDateMoveControl(rl : Int): String{
-        when(rl){
-            0->{    //right +
-                if(!isCurrentToolbarDate()) {
+    private fun setDateMoveControl(rl: Int): String {
+        when (rl) {
+            0 -> {    //right +
+                if (!isCurrentToolbarDate()) {
                     cal.add(Calendar.MONTH, 1)
                     loadData()
                 }
             }
-            1->{    //left -
+            1 -> {    //left -
                 val mindgardenStartDate = Calendar.getInstance()
-                mindgardenStartDate.set(2019, 6,31)
-                if(txtDateToolbarMain.text != getToolbarDate(mindgardenStartDate)){
+                mindgardenStartDate.set(2019, 6, 31)
+                if (txtDateToolbarMain.text != getToolbarDate(mindgardenStartDate)) {
                     cal.add(Calendar.MONTH, -1)
                     loadData()
                 }
@@ -301,15 +314,17 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
 
 
     private fun setLocation() {
-        locationList = listOf(img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
+        locationList = listOf(
+            img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11,
             img12, img13, img14, img15, img16, img17, img18, img19, img20, img21_weed, img22,
-            img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32)
+            img23, img24, img25, img26, img27, img28, img29, img30_weed, img31, img32
+        )
 
     }
 
-    private fun disableScreenSizeChange(){
+    private fun disableScreenSizeChange() {
         //screen size
-        val configuration : Configuration = resources.configuration
+        val configuration: Configuration = resources.configuration
         configuration.fontScale = 1f
         val metrics = DisplayMetrics()
         activity!!.windowManager.defaultDisplay.getMetrics(metrics)
