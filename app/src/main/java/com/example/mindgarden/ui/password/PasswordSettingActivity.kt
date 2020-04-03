@@ -43,6 +43,7 @@ class PasswordSettingActivity : BaseActivity(R.layout.activity_password_setting)
 
         passwordSwitch.setOnCheckedChangeListener  { _, isChecked ->
             pwSwitchState(isChecked)
+            SharedPreferenceController.setPasswordSwitchState(this ,passwordSwitch.isChecked,100)
             if (!isChecked) showToast()
         }
 

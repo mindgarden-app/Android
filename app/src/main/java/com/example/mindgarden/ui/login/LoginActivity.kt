@@ -19,13 +19,18 @@ import android.view.View
 import android.widget.*
 import com.example.mindgarden.db.TokenController
 import com.example.mindgarden.R
+import com.example.mindgarden.data.MindgardenRepository
+import com.example.mindgarden.db.RenewAcessTokenController
 import com.example.mindgarden.db.SharedPreferenceController
 import com.example.mindgarden.ui.base.BaseActivity
 import com.example.mindgarden.ui.main.MainActivity
 import com.example.mindgarden.ui.password.PasswordActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.android.ext.android.inject
 
 class LoginActivity : BaseActivity(R.layout.activity_login) {
+    private val repository: MindgardenRepository by inject()
+
     private val PERMISSION_CALLBACK_CONSTANT = 101
     private val REQUEST_PERMISSION_SETTING = 101
     private var permissionsRequired = arrayOf(
@@ -116,7 +121,35 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
 
         //암호 작동
         if(TokenController.getAccessToken(this)!=""){
-            if(SharedPreferenceController.getPassword(this) != "") {
+            val currentTime = System.currentTimeMillis()
+
+            if (TokenController.getExpAccessToken(this) * 10 > currentTime - TokenController.getTimeAccessToken(this)) {
+                if(SharedPreferenceController.getPassword(this) != "") {
+                    val passwordIntent = Intent(this, PasswordActivity::class.java)
+                    passwordIntent.putExtra("whereFrom","login")
+                    startActivity(passwordIntent)
+                    finish()
+                } else {
+                    val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+                    startActivity(alreadyLoginIntent)
+                    finish()
+                }
+            } else {
+                RenewAcessTokenController.postRenewAccessToken(this, repository)
+
+                if(SharedPreferenceController.getPassword(this) != "") {
+                    val passwordIntent = Intent(this, PasswordActivity::class.java)
+                    passwordIntent.putExtra("whereFrom","login")
+                    startActivity(passwordIntent)
+                    finish()
+                } else {
+                    val alreadyLoginIntent = Intent(this,MainActivity::class.java)
+                    startActivity(alreadyLoginIntent)
+                    finish()
+                }
+            }
+
+            /*if(SharedPreferenceController.getPassword(this) != "") {
                 val passwordIntent = Intent(this, PasswordActivity::class.java)
                 passwordIntent.putExtra("whereFrom","login")
                 startActivity(passwordIntent)
@@ -125,8 +158,8 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                 val alreadyLoginIntent = Intent(this,MainActivity::class.java)
                 startActivity(alreadyLoginIntent)
                 finish()
-            }
-        } else {
+            }*/
+        } /*else {
             if (TokenController.getRefreshToken(this) != "") {
                 if(SharedPreferenceController.getPassword(this) != "") {
                     val passwordIntent = Intent(this, PasswordActivity::class.java)
@@ -139,7 +172,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                     finish()
                 }
             }
-        }
+        }*/
     }
 
     private fun requestPermission() {
