@@ -7,12 +7,9 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mindgarden.ui.mypage.MypageActivity
 import com.example.mindgarden.R
@@ -32,6 +29,7 @@ import kotlinx.android.synthetic.main.toolbar_diary_list.btn_right
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -64,6 +62,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         init()
     }
 
@@ -73,7 +72,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
     
     override fun onResume() {
         super.onResume()
-        if(WriteDiaryActivity.CHECK){
+
+        if (WriteDiaryActivity.CHECK) {
             init()
         }
     }
@@ -82,7 +82,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
         configureRecyclerView()
         initToolbarTextCurrent()
         diaryListFragmentClick()
-        getData()
+        //getData()
+        loadData()
     }
 
     private fun configureRecyclerView() {
@@ -132,12 +133,14 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
     private fun btnToolbarClick() {
         btn_left.setOnClickListener {
             txt_date_toolbar_diary_list.text = setDateMoveControl(1)
-            getData()
+            //getData()
+            loadData()
         }
 
         btn_right.setOnClickListener {
             txt_date_toolbar_diary_list.text = setDateMoveControl(0)
-            getData()
+            //getData()
+            loadData()
         }
 
         txt_date_toolbar_diary_list.setOnClickListener {
@@ -157,7 +160,8 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
                     cal.set(Calendar.MONTH, data.getIntExtra("month", - 1))
                     cal.set(Calendar.YEAR, data.getIntExtra("year", - 1))
                     txt_date_toolbar_diary_list.text = getToolbarDate(cal)
-                    getData()
+                    //getData()
+                    loadData()
                 } else {
                     Log.e("diaryList", "onActivityResult Failed")
                 }
@@ -193,7 +197,7 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
         return f.format(calendar.time)
     }
 
-    fun isValid(accessToken: String, date: String): Boolean {
+    /*fun isValid(accessToken: String, date: String): Boolean {
         val toast: Toast = Toast(activity!!.applicationContext)
         val inflater: LayoutInflater = LayoutInflater.from(activity!!.applicationContext)
         val toastView: View = inflater.inflate(R.layout.toast, null)
@@ -216,15 +220,52 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
         else return true
 
         return false
-    }
+    }*/
 
     private fun loadData() {
-        TokenController.isValidToken(activity!!.applicationContext, repository)
+        //TokenController.isValidToken(activity!!.applicationContext, repository)
 
         val date = getServerDate(cal)
         Log.e("diaryList date_loadData():", date)
 
-        repository
+        if (TokenController.isValidToken(activity!!.applicationContext, repository)) {
+            repository
+                .getDiaryList(
+                    TokenController.getAccessToken(activity!!.applicationContext), date,
+                    { response ->
+                        hideErrorView()
+
+                        when (response.status) {
+                            200 -> {
+                                val tmp: ArrayList<DiaryListData> = response.data!!
+
+                                if (tmp.isEmpty()) {
+                                    ll_list_zero.visibility = View.VISIBLE
+                                } else {
+                                    ll_list_zero.visibility = View.GONE
+
+                                    diaryListRecyclerViewAdapter.setData(tmp)
+                                    diaryListRecyclerViewAdapter.dataList.sortByDescending { data -> data.date }
+                                    diaryListRecyclerViewAdapter.notifyDataSetChanged()
+                                }
+                            }
+                            else -> Log.e("diaryList", response.message)
+                        }
+                    },
+                    {
+                        showErrorView()
+                        btnRetryDataLoad()
+                    })
+        } else {
+            thread(start = true) {
+                while (!TokenController.isValidToken(activity!!.applicationContext, repository)) {
+                    loadData()
+                    Thread.sleep(3000)
+                }
+            }
+        }
+
+        /*repository
             .getDiaryList(
                 TokenController.getAccessToken(activity!!.applicationContext), date,
                 { response ->
@@ -250,15 +291,17 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
                 {
                     showErrorView()
                     btnRetryDataLoad()
-                })
+                })*/
     }
 
     private fun clickEventCallback(position: Int) {
         val date = getServerDate(cal)
 
-        if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
+        deleteDiary(diaryListRecyclerViewAdapter.dataList[position].diaryIdx)
+
+        /*if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
             deleteDiary(diaryListRecyclerViewAdapter.dataList[position].diaryIdx)
-        }
+        }*/
     }
 
     private fun deleteDiary(diaryIdx: Int) {
@@ -289,13 +332,13 @@ class DiaryListFragment : androidx.fragment.app.Fragment(), DiaryDate, MyObserve
                 })
     }
 
-    private fun getData() {
+    /*private fun getData() {
         val date = getServerDate(cal)
 
         if (isValid(TokenController.getAccessToken(activity!!.applicationContext), date)) {
             loadData()
         }
-    }
+    }*/
 
    private fun showErrorView() {
         dataLoadFailDiaryList.visibility = View.VISIBLE
