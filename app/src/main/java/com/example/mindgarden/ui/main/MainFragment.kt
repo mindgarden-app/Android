@@ -94,14 +94,13 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         txtDateToolbarMain.text = getToolbarDate(Calendar.getInstance())
     }
 
-    private fun mainFragmentClick() {
+    private fun mainFragmentClick(){
         btnToolbarClick()
         btnSettingClick()
         btnRewardClick()
         txtToolbarDateClick()
     }
-
-    private fun btnToolbarClick() {
+    private fun btnToolbarClick(){
         btn_left.setOnClickListener {
             txtDateToolbarMain.text = setDateMoveControl(1)
         }
@@ -117,14 +116,12 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         }
     }
 
-    private fun btnRewardClick() {
+    private fun btnRewardClick(){
+        img_balloon.setOnClickListener {
+            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE)
+        }
         btn_reward.setOnClickListener {
-            startActivityForResult(
-                Intent(
-                    activity!!.applicationContext,
-                    InventoryActivity::class.java
-                ).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE
-            )
+            startActivityForResult(Intent(activity!!.applicationContext, InventoryActivity::class.java).putExtra("season", getSeason()), INVENTORY_REQUEST_CODE)
         }
     }
 
@@ -242,14 +239,12 @@ class MainFragment : Fragment(), DiaryDate, MyObserver {
         }
     }
 
-    private fun setTree(dataSize: Int, data: ArrayList<GardenResponse.GardenData>) {
-        when (getSeason()) {
-            0 -> {
-                for (i in 0 until dataSize) {
-                    if (data[i].treeIdx == 16) locationList[data[i].location - 1].setSpringTreeImage(
-                        data[i].treeIdx
-                    )
-                    else locationList[data[i].location - 1].setSpringTreeImage(data[i].treeIdx)
+    private fun setTree(dataSize : Int, data: ArrayList<GardenResponse.GardenData>){
+        when(getSeason()){
+            0->{
+                for(i in 0 until dataSize){
+                    if(data[i].treeIdx == 16) locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
+                    else locationList[data[i].location-1].setSpringTreeImage(data[i].treeIdx)
                 }
             }
             else -> {
