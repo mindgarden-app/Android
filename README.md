@@ -5,15 +5,17 @@ Hi! We are MindGarden android development team✌️
 
 # MindGarden 
 
-2019 OPEN SOPT 24TH Android Project 🍀
+>2019 OPEN SOPT 24TH Android Project 🍀
 
 [🏠](https://www.mindgarden11.net/) [소개페이지](https://www.mindgarden11.net/)
 
 [🎞](https://youtu.be/debMDLCi3vc) [video](https://youtu.be/debMDLCi3vc)
 
-개발기간 : 2019년 6월 29일 ~ 2019년 7월 12일, 
-
-​                    update 2020년 2월 23일 ~ 2020년 4월 6일
+## Version
+- 1.0
+기간 : 2019년 6월 29일 ~ 2019년 7월 12일
+- 1.1.0 🎆✨update✨🎆
+기간 : 2020년 2월 23일 ~ 2020년 4월 6일
 
 ## 나를 기록하는 모바일 속 작은 공간, Mind garden
 
