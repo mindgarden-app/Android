@@ -3,7 +3,7 @@ Hi! We are MindGarden android development team✌️
 
 
 
-<center> # MindGarden </center>
+# MindGarden 
 
 2019 OPEN SOPT 24TH Android Project 🍀
 
