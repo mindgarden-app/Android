@@ -15,7 +15,7 @@ Hi! We are MindGarden android development team✌️
 
 ​                    update 2020년 2월 23일 ~ 2020년 4월 6일
 
-## [나를 기록하는 모바일 속 작은 공간, Mind garden]
+## 나를 기록하는 모바일 속 작은 공간, Mind garden
 
 - [https://www.mindgarden11.net](https://www.mindgarden11.net/)
 
