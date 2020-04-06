@@ -3,7 +3,7 @@ Hi! We are MindGarden android development team✌️
 
 
 
-# MindGarden 
+# Mind Garden 
 
 2019 OPEN SOPT 24TH Android Project 🌳
 
@@ -21,7 +21,7 @@ Hi! We are MindGarden android development team✌️
 
   2020년 2월 23일 ~ 2020년 4월 6일
 
-## 나를 기록하는 모바일 속 작은 공간, Mind garden
+## 나를 기록하는 모바일 속 작은 공간, Mind Garden
 
 - Mind Garden은 하루의 이야기로 나만의 정원을 가꿔나가는 **🍀힐링 다이어리 앱🍀**입니다.
 
