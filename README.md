@@ -40,11 +40,12 @@ Hi! We are MindGarden android development team✌️
   
 
 ### Tables of Contents
+------
 
 1. [Service Workflow](#service)
 2. [Features](#features)
 3. [Developers](developers)
-
+</br>
 
 
 
@@ -52,6 +53,7 @@ Hi! We are MindGarden android development team✌️
 <a name="service"></a>
 
 ### Service Workflow
+------
 
 ![KakaoTalk_20200404_204529670](https://user-images.githubusercontent.com/51378843/78564809-f704db80-7857-11ea-80bd-4a1985085b11.jpg)
 
@@ -112,6 +114,7 @@ Hi! We are MindGarden android development team✌️
 <a name="developers"></a>
 
 ### Developer
+------
 
 - 신초희  [godjoy](https://github.com/godjoy)
 - 정은이 [EuneeChung](https://github.com/EuneeChung)
