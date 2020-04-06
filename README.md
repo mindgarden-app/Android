@@ -5,7 +5,7 @@ Hi! We are MindGarden android development team✌️
 
 # MindGarden 
 
-2019 OPEN SOPT 24TH Android Project 🍀
+> 2019 OPEN SOPT 24TH Android Project 🍀
 
 개발기간 : 2019년 6월 29일 ~ 2019년 7월 12일, 
 
