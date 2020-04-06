@@ -114,6 +114,7 @@ Hi! We are MindGarden android development team✌️
     - 암호 설정
     - 암호 변경
     - 암호 분실시 재설정
+    
   - 알림 설정
     - 시간 설정
     - 푸시 알림
