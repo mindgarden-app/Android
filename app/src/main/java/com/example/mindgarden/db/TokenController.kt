@@ -101,7 +101,7 @@ object TokenController {
             Log.e("Token Controller isValid", getTimeAccessToken(ctx).toString())
 
             Log.e("Token Controller isValid", (currentTime - getTimeAccessToken(ctx)).toString())
-            if (getExpAccessToken(ctx) * 10 > currentTime - getTimeAccessToken(ctx)) {
+            if (getExpAccessToken(ctx) * 1000 > currentTime - getTimeAccessToken(ctx)) {
                 Log.e("Token Controller isValid", "is vaildate")
                 return true
 

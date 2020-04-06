@@ -123,7 +123,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
         if(TokenController.getAccessToken(this)!=""){
             val currentTime = System.currentTimeMillis()
 
-            if (TokenController.getExpAccessToken(this) * 10 > currentTime - TokenController.getTimeAccessToken(this)) {
+            if (TokenController.getExpAccessToken(this) * 1000 > currentTime - TokenController.getTimeAccessToken(this)) {
                 if(SharedPreferenceController.getPassword(this) != "") {
                     val passwordIntent = Intent(this, PasswordActivity::class.java)
                     passwordIntent.putExtra("whereFrom","login")
