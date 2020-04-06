@@ -5,7 +5,7 @@ Hi! We are MindGarden android development team✌️
 
 # MindGarden 
 
-## 2019 OPEN SOPT 24TH Android Project 🍀
+2019 OPEN SOPT 24TH Android Project 🍀
 
 [🏠](https://www.mindgarden11.net/) 소개페이지
 
