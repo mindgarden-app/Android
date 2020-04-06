@@ -32,7 +32,7 @@ Hi! We are MindGarden android development team✌️
 - 일기에서 날씨로 나의 상태를 기록하고 아름다운 나무와 꽃을 받아보세요!
 
 - 매일 기록할수록 정원이 더욱 풍요로워집니다. 
-
+</br>
   
 
   ✨update✨
