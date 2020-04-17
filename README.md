@@ -1,9 +1,6 @@
-# Android
+# Mind Garden Android
+
 Hi! We are MindGarden android development team✌️
-
-
-
-# Mind Garden 
 
 2019 OPEN SOPT 24TH Android Project 🌳
 
