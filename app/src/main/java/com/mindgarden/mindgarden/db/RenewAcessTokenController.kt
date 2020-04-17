@@ -44,10 +44,7 @@ object RenewAcessTokenController {
                             //리프레시 토큰 값 지워주고
                             TokenController.clearRefreshToken(ctx)
 
-                            //로그인 화면으로 이동
-                            var loginIntent= Intent(ctx, LoginActivity::class.java)
-                            loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            ContextCompat.startActivity(ctx, loginIntent, Bundle())
+
                         }
                     }
                 },

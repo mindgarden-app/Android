@@ -1,5 +1,6 @@
 package com.mindgarden.mindgarden.ui.mypage
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -52,19 +53,6 @@ class MypageActivity : BaseActivity(R.layout.activity_mypage) {
         btnDelete.setOnClickListener {
             showDialog()
 
-            //TODO 웹쿠키 지우고 내부 디비 지우고 계정삭제
-
-            /*
-            deleteUserResponse()
-            TokenController.clearRefreshToken(this)
-
-
-
-            val Intent= Intent(this, WebviewLoginActivity::class.java)
-            Intent.putExtra("whyOpen","deleteUser")
-            startActivity(Intent)
-            */
-
         }
 
             //LinerLayout 버튼들
@@ -88,10 +76,14 @@ class MypageActivity : BaseActivity(R.layout.activity_mypage) {
     }
 
     fun showDialog() {
+        val deleteUserButtonClick = { dialog: DialogInterface, which: Int ->
+            deleteUser()
+        }
         var dlg = AlertDialog.Builder(this, R.style.NewDialogStyle)
-        dlg.setTitle(" ")
-            .setMessage("\n계정 삭제는 이메일로 문의해주세요.\n" + "mindgarden2019@gmail.com")
-            .setPositiveButton("\n확인", null)
+        dlg.setTitle("")
+            .setMessage("  계정을 삭제하시겠습니까?  ")
+            .setNegativeButton("취소", null)
+            .setPositiveButton("삭제하기",deleteUserButtonClick)
 
         var dlgNew: AlertDialog = dlg.show()
 
@@ -101,7 +93,7 @@ class MypageActivity : BaseActivity(R.layout.activity_mypage) {
 
         dlgNew.show()
 
-        buttonModi(dlgNew)
+        twoButtonModi(dlgNew)
     }
 
     fun messageModi(dlgNew : AlertDialog) {
@@ -112,23 +104,33 @@ class MypageActivity : BaseActivity(R.layout.activity_mypage) {
         messageText!!.setTextColor(getColor(R.color.colorBlack2b))
     }
 
-    fun buttonModi(dlgNew : AlertDialog) {
-        val button : Button = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE)
-        val parent : LinearLayout = button.parent as LinearLayout
-        parent.gravity = Gravity.CENTER_HORIZONTAL
-        val leftSpacer : View = parent.getChildAt(1)
-        leftSpacer.visibility = View.GONE
 
-        button.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
-        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+    fun twoButtonModi(dlgNew : AlertDialog) {
+        val btnPositive = dlgNew.getButton(AlertDialog.BUTTON_POSITIVE);
+        val btnNegative = dlgNew.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+        btnNegative.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        btnNegative.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        btnNegative.setTextColor(getColor(R.color.colorBlack2b))
+
+        btnPositive.typeface = ResourcesCompat.getFont(this, R.font.notosanscjkr_medium)
+        btnPositive.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f)
+        btnPositive.setTextColor(getColor(R.color.colorRed))
+
+        val layoutParams : LinearLayout.LayoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 10f;
+        btnPositive.setLayoutParams(layoutParams);
+        btnNegative.setLayoutParams(layoutParams);
     }
-
     private fun deleteUser() {
         TokenController.isValidToken(this,repository)
 
         repository
             .deleteUser(TokenController.getAccessToken(this),
                 {
+                    if(it.success){
+                        TokenController.clearRefreshToken(this)
+                    }
                     Log.e("Delete User", it.message)
                 },
                 {

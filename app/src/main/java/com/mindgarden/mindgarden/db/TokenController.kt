@@ -3,7 +3,9 @@ package com.mindgarden.mindgarden.db
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Bundle
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.mindgarden.mindgarden.data.MindgardenRepository
 import com.mindgarden.mindgarden.ui.login.LoginActivity
 
@@ -56,6 +58,10 @@ object TokenController {
         editor = preference.edit()
         editor.clear()
         editor.commit()
+
+        var loginIntent= Intent(ctx, LoginActivity::class.java)
+        loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        ContextCompat.startActivity(ctx, loginIntent, Bundle())
     }
 
     fun setStartTimeAccessToken(ctx: Context, tiemToStart: Long) {
