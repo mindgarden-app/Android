@@ -111,7 +111,7 @@ Hi! We are MindGarden android development team✌️
 - **환경 설정**
 
   - 프로필 확인(이름, 이메일)
-
+  - 계정 삭제
   - 앱 암호 설정 
     - 암호 설정
     - 암호 변경
