@@ -17,6 +17,10 @@ Hi! We are MindGarden android development team✌️
 - 1.1.0 
 
   2020년 2월 23일 ~ 2020년 4월 6일
+  
+  - 1.1.1 
+
+  2020년 4월 18일
 
 ## 나를 기록하는 모바일 속 작은 공간, Mind Garden
 
