@@ -1,9 +1,6 @@
-# Android
+# Mind Garden Android
+
 Hi! We are MindGarden android development team✌️
-
-
-
-# Mind Garden 
 
 2019 OPEN SOPT 24TH Android Project 🌳
 
@@ -20,6 +17,10 @@ Hi! We are MindGarden android development team✌️
 - 1.1.0 
 
   2020년 2월 23일 ~ 2020년 4월 6일
+  
+  - 1.1.1 
+
+  2020년 4월 18일
 
 ## 나를 기록하는 모바일 속 작은 공간, Mind Garden
 
@@ -111,7 +112,7 @@ Hi! We are MindGarden android development team✌️
 - **환경 설정**
 
   - 프로필 확인(이름, 이메일)
-
+  - 계정 삭제
   - 앱 암호 설정 
     - 암호 설정
     - 암호 변경
