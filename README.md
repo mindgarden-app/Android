@@ -47,6 +47,7 @@ Hi! We are MindGarden android development team✌️
 - 일기 목록에서 기분 날씨 보기 가능
 
 - 일기 목록에서 날짜 선택해 이동 가능
+</br>
 
   ✨update✨
 
