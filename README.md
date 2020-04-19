@@ -18,7 +18,7 @@ Hi! We are MindGarden android development team✌️
 
   2020년 2월 23일 ~ 2020년 4월 6일
   
-  - 1.1.1 
+- 1.1.1 
 
   2020년 4월 18일
 
@@ -48,6 +48,9 @@ Hi! We are MindGarden android development team✌️
 
 - 일기 목록에서 날짜 선택해 이동 가능
 
+  ✨update✨
+
+- 계정 삭제
   
 
 ### Tables of Contents
